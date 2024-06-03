@@ -2,6 +2,8 @@ BACKUP ~Aura_BG2/backup~
 AUTHOR ~AionZ~
 VERSION ~3.0~
 ALWAYS
+  OUTER_SPRINT BGFORGE_LIB_DIR "%MOD_FOLDER%/lib/bgforge"
+  INCLUDE ~%BGFORGE_LIB_DIR%/main.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/a7#add_kit_ex.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/eet.tph~
   INCLUDE ~%MOD_FOLDER%/lib/functions.tph~
