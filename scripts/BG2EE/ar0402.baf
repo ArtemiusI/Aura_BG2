@@ -1,0 +1,30 @@
+IF
+  Global("C0AuraHomeNote","AR0402",0)
+THEN
+  RESPONSE #100
+    AddMapNote([130.367],~Workshop~)
+    SetGlobal("C0AuraHomeNote","AR0402",1)
+END
+
+IF
+	TriggerOverride("C0AuraHome",Range(Player1,15))
+	Global("C0AuraBegin","GLOBAL",0)
+THEN
+  RESPONSE #100
+	SetInterrupt(FALSE)
+	SetGlobal("C0AuraBegin","GLOBAL",1)
+	Wait(1)
+	ClearAllActions()
+	StartCutSceneMode()
+	StartCutScene("c0acut0")
+	SetInterrupt(TRUE)
+END
+
+IF
+	GlobalGT("C0AuraBegin","GLOBAL",9)
+	Global("C0AuraHomeActivate","AR0402",0)
+THEN
+  RESPONSE #100
+	SetGlobal("C0AuraHomeActivate","AR0402",1)
+	TriggerActivation("C0AuraHome",TRUE)
+END

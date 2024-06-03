@@ -1,0 +1,159 @@
+BACKUP ~Aura_BG2/backup~
+AUTHOR ~AionZ~
+VERSION ~3.0~
+ALWAYS
+  INCLUDE ~%MOD_FOLDER%/lib/a7#add_kit_ex.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/eet.tph~
+  INCLUDE ~%MOD_FOLDER%/lib/functions.tph~
+  INCLUDE ~%MOD_FOLDER%/lib/alter_script.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/replace_multiline.tpa~
+END
+
+ALWAYS
+  ACTION_IF GAME_IS ~eet~ BEGIN
+    OUTER_SET bg2_chapter = 12
+  END ELSE BEGIN
+    OUTER_SET bg2_chapter = 0
+  END
+  OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
+    OUTER_SET bg2_chapter = bg2_chapter + 1
+    OUTER_TEXT_SPRINT name_source ~bg2_chapter_%i%~
+    OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+  END
+
+
+  //either use cpmvars that have these variables set or add this variable declaration somewhere in your tp2 code
+  ACTION_IF GAME_IS ~eet~ BEGIN
+    OUTER_SET wmp_xCoord_SoA = 0 //in relation to BG2/BG2:EE WORLDMAP.WMP add 0 px correction to X coordinate
+    OUTER_SET wmp_yCoord_SoA = 2283 //in relation to BG2/BG2:EE WORLDMAP.WMP add 2283 px correction to Y coordinate
+    OUTER_TEXT_SPRINT wmp_worldmap_ToB "worldmap" //when editing ToB worldmap use WORLDMAP.WMP instead of WORLDM25.WMP
+  END ELSE BEGIN
+    OUTER_SET wmp_xCoord_SoA = 0
+    OUTER_SET wmp_yCoord_SoA = 0
+    OUTER_TEXT_SPRINT wmp_worldmap_ToB "worldm25"
+  END
+END
+
+AUTO_TRA ~Aura_BG2/tra/%s~ //~%~
+LANGUAGE 
+  ~English~ 
+  ~english~
+  ~%MOD_FOLDER%/tra/english/setup.tra~
+
+BEGIN ~Aura NPC for Baldur's Gate 2: Enhanced Edition~
+  REQUIRE_PREDICATE (GAME_IS ~BG2EE EET~) ~This mod must be installed on BG:2EE or EET.~
+
+BEGIN ~Artificer (Thief)~
+FORCED_SUBCOMPONENT ~Choose a class for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+OUTER_SET include_saves = 1
+OUTER_SET auraclass = 1
+INCLUDE ~%MOD_FOLDER%/lib/aura_resources.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_kit.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_items.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_bg2.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/journal.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/crossmod.tpa~
+
+BEGIN ~Illusionist / Artificer (Mage / Thief)~
+FORCED_SUBCOMPONENT ~Choose a class for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+OUTER_SET include_saves = 1
+OUTER_SET auraclass = 2
+INCLUDE ~%MOD_FOLDER%/lib/aura_resources.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_kit.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_items.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_bg2.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/journal.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/crossmod.tpa~
+	  
+BEGIN ~Priestess / Artificer (Cleric / Thief)~
+FORCED_SUBCOMPONENT ~Choose a class for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+OUTER_SET include_saves = 1
+OUTER_SET auraclass = 3
+INCLUDE ~%MOD_FOLDER%/lib/aura_resources.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_kit.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_items.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_bg2.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/journal.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/crossmod.tpa~
+
+BEGIN ~Artificer (Bard, EEex required)~
+FORCED_SUBCOMPONENT ~Choose a class for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~EEex_Actionbar.lua~ ~This component requires EEEx.~ //EEX required!
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+OUTER_SET include_saves = 1
+OUTER_SET auraclass = 4
+INCLUDE ~%MOD_FOLDER%/lib/aura_resources.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_kit.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_items.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/aura_bg2.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/journal.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/crossmod.tpa~
+
+BEGIN ~BG2 Default (The Artisan)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/portraits/Aura2L.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/portraits/Aura2M.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/portraits/Aura2S.bmp~ ~override/Aura2S.bmp~
+BEGIN ~BG1 Default (The Artisan)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/portraits/AuraL.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/portraits/AuraM.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/portraits/AuraS.bmp~ ~override/Aura2S.bmp~
+BEGIN ~Alternate 1 (Omar Diaz)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/alt-portrait/omardiaz/AuraL.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/omardiaz/AuraM.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/omardiaz/AuraS.bmp~ ~override/Aura2S.bmp~
+BEGIN ~Alternate 2 (Pantalion)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/alt-portrait/pantalion/AuraL.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/pantalion/AuraM.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/pantalion/AuraS.bmp~ ~override/Aura2S.bmp~
+BEGIN ~Alternate 3 (The Artisan, edited from Neverwinter Nights)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/alt-portrait/nwnstyle/AuraL.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/nwnstyle/AuraM.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/nwnstyle/AuraS.bmp~ ~override/Aura2S.bmp~
+BEGIN ~Original BG1 Default (Lava Del'Vortel)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/alt-portrait/lavabg1/AuraL.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/lavabg1/AuraM.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/lavabg1/AuraS.bmp~ ~override/Aura2S.bmp~
+BEGIN ~Second BG1 Default (Lava Del'Vortel)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/alt-portrait/originalbg1/AuraL.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/originalbg1/AuraM.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/originalbg1/AuraS.bmp~ ~override/Aura2S.bmp~
+BEGIN ~Original BG2 Default (The Artisan)~
+FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+		COPY ~%MOD_FOLDER%/alt-portrait/originalbg2/AuraL.bmp~ ~override/Aura2L.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/originalbg2/AuraM.bmp~ ~override/Aura2M.bmp~
+		COPY ~%MOD_FOLDER%/alt-portrait/originalbg2/AuraS.bmp~ ~override/Aura2S.bmp~
+  
+BEGIN ~ADD-ON: Import BG1 upgrades into BG2~
+  REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+  REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
+INCLUDE ~%MOD_FOLDER%/lib/import.tpa~

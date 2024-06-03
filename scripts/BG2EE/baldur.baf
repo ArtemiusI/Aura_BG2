@@ -1,0 +1,10 @@
+IF
+	Gender(Player1,FEMALE)
+	!Alignment(Player1,MASK_EVIL)
+	CheckStatGT(Player1,9,CHR)
+	CheckStatGT(Player1,11,INT)
+	Global("C0AuraMatch","GLOBAL",0)
+THEN
+  RESPONSE #100
+	SetGlobal("C0AuraMatch","GLOBAL",1)
+END

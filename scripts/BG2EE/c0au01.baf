@@ -1,0 +1,122 @@
+IF
+	Global("Begin","MYAREA",0)
+THEN
+	RESPONSE #100
+	SetInterrupt(FALSE)
+	ActionOverride("C0Auin3",MakeGlobalOverride())
+	ActionOverride("C0AUIN3",SetGlobal("Standby","LOCALS",1))
+	ChangeEnemyAlly("C0auin3",NEUTRAL)
+	AmbientActivate("Portal1",FALSE)
+	SetGlobal("Begin","MYAREA",1)
+	SetGlobal("C0AutoCreated", "GLOBAL", 1)
+	SetInterrupt(TRUE)
+END
+
+IF
+    !TimeOfDay(MORNING)
+	!TimeOfDay(NIGHT)
+	IsActive("c0akoko2")
+THEN
+    RESPONSE #100
+	AmbientActivate("c0auzzz",FALSE)
+    Deactivate("c0akoko2")
+	SmallWait(5)
+	Activate("c0akoko")
+	Continue()
+END
+
+IF
+	!Global("C0AuraImportOniMask","GLOBAL",1)
+	!Global("C0AuraImportOniMask","GLOBAL",-1)
+THEN
+    RESPONSE #100
+	SetGlobal("C0AuraImportOniMask","GLOBAL",-1)
+	AmbientActivate("c0amaskp",FALSE)
+    Deactivate("Infopoint11")
+	Continue()
+END
+
+IF
+    !TimeOfDay(MORNING)
+	!TimeOfDay(NIGHT)
+	IsActive("c0akoko2")
+THEN
+    RESPONSE #100
+	AmbientActivate("c0auzzz",FALSE)
+    Deactivate("c0akoko2")
+	SmallWait(5)
+	Activate("c0akoko")
+	Continue()
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",1)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AUTT05",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",2)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AUTT06",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",3)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AUTT07",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",4)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AUTT08",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",5)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AUTT09",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",6)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AUTT10",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",7)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AUTT11",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END
+
+IF
+  Global("C0AuraCraftItem","C0AU01",8)
+  Global("C0AuraFinishedCrafting","GLOBAL",1)
+THEN RESPONSE #100
+  ActionOverride("CraftForge",DestroyAllEquipment())
+  GiveItemCreate("C0AJANXB",Player1,1,0,0)
+  ActionOverride("C0AURA",StartDialogueNoSet([PC]))
+END

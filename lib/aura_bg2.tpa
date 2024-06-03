@@ -1,0 +1,3629 @@
+COPY ~%MOD_FOLDER%/bams/BG2~ ~override~
+COPY ~%MOD_FOLDER%/items/BG2~ ~override~
+COPY ~%MOD_FOLDER%/spells/BG2~ ~override~
+
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// ANIMATIONS ///////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+ACTION_IF NOT FILE_EXISTS ~MGIRA1.BAM~ THEN BEGIN
+COPY ~%MOD_FOLDER%/animations/BG2/keg~ ~override~
+END
+
+ACTION_IF NOT FILE_EXISTS ~MGIRA1.BAM~ THEN BEGIN
+COPY ~%MOD_FOLDER%/animations/BG2/golem_iron~ ~override~
+END
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY aura_bg2_anims_Exxx BEGIN
+    ~snow_hag~ => ~C0_SNOW_HAG~
+    ~giant_earth_elemental~ => ~C0_GIANT_EARTH_ELEMENTAL~
+    ~golem_iron_small~ => ~C0_GOLEM_IRON_SMALL~
+    ~mithril_golem~ => ~C0_MITHRIL_GOLEM~
+    ~adamantite_golem~ => ~C0_ADAMANTITE_GOLEM~
+    ~wyvern~ => ~C0_WYVERN~
+  END
+  ACTION_PHP_EACH aura_bg2_anims_Exxx AS folder => symbol BEGIN
+    ACTION_BASH_FOR ~%MOD_FOLDER%/animations/BG2/%folder%~ ~.+\.bam~ ~%MOD_FOLDER%/animations/BG2/%folder%~ ~.+\.bmp~ BEGIN
+      COPY ~%BASH_FOR_FILESPEC%~ ~override~
+    END
+    LAF FIND_FREE_ANIM_SLOT INT_VAR slotMin = 0xE000 RET slot END
+    LAF TO_HEX_NUMBER INT_VAR value = slot minDigits = 4 RET hexNumber END
+    COPY ~%MOD_FOLDER%/animations/BG2/%folder%/Exxx.ini~ ~override/%hexNumber%.ini~
+    OUTER_SET EVAL ~slot_%folder%~ = slot   // save animation slot number for later
+    APPEND ~ANIMATE.IDS~ ~0x%hexNumber% %symbol%~
+END
+//AUDIO
+
+LAF HANDLE_AUDIO END
+
+DEFINE_PATCH_FUNCTION ~GET_2DA_ROW~
+	INT_VAR
+		starting_row=0
+		numcolumns=0
+		match_column=0
+		found_it=0
+	STR_VAR
+		match=~DEFA~
+	RET
+		numcols
+		matched
+BEGIN
+		COUNT_2DA_ROWS numcolumns numrows
+		FOR (i = starting_row; i < numrows; ++i) BEGIN
+			READ_2DA_ENTRY i match_column numcolumns string_to_match
+			PATCH_IF (~%string_to_match%~ STRING_EQUAL_CASE ~%match%~) BEGIN
+				matched = i
+				found_it = 1
+				i = numrows
+
+			END
+		END
+		numcols = numcolumns
+		PATCH_IF (found_it = 0) BEGIN
+			PATCH_FAIL ~GET_2DA_ROW: Could not find a row that contains %match% in column %match_column%.~
+		END
+END
+	
+ADD_MUSIC ~C0AUROM~ ~%MOD_FOLDER%/music/C0AUROM.mus~
+COPY ~%MOD_FOLDER%/music/C0AUROMa.acm~ ~MUSIC/C0AUROM/C0AUROMa.acm~
+
+COPY_EXISTING ~SONGLIST.2da~ ~override~
+	LPF GET_2DA_ROW INT_VAR numcolumns=3 match_column=2 STR_VAR match=~C0AUROM.mus~ RET therow=matched END
+	READ_2DA_ENTRY therow 0 3 ~c0au01song~
+
+	OUTER_SET C0AUROM = c0au01song
+
+ADD_MUSIC ~C0AU01M~ ~%MOD_FOLDER%/music/C0AU01M.mus~
+COPY ~%MOD_FOLDER%/music/C0AU01Ma.acm~ ~MUSIC/C0AU01M/C0AU01Ma.acm~
+
+COPY_EXISTING ~SONGLIST.2da~ ~override~
+	LPF GET_2DA_ROW INT_VAR numcolumns=3 match_column=2 STR_VAR match=~C0AU01M.mus~ RET therow=matched END
+	READ_2DA_ENTRY therow 0 3 ~c0au01song2~
+
+	OUTER_SET C0AU01M = c0au01song2
+
+//AREAS
+
+COPY ~%MOD_FOLDER%/areas~ ~override~
+
+COPY_EXISTING c0au01.are override
+ LPF fj_are_structure 
+ INT_VAR
+  fj_song_day = c0au01song2
+  fj_song_night = c0au01song2
+ STR_VAR
+  fj_structure_type = songs
+ END
+
+// Change Slums District
+
+COPY_EXISTING ar0402.are override
+ LPF fj_are_structure 
+  INT_VAR
+  fj_type = 2 // travel
+  fj_box_left = 60
+  fj_box_top = 294
+  fj_box_right = 109
+  fj_box_bottom = 403
+  fj_cursor_idx = 28
+  fj_flags        = 772  // party required, NPCs can't pass
+  fj_alt_x = 130
+  fj_alt_y = 367
+  fj_vertex_0 = 109 + (327 << 16)
+  fj_vertex_1 = 105 + (362 << 16)
+  fj_vertex_2 = 104 + (403 << 16)
+  fj_vertex_3 = 60 + (364 << 16)
+  fj_vertex_4 = 77 + (294 << 16)
+ STR_VAR
+  fj_structure_type = region
+  fj_name = C0AuraHome
+  fj_destination_area = C0AU01
+  fj_destination_name = Exit01
+ END
+ LPF fj_are_structure INT_VAR
+  fj_loc_x = 130
+  fj_loc_y = 367
+  fj_orientation = 12 // facing direction (0-15 where 0=south, 4=west, 8=north, 12=east)*;
+ STR_VAR
+  fj_structure_type = entrance
+  fj_name = C0AuraHome
+ END
+
+// map icon index in mapicons.bam
+ACTION_IF GAME_IS ~eet~ BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_icons BEGIN 10 => 179 END
+END ELSE ACTION_IF GAME_IS ~bg2ee~ BEGIN
+  INCLUDE ~%MOD_FOLDER%/Worldmap/add_map_icons_ee.tpa~
+  LAF ADD_MAP_ICONS_EE STR_VAR path_to_icons = EVAL ~%MOD_FOLDER%/Worldmap/icon/icon.bam~ patch_to_pvrz = EVAL ~%MOD_FOLDER%/Worldmap/icon~ RET new_icon_index END
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_icons BEGIN 10 => ~%new_icon_index%~ END
+  STRING_SET 23084 ~Hours~ //Traveling Hours -> Hours
+  STRING_SET 5684 ~Unreachable~ //Destination Unreachable -> Unreachable
+END ELSE BEGIN //bg2, bgt
+  INCLUDE ~%MOD_FOLDER%/Worldmap/add_map_icons.tpa~
+  LAF ADD_MAP_ICONS STR_VAR path_to_icons = EVAL ~%MOD_FOLDER%/Worldmap/icon/icon.bam~ RET new_icon_index END
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_icons BEGIN 10 => ~%new_icon_index%~ END
+END
+
+// patch WMP using TBL files
+INCLUDE ~%MOD_FOLDER%/Worldmap/add_worldmap_tbl.tpa~
+LAF ADD_WORLDMAP_TBL
+  INT_VAR
+  verbose = 0
+  inclSv = include_saves
+  add_x = wmp_xCoord_SoA
+  add_y = wmp_yCoord_SoA
+  patch_bp_files = 1
+  patch_mastarea = 1
+  STR_VAR
+  path_to_areas = EVAL ~%MOD_FOLDER%/Worldmap/areas_bg2.tbl~
+  path_to_areas_bp = EVAL ~%MOD_FOLDER%/Worldmap/areas.tbl~
+  path_to_links = EVAL ~%MOD_FOLDER%/Worldmap/links.tbl~
+  path_to_trans = EVAL ~%MOD_FOLDER%/tra/%LANGUAGE%/worldmap.tra~
+  icons_table = remapped_icons
+END
+
+// Journal
+ADD_JOURNAL EXISTING TITLE (#74427) @1 USING ~%MOD_FOLDER%/tra/english/BG2/journal.tra~
+ADD_JOURNAL TITLE (~Planeswalker~) @2 USING ~%MOD_FOLDER%/tra/english/BG2/journal.tra~
+LOAD_TRA ~%MOD_FOLDER%/tra/%LANGUAGE%/BG2/journal.tra~
+OUTER_SET %Aura_Quest1_1% = RESOLVE_STR_REF (@1)
+OUTER_SET %Aura_Quest2_1% = RESOLVE_STR_REF (@2)
+LOAD_TRA ~%MOD_FOLDER%/tra/%LANGUAGE%/BG2/setup.tra~
+
+COMPILE ~%MOD_FOLDER%/dialogue/BG2EE/journal.d~
+
+///////////////
+// CREATURES //
+///////////////
+
+COPY ~%MOD_FOLDER%/spells/pyromancer/2da~ ~override~
+COPY ~%MOD_FOLDER%/spells/pyromancer/spells~ ~override~
+LAF ADD_KIT_EX
+  INT_VAR
+    // Mage	= 1
+	// Fighter = 2
+	// Cleric = 3
+	// Thief = 4
+	// Bard = 5
+	// Paladin = 6
+	// Fighter/Mage = 7
+	// Fighter/Cleric = 8
+	// Fighter/Thief = 9
+	// Fighter/Mage/Thief = 10
+	// Druid = 11
+	// Ranger = 12
+	// Mage/Thief = 13
+	// Cleric/Mage = 14
+	// Cleric/Thief = 15
+	// Fighter/Druid = 16
+	// Fighter/Mage/Cleric = 17
+	// Cleric/Ranger = 18
+	// Sorcerer = 19
+	// Monk = 20
+	// Shaman = 21
+    kit_class     = 4
+	
+	visible = 0
+	
+    mixed         = RESOLVE_STR_REF(~Pyromancer~)
+	
+    lower         = RESOLVE_STR_REF(~pyromancer~)
+	
+    help          = RESOLVE_STR_REF(~PYROMANCER: This type of mage does not specialize in a particular school, but rather in a specific type of element. Pyromancers use the power of the Elemental Plane of Fire, commanding powerful flames through sheer force of will, although this training has left them less adept at all other forms of magic.
+  
+Advantages:
+– May cast one additional spell per level.
+– +50% bonus to all fire damage dealt.
+– Gains an additional +2% Fire Resistance per level gained to a maximum of +30%.
+– Gains the following spells as mage spells: Fiery Missile, Flame Blade, Lower Fire Resistance, Wall of Fire, Flame Strike, Sol's Searing Orb, Fire Storm, Blazing Inferno, Conflagration
+
+Disadvantages:
+– -50% penalty to all acid, cold, electrical and magical damage dealt.
+– -10% penalty to arcane spell duration.
+– Incurs a -2% penalty to Cold Resistance per level gained to a maximum of -30%.~)
+	
+    briefdesc     = RESOLVE_STR_REF(~PYROMANCER: This type of mage does not specialize in a particular school, but rather in a specific type of element. Pyromancers use the power of the Elemental Plane of Fire, commanding powerful flames through sheer force of will, although this training has left them less adept at all other forms of magic.~)
+	
+	// fallen = 0
+	
+  STR_VAR
+    kit_name      = ~C0PYROM~
+	
+    // unusable      = ~0x00004000~
+    // clasweap      = ~1 1 1 1 1 1 1 1~
+	//                                       T   S           F   Q             S S
+	//                                       W   C           L   U             W I
+	//                               B L S   O   I   W       A   A             O N
+	//                               A O H   H   M   A       I   R C   S       R G
+	//               L S           M S N O   A   I   R     H L   T R L H     2 D L 2
+	//               _ _       S   I T G R   N K T D H     A M   E O O O     H A E W
+	//               S S   S B P   S A S T   D A A A A   S L O   R S N R   S A N W E
+	//               W W   P L I   S R W S   E T R G M C P B R M S S G T D L N D E A
+	//               O O B E U K A I D O W A D A W G M L E E N A T B B B A I D S A P
+	//               R R O A N E X L S R O X S N A E E U A R I C A O O O R N E H P O
+	//               D D W R T D E E W D R E W A K R R B R D N E F W W W T G D I O N
+    // weapprof      = ~1 1 1 0 1 0 0 1 0 1 1 0 0 1 1 1 0 1 0 0 0 0 1 1 0 1 1 1 1 1 1 1~
+	
+    // abclasrq      = ~0 9 0 15 0 0~
+	
+    // abclsmod      = ~0 0 0 0 0 0~
+	
+    // abdcdsrq      = ~0 0 0 = 0 =~
+	
+    // abdcscrq      = ~15 0 0 0 0 0~
+	
+	//               L L L N N N C C C
+	//               G N E G N E G N E
+    // alignmnt      = ~0 1 1 0 1 1 0 1 1~
+	
+    // dualclas      = ~1 1 1 0 0 0~
+	
+    // luabbr        = ~C0AURA~
+	
+    // stweap        = ~CHAN09 * HELM07 BAG20 RING06 RING31 * BOOT01 AMUL19 BRAC16 BELT06 AROW11,40 BULL03,40 BOLT06,40 POTN52,5 POTN4,2 POTN14,5 HAM07 SW1H27 STAF08~
+	
+    clab_path     = ~override/C0PYROM.2da~
+	
+    // kittable      = ~~
+	
+	// base_class = 
+	
+	// clab_base_f = 
+	
+	// clab_base_p = 
+	
+	// clab_base_d = 
+	
+	// clab_base_r = 
+	
+	// clab_base_m = 
+	
+	// clab_base_t = 
+	
+    // clsrcreq      = ~1 1 1 1 1 1 1~
+	
+    // clswpbon      = ~0 0 5~
+	
+    // hpclass       = ~HPWIZ~
+	
+    // numwslot      = ~3~
+	
+    // clascolr = ~27 136 119 21 187~
+	
+	// clasiskl = ~0 0 0 0 0 0 0~
+	
+	// clasthac = ~0~
+	
+	// thiefscl = ~100 100 100 100 100 100 0 0~
+	
+	// backstab = ~0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
+	
+	// sneakatt = ~0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
+	
+	// crippstr = ~0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
+	
+	// thiefskl = ~40 20~
+	
+	// traplimt = ~6~
+	
+    // bdstweap      = ~CHAN04 SHLD04 HELM01 * RING06 * * * * BRAC09 BELT02 AROW02,40 BULL02,40 BOLT02,40 POTN08,5 POTN17,3 POTN12,1 * SW1H05 HAMM02~
+  RET
+    kit_id
+END
+
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0011.PRO~ ~C0 FIERY MISSILE 1~
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0012.PRO~ ~C0 FIERY MISSILE 2~
+COPY_EXISTING ~C0PY0012.PRO~ ~OVERRIDE/C0PY0013.PRO~
+COPY_EXISTING ~C0PY0012.PRO~ ~OVERRIDE/C0PY0014.PRO~
+COPY_EXISTING ~C0PY0012.PRO~ ~OVERRIDE/C0PY0015.PRO~
+ADD_PROJECTILE ~OVERRIDE/C0PY0013.PRO~ ~C0 FIERY MISSILE 3~
+ADD_PROJECTILE ~OVERRIDE/C0PY0014.PRO~ ~C0 FIERY MISSILE 4~
+ADD_PROJECTILE ~OVERRIDE/C0PY0015.PRO~ ~C0 FIERY MISSILE 5~
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0041.PRO~ ~C0 WALL OF FIRE~
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0071.PRO~ ~C0 FIRE STORM~
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0081.PRO~ ~C0 BLAZING INFERNO~
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS2.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY002
+	END
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS3.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY003
+	END
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS4.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY004
+	END
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS5.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY005
+	END
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS6.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY006
+	END
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS7.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY007
+	END
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS8.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY008
+	END
+
+COPY_EXISTING ~C0PYLS1.SPL~ ~OVERRIDE/C0PYLS9.SPL~
+	LPF ALTER_EFFECT
+		STR_VAR
+			resource = C0PY009
+	END
+
+// FIRE MISSILE
+COPY_EXISTING ~C0PY001.spl~ OVERRIDE
+		LPF	ADD_SPELL_EFFECT
+			INT_VAR
+				insert_point = 0
+				opcode = 324
+				target = 2
+				parameter2 = FIRE
+				duration = 1
+			STR_VAR
+				resource = EVAL ~%SOURCE_RES%~
+		END	
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		header = 1
+		projectile = C0PY0011
+END
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		header = 2
+		projectile = C0PY0012
+END
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		header = 3
+		projectile = C0PY0013
+END
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		header = 4
+		projectile = C0PY0014
+END
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		header = 5
+		projectile = C0PY0015
+END
+SAY NAME1 ~Fiery Missile~
+SAY UNIDENTIFIED_DESC ~Fiery Missile
+(Evocation)
+
+Level: 1
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: None
+
+Fiery Missile creates up to five missiles of flame that dart forth from the pyromancer's fingertip and unerringly strike their target, which must be a creature of some sort. Each missile inflicts 1d4+1 points of damage. For every two extra levels of experience, the pyromancer gains an additional missile—she has two at 3rd level, three at 5th level, four at 7th level, and a maximum of five missiles at 9th level.~
+
+// FLAME BLADE
+COPY_EXISTING ~SPPR206.spl~ ~override/C0PY002.spl~
+LPF ALTER_EFFECT INT_VAR match_opcode = 111 STR_VAR resource = c0kfblad END
+WRITE_SHORT 0x1C 1
+SAY NAME1 ~Flame Blade: Modified~
+SAY UNIDENTIFIED_DESC ~Flame Blade
+(Evocation)
+
+Level: 2
+Sphere: Elemental Fire
+Range: 0
+Duration: 4 rounds + 1 round/level
+Casting Time: 4
+Area of Effect: The caster
+Saving Throw: None
+
+With this modified version of the Flame Blade spell, the caster causes a blazing ray of red-hot fire to spring forth from <PRO_HISHER> hand. This blade-like ray is wielded as though the wielder is proficient in long swords, but may attack from an extended range. If the caster successfully hits with the flame blade, the creature struck suffers 1d4 points of slashing damage plus 4 points of fire damage, healing the wielder for the fire damage dealt, with a further 2 fire damage if the creature is undead. The blade strikes as a +1 weapon at 6th level, +2 at 9th level, and +3 at 13th level, +4 at 16th level, and +5 at 19th level.~
+
+COPY_EXISTING ~C0KFBLAD.ITM~ OVERRIDE
+SAY NAME2 ~Modified Flame Blade~
+
+// LOWER FIRE RESISTANCE
+COPY_EXISTING ~C0PY003.spl~ OVERRIDE
+	LPF ALTER_EFFECT INT_VAR header = 0 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 30%~) END
+	LPF ALTER_EFFECT INT_VAR header = 1 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 32%~) END
+	LPF ALTER_EFFECT INT_VAR header = 2 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 34%~) END
+	LPF ALTER_EFFECT INT_VAR header = 3 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 36%~) END
+	LPF ALTER_EFFECT INT_VAR header = 4 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 38%~) END
+	LPF ALTER_EFFECT INT_VAR header = 5 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 40%~) END
+	LPF ALTER_EFFECT INT_VAR header = 6 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 42%~) END
+	LPF ALTER_EFFECT INT_VAR header = 7 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 44%~) END
+	LPF ALTER_EFFECT INT_VAR header = 8 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 46%~) END
+	LPF ALTER_EFFECT INT_VAR header = 9 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 48%~) END
+	LPF ALTER_EFFECT INT_VAR header = 10 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 50%~) END
+	LPF ALTER_EFFECT INT_VAR header = 11 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 52%~) END
+	LPF ALTER_EFFECT INT_VAR header = 12 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 54%~) END
+	LPF ALTER_EFFECT INT_VAR header = 13 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 56%~) END
+	LPF ALTER_EFFECT INT_VAR header = 14 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 58%~) END
+	LPF ALTER_EFFECT INT_VAR header = 15 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 60%~) END
+	LPF ALTER_EFFECT INT_VAR header = 16 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 62%~) END
+	LPF ALTER_EFFECT INT_VAR header = 17 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 64%~) END
+	LPF ALTER_EFFECT INT_VAR header = 18 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 66%~) END
+	LPF ALTER_EFFECT INT_VAR header = 19 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 68%~) END
+	LPF ALTER_EFFECT INT_VAR header = 20 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 70%~) END
+	LPF ALTER_EFFECT INT_VAR header = 21 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 72%~) END
+	LPF ALTER_EFFECT INT_VAR header = 22 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 74%~) END
+	LPF ALTER_EFFECT INT_VAR header = 23 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 76%~) END
+	LPF ALTER_EFFECT INT_VAR header = 24 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 78%~) END
+	LPF ALTER_EFFECT INT_VAR header = 25 match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Fire Resistance Lowered by 80%~) END
+SAY NAME1 ~Lower Fire Resistance~
+SAY UNIDENTIFIED_DESC ~Lower Fire Resistance
+(Alteration)
+
+Level: 5
+Range: Visual range of the caster
+Duration: 2 turns
+Casting Time: 5
+Area of Effect: 1 creature
+Saving Throw: None
+
+Using this spell, a pyromancer can reduce the Fire Resistance of a target creature by 20% plus 2% per experience level of the caster. There is no Saving Throw, and the target's Magic Resistance, if any, does not affect this spell.~
+
+// WALL OF FIRE
+COPY_EXISTING ~C0PY004.spl~ OVERRIDE
+		LPF	ADD_SPELL_EFFECT
+			INT_VAR
+				insert_point = 0
+				opcode = 324
+				target = 2
+				parameter2 = FIRE
+				duration = 1
+			STR_VAR
+				resource = EVAL ~%SOURCE_RES%~
+		END
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		projectile = C0PY0041
+END
+SAY NAME1 ~Wall of Fire~
+SAY UNIDENTIFIED_DESC ~Wall of Fire
+(Invocation)
+
+Level: 4
+Sphere: Elemental Fire
+Range: Visual range of the caster
+Duration: 1 turn
+Casting Time: 7
+Area of Effect: 8 ft. long, 2 ft. wide wall
+Saving Throw: None
+
+When cast, flames erupt in a line formation at the target point, briefly slowing the movement rate and dealing 1d4 points of fire damage plus 1 point per level of the caster to all creatures within the spell's radius. Creatures will take damage once per round regardless of when they enter the area of effect, but cannot suffer damage more than once per round.~
+
+// FLAME STRIKE
+COPY_EXISTING ~C0PY005.spl~ OVERRIDE
+SAY NAME1 ~Flame Strike~
+SAY UNIDENTIFIED_DESC ~Flame Strike
+(Evocation)
+
+Level: 5
+Sphere: Combat
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 8
+Area of Effect: 5-ft. radius
+Saving Throw: 1/2
+
+When the priest casts Flame Strike, a vertical column of fire roars downward onto a victim chosen by the caster. The spell deals 6d8 points of fire damage to the target and any nearby victims, with a Save vs. Spell for half damage.~
+
+// SOL'S SEARING ORB
+COPY_EXISTING ~C0PY006.spl~ OVERRIDE
+SAY NAME1 ~Sol's Searing Orb~
+SAY UNIDENTIFIED_DESC ~Sol's Searing Orb
+(Invocation)
+
+Level: 6
+Sphere: Sun
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 6
+Area of Effect: 1 creature
+Saving Throw: Special
+
+This spell allows the caster to hurl a brilliant, searing flash at a target. When it hits, it explodes in a flash of light, doing 6d12 points of fire damage to the target and blinding <PRO_HIMHER> for 3 rounds if a Save vs. Spell is failed. If the Saving Throw is made, the target only takes half damage and is not blinded. Undead creatures are particularly vulnerable to this spell, taking double damage.~
+
+// FIRE STORM
+COPY_EXISTING ~C0PY007.spl~ ~override~
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		projectile = C0PY0071
+END
+SAY NAME1 ~Fire Storm~
+SAY UNIDENTIFIED_DESC ~Fire Storm
+(Evocation)
+
+Level: 7
+Range: Visual range of the caster
+Duration: 8 rounds
+Casting Time: 9
+Area of Effect: 15-ft. radius
+Saving Throw: 1/2
+
+This spell causes the area of effect to be covered in roaring flames, dealing 2d8 points of damage plus 1 per level of the caster to anything within the area of effect each round. Victims are allowed a Save vs. Spell each round for half damage.~
+
+// BLAZING INFERNO
+COPY_EXISTING ~C0PY008.spl~ OVERRIDE
+		LPF	ADD_SPELL_EFFECT
+			INT_VAR
+				insert_point = 0
+				opcode = 326
+				target = 2
+				parameter2 = FIRE2
+				duration = 1
+			STR_VAR
+				resource = C0PY008A
+		END
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		projectile = C0PY0081
+END
+SAY NAME1 ~Blazing Inferno~
+SAY UNIDENTIFIED_DESC ~Blazing Inferno
+(Evocation)
+
+Level: 8
+Sphere: Elemental Fire
+Range: Visual range of the caster
+Duration: 5 rounds
+Casting Time: 9
+Area of Effect: 20-ft. radius
+Saving Throw: 1/2
+
+"There is no greater pain known than the searing flames of Hell."
+
+This powerful spell unleashes a scorching blast of fire from the Lower Plane of Avernus in the target area of effect, dealing 12d10 unmitigated fire damage (Save vs. Breath Weapons at -4 for half damage), additionally reducing Armor Class by 8 and resistance to physical damage by 40% for 5 rounds.~
+
+// CONFLAGRATION
+
+DEFINE_ACTION_FUNCTION cd_new_portrait_icon
+  INT_VAR string = 0
+  STR_VAR bam_file = "****"
+  RET     icon
+  BEGIN
+
+  COPY_EXISTING ~statdesc.2da~ ~override~
+    COUNT_2DA_ROWS 3 count
+    READ_2DA_ENTRY (count - 1) 0 3 icon
+    SET icon += 1
+
+  APPEND ~statdesc.2da~ ~%icon% %string% %bam_file%~
+
+END
+
+LAF cd_new_portrait_icon INT_VAR string = RESOLVE_STR_REF(~Burning~) STR_VAR bam_file = c0kicon1 RET c0kicon1 = icon END
+
+COPY_EXISTING ~C0PY009.spl~ OVERRIDE
+		LPF	ADD_SPELL_EFFECT
+			INT_VAR
+				insert_point = 0
+				opcode = 324
+				target = 2
+				parameter2 = FIRE
+				duration = 1
+			STR_VAR
+				resource = EVAL ~%SOURCE_RES%~
+		END
+  LPF ALTER_EFFECT
+    INT_VAR
+      match_opcode = 142
+	  parameter2 = c0kicon1
+END
+SAY NAME1 ~Conflagration~
+SAY UNIDENTIFIED_DESC ~Conflagration
+(Evocation)
+
+Level: 9
+Sphere: Elemental Fire
+Range: Visual range of the caster
+Duration: 1 round/level
+Casting Time: 9
+Area of Effect: 1 creature
+Saving Throw: Special
+
+"Burn, burn, burn."
+
+A single creature shall be set aflame with this hideous spell, suffering 5d6 points of damage per round, with no saving throw. The spell lasts 1 round per level of the caster. Anybody within 10 feet of the target will also suffer 5d6 pts. of damage, but are allowed a Saving Throw vs. Spells to halve the damage.~
+
+COPY_EXISTING ~C0KROBE1.ITM~ OVERRIDE
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0PYROM~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Pyromancer~)
+END
+SAY NAME2 ~Robe of Eminent Flames~
+SAY DESC ~The robe of Azra Velnath Dilvaalhi, the elder sister of Karihi. Robes such as these were reserved solely for potential leaders of the family, and as such few such robes exist – this one, perhaps, is the last of its kind since the annihilation of House Dilvaalhi. Its tremendous magical power, drawing from the pure element of fire, makes it dangerous if not lethal for anyone but a pyromancer to wear.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: 4
+– Fire Resistance: +30%
+– Casting Speed: +3
+– All fire and magic fire damage inflicted by the character is increased by 40%.
+– Flaming Shroud: When struck by an attack within 5-ft. of the wearer, inflict 1d8+2 damage to the attacker.
+
+Weight: 6~
+
+COPY_EXISTING ~C0KRING1.ITM~ OVERRIDE
+SAY NAME2 ~Karihi's Signet Ring~
+SAY DESC ~This gold ring, inlaid with a fire opal carved into a mysterious insignia, is Karihi's birthright, signifying her as the nobility of some faraway land.
+
+STATISTICS:
+
+Equipped abilities:
+– Vocalize
+– Can cast one extra wizard spell of each level
+
+Weight: 0~
+
+COPY_EXISTING ~C0KSTAF1.ITM~ OVERRIDE
+  LPF ALTER_ITEM_HEADER
+	INT_VAR
+		header = 1
+		projectile = C0PY0011
+END
+SAY NAME1 ~Quarterstaff~
+SAY UNIDENTIFIED_DESC ~The simplest and humblest of staff weapons, the quarterstaff is a length of wood ranging six to nine feet in length. High-quality quarterstaves are made of stout oak and are shod with metal at both ends. The quarterstaff must be wielded with both hands.
+
+STATISTICS:
+
+Damage: 1d6 (crushing)
+Speed Factor: 4
+Proficiency Type: Quarterstaff
+Type: Two-handed
+Requires:
+ 5 Strength
+
+Weight: 4~
+SAY NAME2 ~Staff of Blazing Fire +3~
+SAY DESC ~This staff is decorated with magical symbols and topped with a hot, glowing gem that burns with the color and intensity of a wild flame. While ornamental in appearance, its enchantments make it a serviceable weapon in combat.
+
+STATISTICS:
+
+THAC0: +3
+Damage (melee): 1d6+3, 2d8 fire
+Damage (ranged): 3d6+6 fire
+Damage type: crushing
+Speed Factor: 2
+Proficiency Type: Quarterstaff
+Type: Two-handed
+Requires:
+ 5 Strength
+
+Weight: 4~
+
+// SINGLE-CLASS ARTIFICER
+ACTION_IF (auraclass = 1) THEN BEGIN
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aura2.cre~ ~override/C0Aura2.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura2~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura2~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Eveline Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, adapting to the foreign culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+  
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aura25.cre~ ~override/C0Aura25.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura25~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura25~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Eveline Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, adapting to the foreign culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+END
+
+// ILLUSIONIST / ARTIFICER
+ACTION_IF (auraclass = 2) THEN BEGIN
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aura2M.cre~ ~override/C0Aura2.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura2~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura2~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Evie Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, adapting to the foreign culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+  
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aur25M.cre~ ~override/C0Aura25.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura25~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura25~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Evie Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, adapting to the foreign culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+
+COPY_EXISTING ~c0aule01.itm~ ~override~
+  LPF DELETE_EFFECT
+    INT_VAR
+	  match_opcode = 145
+  END
+  LPF ALTER_EFFECT
+    INT_VAR
+	  match_opcode = 0
+	  match_parameter2 = 16
+	  parameter1 = 8
+  END
+SAY NAME1 ~Cherry-tinted Leather Armor~
+SAY NAME2 ~Cherry-tinted Leather Armor~
+SAY DESC ~This basic armor is made of thick wax or water-hardened leather. It is sturdy protection, not supple like boots or a cloak. Soft garment leathers like that would offer no more protection than common clothing. Magical enchantments have improved the protective abilities of this particular suit.
+
+Aura's custom-made leather armor is dyed a bright pinkish red color that is, according to Aura, reminiscent of Kara-Turan cherry blossoms, designed to repel stains and unpleasant odors.
+
+STATISTICS:
+
+Equipped abilities:
+- Save vs. Breath Weapons: +3
+- Spellcasting is not disabled
+
+Armor Class: 8 (10 vs. piercing and missile)
+Requires:
+ 4 Strength
+
+Weight: 10~
+  
+COPY_EXISTING ~c0aule02.itm~ ~override~
+  LPF DELETE_EFFECT
+    INT_VAR
+	  match_opcode = 145
+  END
+  LPF ALTER_EFFECT
+    INT_VAR
+	  match_opcode = 0
+	  match_parameter2 = 16
+	  parameter1 = 6
+  END
+SAY NAME1 ~Cherry-tinted Leather Armor +2~
+SAY NAME2 ~Cherry-tinted Leather Armor +2~
+SAY DESC ~This basic armor is made of thick wax or water-hardened leather. It is sturdy protection, not supple like boots or a cloak. Soft garment leathers like that would offer no more protection than common clothing. Magical enchantments have improved the protective abilities of this particular suit.
+
+Aura's custom-made leather armor is dyed a bright pinkish red color that is, according to Aura, reminiscent of Kara-Turan cherry blossoms, designed to repel stains and unpleasant odors, as well as protect from the hazards of her experiments, such as extreme heat or cold, electrical shocks, and chemical burns.
+
+STATISTICS:
+
+Equipped abilities:
+– Save vs. Breath Weapons: +3
+– Elemental Resistance: +20%
+– Spellcasting is not disabled
+
+Armor Class: 6 (8 vs. piercing and missile)
+Requires:
+ 4 Strength
+
+Weight: 10~
+END
+
+// PRIESTESS / ARTIFICER
+ACTION_IF (auraclass = 3) THEN BEGIN
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aura2P.cre~ ~override/C0Aura2.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura2~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura2~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Evie Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, adapting to the foreign culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aur25P.cre~ ~override/C0Aura25.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura25~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura25~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Evie Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, foreign to the strange culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+END
+
+// SINGLE-CLASS ARTIFICER (EEex version)
+ACTION_IF (auraclass = 4) THEN BEGIN
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aura2E.cre~ ~override/C0Aura2.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura2~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura2~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Eveline Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, adapting to the foreign culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+  
+COPY ~%MOD_FOLDER%/creatures/BG2/C0Aur25E.cre~ ~override/C0Aura25.cre~
+  SAY NAME1 ~Aura~
+  SAY NAME2 ~Aura~
+  WRITE_ASCII SCRIPT_OVERRIDE ~C0Aura25~ // override
+  WRITE_ASCII DEATHVAR ~C0Aura~ // death variable
+  WRITE_ASCII DIALOG ~C0Aura25~ // dialogue
+  WRITE_ASCII 0X34 ~Aura2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~Aura2L~ #8   //medium portrait
+  SAY BIO ~When asked about her past, AURA informs you that she was born Aurelia Minerva Eveline Glimmershine of Anchoril, Lantan—the third daughter within a large gnomish family of two elder sisters, a younger brother, and twin baby siblings. From a young age, Aura displayed a natural talent in invention and craft and was inducted by her parents to the Sambaran College of Artificers. Quickly recognized as a prodigy by her tutors, she was recommended to the most prestigous and specialized academies of Lantan to be taught the nation's most respected disciplines. Aura's interest in magic, sparked by her brother's innate arcane talents, also drove her to learn the art of runecasting. After completing her studies and reaching adulthood, Aura left home with the blessing of her family to explore various lands and pursue knowledge in the outer world. During one such travel to the Far East, she was shipwrecked and struck with amnesia, awakening under the shelter of a priestess in Mikedono, one of the major islands of Kozakura. She remained in Kozakura, adapting to the foreign culture as her memories gradually returned over the years before her guardian's death led her to leave Kozakura and return to Faerûn. During her time in Athkatla she gained the goodwill of the Jansen family and became a guest in their household, where she has continued to practice her craft. Despite this, she is eager to be back on the road, where her talents can be put to more practical uses.~
+  SAY MORALE ~Run away! Run away!~ [C0AU001]
+  SAY HAPPY ~I'm glad I decided to travel with you.~ [C0AU002]
+  SAY UNHAPPY_ANNOYED ~That was just an honest mistake... right?~ [C0AU003]
+  SAY UNHAPPY_SERIOUS ~I can't believe anyone could be this terrible.~ [C0AU004]
+  SAY UNHAPPY_BREAKING_POINT ~That's... that's enough. I can't deal with this anymore. I'm leaving.~ [C0AU005]
+  SAY LEADER ~Umm... okay. I'll try my best!~ [C0AU006]
+  SAY TIRED ~Can we please take a break? I want tea and biscuits...~ [C0AU007]
+  SAY BORED ~Don't worry, I'll just work on my next invention while you do, uh, nothing I guess.~ [C0AU008]
+  SAY BATTLE_CRY1 ~I didn't want to have to fight!~ [C0AU009]
+  SAY BATTLE_CRY2 ~Ready, aim and fire!~ [C0AU010]
+  SAY BATTLE_CRY3 ~I never miss!~ [C0AU011]
+  SAY BATTLE_CRY4 ~You're not getting away from me!~ [C0AU012]
+  SAY BATTLE_CRY5 ~Okay, I got this!~ [C0AU013]
+  SAY DAMAGE ~Ow!~ [C0AU014]
+  SAY DYING ~Ah...~ [C0AU015]
+  SAY HURT ~It hurts so much...~ [C0AU016]
+  SAY AREA_FOREST ~Oh, I love the forest. It reminds me of home.~ [C0AU017]
+  SAY AREA_CITY ~These cities are so different from my homeland.~ [C0AU018]
+  SAY AREA_DUNGEON ~Careful, Muffy, there might be ghosts nearby.~ [C0AU019]
+  SAY AREA_DAY ~The sunlight's nice on my hair. See how it glitters?~ [C0AU020]
+  SAY AREA_NIGHT ~I'm not afraid of the dark. Really, I'm not!~ [C0AU021]
+  SAY SELECT_COMMON1 ~Yep?~ [C0AU022]
+  SAY SELECT_COMMON2 ~Mm-hmm?~ [C0AU023]
+  SAY SELECT_COMMON3 ~I'm listening.~ [C0AU024]
+  SAY SELECT_COMMON4 ~Need a hand?~ [C0AU025]
+  SAY SELECT_COMMON5 ~Need a gadget?~ [C0AU026]
+  SAY SELECT_COMMON6 ~Anything you need!~ [C0AU027]
+  SAY SELECT_ACTION1 ~Okay.~ [C0AU028]
+  SAY SELECT_ACTION2 ~Here I go.~ [C0AU029]
+  SAY SELECT_ACTION3 ~I'm the girl for the job.~ [C0AU030]
+  SAY SELECT_ACTION4 ~Alright!~ [C0AU031]
+  SAY SELECT_ACTION5 ~I'm on it!~ [C0AU032]
+  SAY SELECT_ACTION6 ~No problem.~ [C0AU033]
+  SAY SELECT_RARE1 ~I'll get it done with one-hundred-and-twenty percent efficency!~ [C0AU034]
+  SAY SELECT_RARE2 ~Nothing's too hard for me! Unless it's got to do with bears. Eep...~ [C0AU035]
+  SAY CRITICAL_HIT ~Ha ha! Right on target!~ [C0AU036]
+  SAY CRITICAL_MISS ~Oops! I messed that one up.~ [C0AU037]
+  SAY TARGET_IMMUNE ~Ooh, interesting. It bounced right off.~ [C0AU038]
+  SAY INVENTORY_FULL ~Hey, I'm not big enough to carry all this.~ [C0AU039]
+  SAY SPELL_DISRUPTED ~Oh, nuts and bolts! I worked hard on that!~ [C0AU040]
+  SAY SET_A_TRAP ~That's how you use your gray matter.~ [C0AU041]
+  SAY HIDDEN_IN_SHADOWS ~I'll be as quiet as a mouse.~ [C0AU042]
+  SAY PICKED_POCKET ~Huh? What's this?~ [C0AU043]
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+  
+COPY_EXISTING ~c0aule01.itm~ ~override~
+  LPF DELETE_EFFECT
+    INT_VAR
+	  match_opcode = 145
+  END
+  LPF ALTER_EFFECT
+    INT_VAR
+	  match_opcode = 0
+	  match_parameter2 = 16
+	  parameter1 = 8
+  END
+SAY NAME1 ~Cherry-tinted Leather Armor~
+SAY NAME2 ~Cherry-tinted Leather Armor~
+SAY DESC ~This basic armor is made of thick wax or water-hardened leather. It is sturdy protection, not supple like boots or a cloak. Soft garment leathers like that would offer no more protection than common clothing. Magical enchantments have improved the protective abilities of this particular suit.
+
+Aura's custom-made leather armor is dyed a bright pinkish red color that is, according to Aura, reminiscent of Kara-Turan cherry blossoms, designed to repel stains and unpleasant odors.
+
+STATISTICS:
+
+Equipped abilities:
+- Save vs. Breath Weapons: +3
+- Spellcasting is not disabled
+
+Armor Class: 8 (10 vs. piercing and missile)
+Requires:
+ 4 Strength
+
+Weight: 10~
+  
+COPY_EXISTING ~c0aule02.itm~ ~override~
+  LPF DELETE_EFFECT
+    INT_VAR
+	  match_opcode = 145
+  END
+  LPF ALTER_EFFECT
+    INT_VAR
+	  match_opcode = 0
+	  match_parameter2 = 16
+	  parameter1 = 6
+  END
+SAY NAME1 ~Cherry-tinted Leather Armor +2~
+SAY NAME2 ~Cherry-tinted Leather Armor +2~
+SAY DESC ~This basic armor is made of thick wax or water-hardened leather. It is sturdy protection, not supple like boots or a cloak. Soft garment leathers like that would offer no more protection than common clothing. Magical enchantments have improved the protective abilities of this particular suit.
+
+Aura's custom-made leather armor is dyed a bright pinkish red color that is, according to Aura, reminiscent of Kara-Turan cherry blossoms, designed to repel stains and unpleasant odors, as well as protect from the hazards of her experiments, such as extreme heat or cold, electrical shocks, and chemical burns.
+
+STATISTICS:
+
+Equipped abilities:
+– Save vs. Breath Weapons: +3
+– Elemental Resistance: +20%
+– Spellcasting is not disabled
+
+Armor Class: 6 (8 vs. piercing and missile)
+Requires:
+ 4 Strength
+
+Weight: 10~
+END
+
+
+APPEND ~pdialog.2da~
+~C0Aura        C0Aura2P             C0Aura2J			C0Aura2D~
+UNLESS ~C0Aura~
+UNLESS ~25POST~
+
+APPEND ~pdialog.2da~
+~C0Aura        C0Aura2P             C0Aura2J            C0Aura2D             C0Aur25P             C0Aur25J		C0Aur25D		C0Aura25~
+UNLESS ~C0Aura~
+IF ~25POST~
+
+APPEND ~interdia.2da~
+~C0Aura       BC0Aura2       BC0Aur25~
+UNLESS ~C0Aura~
+IF ~25FILE~
+
+COPY_EXISTING ~vakthf01.cre~ ~override/c0athf1.cre~
+WRITE_ASCII DIALOG ~c0athf1~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0athf1~  // override
+WRITE_ASCII DEATHVAR ~c0athf1~ // death variable
+SAY NAME1 ~Thug~
+SAY NAME2 ~Thug~
+
+COPY_EXISTING ~vakthf01.cre~ ~override/c0athf2.cre~
+WRITE_ASCII DIALOG ~c0athf2~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0athf2~  // override
+WRITE_ASCII DEATHVAR ~c0athf2~ // death variable
+SAY NAME1 ~Thug Leader~
+SAY NAME2 ~Thug Leader~
+
+COPY_EXISTING ~vakthf01.cre~ ~override/c0athf3.cre~
+WRITE_ASCII DIALOG ~c0athf3~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0athf3~  // override
+WRITE_ASCII DEATHVAR ~c0athf3~ // death variable
+SAY NAME1 ~Thug~
+SAY NAME2 ~Thug~
+
+COPY_EXISTING ~vakthf01.cre~ ~override/c0athf4.cre~
+WRITE_ASCII DIALOG ~c0athf4~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0athf4~  // override
+WRITE_ASCII DEATHVAR ~c0athf4~ // death variable
+SAY NAME1 ~Thug~
+SAY NAME2 ~Thug~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0au#at1.cre~ ~override~
+WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_AUTOCANNON~))
+WRITE_ASCII SCRIPT_DEFAULT ~c0au#at1~  // override
+WRITE_ASCII DEATHVAR ~c0au#at1~ // death variable
+SAY NAME1 ~Lantan Autocannon~
+SAY NAME2 ~Lantan Autocannon~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0akoko.cre~ ~override~
+WRITE_ASCII DIALOG ~c0akoko~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0akoko~  // override
+WRITE_ASCII DEATHVAR ~c0akoko~ // death variable
+SAY NAME1 ~Koko~
+SAY NAME2 ~Koko~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0akoko2.cre~ ~override~
+WRITE_ASCII DIALOG ~c0akoko~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0akoko~  // override
+WRITE_ASCII DEATHVAR ~c0akoko2~ // death variable
+SAY NAME1 ~Koko~
+SAY NAME2 ~Koko~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0apico.cre~ ~override~
+WRITE_ASCII DIALOG ~c0apico~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0apico~  // override
+WRITE_ASCII DEATHVAR ~c0apico~ // death variable
+SAY NAME1 ~Pico Jansen~
+SAY NAME2 ~Pico Jansen~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0tamia.cre~ ~override~
+WRITE_ASCII DIALOG ~c0tamia~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0tamia~  // override
+WRITE_ASCII DEATHVAR ~c0tamia~ // death variable
+SAY NAME1 ~Tamia Spindleweaver~
+SAY NAME2 ~Tamia Spindleweaver~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0korsh.cre~ ~override~
+WRITE_ASCII DIALOG ~c0korsh~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0korsh~  // override
+WRITE_ASCII DEATHVAR ~c0korsh~ // death variable
+SAY NAME1 ~Korsh "Chip" Thurgarr~
+SAY NAME2 ~Korsh "Chip" Thurgarr~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0liro.cre~ ~override~
+WRITE_ASCII DIALOG ~c0liro~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0liro~  // override
+WRITE_ASCII DEATHVAR ~c0liro~ // death variable
+SAY NAME1 ~Liro~
+SAY NAME2 ~Liro~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0liro2.cre~ ~override~
+WRITE_ASCII DIALOG ~c0liro2~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0liro2~  // override
+WRITE_ASCII DEATHVAR ~c0liro2~ // death variable
+SAY NAME1 ~Liro~
+SAY NAME2 ~Liro~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0audad.cre~ ~override~
+WRITE_ASCII DIALOG ~c0audad~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0audad~  // override
+WRITE_ASCII DEATHVAR ~c0audad~ // death variable
+SAY NAME1 ~Kairos~
+SAY NAME2 ~Kairos~
+
+COPY_EXISTING ~majan.cre~ ~override/c0aumom.cre~
+WRITE_ASCII DIALOG ~c0aumom~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0aumom~  // override
+WRITE_ASCII DEATHVAR ~c0aumom~ // death variable
+SAY NAME1 ~Gillian~
+SAY NAME2 ~Gillian~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0eridan.cre~ ~override~
+WRITE_ASCII DIALOG ~c0eridan~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0eridan~  // override
+WRITE_ASCII DEATHVAR ~c0eridan~ // death variable
+SAY NAME1 ~Eridanus~
+SAY NAME2 ~Eridanus~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0marius.cre~ ~override~
+WRITE_ASCII DIALOG ~c0marius~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0marius~  // override
+WRITE_ASCII DEATHVAR ~c0marius~ // death variable
+SAY NAME1 ~Marius~
+SAY NAME2 ~Marius~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0ajuno.cre~ ~override~
+WRITE_ASCII DIALOG ~c0ajuno~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0ajuno~  // override
+WRITE_ASCII DEATHVAR ~c0ajuno~ // death variable
+  WRITE_ASCII 0X34 ~C0AJUNO~ #8   //small portrait
+SAY NAME1 ~Juno~
+SAY NAME2 ~Juno~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0carnif.cre~ ~override~
+WRITE_ASCII DIALOG ~c0carnif~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0carnif~  // override
+WRITE_ASCII DEATHVAR ~c0carnif~ // death variable
+SAY NAME1 ~Carnifex~
+SAY NAME2 ~Carnifex~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0aluna.cre~ ~override~
+WRITE_ASCII DIALOG ~c0aluna~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0aluna~  // override
+WRITE_ASCII DEATHVAR ~c0aluna~ // death variable
+  WRITE_ASCII 0X34 ~C0ALUNA~ #8   //small portrait
+SAY NAME1 ~Luna~
+SAY NAME2 ~Luna~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0amagn.cre~ ~override~
+WRITE_ASCII DIALOG ~c0amagn~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0amagn~  // override
+WRITE_ASCII DEATHVAR ~c0amagn~ // death variable
+WRITE_ASCII DEATHVAR ~c0amagn~ // death variable
+  WRITE_ASCII 0X34 ~C0AMagn~ #8   //small portrait
+SAY NAME1 ~Caridius C. Magnussen~
+SAY NAME2 ~Caridius C. Magnussen~
+  SAY SELECT_COMMON1 ~Greetings.~  [C0A1001]
+  SAY BATTLE_CRY1 ~Such power you have never seen!~  [C0A1002]
+  SAY DAMAGE ~~  [C0A1003]
+  SAY DYING ~~  [C0A1004]
+
+COPY ~%MOD_FOLDER%/creatures/BG2/C0AREES1.cre~ ~override~
+WRITE_ASCII DIALOG ~C0AREES~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~C0AREES~  // override
+WRITE_ASCII DEATHVAR ~C0AREES~ // death variable
+  WRITE_ASCII 0X34 ~C0ARees~ #8   //small portrait
+SAY NAME1 ~Reese~
+SAY NAME2 ~Reese~
+  SAY SELECT_COMMON1 ~Well met.~  [C0A2001]
+  SAY BATTLE_CRY1 ~I'll have you dead!~  [C0A2002]
+  SAY DAMAGE ~~  [C0A2003]
+  SAY DYING ~~  [C0A2004]
+
+COPY ~%MOD_FOLDER%/creatures/BG2/C0AREES2.cre~ ~override~
+WRITE_ASCII DIALOG ~C0AREES~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~C0AREES~  // override
+WRITE_ASCII DEATHVAR ~C0AREES~ // death variable
+  WRITE_ASCII 0X34 ~C0ARees~ #8   //small portrait
+SAY NAME1 ~Reese~
+SAY NAME2 ~Reese~
+  SAY SELECT_COMMON1 ~Well met.~  [C0A2001]
+  SAY BATTLE_CRY1 ~I'll have you dead!~  [C0A2002]
+  SAY DAMAGE ~~  [C0A2003]
+  SAY DYING ~~  [C0A2004]
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0ayuki.cre~ ~override~
+WRITE_ASCII DIALOG ~c0ayuki~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0ayuki~  // override
+WRITE_ASCII DEATHVAR ~c0ayuki~ // death variable
+SAY NAME1 ~Shirayuri~
+SAY NAME2 ~Shirayuri~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0aeele.cre~ ~override~
+WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_GIANT_EARTH_ELEMENTAL~))
+WRITE_ASCII DIALOG ~c0aeele~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0aeele~  // override
+WRITE_ASCII DEATHVAR ~c0aeele~ // death variable
+SAY NAME1 ~Colossal Earth Elemental~
+SAY NAME2 ~Colossal Earth Elemental~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0awhirl.cre~ ~override~
+WRITE_ASCII DIALOG ~c0awhirl~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0awhirl~  // override
+WRITE_ASCII DEATHVAR ~c0awhirl~ // death variable
+SAY NAME1 ~Whirlwind~
+SAY NAME2 ~Whirlwind~
+
+COPY_EXISTING ~scroll01.cre~ ~override/c0evelin.cre~
+WRITE_ASCII DIALOG ~c0evelin~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0evelin~  // override
+WRITE_ASCII DEATHVAR ~c0evelin~ // death variable
+SAY NAME1 ~Madam Evelina~
+SAY NAME2 ~Madam Evelina~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0aukari.cre~ ~override~
+WRITE_ASCII DIALOG ~c0aukari~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0aukari~  // override
+WRITE_ASCII DEATHVAR ~c0aukari~ // death variable
+  WRITE_ASCII 0X34 ~C0Kari2M~ #8   //small portrait
+  WRITE_ASCII 0x3c ~C0Kari2L~ #8   //medium portrait
+SAY NAME1 ~Karihi~
+SAY NAME2 ~Karihi~
+  WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~C0PYROM~))
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0afritz.cre~ ~override~
+WRITE_ASCII DIALOG ~c0afritz~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0afritz~  // override
+WRITE_ASCII DEATHVAR ~c0afritz~ // death variable
+SAY NAME1 ~Fritz~
+SAY NAME2 ~Fritz~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0aceri.cre~ ~override~
+WRITE_ASCII DIALOG ~c0aceri~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0aceri~  // override
+WRITE_ASCII DEATHVAR ~c0aceri~ // death variable
+  WRITE_ASCII 0X34 ~C0ACeri~ #8   //small portrait
+SAY NAME1 ~Ceri~
+SAY NAME2 ~Ceri~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0dedal.cre~ ~override~
+WRITE_ASCII DIALOG ~c0dedal~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0dedal~  // override
+WRITE_ASCII DEATHVAR ~c0dedal~ // death variable
+  WRITE_ASCII 0X34 ~C0ADeda~ #8   //small portrait
+SAY NAME1 ~Dedalus~
+SAY NAME2 ~Dedalus~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0aex1.cre~ ~override~
+WRITE_ASCII DIALOG ~c0aex1~ // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0aex1~  // override
+WRITE_ASCII DEATHVAR ~c0aex1~ // death variable
+  WRITE_ASCII 0X34 ~c0aex1~ #8   //small portrait
+SAY NAME1 ~???~
+SAY NAME2 ~???~
+
+APPEND ~STATE.IDS~ // adds custom IsValidForPartyDialogue state
+  ~0x80101FEF CD_STATE_NOTVALID~
+  UNLESS ~CD_STATE_NOTVALID~
+  
+EXTEND_TOP ~ar0400.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar0400.baf~
+EXTEND_TOP ~ar0402.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar0402.baf~
+EXTEND_TOP ~ar0411.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar0411.baf~
+EXTEND_TOP ~ar2000.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar2000.baf~
+ACTION_IF NOT FILE_EXISTS ~ar2014.bcs~ THEN BEGIN
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/ar2014.baf~
+COPY_EXISTING ar2014.are override
+WRITE_ASCII 0x94 ~ar2014~
+END ELSE BEGIN
+EXTEND_TOP ~ar2014.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar2014.baf~
+END
+EXTEND_TOP ~baldur.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/baldur.baf~
+
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0aura2.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/bc0aura2.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0aura2j.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0aura2p.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0aura25.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0aur25j.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0au01tk.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0akoko.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/c0evelin.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/dialog.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/pid.d~
+
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aura2.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aura25.baf~
+  
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01a.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01b.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01c.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01d.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01e.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01f.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au01g.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0auf1.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aur1.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aur2.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0amaskp.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au02.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0apico.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut0.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut1.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut2.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut3.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut4.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut4a.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut4b.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut5.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut6.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acut7.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0akoko.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0acraft.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au#at1.baf~
+
+//Fate Spirit
+ACTION_IF GAME_IS ~eet~ BEGIN
+ACTION_IF MOD_IS_INSTALLED ~Aura_BG1/Aura_BG1.tp2~ ~0~ BEGIN
+  OUTER_SET type_var = 3 //this will change already applied type of transition = 1 to 3
+END ELSE BEGIN
+  OUTER_SET type_var = 2 //BG1 version of NPC is not installed, so just add BG2 only transition
+END
+  INCLUDE ~EET/other/EET_functions.tph~
+  LAF ~EET_NPC_TRANSITION~
+    INT_VAR
+      type = type_var
+    STR_VAR
+      dv = "C0Aura"
+      override_SoA = "C0AURA2"
+      override_ToB = "C0AURA25"
+      dialog_ToB = "C0Aura25"
+      //traFile = EVAL "%MOD_FOLDER%/translations/%LANGUAGE%/aura.tra"
+      string = "Bring me Aura, the gnome artificer."
+      stringPosDV = "Cernd"
+  END
+END ELSE BEGIN
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dialogue/BG2EE/FATESP.d~
+END
+
+// STORE
+ 
+COPY_EXISTING ~c0amagn.sto~ ~override~
+SAY 0xc ~Magnussen's Prototypes~
+
+COPY_EXISTING ~c0aupot1.sto~ ~override/c0aushop.sto~
+SAY 0xc ~Aura's Workshop~
+
+COPY_EXISTING ~c0ashop1.sto~ ~override/c0ashop1.sto~
+SAY 0xc ~Spindleweaver Trading Company~
+
+COPY_EXISTING ~c0ashop2.sto~ ~override/c0ashop2.sto~
+SAY 0xc ~Chip's Arms and Armors~
+
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// ITEMS /////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+COPY_EXISTING ~c02aring.spl~ ~override~
+COPY_EXISTING ~c02aring.itm~ ~override~
+SAY NAME1 ~Ring of Moon's Eye~
+SAY NAME2 ~Ring of Moon's Eye~
+SAY DESC ~This roughly crafted ring appears unremarkable at first glance aside from a small crescent-shaped carving on the inner side. When worn, the bearer's skin becomes faintly illuminated, as though bathed in moonlight.
+
+STATISTICS:
+
+Equipped abilities:
+– When struck in combat, the wearer has a 25% chance to cast Reflected Image on <PRO_HIMHER>self
+– Immunity to fear and holding effects
+
+Weight: 0~
+
+COPY_EXISTING ~c0abag1.itm~ ~override~
+SAY NAME1 ~Box~
+SAY NAME2 ~Craftsman's Toolbox~
+SAY DESC ~A common companion of inventors, builders and craftsmen, this box is designed to securely carry various tools of the owner's trade. Various miscellaneous items such as ammunition, keys, wands and other objects may be stored within.
+
+STATISTICS:
+
+Weight: 2~
+
+COPY_EXISTING ~c0abag1.sto~ ~override~
+SAY 0xc ~Craftsman's Toolbox~
+
+COPY_EXISTING ~c0abrac1.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Gloves~
+SAY NAME2 ~Minor Artificer's Gloves of Fire~
+SAY DESC ~These thick padded gloves are specialized equipment for artificers and are normally attuned to a specific element. This specific pair of gloves allows an artificer to imbue their missiles with fire.
+
+STATISTICS:
+
+Equipped abilities:
+– Ranged attacks deal 1 extra point of fire damage
+
+Weight: 1~
+
+COPY_EXISTING ~c0abrac2.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Gloves~
+SAY NAME2 ~Artificer's Gloves of Fire~
+SAY DESC ~These thick padded gloves are specialized equipment for artificers and are normally attuned to a specific element. This specific pair of gloves allows an artificer to imbue their missiles with fire.
+
+STATISTICS:
+
+Equipped abilities:
+– Ranged attacks deal 1d4 extra points of fire damage
+– All fire damage inflicted by the wearer is increased by 10%
+
+Weight: 1~
+
+COPY_EXISTING ~c0abrac3.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Gloves~
+SAY NAME2 ~Greater Artificer's Gloves of Fire~
+SAY DESC ~These thick padded gloves are specialized equipment for artificers and are normally attuned to a specific element. This specific pair of gloves allows an artificer to imbue their missiles with fire.
+
+STATISTICS:
+
+Equipped abilities:
+– Fire Resistance: +20%
+– Ranged attacks deal 1d6 extra points of fire damage
+– All fire damage inflicted by the wearer is increased by 20%
+
+Weight: 1~
+
+COPY_EXISTING ~c0amaga3.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 180
+	  target = 1
+	  timing = 2
+	  parameter1 = RESOLVE_STR_REF (~Aura refuses to equip this weapon.~)
+	STR_VAR
+	  resource = c0ausw01
+END
+      LPF ALTER_EFFECT
+      INT_VAR
+        match_opcode      = 142   // Display portrait icon
+        match_parameter1  = 0    // Called Shot icon
+        parameter2        = c0aicon8
+      END
+SAY NAME1 ~Amulet~
+SAY NAME2 ~Aura's Awakened Magatama~
+SAY DESC ~This mysterious, curved stone is called a 'magatama'. Though you have never seen anything like it before, it is apparently a fairly common decorative design in its place of origin, Kara-Tur. These jewels are sometimes blessed by priestesses of the Way and carried as protective talismans against chaotic and malevolent spirits.
+
+Aura's magatama is carved from a piece of green jade and was enchanted by the Kozakuran priestess Reika Amakagami, her mentor, and as such carries great sentimental value to her, so much that she is unwilling to ever remove it. The divine spirit resting in the magatama, now awakened, has unlocked its full power.
+
+STATISTICS:
+
+Charge abilities:
+– Divine Blessing: Amatsugami once per day
+  Special: +4 to Armor Class vs. Undead, Negative Plane Protection, Death Ward, regenerate 2 hit points per round. Additionally, the wearer gains a +4 bonus to Armor Class for the duration.
+  Range: Affects whole party
+  Duration: 2 turns
+
+Equipped abilities:
+– Saving Throws: +3
+– Tamanoya: The wearer is protected by Negative Plane Protection, Death Ward, Protection from Chaos and Protection from Evil
+– Yasakani: If the wearer would suffer fatal damage, she instead survives with one hit point. This blessing is only effective once per eight hours, or after being raised.
+
+Weight: 0~
+OUTER_SET strref = RESOLVE_STR_REF (~Aura bats your hand away with the hint of a frown on her face. "Hey, hands off!"~ [GAM_47])
+APPEND item_use.2da ~c0amaga3 Aura %strref% 3~
+
+COPY_EXISTING ~c0axbow1.itm~ ~override~
+  LPF ALTER_ITEM_HEADER
+	INT_VAR
+		header = 1
+		projectile = c0athund
+END
+  LPF ALTER_EFFECT
+    INT_VAR
+      check_globals = 1
+      check_headers = 1
+      match_opcode = 139 // display string
+      match_parameter1 = 0
+ parameter1 = RESOLVE_STR_REF (~Paralyzed~)
+END
+SAY NAME1 ~Thunderbolt +6~
+SAY NAME2 ~Thunderbolt +6~
+SAY DESC ~This strange bronze-colored contraption appears to be some sort of launcher. Its creator and late owner, Liro Mideveningwalker, was an intelligent yet ambitious gnome, and often sought out mysteries and secrets in dangerous places to increase her own knowledge. Her inexperience in combat led her to design this powerful cannon as a means for self defense. This weapon fires deadly lightning bolts that can strike down anything in its path. Liro's creativity also led her to add a variety of other implements to make it more effective. However, the energy that powers the weapon is limited and requires proper tools to recharge after too many uses. Between the cannon's notable weight and complex mechanisms, only a select few would be capable of using it effectively.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +6 vs. melee weapons
+– Electrical Resistance: +100%
+
+Combat abilities:
+– The Thunderbolt does not launch projectiles. Instead, it fires a ray of lightning which deals 10d8+10 (save vs. breath weapons for half) electrical damage to all creatures within 10-ft. of its target and paralyzes them for two rounds on a failed save vs. breath. The charge then bounces towards an additional five targets, applying the same effects in a 10-ft. radius of each target struck. All targets are also Magnetized (-2 to AC vs. missiles and -20% missile damage resistance) for five rounds. The Thunderbolt strikes as a +6 weapon and may be fired 20 times before needing to recharge.
+
+Speed Factor: 10
+Proficiency Type: None
+Type: Two-handed
+Requires:
+ 14 Strength
+ 17 Intelligence
+
+Weight: 20~
+
+COPY_EXISTING ~c0athund.spl~ ~override~
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		projectile = c0athun2
+END
+
+////////////
+// Armors //
+////////////
+
+COPY_EXISTING ~c0aplat1.itm~ ~override~
+SAY NAME1 ~Mithral Armor~
+SAY NAME2 ~Mithral Field Plate +2~
+SAY DESC ~Mithral is a rare, silvery metal that is lighter than iron but just as hard. When worked like steel, it becomes a wonderful material from which to create armor and is occasionally used for other items as well. It is commonly used in elven armorsmithing, and elven suits of mithral armor are often enchanted.
+
+STATISTICS:
+
+Equipped abilities:
+– Counts as chain mail in terms of usability
+– Open Locks: -20%
+– Find Traps: -20%
+– Pick Pockets: -40%
+– Move Silently: -30%
+
+Armor Class: -1 (-3 vs. slashing, -2 vs. piercing and missile)
+Requires:
+ 8 Strength
+
+Weight: 20~
+
+COPY_EXISTING ~c0ahelm1.itm~ ~override~
+SAY NAME1 ~Helmet~
+SAY NAME2 ~Helm of Chief Grozhok~
+SAY DESC ~Grozhok of Clan Ironbone was a noble chieftain of a clan of orcish warriors. Once, he fought alongside a barbarian tribe in the land of Vaasa against a band of troll marauders. Out of gratitude, the barbarian chief's shaman blessed chief Grozhok's ceremonial helmet, bestowing upon its wearer long life and good fortune. Grozhok passed away at the age of eighty-five, and his helmet was passed down to his eldest son. When the clan ultimately fell apart, the helmet was sold to a wandering trader.
+
+STATISTICS:
+
+Equipped abilities:
+– Protects against critical hits
+– Constitution: +2
+– Saving Throws: +2
+
+Weight: 1~
+
+COPY_EXISTING ~c0ashld1.itm~ ~override~
+SAY NAME1 ~Medium Shield~
+SAY NAME2 ~The Steel Guard +4~
+SAY DESC ~Shields such as this one once belonged to the Steel Legionnaires, a trained squadron of elite soldiers. Each member of the Legionnaires carried one such shield and formed an impenetrable wall of steel when laying siege upon their enemies, turning aside blades and arrows alike. The various dents and concave shapes on the shield's face suggests more than one boulder has been dropped on it in the past.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +5
+– Physical Resistance: +10%
+
+Requires:
+ 12 Strength
+
+Weight: 5~
+
+COPY_EXISTING ~c0aaeri.itm~ ~override~
+SAY NAME1 ~Bracelet~
+SAY NAME2 ~Aerie's Friendship Bracelet~
+SAY DESC ~Aerie's Friendship Bracelet
+
+STATISTICS:
+
+Equipped abilities:
+– Free Action: The wearer is immune to all movement-impairing effects
+– Casting Speed: +2~
+
+///////////
+// Books //
+///////////
+
+COPY_EXISTING ~c0abook1.itm~ ~override~
+SAY NAME1 ~Tome~
+SAY NAME2 ~Imaskari Manual of Golemcraft~
+SAY DESC ~This ancient tome appears to have been magically preserved, keeping its weathered pages from falling apart despite its age. Although it is written in the incomprehensible Imaskari language, the enchantments placed upon it seem to cause the letters to change as you focus upon the text, translating it accurately into the Common tongue.
+
+The book describes many techniques used in the creation of magical golems which have been lost to time, the most noteworthy being a detailed instruction on the inscription of magical runes upon a completed construct which permanently imbues them with the ability to store and unleash magic as a wizard might. A majority of the suggested inscriptions seem to have faded away with age—likely, they were lost before Lavok was able to acquire the tome. There are some which are still legible, however, which may be applicable in the hands of a skilled artificer.
+
+STATISTICS:
+
+Weight: 2~
+
+COPY_EXISTING ~c0abook2.itm~ ~override~
+SAY NAME1 ~Book~
+SAY NAME2 ~Enchiridons of Metal~
+SAY DESC ~This thick and heavy book was originally written many years ago by Agrippinae Vitra Glimmershine II, Grand Artificer and High Priestess of Flandal Steelskin, who pioneered many of Lantan's current techniques of crafting and metallurgy. The book details many different techniques in crafting and artifice. Several chapters are dedicated to the crafting of automatons and golems, including comprehesive guides to improvement and adding new capabilities to crafted automatons of all types. An artificer may be able to apply this knowledge.
+
+STATISTICS:
+
+Weight: 2~
+
+COPY_EXISTING ~c0abook3.itm~ ~override~
+SAY NAME1 ~Tome~
+SAY NAME2 ~Tome of Eminent Flames~
+SAY DESC ~This dark leather-bound book is extremely hot to the touch, and has a glow to it that looks as though the pages would burst into flames at any moment. Within it lies knowledge of a unique brand of magic focusing on the field of pyromancy, an art that harnesses the raw power of the Elemental Plane of Fire and uses it to unleash devastating magicks. Arcanists who have not yet devoted themselves to a particular craft may be able to tap into the knowledge, though a footnote warns that the book's magic will consume it once a single reader's study is complete.
+
+STATISTICS:
+
+Special: Grants the Pyromancer kit to a single-class non-specialist mage. This book is consumed upon use.
+
+Weight: 25~
+
+OUTER_SET pyrobook = RESOLVE_STR_REF (~Read Tome~)
+APPEND ~ITEMDIAL.2da~ ~c0abook3    %pyrobook%    c0abook3~
+
+COPY_EXISTING ~c0abook4.itm~ ~override~
+SAY NAME1 ~Book~
+SAY NAME2 ~Lucky Lilla Vol. III: The Emerald Stream~
+SAY DESC ~Lucky Lilla and the Emerald Stream
+This colorful picture book tells the story of Lucky Lilla, a young pink-haired heroine who embarks upon many adventures that seem something from a fairytale, with this particular volume detailing Lucky Lilla's journey along a stream of emerald before finding the Golden Castle of Jubilation. Though the story are rather childish, the illustrations that accompany it are very charming. At the end of the book, there is a dedication page written in elegant handwriting.
+
+"Dedicated to my baby twin siblings, without whom my stories could not come to life past the pages in ink."
+
+—Aurelia White
+
+Weight: 2~
+
+COPY_EXISTING ~c0abook5.itm~ ~override~
+      LPF ALTER_EFFECT
+      INT_VAR
+        match_opcode      = 139   // Display portrait icon
+        parameter1 = RESOLVE_STR_REF (~All potion and explosive costs reduced by 50%~)
+      END
+SAY NAME1 ~Tome~
+SAY NAME2 ~Tome of Alchemical Knowledge~
+SAY DESC ~This tome was written by the master artificer Caridius M. Magnussen, containing invaluable knowledge of the secrets of Lantanese Alchemy. The degree of expertise displayed by the venerable artificer in his writings is unrivaled among alchemists, making this perhaps one of the most valuable manuals in the Realms. The artificer who reads this tome learns how to create potions with twice the efficiency of a regular alchemist.
+
+STATISTICS:
+
+Special: All potions and explosives made by an artificer's Advanced Alchemy cost 50% less gold to make. The book is consumed upon use.
+Usage: Place into quick item slot
+
+Weight: 25~
+
+COPY_EXISTING ~c0abook6.itm~ ~override~
+SAY NAME1 ~Book~
+SAY NAME2 ~Translations from Kara-Tur Haiku~
+SAY DESC ~A Compilation of Traditional Kara-Turan Haiku
+
+"The cherry blossoms -
+Too soon they scatter away
+In the evening breeze.
+
+Cold winter's snowfall,
+A prayer for the sun's light,
+The joy of spring's song.
+
+The mountains so high,
+A sacred reverence held,
+To the gods we bow.
+
+The moonlight shines bright,
+The stars twinkle in the night,
+My faith never fades.
+
+The wind so gentle,
+Carrying the chirps of birds,
+Signs of peace and love.
+
+The river's swift flow,
+Reminder of life's beauty.
+Ever-changing grace,
+
+The morning day's light,
+Reminder of faith's longing,
+Reminder of joy."
+
+—translated by Lhaeo, scribe of Elminster, 1368 DR
+
+Weight: 2~
+
+COPY_EXISTING ~c0abook7.itm~ ~override~
+SAY NAME1 ~Book~
+SAY NAME2 ~The Scrolls of Fortuitism, Poems of Shou Lung by Zheng Xian, Li Qin et al.~
+SAY DESC ~This book appears to be a series of poetry and calligraphy by various Shou poets. The language is one you cannot read, but notes written in Common are written all across the margins, comprised of a series of translations, comments, and praise of the poets' writing. Only one poem appears to have been fully translated, written on a piece of paper:
+
+"Yestereve the fickle rains scattered in the wind
+Slumber could not cure the lingering wine
+I asked she who raised the curtain,
+'Are the bygonias still as before?
+Dost thou know, dost thou know?'
+The greens are flourishing, and the reds thin."
+
+Weight: 2~
+
+////////////////
+// Explosives //
+////////////////
+
+COPY_EXISTING ~C0MDaggb.spl~ ~override~
+SAY NAME1 ~Create Blast Knives~
+SAY UNIDENTIFIED_DESC ~Create Blast Knives
+This ability creates 3 Blast Knives of +4 enchantment, adding them to the character's inventory.~
+
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/c0mboom.PRO~ ~C0 Blast Knife Explosion~
+COPY_EXISTING ~C0MDaggS.spl~ ~override~
+READ_LONG 0x64 "abil_off"
+READ_SHORT 0x68 "abil_num"
+SET "delta" = 0
+FOR (index = 0; index < abil_num; index = index + 1) BEGIN
+WRITE_SHORT (%abil_off% + (0x28 * %index%) + 0x26) ~%c0mboom%~
+END
+      LPF ALTER_EFFECT
+      INT_VAR
+        match_opcode      = 139   // Display portrait icon
+        parameter1 = RESOLVE_STR_REF (~Stunned~)
+      END
+COPY_EXISTING ~C0MDagg3.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+      LPF ALTER_EFFECT
+      INT_VAR
+        match_opcode      = 139   // Display portrait icon
+        parameter1 = RESOLVE_STR_REF (~Stunned~)
+      END
+SAY NAME1 ~Throwing Dagger~
+SAY NAME2 ~Blast Knives +4~
+SAY DESC ~Blast Knives are slightly larger-than-normal daggers with a hollowed blade and detachable grip, allowing for a small quantity of explosive oil to be contained within. When the small fuse connected to the hilt is lit, the knife must be thrown quickly and precisely, as it will detonate with a fiery impact once the oil is ignited. A dangerous and powerful weapon, and one that only a skilled artificer may handle safely.
+
+STATISTICS:
+
+Combat abilities:
+– 3 attacks per round
+– Deals 5d6 fire damage and Stuns on a failed Saving Throw vs. Breath at -2. If the target dies, an explosion occurs inflicting the same effects to all creatures in a 5-ft. radius.
+
+THAC0: +4
+Damage: 1d4+4 (missile)
+Speed Factor: 0
+Proficiency Type: Dagger
+Type: One-handed
+Requires:
+ 3 Strength
+
+Weight: 0~
+
+COPY_EXISTING ~c0abombb.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Firebomb~
+SAY NAME2 ~CL-2 Anti-Mechanism Bomb~
+SAY DESC ~This contraption is a thrown weapon which, when thrown, releases a shocking wave of electricity that disrupts the mechanical 'mind' of golems and other constructed beings, causing them to become inactive for a short period of time. On rare occasions, it rewires the construct's mind and places it under the control of the weapon's creator.
+
+STATISTICS:
+
+When thrown, unleashes a burst of energy which deals 2d6 electrical damage. Deals an additional 4d6 damage to constructs and disables them for 1d4 rounds on a failed save vs. breath weapons at -6. There is a small chance that affected constructs will be put under the user's control for one turn instead.
+
+Weight: 0~
+WRITE_SHORT 0x9C ~%c0abombb%~
+WRITE_LONG 0x34 1800
+
+COPY_EXISTING ~c0abombb.spl~ ~override~
+  LPF ALTER_EFFECT
+    INT_VAR
+      match_opcode = 139 // display string
+      match_probability1 = 95
+	  parameter1 = RESOLVE_STR_REF (~Disabled~)
+END
+  LPF ALTER_EFFECT
+    INT_VAR
+      match_opcode = 139 // display string
+      match_probability1 = 100
+	  parameter1 = RESOLVE_STR_REF (~Controlled~)
+END
+
+COPY_EXISTING ~c0abombc.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Firebomb~
+SAY NAME2 ~PR-3 Phaser Bomb~
+SAY DESC ~This contraption is a thrown weapon which, when thrown, releases a wave of mysterious energy which is anathema to creatures not native to the Prime Material Plane, dealing tremendous damage and causing their senses to become briefly paralyzed.
+
+STATISTICS:
+
+When thrown, unleashes a burst of energy which deals 2d6 magical damage. Deals an additional 4d6 damage to extraplanar creatures (e.g. demons, devils, elementals) and stuns them for 1d4 rounds on a failed save vs. breath weapons at -4.
+
+Weight: 0~
+WRITE_SHORT 0x9C ~%c0abombc%~
+WRITE_LONG 0x34 2000
+
+COPY_EXISTING ~c0abombc.spl~ ~override~
+  LPF ALTER_EFFECT
+    INT_VAR
+      match_opcode = 139 // display string
+	  parameter1 = RESOLVE_STR_REF (~Stunned~)
+END
+
+COPY_EXISTING ~c0abombd.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Firebomb~
+SAY NAME2 ~Teigan's Firebomb~
+SAY DESC ~This bottle of flammable oil was originally designed by the Lantanese alchemist Teigan Lockspun, who experimented with the traditional Oils of Fiery Burning. It burns more intensely than regular oil at a smaller volume, making it a powerful weapon against creatures vulnerable to fire - particularly trolls.
+
+STATISTICS:
+
+When thrown, unleashes a blast of flame which deals 8d6 fire damage (save vs. breath at -2 for half). If the target is a troll, it permanently loses its regenerative abilities.
+
+Weight: 0~
+WRITE_LONG 0x34 3000
+
+COPY_EXISTING ~c0auimb.itm~ ~override~
+SAY NAME1 ~Grenade~
+SAY NAME2 ~Arcane Disjunctor~
+SAY DESC ~The Arcane Disjunctor was created via collaboration by Imoen and Aura as a means to 'even the odds' against enemy mages. The detonation of the weapon releases a magical blast which completely disrupts the Weave around unfortunate spellcasters, causing their spells to fail until the residue has dissipated.
+
+STATISTICS:
+
+When thrown, unleashes a burst of arcane energy which deals 8d6 Magic Damage (Save vs. Spells for half) and, on a failed Saving Throw vs. Spells, causes all spells cast by afflicted targets within the next five rounds to be miscast. If targets pass their Saving Throw, the miscast chance is reduced to 50% and duration is reduced to two rounds. Regardless of whether targets make their Saving Throw, their casting speed is also penalized by 2 for five rounds.
+
+Weight: 1~
+
+///////////////////
+// Miscellaneous //
+///////////////////
+
+COPY_EXISTING ~c0aubox.itm~ ~override~
+SAY NAME1 ~Box~
+SAY NAME2 ~Sealed Box~
+SAY DESC ~This large box contains a translocation crystal, an essential component for the creation of trans-dimensional portals.
+
+STATISTICS:
+
+Weight: 20~
+
+COPY_EXISTING ~c0acann1.itm~ ~override~
+SAY NAME1 ~Lantanese Autocannon~
+SAY NAME2 ~Lantanese Autocannon~
+SAY DESC ~The Lantanese Autocannon is a weaponized contraption created by artificers with magical training. Built from durable metals, the autocannon makes up for what it lacks in mobility with power, unleashing bolts of fire against victims at rapid speed, making it a valuable defensive weapon. Due to the enchantments placed upon the autocannon, it becomes active upon sensing enemies of its creator, upon which it will attack relentlessly until the magic that animates it is fully spent. Due to its efficient design, the autocannon is portable and quick to set up.
+
+Weight: 20~
+
+//////////////
+// Upgrades //
+//////////////
+
+COPY_EXISTING ~c0anote1.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Golem-Building Note~
+SAY DESC ~The writing on this scrap of paper details the components required to upgrade a Clockwork Automaton.
+
+AUGMENTED BLADE
+Imbues automaton's attacks with magical enchantments
+GRADE I 
+Requirements: *scratched out*— COMPLETE
+GRADE II
+Requirements: 12th level artificer, one basic melee weapon of +2 enchantment value, one Scroll of Enchanted Weapon, 5,000 gold.
+GRADE III
+Requirements: 16th level artificer, one Adamantine Dust, two Diamonds, one Scroll of Enchanted Weapon, 7,500 gold
+GRADE IV
+Requirements: 24th level artificer, one Mithril Alloy, two Rogue Stones, one Scroll of Enchanted Weapon, 10,000 gold
+
+(Scribbled below in graphite is a complex-looking diagram of a two-bladed weapon next to some mathematical equations.)
+"This much mithril's going to be hard to come by. Two—*scratched out*—three times the volume as the Sunshooter. There aren't any dwarven mithril mines around Athkatla, are there?" – A
+
+
+WEAPON OF IMPACT
+Enhances hardness and density of automaton's hands, increasing bludgeoning power
+GRADE I
+Requirements: 9th level artificer, one War Hammer +1, one Scroll of Knock, 5,000 gold
+GRADE II
+Requirements: 13th level artificer, one War Hammer +2, one Diamond, 8,000 gold
+GRADE III
+Requirements: 18th level artificer, one War Hammer +3, one Scroll of Bigby's Crushing Hand, 12,000 gold
+
+"Ouch." – A
+
+
+KEEN EDGE
+Enhances sharpness of automaton's bladed weapon, improving accuracy and critical hit rates
+GRADE I
+Requirements: 9th level artificer, one Bastard Sword +1, one Long Sword +1, 4,000 gold
+GRADE II
+Requirements: 13th level artificer, one Long Sword +2, one Diamond, 8,000 gold
+GRADE III
+Requirements: 18th level artificer, one Long Sword +3, one Scroll of Black Blade of Disaster, 12,000 gold
+
+
+REINFORCED PLATING
+Enhances durability of automaton's outer armor
+GRADE I
+Requirements: 9th level artificer, one Full Plate Mail, one Scroll of Armor, 2,000 gold
+GRADE II
+Requirements: 12th level artificer, one Full Plate Mail +1, one Scroll of Protection from Normal Weapons, 6,000 gold
+GRADE III
+Requirements: 16th level artificer, one Full Plate Mail +2, one Scroll of Absolute Immunity, 10,000 gold
+
+
+ANTI-MAGIC SHIELDING
+Enhances automaton's plating with magic resistance
+GRADE I
+Requirements: 12th level artificer, one Potion of Magic Protection, 4,000 gold
+GRADE II
+Requirements: 17th level artificer, one Star Sapphire, one Scroll of Spell Deflection, 8,000 gold
+GRADE III
+Requirements: 23rd level artificer, two Star Sapphires, one Scroll of Protection from Magic, one Scroll of Spell Trap, 10,000 gold
+
+"I've applied the knowledge of magical defense I learned into infusion with arcane–enhanced metal. Uncle Marius would be proud of me." – A
+
+
+SELF-REPAIRING THAUMATURGY
+EXPERIMENTAL – infuses Alteration magic into automaton's internal power source, allowing for self-reconstuction of damaged parts
+
+"This one should work in theory, but...
+Using regeneration with metal as a substitute for organic matter requires—*an inscrutable paragraph of confusing teminology follows*
+
+Pleasepleasepleasepleeeease work..." – A
+
+GRADE I
+Requirements: 13th level artificer, one Emerald, one Potion of Regeneration, 3,000 gold
+GRADE II
+Requirements: 17th level artificer, one Emerald, two Potions of Power, one Potion of Superior Healing, 5,000 gold
+GRADE III
+Requirements: 22nd level artificer, one Pearly White Ioun Stone, one Ring of Regeneration, 8,000 gold
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote2.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Golem-Building Note II~
+SAY DESC ~The writing on this scrap of paper details the components required to enhance a Clockwork Automaton with techniques taken from the Imaskari Tome of Golemcraft.
+
+TELEPORTATION
+Requirements: 14th level artificer, one Rogue Stone, 2,000 gold
+GOLEM SLOW
+Requirements: 12th level artificer, two Scrolls of Slow, 4,000 gold
+GOLEM HASTE
+Requirements: 12th level artificer, two Scrolls of Haste, 4,000 gold
+GAS CLOUD
+Requirements: 16th level artificer, one Scroll of Death Fog, one Scroll of Cloudkill, 6,000 gold
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote3.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Tharon's Runic Armor of Grounding~
+SAY DESC ~This design schematic details the creation of Tharon's Runic Armor of Grounding, a suit of light armor which innately absorbs electrical energy.
+
+Components:
+– 1x Elven Chain Mail
+– 2x Protection from Electricity Scroll (green)
+– 1x Wand of Lightning
+– 1x Beljuril
+– 10,000 Gold
+
+Charge abilities:
+– Static Discharge once per day
+  Damage: 10d6 electrical (Save vs. Spell at -4 for half)
+  Range: Self
+  Area of Effect: 20 ft.
+  Special: All struck targets who fail their Save vs. Spell at -4 are Stunned for three rounds
+
+Equipped abilities:
+– Creatures within 5 ft. that hit the wearer have a 50% chance to suffer 1d3 electrical damage and become paralyzed for 1 round
+– Electrical Resistance: +100%, +20% to nearby allies
+– Spellcasting is not disabled
+
+Armor Class: 3 (1 vs. slashing, 5 vs. crushing)
+Requires:
+ 5 Strength
+ 17 Intelligence
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote4.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Blinking Boots~
+SAY DESC ~This design schematic details the creation of Blinking Boots, a perfected variation of the Boots of Phasing capable of warping the wearer between locations.
+
+Components:
+– 1x Boots of Phasing
+– 1x Scroll of Teleport Field
+– 1x Scroll of Haste
+– 1x Rogue Stone
+– 5,000 gold
+
+Charge abilities:
+– Ethereal Jaunt three times per day
+  Range: 40 ft.
+  Area of Effect: Self
+  Duration: Special
+  Special: The wearer turns ethereal, becoming undetectable and immune to damage for a brief period of time, regenerating two hit points per second. While ethereal, however, the wearer may not attack, cast spells or otherwise interact with the Material Plane in any way. The duration of etherealness scales with the wearer's level, at a minimum of one round.
+
+Equipped abilities:
+– Armor Class: +2
+– Movement Rate: +2
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote5.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Greater Bracers of Archery~
+SAY DESC ~This design schematic details the creation of Greater Bracers of Archery, an enhancement of the original bracers.
+
+Components:
+– 1x Bracers of Archery
+– 1x Pale Green Ioun Stone
+– 1x Potion of Power
+– 2x Diamonds
+– 7,500 gold
+
+Equipped abilities:
+– THAC0: +4 with missile weapons
+– Critical Hit Chance: +10% with missile weapons
+– Ranged attacks will never critically miss
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote6.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Galarin's Orb of Warding~
+SAY DESC ~This design schematic details the creation of Galarin's Orb of Warding, a powerful Lantanese artifact with antimagic enchantments.
+
+Components:
+– 2x Star Sapphires
+– 1x Scrolls of Protection from Magic
+– 1x Amulet of 5% Magic Resistance
+– 8,000 gold
+
+Charge abilities:
+– Protection from Magic once per day
+  Special: Creates a globe of anti-magic around the wearer: Spells cannot be cast from the inside or to the outside of the globe, and all magical effects affecting the wearer are dispelled.
+  Range: Special
+  Area of Effect: Self
+  Duration: 2 hours
+  
+Equipped abilities:
+– Magic Resistance: +20%
+
+Requires:
+– 15 Intelligence
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote7.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Improved Ring of the Ram~
+SAY DESC ~This design schematic details the creation of Improved Ring of the Ram, an enhancement of the original ring.
+
+Components:
+– 1x Ring of the Ram
+– 3x Scrolls of Knock
+– 1x Scroll of Power Word: Stun
+– 2x Diamonds
+– 5,000 gold
+
+Charge abilities:
+– Ram once per day
+  Damage: 5d6 magic
+  Special: Pushes target away from user
+  Range: 60 ft.
+  Area of Effect: 1 creature
+
+Equipped abilities:
+– Crushing Resistance: +25%
+– All crushing damage inflicted by the wearer is increased by 25%
+– Wearer cannot be displaced, staggered or stunned by any means
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote8.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Marius's Headband of Intellect~
+SAY DESC ~This design schematic details the creation of Marius's Headband of Intellect, a custom-designed magical circlet which enhances the wearer's wit and memory.
+
+Components:
+– 1x Ring of Acuity
+– 1x Metaspell Influence Amulet
+– 1x King's Tears
+– 10,000 gold
+
+Equipped abilities:
+– Intelligence: +1
+– Can memorize one extra 1st- to 5th-level wizard spells
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anote9.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Avalee's Spellbreaker~
+SAY DESC ~This design schematic details the creation of Avalee's Spellbreaker, a powerful Lantanese artifact with the power to shatter magical defenses.
+
+Components:
+– 1x Scroll of Spellstrike
+– 3x Scrolls of Pierce Magic
+– 2x King's Tears
+– 12,000 gold
+
+Charge abilities:
+– Pierce Magic three times per day
+  Special: Lowers target's Magic Resistance by 20% for 2 turns and removes one spell protection from target
+  Range: 40 ft.
+  Area of Effect: 1 creature
+  
+– Spellstrike once per day
+  Special: Dispels all magical protections from the target
+  Range: 80 ft.
+  Area of Effect: 1 creature
+
+Requires:
+ 9 Intelligence
+
+STATISTICS:
+
+Weight: 0~
+
+COPY_EXISTING ~c0anotea.itm~ ~override~
+SAY NAME1 ~Note~
+SAY NAME2 ~Schematic: Flasher Launcher Mark II~
+SAY DESC ~This design schematic details several major enhancements to Jan's patented weapon, the Flasher Launcher.
+
+Components:
+– 1x Flasher Launcher
+– 1x Light Crossbow of Speed
+– 1x Scroll of Protection From Normal Missiles
+– 1x Emerald
+– 1x Diamond
+– 6,000 gold
+
+Equipped effects:
+– Eminence: All missiles launched by this weapon strike with at least +3 enchantment
+– Armor Class vs. Missiles: +4
+– 1 extra attack per round
+
+THAC0: +4
+Damage: +3
+Speed Factor: 3
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 8 Strength
+
+Weight: 10~
+
+COPY_EXISTING ~c0astaf1.itm~ ~override~
+SAY NAME1 ~Quarterstaff~
+SAY NAME2 ~The Physician's Staff +3~
+SAY DESC ~This gem-topped staff belonged to the physician Pyrohus Cohval. As a practitioner of both the medical and poisonous arts, this staff appears to have been enchanted with the dual powers of life and death, granting the ability to heal and inflict death with the power of thought.
+
+As unsettling as the gnarled appearance of the staff is, grasping it fills the wielder with a strange sense of ease, and the latent powers of healing spreads from them to anyone they deem an ally.
+
+STATISTICS:
+
+Equipped abilities:
+– Healer: Wielder and <PRO_HISHER> allies regenerate 1 hit point per 12 seconds
+– Poisoner: Poison damage inflicted by the wielder is doubled
+
+THAC0: +3
+Damage: 1d6+3 (crushing)
+Speed Factor: 1
+Proficiency Type: Quarterstaff
+Type: Two-handed
+Requires:
+ 5 Strength
+
+Weight: 4~
+
+COPY_EXISTING ~c0ajanfl.itm~ ~override~
+      LPF ALTER_EFFECT
+      INT_VAR
+        check_globals     = 0
+        check_headers     = 1
+        match_opcode      = 142   // Display portrait icon
+        match_parameter2  = 82    // Called Shot icon
+        parameter2        = c0aicon3
+      END
+SAY NAME1 ~Flasher Blaster Splasher Mate~
+SAY NAME2 ~Flasher Blaster Splasher Mate~
+SAY DESC ~This is the ammunition for Jan's crossbow (the Flasher Master Splasher), designed collaboratively by Jan and Aura. Each individual skull is filled with vials of chemicals that inflict a variety of debilitating effects.
+
+STATISTICS:
+
+Combat abilities:
+– Hit target randomly suffers 1d4 elemental damage of one of the following types and effects:
+  Acid: -2 penalty to Armor Class
+  Cold: -2 THAC0
+  Electricity: 50% chance to miscast magic
+  Fire: 5 fire damage per round
+
+THAC0: +1
+Damage: 1d2+1 (missile)
+Launcher: Flasher Master Splasher
+
+Requires:
+ 9 Intelligence
+
+Weight: 0~
+
+COPY_EXISTING ~c0ajanxb.itm~ ~override~
+SAY NAME1 ~Flasher Launcher~
+SAY NAME2 ~Flasher Launcher Mark II~
+SAY DESC ~This is Jan Jansen's crossbow, and such is its complexity that only he can use it. Likewise, only he can make the special ammunition it is capable of firing. Substantial tinkering on this launcher has made it especially accurate.
+
+Aura and Jan's collaborative efforts to upgrade the already complex Flasher Launcher has made it an even more effective weapon than it was.
+
+STATISTICS:
+
+Equipped effects:
+– Eminence: All missiles launched by this weapon strike with at least +3 enchantment
+– Armor Class vs. Missiles: +4
+– 1 extra attack per round
+
+THAC0: +4
+Damage: +3
+Speed Factor: 3
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 8 Strength
+
+Weight: 10~
+
+COPY_EXISTING ~c0autt5a.spl~ ~override~
+SAY NAME1 ~Static Discharge~
+COPY_EXISTING ~c0autt05.itm~ ~override~
+SAY NAME1 ~Chain Mail~
+SAY NAME2 ~Tharon's Runic Armor of Grounding~
+SAY DESC ~Master artificer Tharon of the Mideveningwalker family was an unorthodox creator who crossed invention with magic. While working together with Lightwinder enchanters, he designed protective suits such as this one that are capable of safely conducting electricity without harming the wearer and storing a portion of the energy in the magical runes imbued in the armor's lining. The excess energy can then be released at will. Additionally, because of the specific materials used to make the armor, it is exceptionally light and does not hinder the wearer.
+
+STATISTICS:
+
+Charge abilities:
+– Static Discharge once per day
+  Damage: 10d6 electrical (Save vs. Spell at -4 for half)
+  Range: Self
+  Area of Effect: 20 ft.
+  Special: All struck targets who fail their Save vs. Spell at -4 are Stunned for three rounds
+
+Equipped abilities:
+– Creatures within 5 ft. that hit the wearer have a 30% chance to suffer 1d3 electrical damage and become paralyzed for 1 round
+– Electrical Resistance: +100%, +20% to nearby allies
+– Spellcasting is not disabled
+
+Armor Class: 3 (1 vs. slashing, 5 vs. crushing)
+Requires:
+ 5 Strength
+ 17 Intelligence
+
+Weight: 7~
+
+COPY_EXISTING ~c0autt06.spl~ ~override~
+SAY NAME1 ~Ethereal Jaunt~
+COPY_EXISTING ~c0autt06.itm~ ~override~
+SAY NAME1 ~Boots~
+SAY NAME2 ~Blinking Boots~
+SAY DESC ~This pair of boots are a perfected variation of the cursed Boots of Phasing. Unlike the original item, the phasing properties of these boots can be controlled by the wearer, allowing them to make brief shifts into the Ethereal Plane at will.
+
+STATISTICS:
+
+Charge abilities:
+– Ethereal Jaunt three times per day
+  Range: 40 ft.
+  Area of Effect: Self
+  Duration: Special
+  Special: The wearer turns ethereal, becoming undetectable and immune to damage for a brief period of time, regenerating two hit points per second. While ethereal, however, the wearer may not attack, cast spells or otherwise interact with the Material Plane in any way. The duration of etherealness scales with the wearer's level, at a minimum of one round.
+
+Equipped abilities:
+– Armor Class: +2
+– Movement Rate: +2
+
+Weight: 3~
+
+COPY_EXISTING ~c0autt07.itm~ ~override~
+SAY NAME1 ~Bracers~
+SAY NAME2 ~Greater Bracers of Archery~
+SAY DESC ~Bracers of Archery: The Dale's Protector
+During a dangerous meeting with a rival ruler, the king of the Great Dale requested the protection of his best Archers in addition to his usual guard. The Archers, each equipped with an enchanted bow and bracers, hid within range of the gathering. As predicted, enemy troops attempted to seize the king and force their will over his rule, but none had anticipated the amazing accuracy and lethality of the hidden Archers. The king was able to escape unharmed; in fact, none of the ambush members even lived to approach him. 
+
+With the enchantments Aura has added to the already formidable bracers, the Dale's Protector is now one of the most valuable magical items for any marksman.
+
+STATISTICS:
+
+Equipped abilities:
+– THAC0: +4 with missile weapons
+– Critical Hit Chance: +10% with missile weapons
+– Ranged attacks will never critically miss
+
+Weight: 2~
+
+COPY_EXISTING ~c0autt08.itm~ ~override~
+SAY NAME1 ~Orb~
+SAY NAME2 ~Galarin's Orb of Warding~
+SAY DESC ~This metallic sphere was originally designed by the Lantanese arcanist Galarin, whose knowledge of magic and technology allowed him to create many wondrous inventions. The Orb of Warding is hollow and, when opened, creates a field of antimagic around the bearer without disrupting their own spells. However, the orb's energy is limited and can only be used once per day before needing time to recharge.
+
+STATISTICS:
+
+Charge abilities:
+– Protection from Magic once per day
+  Special: Creates a globe of anti-magic around the wearer: Spells cannot be cast from the inside or to the outside of the globe, and all magical effects affecting the wearer are dispelled.
+  Range: Special
+  Area of Effect: Self
+  Duration: 2 hours
+  
+Equipped abilities:
+– Magic Resistance: +20%
+
+Requires:
+ 15 Intelligence
+  
+Weight: 1~
+
+COPY_EXISTING ~c0autt09.itm~ ~override~
+SAY NAME1 ~Ring~
+SAY NAME2 ~Improved Ring of the Ram~
+SAY DESC ~Also known as the Breaker of Castles, with one word, this ring can unleash fantastic and deadly powers. When it is triggered, a barely discernible ram-like shape billows forth from the ring. This force can potentially knock opponents off of walls, destroy castle gates, or crush enemies, but it is damaging as well in its own right.
+
+Aura has enhanced the ring's destructive potential greatly. When worn, the ring now bestows great protection against the effects of impact, while causing the wearer's blows to strike more heavily.
+
+STATISTICS:
+
+Charge abilities:
+– Ram once per day
+  Damage: 5d6 magic
+  Special: Pushes target away from user
+  Range: 60 ft.
+  Area of Effect: 1 creature
+
+Equipped abilities:
+– Crushing Resistance: +25%
+– All crushing damage inflicted by the wearer is increased by 25%
+– Wearer cannot be displaced, staggered or stunned by any means
+
+Weight: 0~
+
+COPY_EXISTING ~c0autt10.itm~ ~override~
+SAY NAME1 ~Circlet~
+SAY NAME2 ~Marius's Headband of Intellect~
+SAY DESC ~Woven round the brim of this helm is a light cord with a small gem set so that it rests upon the forehead of the wearer. The magic of the headband has the power to dramatically sharpen the wearer's intellect.
+
+Considered 'cheating' by some wizards, these bands are highly sought after by many wizards, especially the Red Wizards of Thay. This headband was created using an advanced form of enchantment developed by Marius Lightwinder, Aura's uncle.
+
+STATISTICS:
+
+Equipped abilities:
+– Intelligence: +1
+– Can memorize one extra 1st- to 5th-level wizard spell
+
+Weight: 1~
+
+COPY_EXISTING ~c0autt11.itm~ ~override~
+SAY NAME1 ~Wand~
+SAY NAME2 ~Avalee's Spellbreaker~
+SAY DESC ~This antimagic wand is one of many crafted using the designs of Craftmistress Avalee, Most Holy Servant of Gond. Though the original intention of its creation may have been benign, such wands have often been abused by Lantanese extremists who wage war against magic-users, believing them to be a threat towards invention and creativity. As such, the technique behind the creation of Spellbreakers is heavily restricted.
+
+STATISTICS:
+
+Charge abilities:
+– Pierce Magic three times per day
+  Special: Lowers target's Magic Resistance by 20% for 2 turns and removes one spell protection from target
+  Range: 40 ft.
+  Area of Effect: 1 creature
+  
+– Spellstrike once per day
+  Special: Dispels all magical protections from the target
+  Range: 80 ft.
+  Area of Effect: 1 creature
+
+Requires:
+ 9 Intelligence
+
+Weight: 1~
+
+COPY_EXISTING ~c0acirc1.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Power Circlet~
+SAY NAME2 ~Power Circlet~
+SAY DESC ~This circlet is a prototype power source for Lantanese mechanisms, with the purpose of increasing their power and efficiency.
+
+STATISTICS:
+
+Equipped effects:
+– Autocannons created by the wearer gain a +4 bonus to THAC0, 50% magic resistance and take half damage from elemental damage
+– Automatons created by the wearer gain a +4 bonus to THAC0, Damage, Armor Class, Saving Throws and +60 Hit Points.
+
+Weight: 1~
+
+COPY_EXISTING ~c0amith.itm~ ~override~
+SAY NAME1 ~Mithril Alloy~
+SAY NAME2 ~Mithril Alloy~
+SAY DESC ~This metal ingot is far lighter than its large size would suggest. Its composition is a hybrid of primarily mithril and smaller amounts of various other durable metals, making it a valuable component for smithing and crafting of powerful weapons.
+
+STATISTICS:
+
+Weight: 5~
+
+COPY_EXISTING ~c0aufor1.itm~ ~override~
+SAY NAME1 ~Strange Concoction~
+SAY NAME2 ~Formula #00155-L~
+SAY DESC ~This strange concoction has a vivid color and the consistency of oil. Still in its experimental stage, it has yet to be given an official name, merely being labeled by its designated number with a brief description of its effects on the imbiber—which are partly beneficial, partly harmful, and entirely irreversible.
+
+STATISTICS:
+
+Maximum Hit Points: Reduced by ten points permanently
+Intelligence: Raised by 1 point permanently
+
+Weight: 1~
+
+COPY_EXISTING ~c0aufor2.itm~ ~override~
+SAY NAME1 ~Strange Concoction~
+SAY NAME2 ~Formula #10783-N~
+SAY DESC ~This strange concoction has a vivid color and the consistency of oil. Still in its experimental stage, it has yet to be given an official name, merely being labeled by its designated number with a brief description of its effects on the imbiber—which are partly beneficial, partly harmful, and entirely irreversible.
+
+STATISTICS:
+
+Strength: Raised by 1 point permanently
+Dexterity: Reduced by 2 points permanently
+Constitution: Raised by 1 point permanently
+
+Requires:
+  16 Dexterity
+
+Weight: 1~
+
+COPY_EXISTING ~c0aufor3.itm~ ~override~
+SAY NAME1 ~Strange Concoction~
+SAY NAME2 ~Formula #06797-S~
+SAY DESC ~This strange concoction has a vivid color and the consistency of oil. Still in its experimental stage, it has yet to be given an official name, merely being labeled by its designated number with a brief description of its effects on the imbiber—which are partly beneficial, partly harmful, and entirely irreversible.
+
+STATISTICS:
+
+Strength: Reduced by 2 points permanently
+Magic Resistance: Raised by 15% permanently
+
+Requires:
+  16 Strength
+
+Weight: 1~
+
+/////////////
+// Weapons //
+/////////////
+
+COPY_EXISTING ~c0adagg2.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 177
+	  target = 1
+	  timing = 2
+	  parameter1 = IDS_OF_SYMBOL (~KIT~ ~C0AURA~)
+	  parameter2 = 9
+	STR_VAR
+	  resource = C0ADAG2A
+END
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 177
+	  target = 1
+	  timing = 2
+	  parameter1 = IDS_OF_SYMBOL (~KIT~ ~C0AURA~)
+	  parameter2 = 9
+	STR_VAR
+	  resource = C0ADAG2B
+END
+SAY NAME1 ~Dagger~
+SAY NAME2 ~Infinity Key +4~
+SAY DESC ~This knife has the brand of the Lantanese Artificers' Guild branded upon the unusual blade, which can be folded and shaped into a seemingly infinite number of formations, allowing it to be used in a variety of ways as a pick, a file, a pair of scissors, a blade... it seems the amount of functions of this tool is only limited by the user's imagination. Even in its simplest form, however, the blade is razor sharp, capable of cutting metal as easily as it does cloth. The complexity of the weapon's design means that only one of sufficient cunning can use it without the risk of accidental self-harm, and perhaps only an artificer may be able to optimize its capabilities to its fullest.
+
+STATISTICS:
+
+Equipped abilities:
+– Find Traps: +50%
+– Open Locks: +50%
+– Pick Pockets: +50%
+
+Combat abilities:
+– Critical Hit Chance: +10% (+20% for Artificers, this weapon only)
+– Backstab Multiplier: Set to x5 (Artificers only)
+
+THAC0: +6
+Damage: 1d4+4
+Damage type: piercing or slashing
+Speed Factor: 0
+Proficiency Type: Dagger
+Type: One-handed
+Requires:
+ 3 Strength
+ 15 Dexterity
+ 17 Intelligence
+
+Weight: 1~
+
+COPY_EXISTING ~c0ausw04.itm~ ~override~
+SAY NAME1 ~Wakizashi~
+SAY NAME2 ~Jin'rai +3~
+SAY UNIDENTIFIED_DESC ~The wakizashi, or companion sword, is extremely important to samurai. It is worn at all times, even indoors, and is near the samurai when he sleeps at night. As finely made as the katana, the wakizashi, a shorter sword with a length between twelve and twenty-four inches, is a dangerous weapon in the hands of a skilled user.
+
+STATISTICS:
+
+Damage: 1d8 (piercing)
+Speed Factor: 3
+Proficiency Type: Scimitar/Wakizashi/Ninja-to
+Type: One-handed
+Requires:
+ 5 Strength
+
+Weight: 3~
+SAY DESC ~This wakizashi has a blade sharper and finer than any other weapon you have seen, as though the slightest touch from its edge could sever steel. Its lightness and fine balance is only matched by its powerful enchantments and its beauty, decorated with faint etchings on the blade that resemble a strange hybrid of birds and clouds. After the blade was tempered and improved by Cromwell, it occasionally flashes with a bluish sheen reminiscent of lightning.
+
+According to Aura, the sword's name roughly translates to 'Swift Thunder'.
+
+STATISTICS:
+
+Combat abilities:
+– Critical Hit Chance: +10%
+– Critical hits deal an additional 2d10 electrical damage
+
+Equipped abilities:
+– Dexterity: +1
+– Movement Rate: +2
+
+THAC0: +3
+Damage: 1d8+3, 2 electrical
+Damage type: piercing
+Speed Factor: 2
+Proficiency Type: Scimitar/Wakizashi/Ninja-to
+Type: One-handed
+Requires:
+ 5 Strength
+
+Weight: 2~
+
+COPY_EXISTING ~c0abow1.itm~ ~override~
+SAY NAME1 ~Longbow~
+SAY NAME2 ~Longbow of Winter, "Shirayuki" +3~
+SAY DESC ~A mystical weapon once carried by a yuki-onna, a powerful snow spirit of Eastern origin, this alabaster white longbow is cold, yet not uncomfortable to the touch. In many interations of Kozakuran folklore, yuki-onna are maligned and feared for their reputations of seducing and abducting vulnerable and weak-willed men from their homes. In truth, however, a great number of yuki-onna are peaceful and even benevolent in nature, their timid natures driving them to hide away from mortals except in moments of great need. Those who gain the fondness or affection of yuki-onna are granted a symbol of their favor, such as this bow.
+
+As fragile and lightweight as it seems, this bow is an item of great power. When drawn, cold energies gather to create a magical arrow capable of freezing their targets solid. The biting chill of the arrows sap the lifeforce of their victims, which seep back to the wielder and restores their own. Additionally, when carrying the bow, the user's skin begins to emit an ethereal white glow, similar to that of a yuki-onna.
+
+STATISTICS:
+
+Equipped abilities:
+– Fireshield (Blue)
+– Charisma: +2
+– 2.5 attacks per round
+
+Combat abilities:
+– When no arrows are equipped, the bow fires missiles that are treated as +3 for the purposes of determining what enemies they can damage. The missiles receive +3 to hit including the bonus listed below, and deal a total of 2 piercing and 1d4 magical cold damage. The wielder is healed for the amount of magical cold damage dealt by this weapon.
+– On a critical hit, targets become Frozen. While Frozen, the target suffers double damage from physical and fire damage but is immune to cold damage. After five rounds have passed or upon taking damage, the target will be Shattered, becoming unfrozen and suffering a -2 penalty to Armor Class and Strength for one turn.
+
+THAC0: +3
+Damage: +2 piercing, +1d4 magical cold
+Speed Factor: 2
+Proficiency Type: Longbow
+Type: Two-handed
+Requires:
+ 6 Strength
+ 17 Dexterity
+
+Weight: 1~
+WRITE_SHORT 0x9C ~%c0auaro9%~
+
+COPY_EXISTING ~c0asper1.itm~ ~override~
+SAY NAME1 ~Spear~
+SAY NAME2 ~Great Spear of Fate, "Gungnir" +4~
+SAY DESC ~This mighty weapon is reputed to be the mythical weapon of a one-eyed deity from another realm apart from Toril. Though likely only a replica of the true weapon—if such a god truly exists—even such an imitation carries great power that could perhaps be ascribed to divinity, its strikes landing with certainty as though determined by the power of fate itself. Such power can only be harnessed by a focused mind, clear of any doubts that may fog their perception.
+
+STATISTICS:
+
+Charge abilities:
+– Critical Strike once per day
+
+Equipped abilities:
+– Armor Class: +2
+– Magic Resistance: +5%
+
+Combat abilities:
+– Sealed Fate: On a critical hit, the target is rended by a magical flock of ravens, suffering an additional 2d6 magic damage and a -6 penalty to all Saving Throws for the next 10 seconds. This effect is non-cumulative with itself.
+
+THAC0: +6
+Damage: 1d10+4
+Damage type: piercing
+Speed Factor: 3
+Proficiency Type: Spear 
+Type: Two-handed
+Requires:
+ 5 Strength
+ 17 Wisdom
+
+Weight: 3~
+
+COPY_EXISTING ~c0aclck1.itm~ ~override~
+SAY NAME1 ~Burning Cloak~
+SAY NAME2 ~Shroud of Flame "Innaz-Kava"~
+SAY DESC ~
+
+STATISTICS:
+
+Equipped abilities:
+– Fireshield (Red)
+  Fire Resistance: +50%
+  Attackers within a 5-ft. radius suffer 1d8+2 points of fire damage
+  
+– Cold Resistance: -50%
+– All fire damage inflicted by the wearer is increased by 20%
+
+Requires: 16 Constitution
+
+Weight: 1~
+
+COPY_EXISTING ~c0ausw05.spl~ ~override~
+  LPF ALTER_EFFECT
+    INT_VAR
+      check_globals = 1
+      check_headers = 1
+      match_opcode = 139 // display string
+      match_parameter1 = 0
+ parameter1 = RESOLVE_STR_REF (~-20% maximum hit points~)
+END
+SAY NAME1 ~Soul Sunder~
+COPY_EXISTING ~c0ausw05.itm~ ~override~
+SAY NAME1 ~Katana~
+SAY NAME2 ~Spirit Blade, "Empty-Of-All" +5~
+SAY UNIDENTIFIED_DESC ~The katana is a single-edged, slightly curved sword that ends with a chisel point. The katana is perhaps one of the finest swords ever made, the steps to its creation a long and secret process that is more art form than anything else. This blade is an important facet of Kara-Turan culture. To touch or wield a samurai's katana is to insult the samurai and to incite his wrath. For a gaijin, or foreigner, to own such a blade is a rare occurrence. Either the gaijin is a greatly honored friend of an important minister, or the gaijin has murdered a samurai.
+
+STATISTICS:
+
+Damage: 1d10 (slashing)
+Speed Factor: 4
+Proficiency Type: Katana
+Type: One-handed
+Requires:
+ 6 Strength
+
+Weight: 6~
+SAY DESC ~This otherworldly katana is weightless and bears an unusual design that bears no discernable creator's mark. Its translucent edge appears ethereal in nature and leaves no visible cuts upon its target. Instead of cutting flesh, this blade strikes directly at the target's spirit, weakening them while transferring their life force to the wielder.
+
+Strangely, the katana's grip is tightly bound with paper talismans.
+
+STATISTICS:
+
+Combat abilities:
+– Undead must save vs. death at -4 or be destroyed
+– Each hit drains 10% of the target's maximum Hit Points and transfers it to the wielder. This will not heal beyond the wielder's maximum. (Save vs. Death for half)
+– On a critical hit, drains 20% of the target's maximum Hit Points and inflicts Soul Sunder for 5 rounds (-4 to Saving Throws and -30% to damage dealt)
+
+Equipped abilities:
+– Negative Plane Protection
+
+THAC0: +1
+Damage: ? (magic)
+Speed Factor: 0
+Proficiency Type: Katana
+Type: One-handed
+Requires:
+ 15 Constitution
+ 13 Wisdom
+
+Weight: 0~
+
+COPY_EXISTING ~c0ahalb1.itm~ ~override~
+SAY NAME1 ~Halberd~
+SAY NAME2 ~Bloodreaver +3~
+SAY DESC ~Long ago, there was once a vicious killer known only as the Bloodreaver. His halberd, as gruesome a weapon as the person himself, was believed to be cursed with the soul of a demon that fueled the murderer's madness, albeit the reverse may be just as likely. As the Bloodreaver killed a single man, a strange hunger appeared to take him over, causing him to kill with increasing ferocity. Even when wounded, the man's insatiable bloodlust did not fade, but appeared to amplify, making him a threat even to entire bands of heroes. The Bloodreaver eventually met his end at the hands of a single warrior, claimed by some to be the fabled Gray Knight.
+
+STATISTICS:
+
+Combat abilities:
+– When the wielder's Hit Points drop below 50%, <PRO_HESHE> gains +4 to damage but -4 to Armor Class
+– Upon killing any creature, gain one extra attack per round for two rounds
+
+THAC0: +3
+Damage: 1d10+6 (piercing)
+Speed Factor: 6
+Proficiency Type: Halberd
+Type: Two-handed
+Requires:
+ 13 Strength
+
+Weight: 11~
+
+COPY_EXISTING ~c0aring3.itm~ ~override~
+SAY NAME1 ~Ring~
+SAY NAME2 ~The Hallowed Savant~
+SAY DESC ~Ring of the First Reader: The Hallowed Savant
+Although you have never seen this ring before, you immediately recognize the crest of Candlekeep emblazoned upon its signet, a symbol you are all too familiar with. Once belonging to First Reader Tethtoril, this magical ring was given as a token of respect and friendship during a cultural exchange with the scholars of Lantan who once visited the halls of your former home, led by High Artificer Dedalus Dinelstrand. Despite the many years that have passed since then, the ring has remained well-kept and polished. Simply by holding it in your palm, you sense a nostalgic feeling of guidance, reminiscent of the wisdom bestowed upon you by the wise teachers of the library long ago.
+
+STATISTICS:
+
+Equipped abilities:
+– Lore: +50
+– Can memorize one extra divine spell of each level from 1st to 7th
+
+Weight: 0~
+
+COPY_EXISTING ~c0asw1h1.itm~ ~override~
+SAY NAME1 ~Bastard Sword~
+SAY NAME2 ~Noble's Blade +3~
+SAY DESC ~This finely-made sword belonged to Lord Tohral Powell of Neverwinter, a peerless swordsman and an aficionado of duelling. With this blade in hand, the noble earned his fame by defeating any man who challenged him in a fair duel. When his age caught up to him and he could no longer wield his sword with his former grace, however, he gifted his blade to his favorite student.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class vs. Humanoids: +2
+
+THAC0: +3, +5 vs. Humanoids
+Damage: 2d4+3, +5 vs. Humanoids (slashing)
+Speed Factor: 5
+Proficiency Type: Bastard Sword
+Type: One-handed
+Requires:
+ 11 Strength
+
+Weight: 7~
+
+COPY_EXISTING ~c0asw1h2.itm~ ~override~
+	LPF	ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = ELEC duration = 1 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
+    LPF ALTER_EFFECT INT_VAR match_opcode = 142 parameter2 = c0aicon6 END
+    LPF ALTER_EFFECT INT_VAR match_opcode = 139 parameter1 = RESOLVE_STR_REF (~Shocked~) END
+SAY NAME1 ~Long Sword~
+SAY NAME2 ~Shockblade +4~
+SAY DESC ~This weapon is less of a sword than a strange mechanical device in the rough shape of a sword. It is branded with the sigil of the Mideveningwalker clan, a Lantanese family who specializes in creating mechanisms that harness electrical energy, this blade being one such example. Each strike releases a strong electrical current into the victim, causing electrocution that damages their body and potentially paralyzes them.
+
+STATISTICS:
+
+Combat abilities:
+– On a failed Save vs. Spells at -2, targets become Shocked for one turn, suffering a 10% chance every round to become Paralyzed for 1 round.
+– Slaying a target causing them to burst with a pulse of electricity, dealing 3d6 electrical damage to all enemies within a 20-ft. radius
+
+THAC0: +4
+Damage: 1d8+2, +2d8 electrical
+Damage type: slashing
+Speed Factor: 4
+Proficiency Type: Long Sword
+Type: One-handed
+Requires:
+ 6 Strength
+
+Weight: 4~
+
+COPY_EXISTING ~c0auss01.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 177
+	  target = 1
+	  timing = 2
+	  parameter1 = IDS_OF_SYMBOL (~KIT~ ~C0AURA~)
+	  parameter2 = 9
+	STR_VAR
+	  resource = C0AUSS1A
+END
+SAY NAME1 ~Short Sword~
+SAY NAME2 ~Sagacity +4~
+SAY DESC ~Though Lantanese artificers rarely craft traditional weaponry, the few that exist are unrivaled in their effectiveness and ingenuity. Ever since gaining the rank of High Artificer, Dedalus had little time to create his own personal artifacts, this sleek platinum blade being among his last. The sword itself is of flawless balance, but its power is in the hidden mechanisms within its grip. While wielded, it uses the wielder's intellect to guide its strikes, following their thoughts with blinding speed. Those with a brilliant mind wield the sword with the skill of a seasoned blademaster. Those without are capable of doing little more than swinging clumsily and ineffectually.
+
+For some strange reason attributed to its design, this sword may only be wielded in the right hand. Attempting to use it in the left hand causes a strange disconnection between the hand and the wielder's mind, rendering it nigh-unusable.
+
+STATISTICS:
+
+Combat abilities:
+– Bonuses to hit and damage based on Strength do not apply to this weapon. Instead, this weapon gains bonuses to hit based on Intelligence
+– Critical Hit Chance: +10% (this weapon)
+– 2 attacks per round (Artificers, 1.5 for non-Artificers)
+
+Equipped abilities:
+– Wielder is immune to critical hits
+
+THAC0: +4
+Damage: 1d6+6 (piercing)
+Speed Factor: 0
+Proficiency Type: Short Sword
+Type: One-handed
+Requires:
+ 5 Strength
+ 16 Intelligence
+
+Weight: 1~
+
+COPY_EXISTING ~c0auss01.spl~ ~override~
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1A END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1B END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1C END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1D END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1E END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1F END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1G END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1H END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1I END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1J END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1K END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1L END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1M END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1N END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1O END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1P END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0AUSS1Q END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 1 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1A END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 2 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1B END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 3 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1C END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 4 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1D END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 5 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1E END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 6 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1F END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 7 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1G END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 16 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1H END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 17 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1I END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 18 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1J END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 19 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1K END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 20 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1L END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 21 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1M END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 22 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1N END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 23 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1O END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 24 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1P END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 25 parameter2 = %C0AUINT% STR_VAR resource = C0AUSS1Q END
+
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1b.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = %-3% END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1c.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = %-3% END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1d.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = %-2% END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1e.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = %-2% END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1f.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = %-1% END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1g.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = %-1% END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1h.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 0 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1i.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 1 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1j.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 1 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1k.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 3 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1l.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 3 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1m.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 4 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1n.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 4 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1o.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 5 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1p.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 6 END
+COPY_EXISTING ~c0auss1a.spl~ ~override/c0auss1q.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 306 parameter1 = 7 END
+		
+COPY_EXISTING ~c0abrac4.spl~ ~override~
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4A END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4B END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4C END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4D END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4E END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4F END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4G END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 duration = 9 parameter1 = 1 STR_VAR resource = C0ABRA4H END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 18 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4A END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 19 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4B END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 20 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4C END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 21 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4D END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 22 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4E END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 23 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4F END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 24 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4G END
+		LPF	ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 duration = 9 parameter1 = 25 parameter2 = %C0AUINT% STR_VAR resource = C0ABRA4H END
+COPY_EXISTING ~c0abrac4.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 177
+	  target = 1
+	  timing = 2
+	  parameter1 = IDS_OF_SYMBOL (~KIT~ ~C0AURA~)
+	  parameter2 = 9
+	STR_VAR
+	  resource = C0ABRA4A
+END
+SAY NAME1 ~Gloves~
+SAY NAME2 ~Gauntlets of Perspicacity~
+SAY DESC ~The people of Lantan, the nation of knowledge and invention, are rarely known for being warriors. The small stature of gnomes lends itself poorly towards the field of physical combat. To compensate for this weakness among their people, Lantanese artificers have designed various artifacts designed to enhance their militant groups' combat prowess. These gauntlets—though experimental—are infused with enchantments that allow the wearer to use their intuition to strike more accurately in battle, often striking vital points with uncanny ease. However, the wearer finds themselves overly focused on offense, leaving more openings in their guard.
+
+STATISTICS:
+
+Equipped abilities:
+– Melee Critical Hit Rate: +1, additional +1 at 19, 21, 23 and 25 Intelligence
+– Melee THAC0: +1, additional +1 at 18, 20, 22 and 24 Intelligence
+– Armor Class: -4 penalty (Artificers: -2)
+
+Requires:
+ 17 Intelligence
+
+Weight: 2~
+
+COPY_EXISTING ~C0ABRA4B.spl~ ~override/C0ABRA4C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 284 parameter1 = 2 END
+COPY_EXISTING ~C0ABRA4C.spl~ ~override/C0ABRA4D.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 301 parameter1 = 2 END
+COPY_EXISTING ~C0ABRA4D.spl~ ~override/C0ABRA4E.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 284 parameter1 = 3 END
+COPY_EXISTING ~C0ABRA4E.spl~ ~override/C0ABRA4F.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 301 parameter1 = 3 END
+COPY_EXISTING ~C0ABRA4F.spl~ ~override/C0ABRA4G.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 284 parameter1 = 4 END
+COPY_EXISTING ~C0ABRA4G.spl~ ~override/C0ABRA4H.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode = 301 parameter1 = 4 END
+/*
+COPY_EXISTING ~c0ahamm1.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0AURA~))
+	  parameter2 = 9
+	  power = 1
+	  special = RESOLVE_STR_REF (~Artificer~)
+END
+SAY NAME1 ~Giant Hammer~
+SAY NAME2 ~Mechanum Hammer~
+SAY DESC ~Mounted knights cannot effectively use pole arms while on horseback, and as a result, many weapons have been altered so they may be used one-handed. The horseman's war hammer is made entirely of steel and has a shaft about eighteen inches long. Powerful magical energy flows through this weapon, though its origins are nondescript.
+
+STATISTICS:
+
+THAC0: +3, +6 vs. chaotic
+Damage: 2d4+4, +8 vs. chaotic
+Damage type: crushing
+Speed Factor: 9
+Proficiency Type: War Hammer
+Type: One-handed
+Requires:
+ 21 Strength
+ 19 Intelligence
+
+Weight: 18~
+*/
+
+COPY_EXISTING ~c0asmok1.spl~ ~override~
+READ_LONG 0x64 "abil_off"
+READ_SHORT 0x68 "abil_num"
+SET "delta" = 0
+FOR (index = 0; index < abil_num; index = index + 1) BEGIN
+WRITE_SHORT (%abil_off% + (0x28 * %index%) + 0x26) ~%c0abomb3%~
+END
+  LPF ALTER_EFFECT
+    INT_VAR
+      match_opcode = 139 // display string
+ parameter1 = RESOLVE_STR_REF (~Stunned~)
+END
+
+COPY_EXISTING ~c0asmok2.spl~ ~override~
+READ_LONG 0x64 "abil_off"
+READ_SHORT 0x68 "abil_num"
+SET "delta" = 0
+FOR (index = 0; index < abil_num; index = index + 1) BEGIN
+WRITE_SHORT (%abil_off% + (0x28 * %index%) + 0x26) ~%c0akeg1%~
+END
+  LPF ALTER_EFFECT
+    INT_VAR
+      match_opcode = 139 // display string
+ parameter1 = RESOLVE_STR_REF (~Stunned~)
+END
+
+COPY_EXISTING ~c0aarow1.itm~ ~override~
+SAY NAME1 ~Arrow~
+SAY NAME2 ~Smokepowder Arrow~
+SAY DESC ~Smokepowder is an alchemical compound with explosive properties. The knowledge of its production was gifted to the Lantanese during the Time of Troubles by their patron deity, Gond the Wonderbringer. Due to its immense destructive potential, the production of smokepowder is kept secret by the artificers of Lantan and its use is heavily restricted by the clergy of Gond.
+
+This arrow has been hollowed and filled with smokepowder, from which even a small amount will explode with devastating force upon impact.
+
+STATISTICS:
+
+Damage: 8d10 (Save vs. Breath at -2 for half)
+Damage type: fire
+Special: Targets within 10-ft. are stunned for one round on a failed Save vs. Breath at -2
+Launcher: Bow
+
+Weight: 1~
+
+COPY_EXISTING ~c0abull1.itm~ ~override~
+SAY NAME1 ~Bullet~
+SAY NAME2 ~Smokepowder Bullet~
+SAY DESC ~Smokepowder is an alchemical compound with explosive properties. The knowledge of its production was gifted to the Lantanese during the Time of Troubles by their patron deity, Gond the Wonderbringer. Due to its immense destructive potential, the production of smokepowder is kept secret by the artificers of Lantan and its use is heavily restricted by the clergy of Gond.
+
+This bullet has been hollowed and filled with smokepowder, from which even a small amount will explodeexplode with devastating force upon impact.
+
+STATISTICS:
+
+Damage: 8d10 (Save vs. Breath at -2 for half)
+Damage type: fire
+Special: Targets within 10-ft. are stunned for one round on a failed Save vs. Breath at -2
+Launcher: Sling
+
+Weight: 1~
+
+COPY_EXISTING ~c0abolt1.itm~ ~override~
+SAY NAME1 ~Bolt~
+SAY NAME2 ~Smokepowder Bolt~
+SAY DESC ~Smokepowder is an alchemical compound with explosive properties. The knowledge of its production was gifted to the Lantanese during the Time of Troubles by their patron deity, Gond the Wonderbringer. Due to its immense destructive potential, the production of smokepowder is kept secret by the artificers of Lantan and its use is heavily restricted by the clergy of Gond.
+
+This bolt has been hollowed and filled with smokepowder, from which even a small amount will explode with devastating force upon impact.
+
+STATISTICS:
+
+Damage: 8d10 (Save vs. Breath at -2 for half)
+Damage type: fire
+Special: Targets within 10-ft. are stunned for one round on a failed Save vs. Breath at -2
+Launcher: Crossbow
+
+Weight: 1~
+
+COPY_EXISTING ~c0akeg1.cre~ ~override~
+SAY NAME1 ~Smokepowder Barrel~
+SAY NAME2 ~Smokepowder Barrel~
+
+COPY_EXISTING ~c0akeg1.itm~ ~override~
+SAY NAME1 ~Barrel~
+SAY NAME2 ~Smokepowder Barrel~
+SAY DESC ~Smokepowder is an alchemical compound with explosive properties. The knowledge of its production was gifted to the Lantanese during the Time of Troubles by their patron deity, Gond the Wonderbringer. Due to its immense destructive potential, the production of smokepowder is kept secret by the artificers of Lantan and its use is heavily restricted by the clergy of Gond.
+
+This heavy keg contains no less than a hundred pounds of smokepowder, enough to unleash a truly catastrophic amount of destruction to anything within its area of impact. The barrel must first be set down upon a location and then struck by an attack, upon which it will detonate.
+
+STATISTICS:
+
+Damage: 20d10 (Save vs. Breath at -4 for half)
+Damage type: fire
+Special: Targets within 15-ft. are stunned for one round on a failed Save vs. Breath at -4
+
+Weight: 100~
+
+COPY_EXISTING ~c0akeg2.itm~ ~override~
+SAY NAME1 ~Pry Bar~
+SAY NAME2 ~Pry Bar~
+SAY DESC ~A pry bar, also known as a crowbar, is a hooked metal tool designed for forcing apart objects or removing nails.
+
+STATISTICS:
+
+Special: Dismantles smokepowder barrels and returns them to the user's inventory.
+
+Weight: 1~
+
+COPY_EXISTING ~c0aucry1.itm~ ~override~
+SAY NAME1 ~Crystal~
+SAY NAME2 ~Flame Crystal~
+SAY DESC ~This orange crystal, taken from the Elemental Plane of Fire, radiates an intense heat.
+
+STATISTICS:
+
+Weight: 1~
+
+COPY_EXISTING ~c0aucry2.itm~ ~override~
+SAY NAME1 ~Crystal~
+SAY NAME2 ~Frost Crystal~
+SAY DESC ~This pale crystal, taken from the Elemental Plane of Ice, radiates an unnatural chill.
+
+STATISTICS:
+
+Weight: 1~
+
+COPY_EXISTING ~c0aucry3.itm~ ~override~
+SAY NAME1 ~Crystal~
+SAY NAME2 ~Earth Crystal~
+SAY DESC ~This green crystal, taken from the Elemental Plane of Earth, emanates a sour scent.
+
+STATISTICS:
+
+Weight: 1~
+
+COPY_EXISTING ~c0aucry4.itm~ ~override~
+SAY NAME1 ~Crystal~
+SAY NAME2 ~Shock Crystal~
+SAY DESC ~This blue crystal, taken from the Elemental Plane of Air, causes a slight shock when touched.
+
+STATISTICS:
+
+Weight: 1~
+
+COPY_EXISTING ~c0aucry5.itm~ ~override~
+SAY NAME1 ~Crystal~
+SAY NAME2 ~Arcane Crystal~
+SAY DESC ~This violet crystal, taken from the strange spirit plane, seems almost alive.
+
+STATISTICS:
+
+Weight: 1~
+
+COPY_EXISTING ~c0autt3x.itm~ ~override~
+SAY NAME1 ~Aura's Wildsurge Amplifier (???)~
+SAY NAME2 ~Aura's Wildsurge Amplifier (???)~
+SAY DESC ~This experimental device is designed by Aura to amplify the abilities of a wild mage and allow them to surge at will. It appears to do so successfully, though Neera seems none too thrilled for wearing it, as its design is less than appealing.
+
+A rather large dent is present on the front of the device, and several of the glass lenses appear cracked with fragments missing. You doubt this thing is functional anymore.
+
+STATISTICS:
+
+Charge abilities (once per day):
+– Rapid Surge: For the next round, the wearer may cast without delay and has casting time reduced by 4. However, every spell cast during this time will incur a wild surge.
+
+Equipped abilities:
+– +10% probability that a wild surge will have positive effect
+– +2 bonus 1st level spells
+
+Weight: 0~
+
+COPY_EXISTING ~c0autt3z.itm~ ~override~
+SAY NAME1 ~Aura's Wildsurge Amplifier II~
+SAY NAME2 ~Aura's Wildsurge Amplifier II~
+SAY DESC ~This experimental device is designed by Aura to amplify the abilities of a wild mage and allow them to surge at will. It appears to do so successfully, though Neera seems none too thrilled for wearing it, as its design is less than appealing.
+
+Aura appears to have repaired and upgraded this strange device, and now it hums with energy.
+
+STATISTICS:
+
+Charge abilities (once per day):
+– Rapid Surge: For the next round, the wearer may cast without delay and has casting time reduced by 4. However, every spell cast during this time will incur a wild surge.
+
+Equipped abilities:
+– +15% probability that a wild surge will have positive effect
+– +2 bonus 1st to 3rd level spells
+
+Weight: 0~
+
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// SPELLS /////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+COPY_EXISTING ~c0auto7a.spl~ ~override~
+SAY NAME1 ~Teleport~
+SAY UNIDENTIFIED_DESC ~Teleport
+This unit may teleport to any place within its vision range at will.~
+COPY_EXISTING ~c0auto8a.spl~ ~override~
+SAY NAME1 ~Golem Slow~
+SAY UNIDENTIFIED_DESC ~Golem Slow
+Golem Slow causes creatures to move and attack at half of their normal rates for one turn. It negates Haste, but does not otherwise affect magically hasted or slowed creatures. Slowed creatures have an Armor Class and attack penalty of -4. Creatures save at -4 vs. Spell.~
+COPY_EXISTING ~c0auto9a.spl~ ~override~
+SAY NAME1 ~Golem Haste~
+SAY UNIDENTIFIED_DESC ~Golem Haste
+Golem Haste causes the golem and all allies around it to become hasted for one turn. Unlike the Haste spell, creatures are not fatigued when the spell ends.~
+COPY_EXISTING ~c0auto0a.spl~ ~override~
+SAY NAME1 ~Gas Cloud~
+SAY UNIDENTIFIED_DESC ~Gas Cloud
+The golem unleashes a billowing cloud of poisonous gas, poisoning all enemies within it for one damage per second for three rounds.~
+
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/c0au#sp2.PRO~
+COPY_EXISTING ~c0au#sp1.spl~ ~override~
+SAY NAME1 ~Create Autocannon~
+SAY UNIDENTIFIED_DESC ~Create Autocannon
+With this ability, an artificer may attempt to create a Lantanese Autocannon in the targeted location. The success of the ability is dependent on the artificer's Set Traps skill. This autocannon will become active upon an enemy creature entering its range. The autocannon is immobile and launches fiery missiles dealing 1d2 fire damage.
+
+Automatons have a 5% chance per round to become Overcharged, becoming Hasted and launching missiles at twice their normal rate.
+
+For each 15 points of Set Traps above 100 from the artificer, autocannons gain a +1 bonus to Armor Class and +5 bonus hit points.
+For each 50 points of Set Traps above 100 from the artificer, autocannons deal 1 additional point of fire damage.
+
+Once activated, autocannons last for two turns.~
+COPY_EXISTING ~c0au#at2.spl~ ~override~
+READ_LONG 0x64 "abil_off"
+READ_SHORT 0x68 "abil_num"
+SET "delta" = 0
+FOR (index = 0; index < abil_num; index = index + 1) BEGIN
+WRITE_SHORT (%abil_off% + (0x28 * %index%) + 0x26) ~%c0au#at1%~
+END
+COPY_EXISTING ~c0au#at2.spl~ ~override/c0au#at3.spl~
+LPF ALTER_EFFECT INT_VAR parameter1 = 1 END
+COPY_EXISTING ~c0au#at2.spl~ ~override/c0au#at4.spl~
+LPF ALTER_EFFECT INT_VAR parameter1 = 2 END
+COPY_EXISTING ~c0au#at2.spl~ ~override/c0au#at5.spl~
+LPF ALTER_EFFECT INT_VAR parameter1 = 3 END
+
+COPY_EXISTING ~c0au#sp2.spl~ ~override~
+READ_LONG 0x64 "abil_off"
+READ_SHORT 0x68 "abil_num"
+SET "delta" = 0
+FOR (index = 0; index < abil_num; index = index + 1) BEGIN
+WRITE_SHORT (%abil_off% + (0x28 * %index%) + 0x26) ~%c0au#sp2%~
+END
+
+COPY_EXISTING ~c0ajans.spl~ ~override~
+SAY NAME1 ~Create Splasher Mates~
+SAY UNIDENTIFIED_DESC ~Create Splasher Mates
+This ability crafts 5 of Aura and Jan's patented Flasher Master Splasher Mates, adding them to the character's inventory. Handle with care!~
+
+COPY_EXISTING ~c0ausp01.spl~ ~override~
+		LPF	ADD_SPELL_EFFECT
+			INT_VAR
+				insert_point = 0
+				opcode = 324
+				target = 2
+				parameter2 = POISN
+				duration = 1
+			STR_VAR
+				resource = EVAL ~%SOURCE_RES%~
+		END
+SAY NAME1 ~Poison Shroud~
+SAY UNIDENTIFIED_DESC ~Poison Shroud
+(Alteration)
+
+Level: 5
+Range: 0
+Duration: 3 rounds + 1 round/level
+Casting Time: 4
+Area of Effect: The caster
+Saving Throw: None
+
+This spell enshrouds the user with a miasmic cloak, protecting the caster from attacks made within a 5-ft. radius around the caster. An opponent that hits the caster with any weapons or spells within this radius suffers 6 poison damage + 1 additional poison damage per second for 6 seconds. Additionally, so long as the shroud is active, the caster is immune to poison.~
+
+COPY_EXISTING ~c0ausp02.spl~ ~override~
+READ_LONG 0x64 "abil_off"
+READ_SHORT 0x68 "abil_num"
+SET "delta" = 0
+FOR (index = 0; index < abil_num; index = index + 1) BEGIN
+WRITE_SHORT (%abil_off% + (0x28 * %index%) + 0x26) ~%c0ausp02%~
+END
+		LPF	ADD_SPELL_EFFECT
+			INT_VAR
+				insert_point = 0
+				opcode = 324
+				target = 2
+				parameter2 = POISN
+				duration = 1
+			STR_VAR
+				resource = EVAL ~%SOURCE_RES%~
+		END
+SAY NAME1 ~Poison Haze~
+SAY UNIDENTIFIED_DESC ~Poison Haze
+(Alteration)
+
+Level: 7
+Range: 40 ft.
+Duration: 1 turn
+Casting Time: 5
+Area of Effect: 15-ft. radius
+Saving Throw: Special
+
+This spell appears to be a modified variant of the Cloudkill spell– when cast, a ghostly green haze begins to enshroud the target area until it has expanded to an area of roughly 15-ft. radius. Those standing within the haze become sickly, suffering 2d8 poison damage each round, and creatures that fail a Saving Throws vs. Poison have their Strength, Dexterity and Constitution halved. Additionally, the haze obscures the vision of those standing within it, reducing their vision range and movement rate.
+
+The spell's primary effects last for five rounds for creatures who leave the haze.~
+
+COPY_EXISTING ~c0ausp03.spl~ ~override~
+READ_LONG 0x64 "abil_off"
+READ_SHORT 0x68 "abil_num"
+SET "delta" = 0
+FOR (index = 0; index < abil_num; index = index + 1) BEGIN
+WRITE_SHORT (%abil_off% + (0x28 * %index%) + 0x26) ~%c0ausp03%~
+END
+		LPF	ADD_SPELL_EFFECT
+			INT_VAR
+				insert_point = 0
+				opcode = 324
+				target = 2
+				parameter2 = POISN
+				duration = 1
+			STR_VAR
+				resource = EVAL ~%SOURCE_RES%~
+		END
+SAY NAME1 ~Poison Blast~
+SAY UNIDENTIFIED_DESC ~Poison Blast
+(Alteration)
+
+Level: 8
+Range: 40 ft.
+Duration: Instant
+Casting Time: 3
+Area of Effect: 15-ft. radius
+Saving Throw: 1/2 
+
+This powerful spell unleashes a large globule of deadly poison that violently explodes upon reaching its target location, instantly dealing poison damage equal to 1d10 per 2 caster levels (up to a maximum of 10d10), reducing all Saving Throws by 2 points, and dealing 2 additional poison damage per round for 5 rounds. Creatures who make a Saving Throw vs. Poison at -4 take half damage and avoid all secondary effects.~
+
+  

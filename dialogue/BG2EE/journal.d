@@ -1,0 +1,14 @@
+ADD_TRANS_ACTION INSPECT
+BEGIN 30 END
+BEGIN END
+~EraseJournalEntry(@1)~ IF ~EraseJournalEntry(34287)~
+
+ADD_TRANS_ACTION TANWIZ1
+BEGIN 0 END
+BEGIN END
+~EraseJournalEntry(@1)~ IF ~EraseJournalEntry(34247)~
+
+ADD_TRANS_ACTION HABREGA
+BEGIN 11 END
+BEGIN END
+~EraseJournalEntry(@1)~ IF ~EraseJournalEntry(34287)~

@@ -1,0 +1,8 @@
+// Branwen talks immediately when summoned.
+IF
+Global("C0AuraSummoned","GLOBAL",1)
+THEN
+RESPONSE #100
+Wait(1)
+StartDialogueNoSet([PC])
+END
