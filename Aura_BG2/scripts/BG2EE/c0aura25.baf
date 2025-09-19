@@ -1,0 +1,72 @@
+IF
+Global("C0AuraSummoned","GLOBAL",1)
+THEN
+RESPONSE #100
+Wait(1)
+StartDialogueNoSet([PC])
+END
+
+IF
+	InParty(Myself)
+	InMyArea(Player1)
+	!InMyArea([ENEMY])
+    AreaCheck("AR4500")
+	CombatCounter(0)
+	!StateCheck(Myself,CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+    GlobalGT("SarevokAlive","GLOBAL",3)
+	Global("C0AuraToBPocketPlane","GLOBAL",0)
+  THEN
+	RESPONSE #100
+	  SetInterrupt(FALSE)
+      Wait(2)
+	  SetGlobal("C0AuraToBPocketPlane","GLOBAL",1)
+	  StartDialogNoSet(Player1)
+	  SetInterrupt(TRUE)
+END
+
+IF
+	InParty(Myself)
+	InMyArea(Player1)
+	!InMyArea([ENEMY])
+    AreaCheck("AR4500")
+	See("LeavePocketPlane")
+	CombatCounter(0)
+	!StateCheck(Myself,CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("ChallengesDone","GLOBAL",1)
+	Global("C0AuraImoenToBFlirt","GLOBAL",1)
+	GlobalLT("C0AuraImoenToB1","GLOBAL",4)
+  THEN
+	RESPONSE #100
+	  SetInterrupt(FALSE)
+      Wait(2)
+	  SetGlobal("C0AuraImoenToB1","GLOBAL",4)
+	  Interact("Imoen2")
+	  SetInterrupt(TRUE)
+END
+
+IF
+	InParty(Myself)
+	InMyArea(Player1)
+	!InMyArea([ENEMY])
+    AreaCheck("AR4500")
+	See("LeavePocketPlane")
+	CombatCounter(0)
+	!StateCheck(Myself,CD_STATE_NOTVALID)
+	!StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("ChallengesDone","GLOBAL",1)
+	Global("C0AuraRomanceActive","GLOBAL",2)
+	Global("C0AuraToBLoveTalk","GLOBAL",15)
+  THEN
+	RESPONSE #100
+	  SetInterrupt(FALSE)
+  	  SetGlobal("C0AuraToBLoveTalk","GLOBAL",16)
+	  ClearAllActions()
+	  StartCutSceneMode()
+      Wait(2)
+	  MoveToObject(Player1)
+	  Wait(1)
+	  ActionOverride(Player1,StartDialog("player1",Player1))
+	  SetInterrupt(TRUE)
+END

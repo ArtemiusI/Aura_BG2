@@ -1,7 +1,0 @@
-IF
-  Global("C0AuraBegin","GLOBAL",3)
-THEN
-  RESPONSE #100
-    ForceRandomEncounterEntry("C0AUF1","En")
-    Continue()
-END

@@ -1,0 +1,155 @@
+IF
+    Global("OneTimeWarning","C0AURB",0)
+    Delay(2)
+THEN
+    RESPONSE #100
+    SetGlobal("OneTimeWarning","C0AURB",1)
+	Explore()
+    DisplayStringPoint([379.338],~Beware! The overwhelming heat of the plane of fire is deadly to those without sufficient protection. All creatures with less than 50% fire resistance will take continuously suffer damage until certain death!~)
+    Continue()
+END
+
+IF
+    CheckStatLT(Player1,50,RESISTFIRE)
+    Delay(2)
+THEN
+    RESPONSE #100
+    CreateVisualEffectObject("ICFIRSDI",Player1)
+    ApplyDamagePercent(Player1,25,FIRE)
+    Continue()
+END
+IF
+    CheckStatLT(Player2,50,RESISTFIRE)
+    Delay(2)
+THEN
+    RESPONSE #100
+    CreateVisualEffectObject("ICFIRSDI",Player2)
+    ApplyDamagePercent(Player2,25,FIRE)
+    Continue()
+END
+IF
+    CheckStatLT(Player3,50,RESISTFIRE)
+    Delay(2)
+THEN
+    RESPONSE #100
+    CreateVisualEffectObject("ICFIRSDI",Player3)
+    ApplyDamagePercent(Player3,25,FIRE)
+    Continue()
+END
+IF
+    CheckStatLT(Player4,50,RESISTFIRE)
+    Delay(2)
+THEN
+    RESPONSE #100
+    CreateVisualEffectObject("ICFIRSDI",Player4)
+    ApplyDamagePercent(Player4,25,FIRE)
+    Continue()
+END
+IF
+    CheckStatLT(Player5,50,RESISTFIRE)
+    Delay(2)
+THEN
+    RESPONSE #100
+    CreateVisualEffectObject("ICFIRSDI",Player5)
+    ApplyDamagePercent(Player5,25,FIRE)
+    Continue()
+END
+IF
+    CheckStatLT(Player6,50,RESISTFIRE)
+    Delay(2)
+THEN
+    RESPONSE #100
+    CreateVisualEffectObject("ICFIRSDI",Player6)
+    ApplyDamagePercent(Player6,25,FIRE)
+    Continue()
+END
+
+IF
+    Global("C0AuraBG2Quest2FireBattle","GLOBAL",2)
+    Dead("C0AFIR01")
+    CombatCounter(0)
+    Delay(2)
+THEN
+    RESPONSE #100
+        SetGlobal("C0AuraBG2Quest2FireBattle","GLOBAL",3)
+        StartCutSceneMode()
+        Wait(1)
+        FadeToColor([30.0],0)
+        Wait(1)
+        ActionOverride(Player1,JumpToPoint([398.342]))
+        ActionOverride(Player1,Face(N))
+        ActionOverride(Player2,JumpToPoint([441.254]))
+        ActionOverride(Player2,Face(NE))
+        ActionOverride(Player3,JumpToPoint([376.228]))
+        ActionOverride(Player3,Face(E))
+        ActionOverride(Player4,JumpToPoint([332.258]))
+        ActionOverride(Player4,Face(SE))
+        ActionOverride(Player5,JumpToPoint([456.308]))
+        ActionOverride(Player5,Face(S))
+        ActionOverride(Player6,JumpToPoint([335.304]))
+        ActionOverride(Player6,Face(SW))
+        Wait(1)
+        FadeFromColor([30.0],0)
+        Wait(2)
+        ActionOverride("C0Aura",StartDialogNoSet(Player1))
+END
+
+IF
+    CombatCounter(0)
+    Global("C0KarihiRetreat","GLOBAL",1)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        SetGlobal("C0KarihiRetreat","GLOBAL",0)
+        Activate("C0AUKARI")
+        ApplySpell("C0AUKARI",CLERIC_HEAL)
+        SetInterrupt(TRUE)
+        Continue()
+END
+
+IF
+    Global("C0AuraBG2Quest2FireBattle","GLOBAL",7)
+    Global("BossBattleWarning","C0AURB",0)
+    Delay(2)
+THEN
+    RESPONSE #100
+    SetGlobal("BossBattleWarning","C0AURB",1)
+	Explore()
+    DisplayStringPoint([615.454],~The Flames of Sovereignty engulf the battlefield, increasing the fire resistance of the channeler's allies while reducing those of foes!~)
+    Continue()
+END
+
+IF
+    Delay(2)
+    NumDeadGT("C0AFIR08",22)
+    Global("Stage3","C0AURB",0)
+THEN
+    RESPONSE #100
+    SetGlobal("Stage3","C0AURB",1)
+    CreateVisualEffect("ICFIRSDI",[852.401])
+    CreateCreature("C0AFIR09",[852.401],W)
+    SmallWait(5)
+    CreateVisualEffect("ICFIRSDI",[802.224])
+    CreateCreature("C0AFIR10",[802.224],W)
+    Continue()
+END
+
+IF
+    Dead("C0AFIR05")
+    Global("C0KarihiRetreat","GLOBAL",0)
+    Global("C0AuraBG2Quest2FireBattle","GLOBAL",7)
+THEN
+    RESPONSE #100
+    SetGlobal("C0AuraBG2Quest2FireBattle","GLOBAL",8)
+    ActionOverride("C0AUKARI",ForceSpellRES("C0AQEF16","C0Aura"))
+    Wait(2)
+    ActionOverride("C0Aura",StartDialogNoSet(Player1))
+END
+
+IF
+    Global("C0AuraBG2Quest2FireBattle","GLOBAL",9)
+THEN
+    RESPONSE #100
+    Wait(1)
+    ActionOverride("C0Aura",StartDialogNoSet(Player1))
+END
