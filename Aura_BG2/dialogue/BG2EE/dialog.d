@@ -1387,7 +1387,7 @@ END
 CHAIN C0AASCL QUEST1-37-2
 ~A pity that he ultimately took such an unsavory path, for it led him to a destructive end. Such is the way of the underworld. I should have given him more incentive to stay, and follow a more productive path.~
 END
-  ++ ~Marek... the Iron Throne's assassin was your mentor?~ + QUEST1-37-3
+  ++ ~Marek... the Iron Throne's assassin was your student?~ + QUEST1-37-3
   ++ ~Looks like I have a bigger quarrel with you than I thought.~ + QUEST1-37-3
   ++ ~I have you to thank for that poisoning incident at Baldur's Gate?~ + QUEST1-37-3
   ++ ~Your profession of poisoning and torturing desperate folk is considered productive?~ + QUEST1-37-4
@@ -1474,11 +1474,22 @@ I... what am I even doing? There's nothing I can do here. Why am I even pretendi
 */
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",40)~ THEN C0AEX1 QUEST1-40
-~Oh dear, dear Asclepios. I was wondering what was taking you so long. Looks like you've seen better days.~
+~ I was wondering what was taking you so long. Looks like you've seen better days.~
 DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",41)~
 == C0AASCL ~*cough*... *cough*~
 == C0AASCL ~I doubt you of all people would be unaware of what happened. I was wondering whether you would even appear.~
-== C0AEX1 ~(Placeholder, mystery figure and Asclepios talk, then they leave him to die.)~
+== C0AEX1 ~You're going to go back? You'd go to your death.~
+== C0AASCL ~I have a patient. My duty is to the ailing.~
+== C0AEX1 ~He's already dead.~
+== C0AASCL ~...~
+== C0AEX1 ~Oh my, dear Asclepios. I'm hurt. All this time, I believed we are alike.~
+== C0AASCL ~Hmm. Contrarily, I have never been under such a mistaken belief. From the day we first spoke, I understood. Your mind is undeniably brilliant. With the apt resources, even I could not compare.~
+== C0AASCL ~But you lack the quality which makes a true researcher—the vision for the future. In that, you cannot match her.~
+== C0AEX1 ~...~
+== C0AASCL ~I believe there is nothing else to be said. I cannot help you any further... and whether you can see the truth for yourself depends on your own ability now. Though I cannot help but doubt your chance of success.~
+== C0AEX1 ~It's truly a shame, Asclepios. Even though I'm disappointed in you... I've liked our association for the past few years. And if you asked me to right now... I would still save you.~
+== C0AASCL ~I decline.~
+== C0AEX1 ~As you wish.~
 == C0AEX1 ~I'll leave you to die in peace.~
 DO ~ClearAllActions()
   	StartCutSceneMode()

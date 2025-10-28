@@ -62,7 +62,7 @@ DO ~SetGlobal("C0AuraCerndToB1","GLOBAL",1)~
 == BC0AUR25 ~Hmm?~
 == BCERND ~ROAR.~
 == BC0AUR25 ~Eep! D–don't do that.~
-== BCERND ~Ha ha! I suppose some instincts cannot be abandoned. Beneath the surface, your nature has not changed, Aura.~
+== BCERND ~Ha ha! I suppose some instincts cannot be abandoned. Beneath the surface, your nature has not changed, Aura. But I see no fault in that.~
 EXIT
 
 // Dorn
@@ -143,7 +143,7 @@ DO ~SetGlobal("C0AuraHexxatToB1","GLOBAL",1)~
 == BHEXXA25 ~And should I simply stake myself? I imagine many be pleased to see that, including you.~
 == BC0AUR25 ~No, I—~
 == BHEXXA25 ~Perhaps that is going too far. I know you mean well—you're incapable of doing any less. But I'd expect you to know better than to talk about what you can't understand.~
-== BC0AUR25 ~But... fair enough. I definitely can't. I'd choose death over what's happened to you. I'm sorry, Hexxat.~
+== BC0AUR25 ~But—fair enough. I definitely can't. I'd choose death over what's happened to you. I'm sorry, Hexxat.~
 == BHEXXA25 ~You've got nothing to be sorry about. Just don't bring it up again.~
 EXIT
 
@@ -169,7 +169,7 @@ DO ~SetGlobal("C0AuraImoenToB1","GLOBAL",1)~
 == BIMOEN25 ~I'm not going to lie, it's not easy. I've changed more recently than I can keep up with, and not all of it is willingly. But I'm different now. I'm playing a part in things instead of just being a victim, and what calms me the most is being able to make a difference.~
 == BC0AUR25 ~You sure? Because if I feel like you're pushing yourself, I'm going to... to...~
 == BIMOEN25 ~Aw, come on. We both know you're too nice to try and be forceful.~
-== BC0AUR25 ~*sigh* Yes, I am. But I can still sedate you during the evenings that you spend too long awake holding your spellbook, you know? For your own good.~
+== BC0AUR25 ~*sigh* Yes, I am. But I can still sedate you during the evenings where you're spending too much time peering over your spellbook, you know? For your own good.~
 == BIMOEN25 ~You—! You know, Aura, if you weren't such a blinding ray of sunshine, you'd seriously be one of the scariest people I've ever met.~
 == BIMOEN25 IF ~!Global("ImoenRomanceActive","GLOBAL",2) !Global("C0AuraRomanceActive","GLOBAL",2)~ THEN ~Instead, though? You're just plain endearing.~
 == BC0AUR25 IF ~!Global("ImoenRomanceActive","GLOBAL",2) !Global("C0AuraRomanceActive","GLOBAL",2)~ THEN ~Oh, come on... saying stuff like that isn't going to stop me from doing what I have to, you know... probably.~
@@ -229,9 +229,9 @@ DO ~SetGlobal("C0AuraImoenToB1","GLOBAL",3)~
 == BC0AUR25 ~Actually, I don't know. I'm happy just to be with you, Imoen, but ever since we started talking about this, I've only gotten more worried that we'll never get a chance to see it... don't forget, you're involved too. You're as much a Bhaalspawn as <CHARNAME> is.~
 == BIMOEN25 ~That... doesn't scare you, does it?~
 == BC0AUR25 ~No! I'm sorry, Imoen, that's not what I—~
-== BIMOEN25 ~I get it, really, I do. But I'm not just going to up and disappear on you, I promise. I'll fight as hard as I can to make sure I can have a future. And you around gives me more reason to.~
+== BIMOEN25 ~I get it, really, I do. But I'm not just going to up and disappear on you, I promise. I'll fight as hard as I can to make sure I can have a future. And you being around gives me more reason to.~
 == BC0AUR25 ~Imoen...~
-== BIMOEN25 ~Though now that I think of it, maybe now's the best time to set some things straight... hey, come here a moment, will you?~
+== BIMOEN25 ~Though now that you've reminded me, maybe now's the best time to set some things straight... hey, come here a moment, will you?~
 == BC0AUR25 ~Okay... what's—~
 == BIMOEN25 ~...Mwah.~
 == BC0AUR25 ~H–hey... we're still—~
@@ -530,9 +530,9 @@ DO ~SetGlobal("C0AuraSarevok1","GLOBAL",2)~
 == BC0AUR25 ~She... she could have returned to the right path. No matter how darkly her soul was stained in blood, still, that is what her kin... what she would have wanted. I owed a debt, but I failed... because of you, Sarevok.~
 == BSAREV25 ~Do you expect remorse? The atrocities of my past life are many, girl. One more shall hardly serve as any greater of a burden. Blame all the evils of the world upon me, if that provides any measure of comfort. I care not a whit.~
 == BC0AUR25 ~...Akuji mi ni tomaru.~
-== BSAREV25 ~"Evil clings to the body"?~
-== BC0AUR25 ~You...~
-== BSAREV25 ~My body became dust with my first defeat, and this stolen life is my proof that there will be no karma to damn me. Do not expect me to be threatened so easily, foolish whelp.~
+== BSAREV25 ~All sins cling to one's body, do they?~
+== BC0AUR25 ~You—~
+== BSAREV25 ~A hollow warning for one such as I. My body became dust with my first defeat, and this stolen life is my proof that there will be no karma to damn me. Do not expect me to be threatened so easily, foolish whelp.~
 == BC0AUR25 ~...~
 == BSAREV25 ~Now begone, and pester one who might care with your admonishments.~
 EXIT
@@ -582,7 +582,7 @@ DO ~SetGlobal("C0AuraSarevokGood1","GLOBAL",2)~
 == BC0AUR25 ~Maybe. But if we gave up simply because we think it's "too late"... we'll only be tortured by regrets for what time we have remaining.~
 == BSAREV25 ~And you believe that I, Sarevok, the madman and scourge of the Sword Coast, might feel something resembling 'regret'?~
 == BC0AUR25 ~Before, I would have never considered it. Now... I want to at least have a bit of faith. I know there are those would want that... even if they're no longer with us.~
-== BSAREV25 ~You speak as though you hardly believe your own words. However... such an offer may be more than I deserve. I will consider it.~
+== BSAREV25 ~You speak as though you hardly believe your own words. However... such an offer may be more than I deserve. I will consider your words.~
 EXIT
 
 // Valygar

@@ -52,7 +52,8 @@ Range("C0Aura",15)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraAerieFriendship","GLOBAL",2)~ THEN BAERIE C0AuraAerie3
 ~What god to you worship, Aura? I thought all Lantanese inventors followed Gond the Wonderbringer, but I don't hear you mentioning His name much.~ [C0BLANK]
-DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
+DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)
+RealSetGlobalTimer("C0AuraAerieRestTalkTimer","GLOBAL",3600)~
 == BC0AURA2 ~I follow the ideals of the Gondar clergy. Artifice, invention, craft. But I... don't pray to Gond.~
 == BAERIE ~Is there a difference between the two? If you follow the things that Gond stands for, isn't that the same thing as worshipping the god?~
 == BC0AURA2 ~I'm not sure. I used to hang tapestries in my room with the gods who embodied what I respected. Besides Gond, there was Mystra for Magic, Oghma for Wisdom, Deneir for Knowledge... it's hard for me to put one god above the rest.~
@@ -138,7 +139,8 @@ Range("C0Aura",15)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraAerieFriendship","GLOBAL",3)~ THEN BAERIE C0AuraAerie4
 ~Aura, do you have a moment? I could use some help!~ [C0BLANK]
-DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
+DO ~RealSetGlobalTimer("C0AuraAerieRestTalkTimer","GLOBAL",ONE_HOUR)
+IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
 == BC0AURA2 ~Hold on, just let me... aha! Okay, what do you need? I'll help however I can.~
 == BAERIE ~I've been trying to figure out some of these spells... I've been practicing and studying, but it feels like I've hit a dead end. I thought maybe you could help.~
 == BC0AURA2 ~Sure, I'll do what I can, but... I'm not a true mage, you know. Wouldn't you understand more than I do?~
@@ -174,8 +176,7 @@ DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
 == BAERIE ~That's a funny way to think about things. Well, to learn about them, more precisely. Now that I think of it, maybe I've got my own way too...~
 == BC0AURA2 ~Ooh, sounds like a story, I can tell. Why don't you tell me about it?~
 == BAERIE ~Maybe next time. <CHARNAME>'s going to be annoyed if we keep standing around chatting for any longer.~
-END
-
+EXIT
 
 CHAIN
 IF ~InParty("C0Aura")
@@ -196,6 +197,118 @@ DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
 == BC0AURA2 ~Maybe you should try making up a tune of your own? Especially with how pretty your voice is... erm, I'd definitely like to hear one.~
 == BAERIE ~Oh, I don't think I've got that sort of talent. If I do, though... I'll definitely have to show you... heehee.~
 EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Aerie",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraAerieFriendship","GLOBAL",6)~ THEN BAERIE C0AuraAerie6
+~If you don't mind, Aura... could I ask you a question? It's a bit personal. Maybe rather silly, even.~ [C0BLANK]
+DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
+== BC0AURA2 ~From you, Aerie? Sure. I promise I won't laugh, either, if you don't want me to.~
+== BAERIE ~You just might, but I don't really mind. I was just wondering... what exactly do you dream of when you sleep? During those times we read together, and you start to fall asleep on my shoulder, and I start hearing some things you say while dreaming... it's made me curious.~
+== BC0AURA2 ~What I dream about? Well... it's never anything important. Not to what's going on right now, anyway. Usually it's about some idea I have, or about the past... happy things, most of the time.~
+== BAERIE ~Oh. That sounds nice... you always seem to be at peace.~
+== BC0AURA2 ~It wasn't always that way. I've had some dark times too... but I've been able to put those days behind me.~
+== BAERIE ~That's... a good thing. I'm happy for you.~
+== BC0AURA2 ~Do you have peaceful dreams too, Aerie? Or, are they...~
+== BAERIE ~Sometimes... usually, I dream that I'm flying again. But I've started to become afraid of those thoughts. I'm worried they'll make me desperate for what I've lost all over again.~
+== BC0AURA2 ~...~
+== BAERIE ~I'm sorry. I didn't mean to make things uncomfortable.~
+== BC0AURA2 ~Hey, Aerie...~
+== BAERIE ~Yes?~
+== BC0AURA2 ~The next time we rest... would you show me your scars? And... if there's anything you want to tell me about. I can listen. Just me.~
+== BAERIE ~I...~
+== BAERIE ~I'd like that.~
+EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Aerie",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraAerieFriendship","GLOBAL",7)~ THEN BAERIE C0AuraAerie7
+~Aura? Is something the matter?~ [C0BLANK]
+DO ~SetGlobalTimer("C0AuraAerieFriendshipRestTalkTimer","GLOBAL",THREE_DAYS)
+IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
+== BC0AURA2 ~Hmm? Oh, no! Not at all. Why would you ever think so? Haha...~
+== BAERIE ~It's just that... you haven't really seemed yourself lately. Not around me, at least. Usually you're always happy to spend time with me and talk about what you've been doing.~
+== BC0AURA2 ~Well...~
+== BAERIE ~You're not avoiding me, are you? If I've done something to upset you, I'm sorry.~
+== BC0AURA2 ~N–no! Absolutely not, it's my fault for not saying anything. Actually, the truth is I've been working on something... for you.~
+== BAERIE ~F–for me?~
+== BC0AURA2 ~I was trying to keep it a surprise... and it's been taking up all my attention, so I haven't really had anything else to talk about.~
+== BAERIE ~Oh. I'm really touched that you've been making something for me this entire time... well, if it's a surprise, I probably shouldn't ask what it is until it's ready, right?~
+== BC0AURA2 ~I really shouldn't give it away right now. I know you'll really love it when it's done, though! I just hope it'll work. I don't want to have disappointed you after making you wait.~
+== BAERIE ~You're really making me curious now... I just hope you won't tire yourself out over it. You're looking a little sleepy right now.~
+== BC0AURA2 ~*yaaawn* Hehe, I don't know what you're talking about...~
+EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Aerie",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraAerieFriendship","GLOBAL",9)~ THEN BAERIE C0AuraAerie8
+~D-does anything still hurt?~ [C0BLANK]
+DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
+== BC0AURA2 ~N... no—*oww*!~
+== BAERIE ~*sigh*~
+END
+  ++ ~What happened?~ EXTERN BC0AURA2 C0AuraAerie8-1
+  ++ ~(Say nothing)~ EXTERN BAERIE C0AuraAerie8-2
+
+CHAIN BC0AURA2 C0AuraAerie8-1
+~I... tried to make a surprise present for Aerie. It... didn't work.~
+EXTERN BAERIE C0AuraAerie8-2
+
+CHAIN BAERIE C0AuraAerie8-2
+~I don't even know what to say... when you told me what it is you made, those metal wings... I think you called them a 'prototype'? I thought I was dreaming at first. Then I saw what happened and my heart nearly stopped.~
+== BC0AURA2 ~I'm... I'm sorry. I overestimated how stable the structure would be, and then... I thought I'd surprise you when it was finally working. Instead all I had to show for my work was some broken metals and a pile of scrap metal.~
+== BAERIE ~You nearly had me scared to death. I'm touched that you wanted to do something like this for me, but do you know how awful I would've felt if you hurt yourself even more badly, or worse?~
+== BC0AURA2 ~*sigh* I didn't have it on my mind at all. My thoughts were entirely on how I could do something to make you happy...~
+== BAERIE ~Oh...~
+== BC0AURA2 ~Oof! Aerie, I'm still recovering, it hurts when you're hugging so tightly...~
+== BAERIE ~S-sorry. But this is my fault... this is because I've been making you listen to my feelings. If I didn't make you think I was still suffering because of my wings, then you...~
+== BC0AURA2 ~No. No! I didn't do this out of pity. I just... wanted to do something for you as a friend. That's all.~
+== BAERIE ~I know. But, Aura... even though you didn't manage to build me a new pair of wings today... knowing that you'd try already makes me happy.~
+== BC0AURA2 ~Really? Then I guess this awful fall I took was worth it after all... hehe.~
+== BAERIE ~Don't laugh. You're still owed a scolding for half scaring me to death, you know that?~
+== BC0AURA2 ~Alright... but, um, just save it for when I'm not aching all over anymore. I'll take all the scolding I deserve then.~
+== BAERIE ~Oh, you silly creature! I wasn't being serious. Just do me a favor and have some rest. I'll check up on you again in the morning.~
+DO ~RestParty()~ EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Aerie",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraAerieFriendship","GLOBAL",10)~ THEN BC0AURA2 C0AuraAerie9
+~Aerie?~ [C0BLANK]
+DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
+== BAERIE ~I'm here. How's your body feeling, Aura?~
+== BC0AURA2 ~All better now, thanks to all the care you've given me. Actually, I wanted to give you a gift. A proper one, this time.~
+== BAERIE ~That's... a bracelet? It's beautiful.~
+== BC0AURA2 ~I made it out of the metal from the wings. I'm... not too good at delicate metalwork, so it's a bit plain. But I thought you might still like it.~
+== BAERIE ~I—I do. It's a lovely gift...~
+== BC0AURA2 ~Hehe...~
+== BC0AURA2 ~You know, Aerie... about my little failed project... even though I haven't made such a huge miscalculation in a long time, it reminded me that I still haven't truly mastered everything there is to know yet. I still have to go back to the basics.~
+== BAERIE ~I think you're being too hard on yourself. The wings might not have worked... but you've done so much that no one else could. Even now, I still can't see you making a mistake.~
+== BC0AURA2 ~Really? I'm happy you think so, Aerie, but... here, I want you to look at this.~
+== BAERIE ~T-there's a burn mark on your underarm? Did that happen recently, I can—~
+== BC0AURA2 ~No, don't worry. It's been there forever. I'd like to say it was from something ambitious but... it's something a lot sillier. I got burned while making candy when I was younger.~
+== BAERIE ~Th-that's it?~
+== BC0AURA2 ~It sounds rather childish, doesn't it? There's really nothing dramatic about this mark. Back in Anchoril, where I grew up, there was a confectionary shop, one that I'd call the best in Faerûn. I loved their sweets so much that I decided to spend a month there as an apprentice, learning the trade myself.~
+== BC0AURA2 ~Everything seemed so simple, especially compared to everything else I'd already learned. But the masters still insisted that I did things slowly and patiently. I was a lot more impulsive then, and got so eager to improve myself that I started getting careless, thinking it was all so easy... then I accidentally spilled boiling hot sugar onto my skin.~
+== BAERIE ~Oh, no... that must have hurt.~
+== BC0AURA2 ~It hurt so much I couldn't stop crying. Even more since I knew it wouldn't have happened if I'd just listened to what I was told. I've kept the burn scar to remind me to never take things for granted... even the easy things. So when I started making that bracelet... I took every step as seriously as I could. Even though it was a simple thing.~
+== BAERIE ~I'll be sure to treasure it. And, one more thing...~
+== BC0AURA2 ~Yes?~
+== BAERIE ~I'm starting to realize... as I am now, I've gotten a chance to find things I might never have before. Thank you for helping me realize that.~
+== BC0AURA2 ~Like a friend who cares for your happiness no matter what?~
+== BAERIE ~Exactly.~
+DO ~GiveItemCreate("c0aaeri","AERIE",0,0,0)~ END
 
 // Anomen
 
@@ -407,7 +520,7 @@ INTERJECT BEDWIN 41 C0AuraMinscEdwinConflict
 == BC0AURA2 ~Please just stop talking...~
 == BMINSC ~Rgh... Minsc has taken some time to calm down, and breathe, and think... the red wizard's evil tongue deserves the hot, wrathful pliers of justice, but there should be a time and place... that is what Dynaheir would say... Minsc thinks...~
 == BC0AURA2 ~That's right, Minsc... and Edwin... I guess it's too much to ask for you to say sorry?~
-== BEDWIN ~Bah! Not a chance. But this witless debate has lost its appeal with your unsolicited interference, girl. I'll spare the witless one further embarrassment... for now.~
+== BEDWIN ~Bah! Not a chance. But this witless debate has lost its appeal with your unsolicited interference, girl. I'll spare the witless one from further embarrassment... this time.~
 EXIT
 
 // Haer'Dalis
@@ -695,8 +808,8 @@ DO ~SetGlobal("C0AuraJan1","GLOBAL",1)~
 == BC0AURA2 ~Oh no... what happened to his arm?~
 == BJAN ~That's a sad story, my dear. Silly old Balroo was studying the crafting of black powder and believed he had managed to improve upon the design. From what I was told, he built his own arquebus and loaded it with some experimental powder he had alchemised, then tested it on a training dummy he set up. Of course, the truth was that he was just terribly, terribly drunk off homebrewed turnip ale and completely lost his sense of judgment. The first shot took his arm from the recoil. He was dismissed from the academy for reckless endangerment and damages to academy grounds not long after. *sigh* A terrible, terrible affair it was.~
 == BC0AURA2 ~That's awful, Jan. I'm so sorry your family's experience with Lantan was... like that. Is there anything I can do?~
-== BJAN ~Very kind of you to ask, lass, but you needn't worry your little head over it. Balroo's stayed positive about the whole experience, and still has plenty of good stories to tell about his studies. Not to mention the prosthetic the Lantanna crafted for him has served him well these years. He still wants to go back to your lovely nation, but mother won't hear a word of it. Said she'd nail his remaining hand to the table if she ever saw him packing his bags.~
-== BC0AURA2 ~Oh... haha. It's reassuring that he can at least try to keep his spirits up despite his loss. The Lantanna... we don't always handle failure well, especially when it costs us.~
+== BJAN ~Very kind of you to ask, lass, but you needn't worry your clever head over it. Balroo's stayed positive about the whole experience, and still has plenty of good stories to tell about his studies. Not to mention the prosthetic the Lantanna crafted for him has served him well these years. He still wants to go back to your lovely nation, but mother won't hear a word of it. Said she'd nail his remaining hand to the table if she ever saw him packing his bags.~
+== BC0AURA2 ~Oh... haha. It's reassuring that he can at least try to keep his spirits up despite his loss. The Lantanna... we try to learn from failure, but some of us don't always take it well, especially when it costs us.~
 == BJAN ~Well, you can't ever make a good turnip omelette without breaking some eggs and picking out the rotten ones first. I'll make my own pilgrimage to the Isle of Wonders one day, and hopefully stay there with all four limbs intact. Perhaps you could be my guide when the time comes, eh?~
 == BC0AURA2 ~If I'm available, I'd be happy to, Jan. Just stay away from the black powder when we're there, okay?~
 EXIT
@@ -1138,6 +1251,29 @@ DO ~SetGlobal("C0AuraValygar2","GLOBAL",1)~
 == BVALYGA ~What people think of me, or my last name, matter little anymore. Good deeds are worth enough alone, they do not need the burden of fame to accompany them.~
 EXIT
 
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Valygar",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+PartyHasItem("c0abook1")
+Dead("Lavok02")
+Global("C0AuraValygar3","GLOBAL",0)~ THEN BVALYGA C0AuraValygar1
+~You've been reading Lavok's book.~ [C0BLANK]
+DO ~SetGlobal("C0AuraValygar3","GLOBAL",1)~
+== BC0AURA2 ~The Imaskari tome he was researching? Yes, it's... fascinating. Some of the knowledge in there could help with my own work.~
+== BVALYGA ~I see.~
+== BC0AURA2 ~Valygar, I can tell you're uncomfortable. If you're worried about me using your ancestor's knowledge, I can—~
+== BVALYGA ~No, don't mind me. As I am now, I'm... in no position to be telling anyone what they do or don't deserve to know. I don't even understand things fully myself.~
+== BC0AURA2 ~Valygar...~
+== BC0AURA2 ~I actually understand how you feel. Knowledge isn't inherently evil, but it does lead to obsession... I've seen it sometimes back in Lantan, too. Friends and family who are so devoted to their work, they don't notice how they're hurting themselves and others in the process.~
+== BVALYGA ~That is what I have seen as well, aye.~
+== BC0AURA2 ~But... I think that's why we need to look out for each other. If we think someone's losing themselves, we need to be there to take their hand and pull them back. And I think to Lavok... finding about you meant something to him.~
+== BVALYGA ~And you truly believe that? I had not thought such optimism existed.~
+== BC0AURA2 ~I don't know for sure. But I feel like it's the right thing to believe. And... Valygar, if you think I'll fall into obsession, I'd like you to let me know, as a friend.~
+== BVALYGA ~I see. For your sake, I'll do my best.~
+EXIT
+
 // Viconia
 
 CHAIN
@@ -1179,9 +1315,9 @@ IF ~InParty("Wilson")
 Range("Wilson",15)
 !StateCheck("Wilson",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
-Global("C0AuraWilson1","GLOBAL",0)~ THEN BWILSON C0AuraWilson1
+Global("C0AuraWilson1","GLOBAL",1)~ THEN BWILSON C0AuraWilson1
 ~Growl. Yaaawn... groooowl....~ [C0BLANK]
-DO ~SetGlobal("C0AuraWilson1","GLOBAL",1)~
+DO ~SetGlobal("C0AuraWilson1","GLOBAL",2)~
 == BC0AURA2 ~...~
 == BWILSON ~Snore... Snuffle.~
 == BC0AURA2 ~No. Nope! Can't stand it anymore! Hey, get up! UP! *whistle* *FFFFWWWW*!~
@@ -1191,6 +1327,66 @@ DO ~SetGlobal("C0AuraWilson1","GLOBAL",1)~
 == BC0AURA2 ~A—aaah! Stop, stop it! Let go of my gown! Ohh... why? Why do you have to be here?~
 == BWILSON ~Snuff. Snort! Yawn... zzz...~
 == BC0AURA2 ~Ugh... this is never going to work...~
+EXIT
+
+CHAIN
+IF ~InParty("Wilson")
+Range("Wilson",15)
+!StateCheck("Wilson",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraWilson1","GLOBAL",2)~ THEN BC0AURA2 C0AuraWilson2
+~*yaaawn*~ [C0BLANK]
+DO ~SetGlobal("C0AuraWilson1","GLOBAL",3)~
+== BWILSON ~Yaaaaaawnn...~
+== BC0AURA2 ~Ah... *achoo*!~
+== BWILSON ~Growl... grrr... *A-A-ACHOO*!~
+== BC0AURA2 ~Ohh, that does it! Are you copying me on purpose?~
+== BWILSON ~Snort.~
+== BC0AURA2 ~I have no idea if that means yes or no, but either way, stop it! You're creeping me out!~
+== BWILSON ~Snuffle, grunt.~
+== BC0AURA2 ~*sigh*~
+== BWILSON ~Siiiigghh.~
+EXIT
+
+CHAIN
+IF ~InParty("Wilson")
+Range("Wilson",15)
+!StateCheck("Wilson",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraWilson1","GLOBAL",3)~ THEN BC0AURA2 C0AuraWilson3
+~Hey. Um... Mr. Bear? Wilson?~ [C0BLANK]
+DO ~SetGlobal("C0AuraWilson1","GLOBAL",4)~
+== BWILSON ~Grunt?~
+== BC0AURA2 ~I just, um... er... wanted to say thanks. That monster... might've gotten me if you hadn't smacked it away.~
+== BWILSON ~Growl. Snuffle.~
+== BC0AURA2 ~What's that? Are you asking... if I still find you scary?~
+== BWILSON ~Grunt.~
+== BC0AURA2 ~Well... of course I do! I'm not going to just get over my fear in a day or two, you know.~
+== BWILSON ~Rrr...~
+== BC0AURA2 ~Still, if you scare our enemies as much as me... maybe this won't be so bad to deal with either.~
+== BWILSON ~Grumble.~
+== BC0AURA2 ~Wait... was that your stomach growling just now? Are you... hungry?~
+== BWILSON ~GRUMBLE.~
+== BC0AURA2 ~Aah! No, no no no! You can't eat me! I'm not tasty in the slightest!~
+EXIT
+
+CHAIN
+IF ~InParty("Wilson")
+Range("Wilson",15)
+!StateCheck("Wilson",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraWilson1","GLOBAL",4)~ THEN BWILSON C0AuraWilson4
+~Growl?~ [C0BLANK]
+DO ~SetGlobal("C0AuraWilson1","GLOBAL",5)~
+== BC0AURA2 ~Hmm? You're asking... if I have fish?~
+== BWILSON ~Grunt...!~
+== BC0AURA2 ~Oh, I'm so glad to hear you'd rather eat fish than me. Er, no, I don't. But... I do know how to fish. I grew up by the sea, after all!~
+== BWILSON ~Hnrh.~
+== BC0AURA2 ~You... want to take me fishing? No, no way! This is a trick to catch me all by myself, I know it!~
+== BWILSON ~Snort snort snort.~
+== BC0AURA2 ~Now—now you're laughing at me? You think I can't outfish you?~
+== BWILSON ~ROAR!~
+== BC0AURA2 ~Ooh, that's it. Next time we pass by a body of water, I'm bringing out my newest rod. I'll show you, you stupid bear!~
 EXIT
 
 // Yoshimo
@@ -1211,7 +1407,7 @@ DO ~IncrementGlobal("C0AuraYoshimo1","GLOBAL",1)~
 == BYOSHIM ~Ha ha. Teasing aside... truly, seeing the impression Kozakura has left on you pleases my heart. I have always thought, 'tis a pity the East lies so far from these lands, that more could not have the chance to see that place, to embrace it, fully within their hearts.~
 == BYOSHIM ~For me... well, long as the journey may be, one day, I hope to return.~
 == BC0AURA2 ~I truly do hope you see your kakyou again, Yoshimo. Where is it, if I might ask?~
-== BYOSHIM ~Hmm... another time, little blossom. I fear if I begin to speak of home, it will be some time before I stop. And I doubt <CHARNAME> would appreciate that. Heh.~
+== BYOSHIM ~Hmm... another time, little Aura. I fear if I begin to speak of home, it will be some time before I stop. And I doubt <CHARNAME> would appreciate that. Heh.~
 EXIT
 
 CHAIN
@@ -1220,14 +1416,14 @@ Range("C0Aura",15)
 !StateCheck("Yoshimo",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraYoshimo2","GLOBAL",0)~ THEN BYOSHIM C0AuraYoshimo2
-~Your pleasant spirit is quite contagious, little blossom. It is truly fortunate, to have your cheerful and considerate person to lighten the party's atmosphere.~ [C0BLANK]
+~Your pleasant spirit is quite contagious, little Aura. It is truly fortunate, to have your cheerful and considerate person to lighten the party's atmosphere.~ [C0BLANK]
 DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",1)~
-== BC0AURA2 ~'Little blossom'? Are you going to call me that from now on, Yoshimo?~
+== BC0AURA2 ~'Little Aura'? Are you going to call me that from now on, Yoshimo?~
 == BYOSHIM ~I thought it quite delightful, would you not agree?~
 == BC0AURA2 ~But it's... it's rather childish, isn't it?~
 == BYOSHIM ~If you do not enjoy it, I shall cease. I simply thought it a term of endearment between friends.~
 == BC0AURA2 ~Well, it's... not so bad. I mean, I guess it's okay to call me that. If we're friends.~
-== BYOSHIM ~Of course, heh... little blossom.~
+== BYOSHIM ~Of course, heh... little Aura.~
 EXIT
 
 CHAIN
@@ -1235,8 +1431,16 @@ IF ~InParty("C0Aura")
 Range("C0Aura",15)
 !StateCheck("Yoshimo",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
-Global("C0AuraYoshimo2","GLOBAL",0)~ THEN BYOSHIM C0AuraYoshimo2
-~~ [C0BLANK]
-DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",1)~
-== BC0AURA2 ~~
+Global("C0AuraYoshimo2","GLOBAL",1)~ THEN BC0AURA2 C0AuraYoshimo2
+~Do you have a moment, Yoshimo? There's something I was curious about.~ [C0BLANK]
+DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",2)~
+== BYOSHIM ~But of course, little Aura. It is always a delight to hear your voice, so listen eagerly I will.~
+== BC0AURA2 ~Hehe, you're flattering me too much. I just wanted to know, though... you've been away from home for a long time, haven't you? You've mastered the Common tongue, you understand these lands better than even I do... these lands must feel like a second home to you now.~
+== BYOSHIM ~Aye, close enough, my dear. It has been a long time since I left Kozakura in search of adventure, and in all that time, I have grown accustomed to the danger and thrill, as well as the profit, to be found here. Perhaps that is why, despite my homesickness, I have not felt the desperate urge to return home.~
+== BC0AURA2 ~You're a free spirit. The type who quickly finds themselves at home anywhere, no matter how unfamiliar it is.~
+== BYOSHIM ~Still, only the truly heartless, or those with dark memories, would not hold some affection for the land they were born and raised in. Meeting you, little Aura, who has discovered a love for my home, is as good as meeting a kinsman.~
+== BC0AURA2 ~And... do you miss Kozakura even more now, after talking about it with me?~
+== BYOSHIM ~I do. Though I fear it is not the time for a homecoming for me... not yet.~
+== BC0AURA2 ~Not yet?~
+== BYOSHIM ~Well, I must see the end of this journey with <CHARNAME>—and you, my new friend—no? Come now, little one, there is still a tale to be told yet.~
 EXIT

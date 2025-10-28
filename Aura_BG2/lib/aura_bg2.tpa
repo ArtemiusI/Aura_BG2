@@ -1016,16 +1016,6 @@ The pyromancer blasts the targeted creature with a bolt of deadly hellfire, inst
 The backlash of this extremely dangerous spell causes the caster to suffer 50% of their maximum hit points in damage after the spell is cast.~
 
 COPY_EXISTING ~C0KROBE1.ITM~ OVERRIDE
-  LPF ADD_ITEM_EQEFFECT
-    INT_VAR
-      opcode = 319
-	  target = 1
-	  timing = 2
-	  parameter1 = (IDS_OF_SYMBOL (~kit~ ~C0PYROM~))
-	  parameter2 = 9
-	  power = 1
-	  special = RESOLVE_STR_REF (~Pyromancer~)
-END
 SAY NAME2 ~Robe of Eminent Flames~
 SAY DESC ~The robe of Azra Velnath Dilvaalhi, the elder sister of Karihi. Robes such as these were reserved solely for potential leaders of the family, and as such few such robes exist – this one, perhaps, is the last of its kind since the annihilation of House Dilvaalhi. Its tremendous magical power, drawing from the pure element of fire, makes it dangerous if not lethal for anyone but a pyromancer to wear.
 
@@ -2446,6 +2436,8 @@ END
 EXTEND_TOP ~baldur.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/baldur.baf~
 EXTEND_TOP ~JAN.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/JAN.baf~
 EXTEND_BOTTOM ~CUT218G.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/CUT218G.baf~
+EXTEND_BOTTOM ~AERIE.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/AERIE.baf~
+EXTEND_BOTTOM ~AERI25.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/AERIE.baf~
 EXTEND_TOP ~AR6200.bcs~ ~%MOD_FOLDER%/Scripts/BG2EE/AR6200.baf~
 
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aura2.baf~
@@ -2925,16 +2917,32 @@ Requires:
 
 Weight: 5~
 
+OUTER_SET aerie_strref = RESOLVE_STR_REF (~Aerie~)
+APPEND item_use.2da ~C0AAERI     AERIE     9382      2          %aerie_strref%~
+
 COPY_EXISTING ~c0aaeri.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode = 319
+	  target = 1
+	  timing = 2
+	  parameter2 = 11
+	  power = 1
+	  special = RESOLVE_STR_REF (~Aerie~)
+	STR_VAR
+	  resource = AERIE
+END
 SAY NAME1 ~Bracelet~
 SAY NAME2 ~Aerie's Friendship Bracelet~
-SAY DESC ~Aerie's Friendship Bracelet
+SAY DESC ~This bracelet, made of brass, was made from the remains of Aura's failed attempt to craft mechanical wings for Aerie. Though the experiment was a failure, it seems the attempt has brought Aura and Aerie closer together, with their friendship now symbolized with this trinket. Though it is made with inexperienced hands, there is a slight enchantment to it, which is brought to life when the two friends are together.
 
 STATISTICS:
 
 Equipped abilities:
-– Free Action: The wearer is immune to all movement-impairing effects
-– Casting Speed: +2~
+– Movement Rate: +50% (if Aura is in the party)
+– Casting Speed: +2 (if Aura is in the party)
+
+Weight: 0~
 
 ///////////
 // Books //

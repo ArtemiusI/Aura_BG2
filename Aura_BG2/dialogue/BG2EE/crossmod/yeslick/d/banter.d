@@ -35,7 +35,7 @@ DO ~SetGlobal("C0AuraLK#Yeslick","GLOBAL",2)~
 == BC0AURA2 ~Yes... I was still very young during that time, and I never met the Wonderbringer's avatar, nor did I really understand the meaning of what Him being among my people meant. But I still remember how Lantan changed from His presence.~
 == BLK#YES ~And, well... I can guess at yer point o' view, lass. The presence of a god among mortals can bring awe, but also dread.~
 == BC0AURA2 ~I was inspired. But I eventually became afraid. We were given knowledge of a great power... but things went wrong more than once. People were hurt. And I wondered if what we were given was truly a good thing.~
-== BLK#YES ~I understand, lass. But think o' in another way. Gond gave yer people the knowledge believin' ye be worthy of it. Knowledge o' the new can ne'er come without faults. But the Lantanna have wielded it with greater restraint an' wisdom than most, that I also believe. More than any society o' humans, an', me kin forgive me for sayin' this, even dwarves.~
+== BLK#YES ~I understand, lass. But think o' in another way. Gond gave yer people the knowledge believin' ye be worthy of it. Knowledge o' the new can ne'er come without faults. But the Lantanna have wielded it with greater restraint an' wisdom than most, that I also believe. More than any society o' humans, an'—may me kin forgive me for sayin' this—even dwarves.~
 == BLK#YES ~The good gods do not demand yer fealty, but I hope ye might consider that yer people's patron god have yer best interests in mind, regardless o' the mistakes.~
 == BC0AURA2 ~I... I think you have a good point, Yeslick. Thank you, I'll... think about it.~
 EXIT

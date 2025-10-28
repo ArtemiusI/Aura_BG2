@@ -14,6 +14,42 @@ THEN
 	Interact(Player1)
 END
 
+// Aerie banter - at rest
+
+IF
+    InParty(Myself)
+    InParty("Aerie")
+    See("Aerie")
+    !StateCheck("Aerie",CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+  GlobalGT("C0AuraAerieFriendship","GLOBAL",3)
+	RealGlobalTimerExpired("C0AuraAerieRestTalkTimer","GLOBAL")
+	AreaType(OUTDOOR)
+	TimeOfDay(NIGHT)
+THEN
+  RESPONSE #100
+    SetGlobal("C0AuraAerieRestTalk1","GLOBAL",1)
+    Interact("Aerie")
+END
+
+// Aerie friendship banter - at rest
+
+IF
+    InParty(Myself)
+    InParty("Aerie")
+    See("Aerie")
+    !StateCheck("Aerie",CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+  Global("C0AuraAerieFriendship","GLOBAL",8)
+	GlobalTimerExpired("C0AuraAerieFriendshipRestTalkTimer","GLOBAL")
+	AreaType(FOREST)
+	TimeOfDay(NIGHT)
+THEN
+  RESPONSE #100
+    SetGlobal("C0AuraAerieFriendship","GLOBAL",9)
+    Interact("Aerie")
+END
+
 // Minsc banter - at rest
 
 IF
@@ -28,5 +64,22 @@ IF
 THEN
   RESPONSE #100
     SetGlobal("C0AuraMinscRestTalk1","GLOBAL",1)
+    Interact("Minsc")
+END
+
+// Wilson banter - at rest
+
+IF
+    InParty(Myself)
+    InParty("Wilson")
+    See("Wilson")
+    !StateCheck("Minsc",CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+	GlobalTimerExpired("C0AuraWilsonRestTalkTimer","GLOBAL")
+	AreaType("OUTDOOR")
+	TimeOfDay(NIGHT)
+THEN
+  RESPONSE #100
+    SetGlobal("C0AuraWilson1","GLOBAL",1)
     Interact("Minsc")
 END

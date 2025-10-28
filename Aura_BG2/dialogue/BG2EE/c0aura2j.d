@@ -279,18 +279,18 @@ I_C_T YOSHJ 113 C0AuraYOSHJ113
 END
 
 I_C_T YOSHJ 113 C0AuraYOSHJ113
-== C0AURA2J IF ~GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Y–Yoshi-san...? No... no, it can't be...~
+== C0AURA2J IF ~GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Y–Yoshimo...? No... no, it can't be...~
 END
 
 I_C_T YOSHIMOX 0 C0AuraYOSHIMOX0
 == C0AURA2J IF ~GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Why are you doing this, Yoshi–san?~
 DO ~SetGlobal("C0AuraYoshimoBetrayal","GLOBAL",1)~
-== YOSHIMOX ~Ah-chan, Aurelia... please don't. I cannot afford to stay my hand. I have tarried too long already.~
+== YOSHIMOX ~Little Aura... please don't. I cannot afford to stay my hand. I have waited too long already.~
 == C0AURA2J ~I just... don't understand. We trusted you. Why... why couldn't you trust us? <CHARNAME> would have helped you... *we* would have helped you.~
 == YOSHIMOX ~...~
-== YOSHIMOX ~You are far too naive, Aurelia. Do you believe Irenicus would have chosen any fool to gain <CHARNAME>'s trust? Every action I made to said, every action I made while in your company was to lead to this ending. Befriending you, naturally, was just another means to an end.~
-== C0AURA2J ~I... I don't believe you. You never wanted it to end up like this. You still don't.~
-== YOSHIMOX ~Enough. Please... that's enough.~
+== YOSHIMOX ~You are far too naive, Aura. Do you believe Irenicus would have chosen any fool to gain <CHARNAME>'s trust? Every action I made to said, every action I made while in your company was to lead to this ending. Befriending you, naturally, was just another means to an end.~
+== C0AURA2J ~I—I don't believe you. You never wanted it to end up like this. You still don't.~
+== YOSHIMOX ~Enough! Please... that's enough.~
 END
 
 EXTEND_BOTTOM PPIMOEN 0
@@ -1121,8 +1121,10 @@ DO ~SetGlobal("C0AuraWaylane","LOCALS",1)~
 == WAYLANE ~Yes, you! See this mighty fine sphere here? You can have it for your very own for a mere 500 gold pieces! What do you say?~
 == C0AURA2J ~Oh, the magical sphere! I've been curious about it ever since it suddenly appeared here. Do you know how to get inside?~
 == WAYLANE ~Why... why, yes! There's... there's a password, which I will tell you in exchange for a paltry sum. You won't get a better deal anywhere!~
-== C0AURA2J ~Hmm, on second thought, I get this ominous feeling that terrible things will happen if the thing did crack open. It's like all those tales of strange ships falling from the sky, then the doors open and creatures from the outer realms overrun us all and take over the world. But I'm sure those are just scary stories...~
+== C0AURA2J ~Hmm, although... I get this ominous feeling that terrible things will happen if the thing did crack open. It's like all those tales of strange ships falling from the sky, then the doors open and creatures from the outer realms overrun us all and take over the world. But I'm sure those are just scary stories...~
 == WAYLANE ~Uh... that wouldn't really happen, would it? On second thought, maybe being this close to the thing isn't such a bright idea after all...~
+== C0AURA2J ~Sorry, just went off track there. What was the price again? I might just have enough in my personal stash.~
+== WAYLANE ~Er, the offer is... suspended for now... yeah. I need some time to figure out a better pitch. And probably a safer place to stand as well...~
 EXIT
 
 CHAIN IF WEIGHT #-1
@@ -1512,7 +1514,8 @@ DO ~ActionOverride("C0Aura",RunAwayFrom("WILSON",20))~ EXIT
 CHAIN IF WEIGHT #-1 ~IsValidForPartyDialog("Wilson")
 Global("C0AuraWilsonConflict","GLOBAL",2)~ THEN C0AURA2J wilsonconflict
 ~S-seriously?~
-DO ~SetGlobal("C0AuraWilsonConflict","GLOBAL",3)~
+DO ~SetGlobal("C0AuraWilsonConflict","GLOBAL",3)
+SetGlobalTimer("C0AuraWilsonRestTalkTimer","GLOBAL",ONE_DAY)~
 = ~...No, <CHARNAME>. Just... no.~
 END
 ++ ~What?~ + wilsonconflict.1

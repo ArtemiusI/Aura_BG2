@@ -1034,7 +1034,7 @@ CHAIN BC0AUR25 tob-rom-3-7
 EXTERN BC0AUR25 tob-rom-3-8
 
 CHAIN BC0AUR25 tob-rom-3-8
-~You've gone through so much, and suffered more than anyone ever should... and here, when your feelings should be important, the only thing that anyone seems to care about is you destiny, and whether you'll succumb to your divine blood...~
+~You've gone through so much, and suffered more than anyone ever should... and here, when your feelings should be important, the only thing that anyone seems to care about is your destiny, and whether you'll succumb to your divine blood...~
 = ~I don't want you to see you hurting, <CHARNAME>, and I especially don't want you to keep it all to yourself. Even if nobody else does, I'll always see you as you are... and I'll be here to listen to you, to give you someone to lean on, or to hold you close... if that's what you need.~
 END
   ++ ~I... I think I do need that.~ + tob-rom-3-9
