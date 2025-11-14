@@ -64,83 +64,22 @@ IF ~Global("C0AuraRomanceActive","GLOBAL",2)~ DO ~ClearAllActions() StartCutScen
 END
 
 CHAIN 
-IF ~Global("C0AuraToBRomWraith","GLOBAL",0)~ THEN C0AU25WR tob-wraith1
-~Ah... it's so cold... so difficult to breathe... and yet, here I am. Look upon me, Aura.~
+IF ~Global("C0AuraToBRomWraith","GLOBAL",0)~ THEN C0AU25W2 tob-wraith1
+~Hmm...? Whose hand is it that beckons me away from the pure land?~
 DO ~SetGlobal("C0AuraToBRomWraith","GLOBAL",1)~
-== C0AUR25J ~What... what are you?~
-== C0AU25WR ~Do you not recognize this face? No, you are lying to yourself. You know me—for I have always been with you. I am that which you lost when the Great Sea took you.~
-== C0AUR25J ~This is... no, I believe in reason. I don't know what you are, but you aren't me. You can't...~
-== C0AU25WR ~No? Then why do I remember it all so clearly? The day we drowned, I was with you. I remember the pain, and the despair.~
-== C0AUR25J ~The... the day I... the ship... the ocean... and then—~
-== C0AU25WR ~Wasn't it horrible? Swallowed whole, away from home, from family, leaving behind nothing, not even a body to mourn... to this day, I know it was the worst memory of our lives. All those fellow Lantanna on the ship, dead, because you failed to perceive the threat that existed.~
-== C0AUR25J ~I—I remember now. I died then... but I came back... because of her.~
-== C0AU25WR ~And it should've ended there... we deserved to fall with our brothers and sisters. But we managed to cheat death... when Reika-san gave us life again.~
-== C0AU25WR ~But... maybe it was a mistake for us to be brought back. We could have prevented our greatest sin... she would not have died for us...~
-== C0AUR25J ~You're... right... but...~
-== C0AU25WR ~Do you want to see her again? She wants to see you.~
-== C0AUR25J ~What...?~
-DO ~StartCutSceneMode()
-Wait(1)
-CreateVisualEffectObject("SPFINGER","C0AU25WR")
-ActionOverride("C0AU25WR",SetSequence(SEQ_DIE))
-Wait(2)
-CreateVisualEffect("SPFLESHS",[1454.1398])
-ActionOverride("C0AU25WR",ChangeAnimationNoEffect("C0AU25W2"))
-Wait(2)
-ActionOverride("C0AU25W2",StartDialogNoSet(Player1))~ EXIT
-
-CHAIN 
-IF ~Global("C0AuraToBRomWraith","GLOBAL",1)~ THEN C0AU25W2 tob-wraith2
-~I returned your soul to the mortal realm, Aura. When the eastern sea brought you to me, I petitioned Amatsugami to draw your spirit from the underworld and bring you back.~
-DO ~SetGlobal("C0AuraToBRomWraith","GLOBAL",2)~
-== C0AUR25J ~Reika-san...~
-== C0AU25W2 ~When you woke, deprived of all memories, I nurtured and cared for you until you knew life proper once more. Our joyous memories, our bond... have you forgotten?~
-== C0AUR25J ~No! I've never forgotten... not one moment!~
-== C0AU25W2 ~But you forgot my lessons.~
-== C0AUR25J ~I... no, I—~
-== C0AU25W2 ~I taught you to value the sanctity of life, of mercy, of the balance of worlds. But you... your heart first turned towards vengeance after my death, and followed with the death of hundreds, thousands... and worse, instead of accepting your sins, you seek to justify them.~
-== C0AU25W2 ~"I must protect others", "I must not fail my friends"... Such convenient logic, yet you know they are but excuses. You may still believe your are working to improve the world, yet without knowing it, you have turned your treasured art into a tool of murder. And you do not even realize what you have become.~
-== C0AUR25J ~Forgive me... please...~
-== C0AU25W2 ~Of course I forgive you. You are as though my daughter, and I wish it could have always been so. I would have given all to see your joy. But you...~
-DO ~StartCutSceneMode()
-Wait(1)
-CreateItem("C0AUSW01",1,0,0)
-PlaySound("C0ASFX6")
-SmallWait(1)
-EquipItem("C0AUSW01")
-Wait(1)
-StartDialogNoSet(Player1)~ EXIT
-
-CHAIN 
-IF ~Global("C0AuraToBRomWraith","GLOBAL",2)~ THEN C0AU25W2 tob-wraith3
-~You remember this, do you not? Yes, this is the blade that took my life... the one wielded by 'that man'. The blade you created, and that which took my life, and countless others.~
-DO ~SetGlobal("C0AuraToBRomWraith","GLOBAL",3)~
-== C0AU25W2 ~Holding it now, it all seems so familiar. On that day, as I wiped your tears... I could still feel the pain, the coldness of the steel in my flesh.~
-== C0AUR25J ~I'm sorry... I'm so sorry...~
-== C0AU25W2 ~The memory must seem so distant to you now. Shall I remind you what it looked like?~
-== C0AUR25J ~No... NO! Don't—!~
-DO ~StartCutSceneMode()
-Wait(1)
-PlaySound("C0ASFX7")
-SmallWait(1)
-CreateVisualEffectObject("C0AU25VF","C0AU25W2")
-PlaySound("PHAERE06")
-ActionOverride("C0AU25W2",SetSequence(SEQ_DIE))
-Wait(1)
-CreateVisualEffectObject("SPFINGER","C0AU25W2")
-Wait(1)
-CreateVisualEffect("SPFLESHS",[1454.1398])
-ActionOverride("C0AU25W2",ChangeAnimationNoEffect("C0AU25WR"))
-Wait(2)
-ActionOverride("C0AU25WR",StartDialogNoSet(Player1))~ EXIT
-
-CHAIN 
-IF ~Global("C0AuraToBRomWraith","GLOBAL",3)~ THEN C0AU25WR tob-wraith1
-~Do you understand now? We are murderers, our sins written in a litany of blood. Our rebirth has brought nothing but sorrow and death. A thousand deaths would not be enough repentance.~
-DO ~SetGlobal("C0AuraToBRomWraith","GLOBAL",4)~
-== C0AUR25J ~No... that's not...~
-== C0AU25WR ~It is the truth. You cannot deny it.~
-== C0AUR25J ~I... I'm... what have I—~
+== C0AUR25J ~Reika-san...?~
+== C0AU25W2 ~Ah, it is you, dear child. Have you... found your name, and your own self? It brings me joy to see it.~
+== C0AUR25J ~I... I have. I owe so much to you. And I've missed you so much... but you shouldn't be here!~
+== C0AU25W2 ~I should not? But have I not said before, that I am always with you, so long as you need me? Or have you forgotten and discarded me already?~
+== C0AUR25J ~No! NO! I haven't forgotten you, not even one bit! Please... forgive me...~
+== C0AU25W2 ~Of course I forgive you. I will always forgive you. But how could you forgive yourself, for all the sins you have wrought? All the violence and death which you culpable for?~
+== C0AUR25J ~I'm sorry... I'm so sorry... it's my fault that you died. But you should be at peace... I... I made things right...~
+== C0AU25W2 ~Yes, you took revenge. But is revenge what I sought? No, I gave my life hoping for an end to the bloodshed. It was you who decided that my life was worth continuing a cycle of violence, and taint your soul eternally.~
+== C0AUR25J ~You're... you're right. But I—~
+== C0AU25W2 ~Did you believe that, by taking only one life steeped in sin, that it would be enough? Perhaps, but it was not only one, was it? One became a hundred, a thousand... how many lives have you taken with your bow, which I trained you to draw across countless nights? Does all this blood... not stain my hands as well?~
+== C0AUR25J ~I...~
+== C0AU25W2 ~It seems our hearts are both impure, child. And now, in your ignorance, we both suffer. Even in death, I cannot know peace. But if you have truly abandoned me, then I shall bear the weight of our sins for us both.~
+== C0AUR25J ~No... I... what have I done? I...~
 END
   ++ ~Don't listen, Aura! You mustn't blame yourself for what's happened!~ EXTERN HGWRA01 25
   ++ ~Stop this, Gorion! She doesn't deserve this!~ EXTERN HGWRA01 25

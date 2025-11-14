@@ -97,12 +97,12 @@ Global("C0AuraEdwinToB1","GLOBAL",0)~ THEN BC0AUR25 C0AuraEdwinToB1
 ~Can I ask a favor of you, Edwin?~ [C0BLANK]
 DO ~SetGlobal("C0AuraEdwinToB1","GLOBAL",1)~
 == BEDWIN25 ~My favors come with a steep price, girl, as you should well know. Be quick, and I may consider it, as long as it does not involve parting ways with any of my collection of artifacts.~
-== BC0AUR25 ~It'll be quick and easy. I don't want anything from you, Edwin, but could you write something in my journal? Anything works, as long as it's genuine.~
+== BC0AUR25 ~It'll be quick and easy. You don't have to give me anything, Edwin, but could you write something in my journal? Even something short is fine, as long as it's genuine.~
 == BEDWIN25 ~What?! You'll squirrel no more magical secrets from me, not after all the ones you already have. (Too dangerous to give so much so quickly! She cannot be truly as guileless as she appears...)~
 == BC0AUR25 ~Edwin, I just want some words to remember you by! After everything we've been through, I'll miss everyone once we part ways, even you. Won't you miss me?~
 == BEDWIN25 ~I—I... bah. I suppose I could be so magnanimous as to grant you a few words of favor from my esteemed self. Fine! Hand me your pen and book so that I might do this quickly, before anyone notices my gesture.~
 == BC0AUR25 ~You don't have to get too complicated, Edwin. Even a simple "good luck" will do, you know? Sometimes it really is just that simple.~
-== BEDWIN25 ~No. That will not do. My words much be of as much purpose and worth as might be expected of my greatness. I will come to you once I have thought of the appropriate parting words, gnome. Be greatful that I am willing to distract myself on such trivial matters.~
+== BEDWIN25 ~No. That will not do. My words much be of as much purpose and worth as might be expected of my greatness. I will come to you once I have thought of the appropriate parting words, gnome. Be grateful that I am willing to distract myself on such trivial matters.~
 == BC0AUR25 ~Thank you, Edwin!~
 == BEDWIN25 ~(Truly as without guile or ambition as she seems... but, perhaps that is not so disagreeable sometimes.)~
 EXIT

@@ -65,6 +65,6 @@ THEN
         ActionOverride(Player6,Face(NE))
         ActionOverride("C0AURA",Face(NE))
         ActionOverride("C0ALUNA",Face(NE))
-        ActionOverride("C0DEDAL",StartDialogNoSet(Player1))
+        ActionOverride("C0AJUNO",StartDialogNoSet(Player1))
 END
 

@@ -22,7 +22,7 @@ DO ~SetGlobal("C0AuraL#Xzele","GLOBAL",1)~
 == L#XZEB ~I understand. Your fate is your own to control, and I respect that you have your standards. Some of us, however... were dealt a crueler hand by fate. All we could do is make the best of what we became, and find some hope and beauty in our existence.~
 == BC0AURA2 ~I... see. That's a form of bravery in itself, I can't deny that. Maybe there's still a lot I've yet to learn about life, and how to truly live it.~
 == L#XZEB ~You will have time. I assure you—as long as I am here, fate will not steal a second of the time you deserve.~
-END
+EXIT
 
 CHAIN
 IF ~InParty("L#XZE")
@@ -39,7 +39,7 @@ DO ~SetGlobal("C0AuraL#Xzele","GLOBAL",2)~
 == L#XZEB ~But... do you believe I did?~
 == BC0AURA2 ~That's a whole different matter. I can disagree, but I don't want to decry the humanity you have by criticizing you. No Lantanna would approve of debating in such a manner.~
 == L#XZEB ~I'm glad. Most would not be afraid to say what a mistake my existence is... in my face, if they aren't already drawing weapons.~
-== BC0AURA2 ~I don't believe in that. If you believe there is something worth continuing for... I wouldn't want it, but I can't decide the same for you. I'll never understand you that way.~
+== BC0AURA2 ~I don't believe in that. If you believe there is something worth continuing for... I wouldn't want it, but I can't decide the same for you. If I did that, I'd never understand you.~
 == L#XZEB ~Even death would never dull that kindness you have, Aura. If you were to embrace unlife, whether by choice or chance... I think all of our brothers and sisters would embrace your warmth.~
 == BC0AURA2 ~...Thank you.~
 EXIT

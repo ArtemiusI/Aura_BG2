@@ -137,6 +137,62 @@ EXIT
 ///////////////////////////////FRIENDSHIP/////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",2)~ THEN BC0AURA2 FRIEND-1
+~<CHARNAME>, if you've got a second... I just wanted to tell you that I'm grateful to be able to travel with you.~ [C0BLANK]
+= IF ~Global("C0AuraKnowsBG1","GLOBAL",1)~ THEN ~Again.~
+END
+  + ~Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~You don't need to express gratitude. I'm just as glad that we managed to meet again.~ + FRIEND-1-1
+  + ~!Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~You seem to be quite familiar with my stories. Is it that exciting to be able to experience one yourself?~ + FRIEND-1-2
+  ++ ~I just hope you're ready for the hardship in store.~ + FRIEND-1-3
+  ++ ~As long as you pull your weight. If you prove yourself a liability, you're out.~ + FRIEND-1-3
+  ++ ~Thank you, but please save this for another time.~ + FRIEND-1-0
+
+CHAIN BC0AURA2 FRIEND-1-0
+~Sure. I've said the most important part, anyway. Until next time, then.~
+EXIT
+
+CHAIN BC0AURA2 FRIEND-1-1
+~~
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",4)~ THEN BC0AURA2 FRIEND-2
+~So... it's a whole new adventure for you, isn't it? After all the chaos in the Sword Coast, here you are with another goal to fight for.~ [C0BLANK]
+= ~It must be a hard life. I know some people are made for it, and they wouldn't swap it for any other, but... there must be things you'd rather you didn't have to deal with, isn't there, <CHARNAME>?~
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",6)~ THEN BC0AURA2 FRIEND-3
+~You know, there's all types of people who've decided to take up adventuring and trained themselves to fight. But I haven't seen many who use skills like mine.~ [C0BLANK]
+= ~The knowledge of an artificer isn't any less effective as a warrior or arcanist's, or so I'd like to say. What do you think, <CHARNAME>? My tricks haven't been too much to manage, have they?~
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",8)~ THEN BC0AURA2 FRIEND-4
+~There really aren't that many gnomes out here. Not only in Amn, but the Sword Coast, as well... no matter how far I travel, I just can't ever stop feeling out of place.~ [C0BLANK]
+= IF ~Race(Player1,GNOME)~ THEN ~To tell you the truth, I'm so glad that you're a gnome like me, <CHARNAME>. When there's so few of us that decide to travel, sticking together is a huge comfort.~
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",10)~ THEN BC0AURA2 FRIEND-5
+~Hey, <CHARNAME>, I was wondering, just speaking hypothetically... would you ever consider travelling to Lantan to study at the academy? Perhaps for a season, or more?~ [C0BLANK]
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",12)~ THEN BC0AURA2 FRIEND-6
+~Look at these calluses on my hands. Even with me treating them every night, my skin's gone and turned like this anyway. *sigh*~ [C0BLANK]
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",14)~ THEN BC0AURA2 FRIEND-7
+~<CHARNAME>, have you heard about my grandmother? Minerva Glimmershine?~ [C0BLANK]
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",16)~ THEN BC0AURA2 FRIEND-8
+~Here, <CHARNAME>. Have a sip of this. It'll do you some good.~ [C0BLANK]
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",18)~ THEN BC0AURA2 FRIEND-9
+~The more I travel, the more I've been thinking... if I, or... well, any Lantanna, could meet and come to know more people like you, maybe Lantan would look much different than it is now.~ [C0BLANK]
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2FriendshipTalk","GLOBAL",20)~ THEN BC0AURA2 FRIEND-10
+~Hehe, <CHARNAME>, come over here! I've got something great to show you!~ [C0BLANK]
+EXIT
+
 //////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////ROMANCE////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -593,8 +649,9 @@ CHAIN IF ~Global("C0AuraBG2FriendshipLetter","GLOBAL",4)~ THEN C0LIRO2 friend-le
 DO ~SetGlobal("C0AuraBG2FriendshipLetter","GLOBAL",5)~
 == C0LIRO2 ~My condition's been steadily improving. I can leave the house and take in some sunlight more often now... sometimes, I've even been able to take walks along the shore. I want you to know so that you don't have to worry about me while you're out there. I know we'll meet again when the right time comes.~
 == C0LIRO2 ~I've been looking at all the schematics that you've sent, and they're ingenious, like always. They've inspired me to take more trips to the workshops and try to finish off my unfinished projects when I feel well enough to travel that far... given a bit longer, and I might even have the Thunderbolt ready for testing. Not that I'll be able to take it and go on adventures like you, with my weak body... but at least knowing it can be done will put my mind at ease.~
-== C0LIRO2 ~Ceri's been pestering me about letting off some of my own worries, even though I didn't want to burden you. But she has a point, so I'll write a little about it... uncle Dedalus has been working particularly hard over the past year. I've been spending more time at the Helianthus House with your parents at his suggestion, since he comes home so rarely nowadays. Uncle Kairos has been telling me not to worry, because my uncle knows what's best for himself, and his work has all been for the sake of Lantan... but I can't help but but worried. He tries to hide it from me, but I can tell... I know nobody else can, but he's been taking care of me since Mother passed away, and I know him more closely than anyone.~
-== C0LIRO2 ~I know you can't do much to help, Aura, but it does feel better writing it all down, knowing that you'll read this and care. When you come home, we'll have a celebration and share all our stories together in a proper way. You, me, Ceri, your sisters, the twins... it'll be wonderful.~
+== C0LIRO2 ~Ceri's been pestering me about letting off some of my own worries, even though I didn't want to burden you. But she has a point, so I'll write a little about it... uncle Dedalus has been working particularly hard over the past year. I've been living at the Helianthus House with your parents at his suggestion, since he comes home so rarely nowadays.~
+== C0LIRO2 ~Uncle Kairos has been telling me not to worry, because my uncle knows what's best for himself, and his work has all been for the sake of Lantan... but I can't help but but worried. He tries to hide it from me, but I can tell... I know nobody else can, but he's been taking care of me since Mother passed away, and I know him more closely than anyone.~
+== C0LIRO2 ~I know you can't do much to help, Aura, but it does feel better writing it all down, knowing that you'll read this and care. When you come home, we'll have a celebration and share all our stories together in a proper way. You, me, Ceri, your sisters, the twins... I'm looking forward to it already.~
 == C0LIRO2 ~We all miss you. Myself, most of all. But when I read your letters, I feel like you're right there next to me. That's more than enough.~
 == C0ACERI2 ~Also, don't you dare come home without bringing the legend <PRO_HIMHER>self, <CHARNAME>, with you for a visit! The stories about <PRO_HIMHER> have been keeping the whole family on the edge of our seats!~
 == C0LIRO2 ~I'm sorry, Aura, Liro stole the pen from me and wrote that in an instant. But my thoughts are the same as hers.~
@@ -602,18 +659,18 @@ DO ~SetGlobal("C0AuraBG2FriendshipLetter","GLOBAL",5)~
 == C0ACERI2 IF ~OR(2) Global("C0AuraRomanceActive","GLOBAL",1) Global("C0AuraRomanceActive","GLOBAL",2)~ THEN ~Even the ones which made me of all people blush! Hehe, I betcha she's standing right next to you while you're reading this. We're rooting for the both of you!~
 == C0LIRO2 IF ~OR(2) Global("C0AuraRomanceActive","GLOBAL",1) Global("C0AuraRomanceActive","GLOBAL",2)~ THEN ~I'm sorry, I couldn't stop Liro from writing that. But I'm curious, too... and more than a little jealous.~
 == C0LIRO2 ~We all send you our deepest love, and I will pray for the blessing of the Wonderbringer to protect you always.~
-== C0AURA2J ~—from Liro and Ceri, your eternal friends. Oh... *sniff*~
+== C0AURA2J ~—from Liro and Ceri, your eternal friends. Oh, they're the same as always... after all this time, I was starting to worry that they'd resent me for being away from them for so long.~
 END
   ++ ~That's a sweet message.~ EXTERN C0AURA2J friend-letter4-1
   ++ ~You have some wonderful friends.~ EXTERN C0AURA2J friend-letter4-1
   ++ ~Finally done? We've stood here long enough.~ EXTERN C0AURA2J friend-letter4-2
 
 CHAIN C0AURA2J friend-letter4-1
-~I... I know... they're wonderful...~
+~Hehe, aren't they? I wish you could meet them yourself, <CHARNAME>... maybe one day, when all of this is behind us.~
 EXTERN C0AURA2J friend-letter4-2
 
 CHAIN C0AURA2J friend-letter4-2
-~Thank you for listening through me reading that, <CHARNAME>... having a new friend to share my happiness with made that even better.~
+~Thank you for listening through me reading that, <CHARNAME>... having a new friend next to me to share my happiness with made that even better.~
 = ~Oh, hang on. There's a postscript...~
 = ~"I've packed some of Darallie's top sweets along with the letter. I'll bet my hat you've been craving them all this time, so I've included your favorite—chocolate truffles with strawberry cream filling and topped with coconut flakes"...!~
 = ~Ooh, I've missed these so much... here, you have one too, <CHARNAME>.~
@@ -1065,12 +1122,120 @@ EXIT
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",10)~ THEN BC0AUR25 tob-rom-4
 ~Do you have a dream for the future, <CHARNAME>?~
 DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
+END
+  ++ ~Of course I do. Who doesn't?~ + tob-rom-4-1
+  ++ ~Would you like to hear about it?~ + tob-rom-4-2
+  ++ ~There's too much going on as it is to even think about my future, I fear.~ + tob-rom-4-3
+  ++ ~Not really. My plans never seem to amount to much when fate keeps getting in the way.~ + tob-rom-4-3
+
+CHAIN BC0AUR25 tob-rom-4-1
+~Would you tell me? Even if it's the smallest or most ridiculous thing... I've been awfully curious. What do you want, <CHARNAME>?~
+END
+  ++ ~I plan to keep adventuring, of course, for as long as I still can.~ + tob-rom-4-4
+  ++ ~When this is over, I'm absolutely prepared to settle down. I've had my fill of excitement for a lifetime.~ + tob-rom-4-5
+  ++ ~I think I'd like to finally see your home. After all you've told me about Lantan, it's high time I go there myself.~ + tob-rom-4-6
+  ++ ~Let's just say it involves you, me, along with a lot of flowers and a huge audience.~ + tob-rom-4-7
+  ++ ~To take my rightful mantle as a god. What else could I be meant for?~ + tob-rom-4-8
+
+CHAIN BC0AUR25 tob-rom-4-2
+~I'd love to.~
+EXTERN BC0AUR25 tob-rom-4-1
+
+CHAIN BC0AUR25 tob-rom-4-3
+~I guess that's true. Every time you try to take a different direction, something inevitable steers you in the way you're expected to go... it must be so difficult.~
+= ~Still, let's suppose you could do anything you wanted, once this is all over... let's say just to humor me. Would you be able to think of something?~
+EXTERN BC0AUR25 tob-rom-4-1
+
+CHAIN BC0AUR25 tob-rom-4-4
+~You still haven't experienced enough, after everything? I'm a little envious. I guess this was what you were meant for all along.~
+EXTERN BC0AUR25 tob-rom-4-9
+
+CHAIN BC0AUR25 tob-rom-4-5
+~I want to as well. Even if it's just for a little bit... having some time that we can finally spend in peace is like a fantasy at this point.~
+EXTERN BC0AUR25 tob-rom-4-9
+
+CHAIN BC0AUR25 tob-rom-4-6
+~Oh. Well, of course if you want that, I'll definitely have to go with you... I can't wait to let you meet my whole family. They'll love you.~
+EXTERN BC0AUR25 tob-rom-4-10
+
+CHAIN BC0AUR25 tob-rom-4-7
+~Hey, are you suggesting—oh, <CHARNAME>! It's still too early to even think about that, don't you know? I feel my face burning up already... but I can't say I don't like the idea...~
+EXTERN BC0AUR25 tob-rom-4-10
+
+CHAIN BC0AUR25 tob-rom-4-8
+~I guess it's not my place to try and understand what that means for you, <CHARNAME>... I'm not destined for that sort of greatness.~
+EXTERN BC0AUR25 tob-rom-4-9
+
+CHAIN BC0AUR25 tob-rom-4-9
+~I was just hoping... hoping that there'd always be a place for me, with you. Even if it's just to keep following your footsteps. That'd be enough.~
+END
+  ++ ~You're more important than that. I want you at my side, not behind me.~ + tob-rom-4-10
+  ++ ~Are you having doubts? You shouldn't. My feelings for you haven't changed, nor will they ever.~ + tob-rom-4-10
+  ++ ~It's hard to say what will happen. As important as our time together has been, I may have to leave you one day.~ + tob-rom-4-11
+
+CHAIN BC0AUR25 tob-rom-4-10
+~And that's all I wanted to know. I don't think there's anything I want more than to see the end of this, <CHARNAME>.~
+EXTERN BC0AUR25 tob-rom-4-12
+
+CHAIN BC0AUR25 tob-rom-4-11
+~I know. I've... thought about every thing that could happen once we come to the end of this journey. Even the things I fear the most.~
+EXTERN BC0AUR25 tob-rom-4-12
+
+CHAIN BC0AUR25 tob-rom-4-12
+~Because... I have my own dreams too. There's so many things I still want to do, and every single one of them includes you.~
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",12)~ THEN BC0AUR25 tob-rom-5
 ~Heehee...~
 DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
+END
+  ++ ~You're finally smiling again.~ + tob-rom-5-1
+  ++ ~What's put you in a good mood?~ + tob-rom-5-2
+
+CHAIN BC0AUR25 tob-rom-5-1
+~Have I not been myself lately? I guess...~
+EXTERN BC0AUR25 tob-rom-5-3
+
+CHAIN BC0AUR25 tob-rom-5-2
+~Nothing. I'm just... feeling happy.~
+EXTERN BC0AUR25 tob-rom-5-3
+
+CHAIN BC0AUR25 tob-rom-5-3
+~I've been thinking about a lot of things. About what we've talked about, about the battles, the ones we've won and the ones waiting for us... but today, I thought of something else that I was also taught once.~
+= ~Sometimes, when it feels like you're overwhelmed by what you're expected to do, you should just try to appreciate what's within reach instead... I was trying to remember who taught me that, then I realized... it was Reika-san's words.~
+= ~When I had lost my memory, and I felt lost in the world, all I could think of was trying to remember everything, and being frustrated with myself that I couldn't. I wasn't doing myself any favors... all I was doing was making myself suffer.~
+= ~So, like the days I'd just take walks around the forest, seeing the beauty around me... I think I should take some time to appreciate what I have right now. Such as... having you with me.~
+END
+  ++ ~Living in the present is a good thing, but it's not wrong to keep the future in mind, either.~ + tob-rom-5-4
+  ++ ~I'm glad you're managing to keep it together. Things have been hard for you.~ + tob-rom-5-5
+  ++ ~If you're feeling better, then that's good enough. Just try to keep it up.~ + tob-rom-5-6
+
+CHAIN BC0AUR25 tob-rom-5-4
+~I know, I know. I wouldn't be able to stop imagining what could happen even if I wanted to. But right now, I don't want to think about that.~
+EXTERN BC0AUR25 tob-rom-5-6
+
+CHAIN BC0AUR25 tob-rom-5-5
+~Isn't it the same for you, if not more? That's the other thing that was on my mind... I figured that if I could be happy again, then maybe you would as well.~
+EXTERN BC0AUR25 tob-rom-5-6
+
+CHAIN BC0AUR25 tob-rom-5-6
+~<CHARNAME>, can I... hold your hand for a while? Just for the sake of it, nothing else.~
+END
+  ++ ~Of course.~ + tob-rom-5-7
+  ++ ~I think you need more than that. Let me give you a hug.~ + tob-rom-5-8
+  ++ ~Not right now, Aura. I need some space.~ + tob-rom-5-9
+
+CHAIN BC0AUR25 tob-rom-5-7
+~I'm so glad I had this chance to be with you. No matter what happens, what we've already had together... has meant everything.~
 EXIT
+
+CHAIN BC0AUR25 tob-rom-5-8
+~Oof! Hehe, you really do know how to make me feel better, <CHARNAME>. This is nice...~
+EXTERN BC0AUR25 tob-rom-5-7
+
+CHAIN BC0AUR25 tob-rom-5-9
+~Alright. But, <CHARNAME>?~
+EXTERN BC0AUR25 tob-rom-5-7
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",14)~ THEN BC0AUR25 tob-rom-6
 ~I've been thinking about Lantan lately. While we're here in the middle of a war, my kinsmen are working hard, trying to improve upon the future.~
@@ -1150,24 +1315,59 @@ CHAIN BC0AUR25 tob-rom-6-12
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",16)~ THEN BC0AUR25 tob-rom-7
-~~
+~*scribble scribble*... <DAYANDMONTH>, <YEAR>.~
 DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
-= ~That's today's date, according to my journal. It feels like it's been a long journey, but it also hasn't. A lot has just happened in that time... hasn't it?~
+= ~That's today's date, according to my journal. It feels like it's been a long journey, but it hasn't really. A lot has just happened in that time... hasn't it?~
 END
   ++ ~About as much as someone might expect in a normal lifetime.~ + tob-rom-7-1
   ++ ~You're not getting tired of adventuring, are you?~ + tob-rom-7-2
-  ++ ~~ + tob-rom-7-3
+  ++ ~I don't know. Some days I feel like our lives are going by too quickly.~ + tob-rom-7-3
+  ++ ~I'm too tired to talk about this right now, Aura.~ + tob-rom-7-0
+
+CHAIN BC0AUR25 tob-rom-7-0
+~Alright. I don't want my thoughts to add more to your burdens... don't worry about it.~
+EXIT
 
 CHAIN BC0AUR25 tob-rom-7-1
-~~
-EXTERN BC0AUR25 tob-rom-7-3
+~I think it could be more than just one. Sometimes I feel like I've done enough in these last couple of years to make all the decades before it completely obsolete.~
+EXTERN BC0AUR25 tob-rom-7-4
 
 CHAIN BC0AUR25 tob-rom-7-2
-~No... I'm not sure? Maybe I am, a little... even though it's not because I~
-EXTERN BC0AUR25 tob-rom-7-3
+~No... I'm not sure? Maybe I am, a little... that's not to say that I've had enough, just that...~
+EXTERN BC0AUR25 tob-rom-7-4
 
 CHAIN BC0AUR25 tob-rom-7-3
-~~
+~I can't argue with that, either. There's things about our adventure that I wish could just keep going forever. But still...~
+EXTERN BC0AUR25 tob-rom-7-4
+
+CHAIN BC0AUR25 tob-rom-7-4
+~*sigh* I just don't think it's fair. Nobody should have been forced to go through so much, not you, not any of the Bhaalspawn.~
+= ~I had a dream last night, you know. I was at home again. My parents, my sisters, my uncle... they were all there. I hadn't forgotten about all of this, yet... as strange as it was, things felt just like they were before I left home~
+= ~The only difference was you. There, when I thought I had just woken up and gotten out of bed, and this life was the dream... I realized you were next to me. And it felt so normal.~
+= ~I... really want that, <CHARNAME>. I know things may never be the way I remember them, but still... I want to have a chance at peace, and I want to have you there to live it with me.~
+= ~Can—can you promise me, <CHARNAME>? Will we be able to have that, one day?~
+END
+  ++ ~I'm sure of it. We'll win, and then finally we'll be able to choose the life we live, together.~ + tob-rom-7-5
+  ++ ~I wish it were up to me, but I have to accept whatever destiny has in store for me.~ + tob-rom-7-6
+  ++ ~There's a throne waiting for me, Aura. I can't give that up so easily.~ + tob-rom-7-7
+  ++ ~It's still too early to think that far ahead. Let's focus on making it through what's in front of us.~ + tob-rom-7-0
+
+CHAIN BC0AUR25 tob-rom-7-5
+~...~
+= ~I believe you.~
+EXTERN BC0AUR25 tob-rom-7-8
+
+CHAIN BC0AUR25 tob-rom-7-6
+~I know. Whatever happens, I'll never blame you or hold a grudge. But like I said... it's just not fair.~
+EXTERN BC0AUR25 tob-rom-7-8
+
+CHAIN BC0AUR25 tob-rom-7-7
+~If that's what's important... I'll do my best to help you achieve your own dream, <CHARNAME>. Your happiness is more important than mine.~
+EXTERN BC0AUR25 tob-rom-7-8
+
+CHAIN BC0AUR25 tob-rom-7-8
+~In any case... we can only keep moving forward, and doing the best we can. I can't ever forget what I am—a researcher. I have to accept the outcome, even if it's not what I want...~
+= ~Don't worry about me, <CHARNAME>. Keep looking forward. I'll keep supporting you until the very end.~
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",18)~ THEN BC0AUR25 tob-rom-8

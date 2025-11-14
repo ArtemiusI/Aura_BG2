@@ -520,7 +520,7 @@ INTERJECT BEDWIN 41 C0AuraMinscEdwinConflict
 == BC0AURA2 ~Please just stop talking...~
 == BMINSC ~Rgh... Minsc has taken some time to calm down, and breathe, and think... the red wizard's evil tongue deserves the hot, wrathful pliers of justice, but there should be a time and place... that is what Dynaheir would say... Minsc thinks...~
 == BC0AURA2 ~That's right, Minsc... and Edwin... I guess it's too much to ask for you to say sorry?~
-== BEDWIN ~Bah! Not a chance. But this witless debate has lost its appeal with your unsolicited interference, girl. I'll spare the witless one from further embarrassment... this time.~
+== BEDWIN ~Bah! Not a chance. But this debate has lost its appeal with your unsolicited interference, girl. I'll spare the witless one from further embarrassment... this time.~
 EXIT
 
 // Haer'Dalis
@@ -1382,9 +1382,9 @@ DO ~SetGlobal("C0AuraWilson1","GLOBAL",5)~
 == BWILSON ~Grunt...!~
 == BC0AURA2 ~Oh, I'm so glad to hear you'd rather eat fish than me. Er, no, I don't. But... I do know how to fish. I grew up by the sea, after all!~
 == BWILSON ~Hnrh.~
-== BC0AURA2 ~You... want to take me fishing? No, no way! This is a trick to catch me all by myself, I know it!~
+== BC0AURA2 ~You... want to take me fishing? No, no way! This is a trick to catch me all by myself, I know it! And then you'll—you'll use me as fish bait!~
 == BWILSON ~Snort snort snort.~
-== BC0AURA2 ~Now—now you're laughing at me? You think I can't outfish you?~
+== BC0AURA2 ~Now—now you're laughing at me? You... think I can't outfish you?~
 == BWILSON ~ROAR!~
 == BC0AURA2 ~Ooh, that's it. Next time we pass by a body of water, I'm bringing out my newest rod. I'll show you, you stupid bear!~
 EXIT
@@ -1435,12 +1435,12 @@ Global("C0AuraYoshimo2","GLOBAL",1)~ THEN BC0AURA2 C0AuraYoshimo2
 ~Do you have a moment, Yoshimo? There's something I was curious about.~ [C0BLANK]
 DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",2)~
 == BYOSHIM ~But of course, little Aura. It is always a delight to hear your voice, so listen eagerly I will.~
-== BC0AURA2 ~Hehe, you're flattering me too much. I just wanted to know, though... you've been away from home for a long time, haven't you? You've mastered the Common tongue, you understand these lands better than even I do... these lands must feel like a second home to you now.~
-== BYOSHIM ~Aye, close enough, my dear. It has been a long time since I left Kozakura in search of adventure, and in all that time, I have grown accustomed to the danger and thrill, as well as the profit, to be found here. Perhaps that is why, despite my homesickness, I have not felt the desperate urge to return home.~
+== BC0AURA2 ~Hehe, you're flattering me too much. I just wanted to know, though... you've been away from home for a long time, haven't you? You've mastered the Common tongue, you understand these lands better than even I do... Faerûn must feel like a second home to you at this point.~
+== BYOSHIM ~Aye, close enough, my dear. It has been a long time since I left Kozakura in search of adventure, and in all that time, I have grown accustomed to the danger and thrill, as well as the profit, to be found here. Perhaps that is why, despite my homesickness, I have not succumbed to the desperate urge to return home.~
 == BC0AURA2 ~You're a free spirit. The type who quickly finds themselves at home anywhere, no matter how unfamiliar it is.~
 == BYOSHIM ~Still, only the truly heartless, or those with dark memories, would not hold some affection for the land they were born and raised in. Meeting you, little Aura, who has discovered a love for my home, is as good as meeting a kinsman.~
 == BC0AURA2 ~And... do you miss Kozakura even more now, after talking about it with me?~
 == BYOSHIM ~I do. Though I fear it is not the time for a homecoming for me... not yet.~
-== BC0AURA2 ~Not yet?~
+== BC0AURA2 ~"Not yet"?~
 == BYOSHIM ~Well, I must see the end of this journey with <CHARNAME>—and you, my new friend—no? Come now, little one, there is still a tale to be told yet.~
 EXIT

@@ -25,7 +25,7 @@ END
 // Autocannon
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraAutocannon","GLOBAL",1)~ THEN C0AURA2J autocannon
-~Oh, I almost forgot! I should probably show you what I had in the package that was so important, right?~
+~Oh, I almost forgot! I should probably show you what I had in the package that was so important, right? It just might be something you're interested in.~
 DO ~SetGlobal("C0AuraAutocannon","GLOBAL",2)~
 END
 ++ ~That's right, I was curious.~ + autocannon.1
@@ -283,13 +283,15 @@ I_C_T YOSHJ 113 C0AuraYOSHJ113
 END
 
 I_C_T YOSHIMOX 0 C0AuraYOSHIMOX0
-== C0AURA2J IF ~GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Why are you doing this, Yoshi–san?~
+== C0AURA2J IF ~GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Why are you doing this, Yoshimo?~
 DO ~SetGlobal("C0AuraYoshimoBetrayal","GLOBAL",1)~
 == YOSHIMOX ~Little Aura... please don't. I cannot afford to stay my hand. I have waited too long already.~
-== C0AURA2J ~I just... don't understand. We trusted you. Why... why couldn't you trust us? <CHARNAME> would have helped you... *we* would have helped you.~
+== C0AURA2J ~I knew... long before all of this, I knew you were keeping secrets, despite our friendship... even then, I wanted to believe you would tell me, when you felt the time was right.~
 == YOSHIMOX ~...~
 == YOSHIMOX ~You are far too naive, Aura. Do you believe Irenicus would have chosen any fool to gain <CHARNAME>'s trust? Every action I made to said, every action I made while in your company was to lead to this ending. Befriending you, naturally, was just another means to an end.~
 == C0AURA2J ~I—I don't believe you. You never wanted it to end up like this. You still don't.~
+== YOSHIMOX ~What would you presume to know of—~
+== C0AURA2J ~I just... don't understand. We trusted you. Why... why couldn't you trust us? <CHARNAME> would have helped you... *we* would have helped you.~
 == YOSHIMOX ~Enough! Please... that's enough.~
 END
 
@@ -760,7 +762,7 @@ CHAIN ARAN SHIPFEAR-3
 ~I promise that I can do my utmost to provide the finest accommodations for those uneasy towards waterborne travel. But I fear this is the only way to reach your destination.~
 EXTERN ARAN 43
 
-I_C_T WSMITH01 8 C0AuraWSMITH018
+I_C_T2 WSMITH01 8 C0AuraWSMITH018
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Cromwell's a true master of his craft. He was the one who drafted most of the enhancements for my automaton a while before we met. When it comes to working the forge, I've never seen anyone better.~
 END
 
@@ -929,19 +931,19 @@ I_C_T PLAYER1 25 C0AuraEnteringHell1
 END
 
 I_C_T HELLJON 7 C0AuraThirdBattleWithIrenicus1
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but this fight's for <CHARNAME>, and everyone you've ever hurt, Irenicus. I'll use every last bit of courage I've gained to make sure an akutō like you may never sees the light again!~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
 END
 
 I_C_T HELLJON 8 C0AuraThirdBattleWithIrenicus1
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but this fight's for <CHARNAME>, and everyone you've ever hurt, Irenicus. I'll use every last bit of courage I've gained to make sure an akutō like you may never sees the light again!~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
 END
 
 I_C_T HELLJON 9 C0AuraThirdBattleWithIrenicus1
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but this fight's for <CHARNAME>, and everyone you've ever hurt, Irenicus. I'll use every last bit of courage I've gained to make sure an akutō like you may never sees the light again!~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
 END
 
 I_C_T HELLJON 10 C0AuraThirdBattleWithIrenicus1
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but this fight's for <CHARNAME>, and everyone you've ever hurt, Irenicus. I'll use every last bit of courage I've gained to make sure an akutō like you may never sees the light again!~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
 END
 
 // Jansens
@@ -1081,7 +1083,7 @@ INTERJECT PBHUNT01 3 C0AuraPBHUNT013
 EXTERN PBHUNT01 7
 
 I_C_T2 PTHRAL01 1 C0AuraPTHRAL011
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~How awful! Their collars are bending their minds to turn them into unwilling slaves! What can we do but make it quick and painless...?~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~How awful! Their collars are bending their minds to turn them into unwilling slaves! Is there anything we can do to save them...?~
 END
 
 // Slums District

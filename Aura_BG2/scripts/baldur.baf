@@ -16,6 +16,24 @@ THEN
 	ChangeStoreMarkup("C0AUPOTH",50,0)
 END
 
+IF
+	Global("MurdersSolved","GLOBAL",1)
+  Global("C0AuraMurderQuestEntry","GLOBAL",0)
+THEN
+  RESPONSE #100
+	SetGlobal("C0AuraMurderQuestEntry","GLOBAL",1)
+	EraseJournalEntry(%Aura_Quest_Skinner_Entry%)
+END
+
+IF
+	Global("C0AlchemyHalfPrice","GLOBAL",1)
+THEN
+  RESPONSE #100
+	SetGlobal("C0AlchemyHalfPrice","GLOBAL",2)
+	ChangeStoreMarkup("C0AUPOT1",50,0)
+	ChangeStoreMarkup("C0AUBOM1",50,0)
+	ChangeStoreMarkup("C0AUPOTH",50,0)
+END
 
 IF
   InParty("C0Aura")

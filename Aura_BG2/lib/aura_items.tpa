@@ -1660,6 +1660,7 @@ Weight: 0~
 
 COPY_EXISTING ~c0bandol.sto~ ~override~
 SAY 0xc ~Aura's Potion Bag~
+WRITE_SHORT 0xa0 ~%grenade%~
 
 COPY_EXISTING ~c0amask1.spl~ ~override~
 COPY_EXISTING ~c0amask1.itm~ ~override~
@@ -2079,6 +2080,7 @@ When thrown, unleashes a burst of negative energy which deals Magic Damage and r
   40th level: 10d10+12 Magic Damage (Save vs. Spells at -4 for half), -5 Strength (3 turns)
 
 Weight: 0~
+	WRITE_SHORT 0x001c	~%grenade%~
 WRITE_SHORT 0x9C ~%c0aproj0%~
 WRITE_LONG 0x34 6000
 
