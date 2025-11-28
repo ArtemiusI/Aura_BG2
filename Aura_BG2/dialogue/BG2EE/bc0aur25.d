@@ -507,7 +507,7 @@ DO ~SetGlobal("C0AuraSarevok1","GLOBAL",1)~
 == BSAREV25 ~You do not, fool. Your understanding of that woman is clouded by preconceptions born of ignorance. Whatever explanation you believe you are owed, you shall receive no such satisfaction from me.~
 == BC0AUR25 ~That's all the consideration you have? Nothing on what she would have wanted?~
 == BSAREV25 ~The thoughts of the dead mean as much to us as the dust flying in the wind. She is gone. Nothing else matters.~
-== BC0AUR25 ~No. I refuse to accept that. No matter what sins she left behind, I believe she retained her soul. Not like the one you've stolen.~
+== BC0AUR25 ~No. I refuse to accept that. No matter what sins she was bound by, I still believe she retained her soul. Not like the one you've stolen.~
 EXIT
 
 CHAIN
@@ -549,7 +549,7 @@ Global("C0AuraSarevokGood1","GLOBAL",0)~ THEN BC0AUR25 C0AuraSarevokFinal1
 ~...~ [C0BLANK]
 DO ~SetGlobal("C0AuraSarevokGood1","GLOBAL",1)~
 == BSAREV25 ~Praying, girl? I did not think you the sort, given I have never heard any god's name from your lips.~
-== BC0AUR25 ~I don't pray to any single god, and certainly not for myself. This is for those I've lost on my journey... you may not care about memory of the fallen, but I do.~
+== BC0AUR25 ~I don't pray to any single god, and certainly not for myself. This is for those I've lost on my journey... you may not care about the memory of the fallen, but I do.~
 == BSAREV25 ~It will serve as little consolation for the untimely fallen, if they can even hear you.~
 == BC0AUR25 ~They might not, but a little faith is better than nothing. Even the knowledge of not being forgotten can bring some peace.~
 == BSAREV25 ~Hmph. A token effort to alleviate oneself of guilt, no more. You are more like her than you think, in that respect.~

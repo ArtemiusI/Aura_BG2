@@ -1,3 +1,42 @@
+// Lovetalk 6
+
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+	Global("C0AuraRomanceActive","GLOBAL",1)
+	Global("C0AuraBG2RomanceTalk","GLOBAL",11)
+    TimeOfDay(NIGHT)
+THEN
+  RESPONSE #100
+    SetGlobal("C0AuraBG2RomanceTalk","GLOBAL",12)
+        ClearAllActions()
+        StartCutSceneMode()
+        Wait(2)
+        FadeToColor([30.0],0)
+        Wait(3)
+        ApplySpellRES("C0CCBLKS",Myself)
+        SmallWait(1)
+	PlaySong(%C0AUROM%)
+	Interact(Player1)
+END
+
+// Lovetalk 12
+
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+	Global("C0AuraRomanceActive","GLOBAL",1)
+  RealGlobalTimerExpired("C0AuraBG2RomanceTimer","GLOBAL")
+	Global("C0AuraBG2RomanceTalk","GLOBAL",23)
+THEN
+  RESPONSE #100
+    SetGlobal("C0AuraBG2RomanceTalk","GLOBAL",24)
+    RestParty()
+END
+
+
 // Underdark Lovetalk
 
 IF
@@ -10,6 +49,13 @@ IF
 THEN
   RESPONSE #100
     SetGlobal("C0AuraBG2RomanceDrowTalk","GLOBAL",1)
+        ClearAllActions()
+        StartCutSceneMode()
+        Wait(2)
+        FadeToColor([30.0],0)
+        Wait(3)
+        ApplySpellRES("C0CCBLKS",Myself)
+        SmallWait(1)
 	PlaySong(%C0AUROM%)
 	Interact(Player1)
 END
@@ -18,18 +64,26 @@ END
 
 IF
     InParty(Myself)
-    InParty("Aerie")
-    See("Aerie")
-    !StateCheck("Aerie",CD_STATE_NOTVALID)
+    InParty("Aerie")  // Aerie
+    See("Aerie")  // Aerie
+    !StateCheck("Aerie",CD_STATE_NOTVALID)  // Aerie
     !StateCheck(Myself,CD_STATE_NOTVALID)
-  GlobalGT("C0AuraAerieFriendship","GLOBAL",3)
-	RealGlobalTimerExpired("C0AuraAerieRestTalkTimer","GLOBAL")
-	AreaType(OUTDOOR)
-	TimeOfDay(NIGHT)
+    Global("C0AuraAerieRestTalk1","GLOBAL",0)
+    GlobalGT("C0AuraAerieFriendship","GLOBAL",3)
+    RealGlobalTimerExpired("C0AuraAerieRestTalkTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(NIGHT)
 THEN
-  RESPONSE #100
-    SetGlobal("C0AuraAerieRestTalk1","GLOBAL",1)
-    Interact("Aerie")
+    RESPONSE #100
+        SetGlobal("C0AuraAerieRestTalk1","GLOBAL",1)
+        ClearAllActions()
+        StartCutSceneMode()
+        Wait(2)
+        FadeToColor([30.0],0)
+        Wait(3)
+        ApplySpellRES("C0CCBLKS",Myself)
+        SmallWait(1)
+        Interact("Aerie")  // Aerie
 END
 
 // Aerie friendship banter - at rest
@@ -47,7 +101,14 @@ IF
 THEN
   RESPONSE #100
     SetGlobal("C0AuraAerieFriendship","GLOBAL",9)
-    Interact("Aerie")
+        ClearAllActions()
+        StartCutSceneMode()
+        Wait(2)
+        FadeToColor([30.0],0)
+        Wait(3)
+        ApplySpellRES("C0CCBLKS",Myself)
+        SmallWait(1)
+        Interact("Aerie")  // Aerie
 END
 
 // Minsc banter - at rest
@@ -59,12 +120,20 @@ IF
     !StateCheck("Minsc",CD_STATE_NOTVALID)
     !StateCheck(Myself,CD_STATE_NOTVALID)
 	RealGlobalTimerExpired("C0AuraMinscRestTalkTimer","GLOBAL")
+  Global("C0AuraMinscRestTalk1","GLOBAL",0)
 	AreaType("OUTDOOR")
 	TimeOfDay(NIGHT)
 THEN
   RESPONSE #100
     SetGlobal("C0AuraMinscRestTalk1","GLOBAL",1)
-    Interact("Minsc")
+        ClearAllActions()
+        StartCutSceneMode()
+        Wait(2)
+        FadeToColor([30.0],0)
+        Wait(3)
+        ApplySpellRES("C0CCBLKS",Myself)
+        SmallWait(1)
+    ActionOverride("MINSC",Interact("C0Aura"))
 END
 
 // Wilson banter - at rest
@@ -73,7 +142,7 @@ IF
     InParty(Myself)
     InParty("Wilson")
     See("Wilson")
-    !StateCheck("Minsc",CD_STATE_NOTVALID)
+    !StateCheck("Wilson",CD_STATE_NOTVALID)
     !StateCheck(Myself,CD_STATE_NOTVALID)
 	GlobalTimerExpired("C0AuraWilsonRestTalkTimer","GLOBAL")
 	AreaType("OUTDOOR")
@@ -81,5 +150,12 @@ IF
 THEN
   RESPONSE #100
     SetGlobal("C0AuraWilson1","GLOBAL",1)
-    Interact("Minsc")
+        ClearAllActions()
+        StartCutSceneMode()
+        Wait(2)
+        FadeToColor([30.0],0)
+        Wait(3)
+        ApplySpellRES("C0CCBLKS",Myself)
+        SmallWait(1)
+    Interact("WILSON")
 END

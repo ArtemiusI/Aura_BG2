@@ -18,6 +18,10 @@ I_C_T2 BJAN 87 C0AuraBJAN87
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~...Eww.~
 END
 
+I_C_T2 BMINSC 3 C0AuraBMINSC3
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Oh. Erm, actually, some of that might've been... you know, on second thought, I did not say anything. Nope. Not me! *whistle*~
+END
+
 I_C_T2 BNEERA 120 C0AuraBJAN87
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Ooh, ooh, strawberry jam! I miss the freshly-baked strawberry tarts my mother used to make. Anomen, pleeeease?~
 END
@@ -271,7 +275,7 @@ I_C_T PPSTAT01 5 C0AuraPPSTAT015
 END
 
 I_C_T2 PPWANEV 5 C0AuraPPWANEV5
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Uhh... I think I can feel my brain slowly withering away with each line I read of this gibberish...~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Uhh... clear everything up? I think I can feel my brain slowly withering away with each line I read of this gibberish...~
 END
 
 I_C_T YOSHJ 113 C0AuraYOSHJ113
@@ -470,8 +474,62 @@ END
 // City-of-Caverns
 
 INTERJECT SAHPR1 1 C0AuraSAHPR11
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~S-sahuagin, the shark-headed sea fiends... I recognize them from the bestiaries I've read. I've never heard a language like this before though.~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~S-sahuagin, the shark-headed sea fiends... I recognize them from the bestiaries I've read. I—I... I've never heard a language like this before though...~
 EXTERN SAHPR1 2
+
+INTERJECT SAHKNG01 17 C0AuraSAHPR117
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~<CHARNAME>, I... ~
+END
+  + ~OR(2)
+     Global("C0AuraRomanceActive","GLOBAL",1)
+     Global("C0AuraRomanceActive","GLOBAL",2)~ + ~I'm here, Aura. You don't have to be scared. We're not in the water anymore. You're safe with me.~ EXTERN C0AURA2J C0AuraSahuagin
+  ++ ~Aura, you look so pale! What's wrong?~ EXTERN C0AURA2J C0AuraSahuagin
+  ++ ~Oh, gods, the fall into the sea must have affected you. What do I do?~ EXTERN C0AURA2J C0AuraSahuagin
+  ++ ~Don't embarrass me in front of the shark-men now of all times, Aura...~ EXTERN C0AURA2J C0AuraSahuagin
+
+CHAIN C0AURA2J C0AuraSahuagin
+~I, I'm, I—~
+DO ~SetGlobal("C0AuraSahuaginFears","GLOBAL",1)
+ApplySpellRES("C0AQEF27",Myself)~
+== SAHKNG01 ~What's this? That especially puny one seems to be shaking especially violently. Rather like a mealworm on a hook, I might say. (Hee hee!) If she's incapable of following your orders, perhaps you can leave her here as a light snack instead, eh?~
+END
+  ++ ~Shut up! Don't you dare talk about her like that!~ EXTERN SAHKNG01 C0AuraSahuagin.1
+  ++ ~The challenge can wait! I need to take care of my companion first.~ EXTERN SAHKNG01 C0AuraSahuagin.1
+  ++ ~I need you to get it together, Aura. Now's not the time to break down on me!~ EXTERN SAHPR1 C0AuraSahuagin.2
+
+CHAIN SAHKNG01 C0AuraSahuagin.1
+~(Hee hee!) Quite the gall you have, strange <PRO_RACE>. You are quite lucky I'm in a tolerant mood right now. Otherwise...~
+== SAHPR1 ~My king... please. I will handle this matter. This will not inconvenience you for long.~
+EXTERN SAHPR1 C0AuraSahuagin.2
+
+CHAIN SAHPR1 C0AuraSahuagin.2
+~Worry not, <PRO_RACE>. Take our king's challenge, while your companion will be under my personal protection. So long as you succeed, no harm will come to her—I swear in the Shark-Father's name. You are needed for our cause, and angering you by allowing those with you to be harmed shall benefit neither of us.~
+END
+  ++ ~Fine. It seems I have no choice but to trust in your word, priestess.~ EXTERN SAHKNG01 C0AuraSahuagin.3
+  ++ ~Alright... please take care of her. She has a terrible fear of drowning.~ EXTERN SAHKNG01 C0AuraSahuagin.3
+  ++ ~No. I don't trust any of you. We're leaving now, or else you all die!~ EXTERN SAHKNG01 22
+
+CHAIN SAHKNG01 C0AuraSahuagin.3
+~Finally! I was just about to decide that I'd prefer a meal over entertainment. Now then, off to the ring with you, chop chop.~
+COPY_TRANS SAHKNG01 17
+
+INTERJECT SAHKNG01 24 C0AuraSAHKNG0124
+== SAHKNG01 IF ~GlobalGT("C0AuraSahuaginFears","GLOBAL",0)~ THEN ~Oh, and of course, your companion is returned to you... unharmed, as our wiser priestess promised. A pity, she does look rather delectable.~
+== SAHPR1 ~She remains shaken, but she should prove responsive to you now, surface <PRO_RACE>. Go, now.~
+== C0AURA2J ~I... I'm sorry for causing a problem for you, <CHARNAME>. I'm... fine now. Really.~
+DO ~ApplySpellRES("C0AQEF28",Myself)~
+END
+  ++ ~Are you sure? You don't have to hide it, if you still haven't recovered.~ EXTERN C0AURA2J C0AuraSahuagin.4
+  ++ ~It's not your fault. What happened with the ship was the worst thing that could've happened.~ EXTERN C0AURA2J C0AuraSahuagin.4
+  ++ ~Just get back in formation, already.~ EXTERN SAHKNG01 C0AuraSahuagin.5
+
+CHAIN C0AURA2J C0AuraSahuagin.4
+~We... we can talk about it later, <CHARNAME>. I... I did pay attention to what was happening just now, despite what it looked like. I know we have a task to do.~
+EXTERN SAHKNG01 C0AuraSahuagin.5
+
+CHAIN SAHKNG01 C0AuraSahuagin.5
+~Yes, yes, very heartwarming, and all that. Your hearts *would* be tasty with some minnows... but in any case, back to business. Now where were we? Oh, yes. (Hee hee!) Senityili wins.~
+EXTERN SAHBAR03 2
 
 I_C_T SAHBEH01 2 C0AuraSAHBEH012
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~A spectator! I've seen them before... they're lawful creatures of Mechanus, not evil-natured. Some of them even work for the church of Gond in Lantan.~
@@ -713,7 +771,7 @@ CHAIN WSMITH01 CROMWELL3
 ~I see ye've a beljuril, as well as a demon heart. With the natural energies of the gem an' the fury of a fiend, I can infuse this blade with the power of the storms. That man makes sharper blades than any other mortal hand, but there be no blade sharper than the strike of lightning. It'll take 8000 gold for the work.~
 END
     + ~PartyGoldLT(8000)~ + ~I don't have enough gold.~ EXTERN WSMITH01 CROMWELLNO
-    + ~PartyGoldGT(7999)~ + ~That sounds good. Do it.~ DO ~SetGlobal("C0AuraCromwellSwordUpgraded","ar0334",1)
+    + ~PartyGoldGT(7999)~ + ~That sounds good. Do it.~ DO ~SetGlobal("C0AuraCromwellSwordUpgrade","ar0334",1)
                                                  SetGlobal("ForgeStuff","GLOBAL",1)
                                                  TakePartyGold(8000)
                                                  TakePartyItemNum("C0AUSW02",1)
@@ -725,9 +783,9 @@ END
                                                  DestroyGold(8000)~ EXTERN WSMITH01 56
     ++ ~Not at this time. What else?~ EXTERN WSMITH01 CROMWELLNO
 
-CHAIN IF WEIGHT #-1 ~GlobalGT("C0AuraCromwellSwordUpgraded","ar0334",0)~ THEN WSMITH01 CROMWELL4 
+CHAIN IF WEIGHT #-1 ~GlobalGT("C0AuraCromwellSwordUpgrade","ar0334",0)~ THEN WSMITH01 CROMWELL4 
 ~Well, there ye go, me friend. Use it well. And if ye comes across anything else of interest, ye knows where to bring it, aye?~
-DO ~SetGlobal("C0AuraCromwellSwordUpgraded","ar0334",0)~ EXIT
+DO ~SetGlobal("C0AuraCromwellSwordUpgrade","ar0334",0)~ EXIT
 
 CHAIN WSMITH01 CROMWELLNO
 ~Now then, let's have a look at what else ye got in here, eh?~
@@ -1058,7 +1116,7 @@ CHAIN IF WEIGHT #-1 ~!Dead("Lavok")
 Global("C0AuraLavok","GLOBAL",1)~ THEN C0AURA2J C0AuraLavok
 ~I... Master Lavok? About this book...~
 DO ~SetGlobal("C0AuraLavok","GLOBAL",2)~
-== LAVOK ~That is...? Ah, the Imaskari Manual of Golemcraft? Hm–hmm... seeing it fills my mind with memories of all the precious time I dedicated to the search of knowledge from places long lost... the efforts spend in preserving the old society's wisdom... bringing it to life...~
+== LAVOK ~That is...? Ah, the Imaskari Manual of Golemcraft? Hm–hmm... seeing it fills my mind with memories of all the precious time I dedicated to the search of knowledge from places long lost... the efforts spent in preserving the ancient society's wisdom... bringing it to life...~
 == LAVOK ~...take it, girl, by all means. If you can give it value beyond that of a dying old man, then it will have been worth it...~
 == C0AURA2J ~Th–thank you...~
 == LAVOK ~Seeing it once again, however, and in the hands of an artificer—that I can see you are—no less... I am reminded of an old correspondent, long before this time... she had a most curious mind, driven by a yearning for knowledge over the forces that command this world... one she applied to the science of metallurgy...~
@@ -1279,7 +1337,7 @@ CHAIN C0AURA2J C0AuraBookMerchant
 == C0AURA2J ~..."Aurelia White"...~
 == IMNBOOK1 ~Ah, yes. Aurelia White, that's the name. Not much of a history to her, s'far I can tell. Only thing anyone knows is that she's a Lantanese author.~
 == C0AURA2J ~Mmm, that's, um, right. Even the Lantanese don't really talk much about, er, about her. What do you think of "Lucky Lilla", sir?~
-== IMNBOOK1 ~Well, you'd think these picture books would be too juvenile for serious reading, but truthfully I find them quite delightful. The tales, the stories! All of it was born of a truly imaginative mind.~
+== IMNBOOK1 ~Well, you'd think these picture books would be too juvenile for serious reading, but truthfully I find them quite delightful. The tales, the imagery! All of it was born of a truly imaginative mind.~
 == C0AURA2J ~Er, haha. Than—I mean, that's really interesting.~
 == IMNBOOK1 ~You know, little lady, you don't look so different from the heroine on the cover. If nothing else, the hair is almost an identical shade of pink. I don't suppose you grew up on these books?~
 == C0AURA2J ~That's, well, something like that, I guess? Ahaha... I know the stories well, in any case. I don't have any of them right now, though.~

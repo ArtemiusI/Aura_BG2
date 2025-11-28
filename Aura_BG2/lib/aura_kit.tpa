@@ -1637,7 +1637,7 @@ Casting Time: 1
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-The Mederi Rune allows the user to cast Panacea Circle. All allies within a 15-ft. radius are healed for 50% of their maximum hit points and are cured of diseases, poisons, blindness, feeblemind, deafness and intoxication.~
+The Mederi Rune allows the user to cast Panacea Circle. All allies within a 15-ft. radius are healed for 20% of their maximum hit points and are cured of diseases, poisons, blindness, feeblemind, deafness and intoxication.~
 	
 COPY_EXISTING ~c0arune9.itm~ ~override~
 SAY NAME1 ~Calamity Rune~
@@ -2076,7 +2076,7 @@ Casting Time: 1
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-The Mederi Rune allows the user to cast Panacea Circle. All allies within a 15-ft. radius are healed for 50% of their maximum hit points and are cured of diseases, poisons, blindness, feeblemind, deafness and intoxication.~
+The Mederi Rune allows the user to cast Panacea Circle. All allies within a 15-ft. radius are healed for 20% of their maximum hit points and are cured of diseases, poisons, blindness, feeblemind, deafness and intoxication.~
 
 // RED METEOR
 COPY_EXISTING ~c0arune9.spl~ ~override~
@@ -2181,7 +2181,7 @@ COPY_EXISTING ~c0auin3a.cre~ ~override/c0auin3b.cre~
 SAY NAME1 ~Jade Automaton~
 SAY NAME2 ~Jade Automaton~
 WRITE_BYTE 0x2e 32
-WRITE_BYTE 0x234 12
+WRITE_BYTE 0x234 14
 WRITE_ASCII 0x2cc ~c0auin3~  #8  // dialogue
   WRITE_ASCII 0x280 ~c0auin3~ #32  //DV
     WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_AURA_AUTOMATON_JADE~))
@@ -2211,7 +2211,7 @@ COPY_EXISTING ~c0auin3a.cre~ ~override/c0auin3c.cre~
 SAY NAME1 ~Black Automaton~
 SAY NAME2 ~Black Automaton~
 WRITE_BYTE 0x2e 75
-WRITE_BYTE 0x234 16
+WRITE_BYTE 0x234 22
 WRITE_ASCII 0x2cc ~c0auin3~  #8  // dialogue
   WRITE_ASCII 0x280 ~c0auin3~ #32  //DV
     WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_AURA_AUTOMATON_BLACK~))

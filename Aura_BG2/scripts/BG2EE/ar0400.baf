@@ -7,14 +7,6 @@ THEN
 END
 
 IF
-	Global("C0AuraBG2Quest3","GLOBAL",2)
-THEN
-  RESPONSE #100
-	      SetGlobal("C0AuraBG2Quest3","GLOBAL",3)
-        CreateCreature("C0CARNIF",[3546.1444],SW)
-END
-
-IF
 	GlobalGT("C0AuraBG2Quest3","GLOBAL",8)
 THEN
 	RESPONSE #100

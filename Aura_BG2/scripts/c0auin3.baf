@@ -1,27 +1,27 @@
+IF
+    CombatCounter(0)
+    !Global("Standby","LOCALS",1)
+    ClassLevelGT("C0Aura",ROGUE,13)  // Aura
+    ClassLevelLT("C0Aura",ROGUE,22)  // Aura
+    LevelLT(Myself,14)
+THEN
+    RESPONSE #100
+        ChangeAnimationNoEffect("C0AUIN3B")  // Jade Automaton
+        Continue()
+END
+
+IF
+    CombatCounter(0)
+    !Global("Standby","LOCALS",1)
+    ClassLevelGT("C0Aura",ROGUE,21)  // Aura
+    LevelLT(Myself,22)
+THEN
+    RESPONSE #100
+        ChangeAnimationNoEffect("C0AUIN3C")  // Black Automaton
+        Continue()
+END
+
 // UPGRADES
-
-IF
-	CombatCounter(0)
-	!Global("Standby","LOCALS",1)
-	ClassLevelGT("C0Aura",ROGUE,13)
-	ClassLevelLT("C0Aura",ROGUE,22)
-	LevelLT(Myself,12)
-THEN
-RESPONSE #100
-	ChangeAnimationNoEffect("C0AUIN3B")
-	Continue()
-END
-
-IF
-	CombatCounter(0)
-	!Global("Standby","LOCALS",1)
-	ClassLevelGT("C0Aura",ROGUE,21)
-	LevelLT(Myself,16)
-THEN
-RESPONSE #100
-	ChangeAnimationNoEffect("C0AUIN3C")
-	Continue()
-END
 
 IF
 	CombatCounter(0)
@@ -138,7 +138,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,14,SET)
 	ChangeStat(Myself,THAC0,6,SET)
 	ChangeStat(Myself,ARMORCLASS,1,SET)
@@ -162,7 +162,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,15,SET)
 	ChangeStat(Myself,THAC0,5,SET)
 	ChangeStat(Myself,ARMORCLASS,1,SET)
@@ -186,7 +186,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,16,SET)
 	ChangeStat(Myself,THAC0,4,SET)
 	ChangeStat(Myself,ARMORCLASS,0,SET)
@@ -210,7 +210,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,17,SET)
 	ChangeStat(Myself,THAC0,3,SET)
 	ChangeStat(Myself,ARMORCLASS,0,SET)
@@ -234,7 +234,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,18,SET)
 	ChangeStat(Myself,THAC0,2,SET)
 	ChangeStat(Myself,ARMORCLASS,-1,SET)
@@ -258,7 +258,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,19,SET)
 	ChangeStat(Myself,THAC0,1,SET)
 	ChangeStat(Myself,ARMORCLASS,-1,SET)
@@ -282,7 +282,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,20,SET)
 	ChangeStat(Myself,THAC0,0,SET)
 	ChangeStat(Myself,ARMORCLASS,-2,SET)
@@ -306,7 +306,7 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Jade Automaton~)
+
 	ChangeStat(Myself,LEVEL,21,SET)
 	ChangeStat(Myself,THAC0,-1,SET)
 	ChangeStat(Myself,ARMORCLASS,-2,SET)
@@ -330,7 +330,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,22,SET)
 	ChangeStat(Myself,THAC0,-2,SET)
 	ChangeStat(Myself,ARMORCLASS,-3,SET)
@@ -340,7 +339,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,2,SET)
 	ChangeStat(Myself,SAVEVSSPELL,4,SET)
 	ChangeStat(Myself,MAXHITPOINTS,129,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -355,7 +353,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,23,SET)
 	ChangeStat(Myself,THAC0,-3,SET)
 	ChangeStat(Myself,ARMORCLASS,-3,SET)
@@ -365,7 +362,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,2,SET)
 	ChangeStat(Myself,SAVEVSSPELL,4,SET)
 	ChangeStat(Myself,MAXHITPOINTS,132,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -380,7 +376,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,24,SET)
 	ChangeStat(Myself,THAC0,-4,SET)
 	ChangeStat(Myself,ARMORCLASS,-4,SET)
@@ -390,7 +385,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,1,SET)
 	ChangeStat(Myself,SAVEVSSPELL,3,SET)
 	ChangeStat(Myself,MAXHITPOINTS,135,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -405,7 +399,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,25,SET)
 	ChangeStat(Myself,THAC0,-5,SET)
 	ChangeStat(Myself,ARMORCLASS,-4,SET)
@@ -415,7 +408,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,1,SET)
 	ChangeStat(Myself,SAVEVSSPELL,3,SET)
 	ChangeStat(Myself,MAXHITPOINTS,138,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -430,7 +422,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,26,SET)
 	ChangeStat(Myself,THAC0,-6,SET)
 	ChangeStat(Myself,ARMORCLASS,-5,SET)
@@ -440,7 +431,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,0,SET)
 	ChangeStat(Myself,SAVEVSSPELL,2,SET)
 	ChangeStat(Myself,MAXHITPOINTS,141,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -455,7 +445,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,27,SET)
 	ChangeStat(Myself,THAC0,-7,SET)
 	ChangeStat(Myself,ARMORCLASS,-5,SET)
@@ -465,7 +454,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,0,SET)
 	ChangeStat(Myself,SAVEVSSPELL,2,SET)
 	ChangeStat(Myself,MAXHITPOINTS,144,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -480,7 +468,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,28,SET)
 	ChangeStat(Myself,THAC0,-8,SET)
 	ChangeStat(Myself,ARMORCLASS,-6,SET)
@@ -490,7 +477,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-1,SET)
 	ChangeStat(Myself,SAVEVSSPELL,1,SET)
 	ChangeStat(Myself,MAXHITPOINTS,147,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -505,7 +491,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,29,SET)
 	ChangeStat(Myself,THAC0,-9,SET)
 	ChangeStat(Myself,ARMORCLASS,-6,SET)
@@ -515,7 +500,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-1,SET)
 	ChangeStat(Myself,SAVEVSSPELL,1,SET)
 	ChangeStat(Myself,MAXHITPOINTS,150,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -530,7 +514,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,30,SET)
 	ChangeStat(Myself,THAC0,-10,SET)
 	ChangeStat(Myself,ARMORCLASS,-7,SET)
@@ -540,7 +523,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-2,SET)
 	ChangeStat(Myself,SAVEVSSPELL,0,SET)
 	ChangeStat(Myself,MAXHITPOINTS,153,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -555,7 +537,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,31,SET)
 	ChangeStat(Myself,THAC0,-11,SET)
 	ChangeStat(Myself,ARMORCLASS,-7,SET)
@@ -565,7 +546,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-2,SET)
 	ChangeStat(Myself,SAVEVSSPELL,0,SET)
 	ChangeStat(Myself,MAXHITPOINTS,156,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -580,7 +560,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,32,SET)
 	ChangeStat(Myself,THAC0,-12,SET)
 	ChangeStat(Myself,ARMORCLASS,-8,SET)
@@ -590,7 +569,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-3,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-1,SET)
 	ChangeStat(Myself,MAXHITPOINTS,159,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -605,7 +583,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,33,SET)
 	ChangeStat(Myself,THAC0,-13,SET)
 	ChangeStat(Myself,ARMORCLASS,-8,SET)
@@ -615,7 +592,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-3,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-1,SET)
 	ChangeStat(Myself,MAXHITPOINTS,162,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -630,7 +606,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,34,SET)
 	ChangeStat(Myself,THAC0,-14,SET)
 	ChangeStat(Myself,ARMORCLASS,-9,SET)
@@ -640,7 +615,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-4,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-2,SET)
 	ChangeStat(Myself,MAXHITPOINTS,165,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -655,7 +629,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,35,SET)
 	ChangeStat(Myself,THAC0,-15,SET)
 	ChangeStat(Myself,ARMORCLASS,-9,SET)
@@ -665,7 +638,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-4,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-2,SET)
 	ChangeStat(Myself,MAXHITPOINTS,168,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -680,7 +652,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,36,SET)
 	ChangeStat(Myself,THAC0,-16,SET)
 	ChangeStat(Myself,ARMORCLASS,-10,SET)
@@ -690,7 +661,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-5,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-3,SET)
 	ChangeStat(Myself,MAXHITPOINTS,171,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -705,7 +675,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,37,SET)
 	ChangeStat(Myself,THAC0,-17,SET)
 	ChangeStat(Myself,ARMORCLASS,-10,SET)
@@ -715,7 +684,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-5,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-3,SET)
 	ChangeStat(Myself,MAXHITPOINTS,174,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -730,7 +698,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,38,SET)
 	ChangeStat(Myself,THAC0,-18,SET)
 	ChangeStat(Myself,ARMORCLASS,-11,SET)
@@ -740,7 +707,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-6,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-4,SET)
 	ChangeStat(Myself,MAXHITPOINTS,177,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -755,7 +721,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,39,SET)
 	ChangeStat(Myself,THAC0,-19,SET)
 	ChangeStat(Myself,ARMORCLASS,-11,SET)
@@ -765,7 +730,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-6,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-4,SET)
 	ChangeStat(Myself,MAXHITPOINTS,180,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -780,7 +744,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,40,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-12,SET)
@@ -790,7 +753,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-7,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-5,SET)
 	ChangeStat(Myself,MAXHITPOINTS,183,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -805,7 +767,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,41,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-12,SET)
@@ -815,7 +776,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-7,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-5,SET)
 	ChangeStat(Myself,MAXHITPOINTS,186,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -830,7 +790,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,42,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-13,SET)
@@ -840,7 +799,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
 	ChangeStat(Myself,MAXHITPOINTS,186,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -855,7 +813,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,43,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-13,SET)
@@ -865,7 +822,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
 	ChangeStat(Myself,MAXHITPOINTS,189,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -880,7 +836,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,44,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-13,SET)
@@ -890,7 +845,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
 	ChangeStat(Myself,MAXHITPOINTS,189,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -905,7 +859,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,45,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-13,SET)
@@ -915,7 +868,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
 	ChangeStat(Myself,MAXHITPOINTS,192,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -930,7 +882,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,46,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-14,SET)
@@ -940,7 +891,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-9,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-7,SET)
 	ChangeStat(Myself,MAXHITPOINTS,195,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -955,7 +905,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,47,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-14,SET)
@@ -965,7 +914,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-9,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-7,SET)
 	ChangeStat(Myself,MAXHITPOINTS,198,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -980,7 +928,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,48,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-15,SET)
@@ -990,7 +937,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-10,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-8,SET)
 	ChangeStat(Myself,MAXHITPOINTS,201,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -1005,7 +951,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,49,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-15,SET)
@@ -1015,7 +960,6 @@ RESPONSE #100
 	ChangeStat(Myself,SAVEVSBREATH,-10,SET)
 	ChangeStat(Myself,SAVEVSSPELL,-8,SET)
 	ChangeStat(Myself,MAXHITPOINTS,204,SET)
-	ApplySpellRES("c0autor",Myself)
 	ApplySpellRES("c0autor",Myself)
 	ReallyForceSpellRES("c0repair",Myself)
 END
@@ -1030,7 +974,6 @@ RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
 	ApplySpellRES("c0autosx",Myself)
-	SetName(~Black Automaton~)
 	ChangeStat(Myself,LEVEL,50,SET)
 	ChangeStat(Myself,THAC0,-20,SET)
 	ChangeStat(Myself,ARMORCLASS,-16,SET)
@@ -1051,13 +994,6 @@ THEN
   SetGlobal("RepairCount","LOCALS",3)
   MakeGlobalOverride()
   ChangeEnemyAlly(Myself,CONTROLLED)
-END
-
-IF
-	PartyRested()
-THEN
-  RESPONSE #100
-  SetGlobal("RepairCount","LOCALS",3)
 END
 
 IF
@@ -1359,48 +1295,52 @@ THEN
 END
 
 IF
-  Global("C0AutoUpgradeSpecial5","GLOBAL",1)
+  GlobalGT("C0AutoUpgradeSpecial5","GLOBAL",0)
   Global("MageSpells1","LOCALS",0)
 THEN
   RESPONSE #100
 	ApplySpellRES("C0AUIN31",Myself)
 	ApplySpellRES("C0AUIN32",Myself)
+	SmallWait(1)
 	Rest()
 	SetGlobal("MageSpells1","LOCALS",1)
 	Continue()
 END
 
 IF
-  Global("C0AutoUpgradeSpecial6","GLOBAL",1)
+  GlobalGT("C0AutoUpgradeSpecial5","GLOBAL",1)
   Global("MageSpells2","LOCALS",0)
 THEN
   RESPONSE #100
 	ApplySpellRES("C0AUIN33",Myself)
 	ApplySpellRES("C0AUIN34",Myself)
+	SmallWait(1)
 	Rest()
 	SetGlobal("MageSpells2","LOCALS",1)
 	Continue()
 END
 
 IF
-  Global("C0AutoUpgradeSpecial7","GLOBAL",1)
+  GlobalGT("C0AutoUpgradeSpecial5","GLOBAL",2)
   Global("MageSpells3","LOCALS",0)
 THEN
   RESPONSE #100
 	ApplySpellRES("C0AUIN35",Myself)
 	ApplySpellRES("C0AUIN36",Myself)
+	SmallWait(1)
 	Rest()
 	SetGlobal("MageSpells3","LOCALS",1)
 	Continue()
 END
 
 IF
-  Global("C0AutoUpgradeSpecial8","GLOBAL",1)
+  GlobalGT("C0AutoUpgradeSpecial5","GLOBAL",3)
   Global("MageSpells4","LOCALS",0)
 THEN
   RESPONSE #100
 	ApplySpellRES("C0AUIN37",Myself)
 	ApplySpellRES("C0AUIN38",Myself)
+	SmallWait(1)
 	Rest()
 	SetGlobal("MageSpells4","LOCALS",1)
 	Continue()

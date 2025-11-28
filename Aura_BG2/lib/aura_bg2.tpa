@@ -372,8 +372,15 @@ LOAD_TRA ~%MOD_FOLDER%/tra/%LANGUAGE%/BG2/journal.tra~
 ADD_JOURNAL EXISTING TITLE (#74427) @1 USING ~%MOD_FOLDER%/tra/english/BG2/journal.tra~
 OUTER_SET %Aura_Quest_Skinner_Entry% = RESOLVE_STR_REF (@1)
 
-ADD_JOURNAL TITLE (~Ipsa scientia potestas est~) @1001 USING ~%MOD_FOLDER%/tra/%LANGUAGE%/BG2/journal.tra~
+ADD_JOURNAL TITLE (~Experto crede~) @1001 USING ~%MOD_FOLDER%/tra/%LANGUAGE%/BG2/journal.tra~
 OUTER_SET %Quest1_Entry_1% = RESOLVE_STR_REF (@1001)
+OUTER_SET %Quest1_Entry_2% = RESOLVE_STR_REF (@1002)
+OUTER_SET %Quest1_Entry_3% = RESOLVE_STR_REF (@1003)
+OUTER_SET %Quest1_Entry_4% = RESOLVE_STR_REF (@1004)
+OUTER_SET %Quest1_Entry_5% = RESOLVE_STR_REF (@1005)
+OUTER_SET %Quest1_Entry_6% = RESOLVE_STR_REF (@1006)
+OUTER_SET %Quest1_Entry_7% = RESOLVE_STR_REF (@1007)
+OUTER_SET %Quest1_Entry_8% = RESOLVE_STR_REF (@1008)
 
 ADD_JOURNAL TITLE (~Planeswalker~) @2001 USING ~%MOD_FOLDER%/tra/%LANGUAGE%/BG2/journal.tra~
 OUTER_SET %Quest1_Entry_1% = RESOLVE_STR_REF (@2001)
@@ -2041,6 +2048,7 @@ WRITE_BYTE 0x46 0 // BASE AC
 WRITE_BYTE 0x48 0 // EFFECTIVE AC
 WRITE_BYTE 0x53 2 // ATTACKS PER ROUND
 WRITE_BYTE 0x270 128
+WRITE_ASCII DIALOG ~C0AGOL02~ #8 // dialogue
 WRITE_ASCII SCRIPT_DEFAULT ~OHBFIG01~ #8 // override
 WRITE_ASCII DEATHVAR ~C0AGOL01~ #32 // death variable
 WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_ADAMANTITE_GOLEM~))
@@ -2058,6 +2066,7 @@ WRITE_BYTE 0x61 50 // CRUSHING RESISTANCE
 WRITE_BYTE 0x62 50 // PIERCING RESISTANCE
 WRITE_BYTE 0x63 50 // MISSILE  RESISTANCE
 WRITE_BYTE 0x270 128
+WRITE_ASCII DIALOG ~C0AGOL03~ #8 // dialogue
 WRITE_ASCII SCRIPT_DEFAULT ~OHBFIG01~ #8 // override
 WRITE_ASCII DEATHVAR ~C0AGOL01~ #32 // death variable
 WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_MITHRIL_GOLEM~))
@@ -2399,6 +2408,7 @@ COPY_EXISTING ar2014.are override
 WRITE_ASCII 0x94 ~ar2014~
 END ELSE BEGIN
 EXTEND_TOP ~ar2014.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar2014.baf~
+EXTEND_TOP ~ar2300.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar2300.baf~
 END
 EXTEND_TOP ~baldur.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/baldur.baf~
 EXTEND_TOP ~JAN.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/JAN.baf~
@@ -4025,6 +4035,14 @@ STATISTICS:
 
 Weight: 5~
 
+COPY_EXISTING ~AR5204.are~ ~override~
+      LPF ADD_AREA_ITEM
+      INT_VAR
+        container_to_add_to = 3
+      STR_VAR
+        item_to_add = ~c0amith~
+      END
+
 COPY_EXISTING ~c0aufor1.itm~ ~override~
 SAY NAME1 ~Strange Concoction~
 SAY NAME2 ~Formula #00155-L~
@@ -4263,7 +4281,7 @@ Equipped abilities:
 – Cold Resistance: -50%
 – All fire damage inflicted by the wearer is increased by 20%
 
-Requires: 16 Constitution
+Requires: 17 Constitution
 
 Weight: 1~
 
@@ -4309,7 +4327,7 @@ Equipped abilities:
 – All enemies within a 15-ft. radius of the wearer have their fire resistance reduced by a cumulative 15% per round for 3 rounds.
 – All fire damage inflicted by the wearer is increased by 30%
 
-Requires: 16 Constitution
+Requires: 17 Constitution
 
 Weight: 1~
 

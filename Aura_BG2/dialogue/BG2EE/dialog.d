@@ -10,6 +10,8 @@ BEGIN C0ATHF1
 BEGIN C0ATHF2
 BEGIN C0ATHF3
 BEGIN C0ATHF4
+BEGIN C0AGOL02
+BEGIN C0AGOL03
 BEGIN C0AKOKO
 BEGIN C0APICO
 BEGIN C0AMAGN
@@ -189,21 +191,33 @@ END
 CHAIN MAJAN MAJANSEN-BG1
 ~Yes, that's exactly right. She's from the Glimmershine family—a very prestigous Lantanese name. Might you be a friend of hers?~
 END
-+ ~Global("C0AuraMatch","GLOBAL",1)~ + ~More than a friend, actually. We were... close.~ DO ~SetGlobal("C0AuraRomanceActive","GLOBAL",1)~ + MAJANSEN-4
++ ~!Global("AnomenRomanceActive","GLOBAL",2)
+!Global("RasaadRomanceActive","GLOBAL",2)
+!Global("DornRomanceActive","GLOBAL",2)
+!Global("HexxatRomanceActive","GLOBAL",2)
+Global("C0AuraMatch","GLOBAL",1)~ + ~More than a friend, actually. We were... close.~ DO ~SetGlobal("C0AuraRomanceActive","GLOBAL",1)~ + MAJANSEN-4
 ++ ~Yes, I am.~ + MAJANSEN-4
 ++ ~Not exactly, but I do know her.~ + MAJANSEN-4
 
 CHAIN MAJAN MAJANSEN-2a
 ~Yes, yes, that's what she's called. She's from the Glimmershine family—a very prestigous Lantanese name. Might you be a friend of hers?~
 END
-+ ~Global("C0AuraMatch","GLOBAL",1)~ + ~More than a friend, actually. We were... close.~ DO ~SetGlobal("C0AuraRomanceActive","GLOBAL",1)~ + MAJANSEN-4
++ ~!Global("AnomenRomanceActive","GLOBAL",2)
+!Global("RasaadRomanceActive","GLOBAL",2)
+!Global("DornRomanceActive","GLOBAL",2)
+!Global("HexxatRomanceActive","GLOBAL",2)
+Global("C0AuraMatch","GLOBAL",1)~ + ~More than a friend, actually. We were... close.~ DO ~SetGlobal("C0AuraRomanceActive","GLOBAL",1)~ + MAJANSEN-4
 ++ ~Yes, I am.~ + MAJANSEN-4
 ++ ~Not exactly, but I do know her.~ + MAJANSEN-4
 
 CHAIN MAJAN MAJANSEN-2b
 ~Oh, do you know the young lady? Her name's Aura, and she's from the Glimmershine family—a very prestigous Lantanese name. Might you be a friend of hers?~
 END
-+ ~Global("C0AuraMatch","GLOBAL",1)~ + ~More than a friend, actually. We were... close.~ DO ~SetGlobal("C0AuraRomanceActive","GLOBAL",1)~ + MAJANSEN-4
++ ~!Global("AnomenRomanceActive","GLOBAL",2)
+!Global("RasaadRomanceActive","GLOBAL",2)
+!Global("DornRomanceActive","GLOBAL",2)
+!Global("HexxatRomanceActive","GLOBAL",2)
+Global("C0AuraMatch","GLOBAL",1)~ + ~More than a friend, actually. We were... close.~ DO ~SetGlobal("C0AuraRomanceActive","GLOBAL",1)~ + MAJANSEN-4
 ++ ~Yes, I am.~ + MAJANSEN-4
 ++ ~Not exactly, but I do know her.~ + MAJANSEN-4
 
@@ -382,7 +396,9 @@ CHAIN C0AURA2J magnus1.5
 EXTERN C0AMAGN magnus1.6
 
 CHAIN C0AMAGN magnus1.6
-~I'm afraid I don't have much to offer in terms of a proper greeting, but you are welcome to make yourself home here, small as my little workplace is. I'm afraid I cannot stay idle while there's still so much work to do, but please do tell me if there is anything I can do for you.~
+~There's not much cause for an inventor here in Athkatla, much less in the poorer district, but this simple abode has been the best I can manage, and so I must do what I can to get by. My skills are at least capable of building playthings for children as "Uncle Mag" for a few coins, and it is enough to put food on my table.~
+= ~That said, if you are the adventuring type, there may be something I have that is of value to you. I may have never taken to the road for extended periods myself, but I am an omnidisciplinary researcher, and perhaps some of my creations may be of use to those of your profession.~
+= ~I'm afraid I don't have much to offer in terms of a proper welcome, but you are free to make yourself home here, small as my little workplace is. I cannot stay idle while there's still so much work to do, but please do tell me if there is anything I can do for you.~
 EXIT
 
 CHAIN IF ~RandomNum(4,1)
@@ -390,6 +406,7 @@ CHAIN IF ~RandomNum(4,1)
 ~Let's see... if I were to, hmm... with the ether... yes, that would—erm, did you need something?~ [C0A1101]
 END
 ++ ~Do you have anything to sell?~ + MAGN-SHOP
+++ ~Can I ask you a few questions?~ + MAGN-QUESTIONS
 ++ ~Not right now.~ EXIT
 
 CHAIN IF ~RandomNum(4,2)
@@ -397,6 +414,7 @@ CHAIN IF ~RandomNum(4,2)
 ~I do believe another twelve ounces of emulsifier should to do the trick... ah, it's you! Please, make yourself at home.~ [C0A1102]
 END
 ++ ~Do you have anything to sell?~ + MAGN-SHOP
+++ ~Can I ask you a few questions?~ + MAGN-QUESTIONS
 ++ ~Not right now.~ EXIT
 
 CHAIN IF ~RandomNum(4,3)
@@ -404,6 +422,7 @@ CHAIN IF ~RandomNum(4,3)
 ~Reese, my boy, have you seen my jar of Formula #157? I could've sworn I left it in... oh, I beg your pardon. Do you need anything?~ [C0A1103]
 END
 ++ ~Do you have anything to sell?~ + MAGN-SHOP
+++ ~Can I ask you a few questions?~ + MAGN-QUESTIONS
 ++ ~Not right now.~ EXIT
 
 CHAIN IF ~RandomNum(4,4)
@@ -411,6 +430,7 @@ CHAIN IF ~RandomNum(4,4)
 ~By Gond, were I still in my younger days I would test these contraptions for faults myself... erm, don't mind an old man's ramblings. I'm paying attention... mostly.~ [C0A1104]
 END
 ++ ~Do you have anything to sell?~ + MAGN-SHOP
+++ ~Can I ask you a few questions?~ + MAGN-QUESTIONS
 ++ ~Not right now.~ EXIT
 
 CHAIN C0AMAGN MAGN-SHOP
@@ -418,6 +438,41 @@ CHAIN C0AMAGN MAGN-SHOP
 END
 ++ ~Let me see what you have.~ DO ~StartStore("C0AMAGN",LastTalkedToBy(Myself))~ EXIT
 ++ ~Maybe later.~ EXIT
+
+CHAIN C0AMAGN MAGN-QUESTIONS
+~Questions? Questions, yes. Of course you may, my <GIRLBOY>.~
+END
+  + ~GlobalGT("C0AuraBG2Quest1","GLOBAL",53)
+     Global("C0AuraMagnReese","GLOBAL",0)~ + ~Are you aware that Reese is an agent of Oculus here to keep you under surveillance?~ DO ~SetGlobal("C0AuraMagnReese","GLOBAL",1)~ + MAGN-REESE
+  + ~GlobalGT("C0AuraBG2Quest1","GLOBAL",48)
+     Global("C0AuraMagnDisciples","GLOBAL",0)~ + ~I noticed you got rather angry when those gnomes from Interitus mentioned disciples. Is there a story behind that?~ DO ~SetGlobal("C0AuraMagnDisciples","GLOBAL",1)~ + MAGN-DISCIPLES
+  ++ ~Actually, I'd rather see what you have to sell.~ + MAGN-SHOP
+  ++ ~Maybe later.~ EXIT
+
+CHAIN C0AMAGN MAGN-QUESTIONS2
+~Now then, is there something else you wished to ask?~
+END
+  + ~GlobalGT("C0AuraBG2Quest1","GLOBAL",53)
+     Global("C0AuraMagnReese","GLOBAL",0)~ + ~Are you aware that Reese is an agent of Oculus here to keep you under surveillance?~ DO ~SetGlobal("C0AuraMagnReese","GLOBAL",1)~ + MAGN-REESE
+  + ~GlobalGT("C0AuraBG2Quest1","GLOBAL",48)
+     Global("C0AuraMagnDisciples","GLOBAL",0)~ + ~I noticed you got rather angry when those gnomes from Interitus mentioned disciples. Is there a story behind that?~ DO ~SetGlobal("C0AuraMagnDisciples","GLOBAL",1)~ + MAGN-DISCIPLES
+  ++ ~Actually, I'd rather see what you have to sell.~ + MAGN-SHOP
+  ++ ~Maybe later.~ EXIT
+
+CHAIN C0AMAGN MAGN-REESE
+~He's told you, eh? Well, naturally I do know, of course. I was expecting one like him to appear sooner or later after my exile.~
+= ~After all, the odds of a clever Lantanna youth just happening to discover me in this den of squalor seems too convenient to be a simple coincidence, don't you think? Not to mention, there is no chance the Ayrorch would simply allow me to go my own ways unsupervised for all these years, given the knowledge I possess. I would be insulted if they didn't send someone to keep watch over me.~
+= ~I am aware, and I suspect he is intelligent enough to have realized that as well, though we have never said it plainly to each other. Besides, it's more convenient for me to have a capable assistant at hand, and Oculus he may be, he is still a young man eager to learn. I believe his decision to remain here is beyond simple duty.~
+EXTERN C0AMAGN MAGN-QUESTIONS2
+
+CHAIN C0AMAGN MAGN-DISCIPLES
+~Ah... you should not concern yourself over that, my <GIRLBOY>, though I suppose there is no harm in telling you. When I was still a professor of the Sambaran academy, I naturally mentored many young Lantanna. Among them, there were two... a brother and sister, who had enough talent to become my protégés.~
+== C0AMAGN ~Their names were Dedalus and Glaphyra Dinelstrand, and they both became High Artificers of the Great Workshops. Dedalus, whose proficiency was in machinery and inanimate creations, took charge of the Eleventh Workshop, while Glaphyra... who was fascinated in life and its workings like myself, and was always the one closer to me, was the leader of the Fourth Workshop.~
+== C0AURA2J IF ~InParty("C0Aura")~ THEN ~Dedalus and Glaphyra? They're distant family from my father's side... Uncle Dedalus is my father's half-brother, and the one who helped me build the Sunshooter. I only remember a little bit of Aunt Glaphyra... she died when I was still very young, but I remember she was kind, and doted on me often.~
+== C0AURA2J IF ~InParty("C0Aura")~ THEN ~I never knew that she was Head Artificer of the Fourth Workshop... or what the workshop even was built for. Was the removal of the Fourth Workshop, and her death related...?~
+== C0AMAGN IF ~InParty("C0Aura")~ THEN ~I'm afraid I'm no authority on the matter, my dear. I know very little of it myself... only that there is nobody alive who was present to witness what happened to her, and not long after the tragedy, the Ayrorch revised their restrictions on experimentation on life into complete prohibition.~
+== C0AMAGN ~I suspect Glaphyra likely involved herself in some project which ultimately went out of hand, and her death, as well as the Fourth Workshop becoming a forbidden subject among Lantanna, are related... but that is in the past, now. I do not wish to think of it any longer.~
+EXTERN C0AMAGN MAGN-QUESTIONS2
 
 CHAIN IF ~True()~ THEN C0AASCS GILBERT
 ~I greet you, friend. Have you come in need of any potions or medical remedies?~
@@ -467,7 +522,7 @@ EXTERN C0AREES QUEST1-BEGIN-4
 
 CHAIN C0AREES QUEST1-BEGIN-4
 ~I just needed to make sure, but I suppose if you don't know, that might be for the best. I'm sorry to keep you.~
-EXIT
+DO ~AddJournalEntry(%Quest1_Entry_1%,QUEST)~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",9)~ THEN C0AQMAN QUEST-MAN
 ~Father! Father, please get up, at least so I can carry you! It can't be too far from here now, we can find it if we walk a little longer!~
@@ -561,8 +616,8 @@ CHAIN C0AASCS GILBERT-QUEST-1
 ~I should not be asking anything difficult from someone with little involvement in this... but you were kind enough to bring this man here, so perhaps you may be willing to do more.~
 = ~There is... one lead that could be followed that I know of. It is nothing but speculation, but rumor has it that a miracle remedy known as Titan has been spread throughout the black market of this city.~ 
 == C0AURA2J IF ~InParty("C0Aura")~ THEN ~Titan... there's that word again.~
-== C0AASCS ~You know of it?~
-== C0AURA2J ~We were told about something called that existing not long ago, but... that's all we know.~
+== C0AASCS IF ~InParty("C0Aura")~ ~You know of it?~
+== C0AURA2J IF ~InParty("C0Aura")~ ~We were told about something called that existing not long ago, but... that's all we know.~
 == C0AASCS ~I see. Then you are as in the dark about it as I am.~
 END
   ++ ~That seems suspicious. Why didn't you bring it up to the man's son?~ + GILBERT-QUEST-2
@@ -581,13 +636,39 @@ EXTERN C0AASCS GILBERT-QUEST-4
 
 CHAIN C0AASCS GILBERT-QUEST-4
 ~I fear I have no knowledge of how you may find the truth. Perhaps a member of the black market itself, or another underworld organization, assuming you dare to speak with them, may enlighten you further, though it will undoubtedly be dangerous.~
-= ~That is all I can tell you, friend. I do not ask you to put yourself at risk, but if you learn of anything, please let me know. There may be something I can do for this sick man if further information is discovered.~
-DO ~SetGlobal("C0AuraBG2Quest1AskTitan","GLOBAL",1)
+== JANJ IF ~InParty("Jaheira")~ THEN ~'Titan', eh? I had aspirations of becoming a Titan, many a lifetime ago... still, if it's a matter of illegal drugs we're talking about, I'm sure some fences around the city will no doubt have heard of it, given this sort of knowledge spreads around like a nasty rash from poison ivy. Maybe if we get some for ourselves, I might be able to have a look at it... just out of curiosity...~
+== JAHEIRAJ IF ~InParty("Jaheira")~ THEN ~When it comes to affairs of this sort, no doubt Bernard at the Copper Coronet has some information he may divulge. I doubt he would be foolish enough to deal in it himself, however, so he can likely point us in the right direction at most.~
+== YOSHJ IF ~InParty("Yoshimo")
+!Global("WorkingForBodhi","GLOBAL",1)~ THEN ~This 'Titan'... I seem to have heard something related to the matter during my time in this city, not long before we met, my friend. Though, with my common sense, I wisely keep my hands clean of such substances... still, perhaps our 'friend' Gaelan Bayle may have some knowledge of the matter, given his associations. Asking him may be a prudent way forwards.~
+== EDWINJ IF ~InParty("Edwin")
+!Global("WorkingForBodhi","GLOBAL",1)~ THEN ~Hmm. A substance of such great claims may warrant some research... perhaps it would be to our benefit to acquire some of this 'Titan' for ourselves. No doubt the Shadow Thieves will have some knowledge on the matter. We should question them.~
+== C0AASCS ~That is all I can tell you, friend. I do not ask you to put yourself at risk, but if you learn of anything, please let me know. There may be something I can do for this sick man if further information is discovered.~
+DO ~AddJournalEntry(%Quest1_Entry_2%,QUEST)
+SetGlobal("C0AuraBG2Quest1AskTitan","GLOBAL",1)
 SetGlobal("C0AuraBG2Quest1","GLOBAL",14)~ EXIT
 
 EXTEND_TOP GAELAN 42 49 51
 + ~Global("C0AuraBG2Quest1","GLOBAL",14) Global("C0AuraBG2Quest1AskTitan","GLOBAL",1)~ + ~I was curious if you knew where to acquire Titan.~ DO ~SetGlobal("C0AuraBG2Quest1AskTitan","GLOBAL",2)~ EXTERN GAELAN GAELAN-TITAN
 END
+
+EXTEND_TOP BERNARD 31
++ ~Global("C0AuraBG2Quest1","GLOBAL",14) Global("C0AuraBG2Quest1AskTitan","GLOBAL",1)~ + ~I was curious if you knew where to acquire Titan.~ DO ~SetGlobal("C0AuraBG2Quest1AskTitan","GLOBAL",2)~ EXTERN BERNARD BERNARD-TITAN
+END
+
+EXTEND_TOP BMTHIEF 0 4
++ ~Global("C0AuraBG2Quest1","GLOBAL",14) Global("C0AuraBG2Quest1AskTitan","GLOBAL",1)~ + ~I was curious if you knew where to acquire Titan.~ DO ~SetGlobal("C0AuraBG2Quest1AskTitan","GLOBAL",2)~ EXTERN BMTHIEF BMTHIEF-TITAN
+END
+
+CHAIN BERNARD BERNARD-TITAN
+~Titan... I know of it, aye, but may the gods strike me down if I e'er dared to lay hands on that poison. Listen, friend. We've peddled in some unlawful substances here, I won't deny it... but I've seen people come in having partaken of Titan, and no matter what it may claim to offer... the consequences ain't worth it, I can assure you of that.~
+= ~If you really value your life so little, I've heard rumors of some dealings in the Graveyard District at night. Suppose it's fitting, since it'll be where anyone involved in that trade ends up, one way or another.~
+EXIT
+
+CHAIN BMTHIEF BMTHIEF-TITAN
+~Titan...? Ah, I see... that is what you're after, is it?~
+= ~Unfortunately, the Shadow Thieves do not deal in Titan, my <PRO_LADYLORD>. I did have a sample of the curious concoction in my possession some time ago, but the order from the higher-ups was to dispose of any which that falls into our hands. It seems those higher in the chain of command find the benefits not worth the cost.~
+= ~That said, if you are insistent on finding some for whatever reason... I have heard that they deal in the substance in the Graveyard District at night. That is the best lead I can offer you, I fear.~
+EXIT
 
 CHAIN GAELAN GAELAN-TITAN
 ~Titan? Me <PRO_LADYLORD>, now ye be barkin' up the wrong tree 'ere, I assure ye. Me and my employers, we get our hands in some shady dealin's, no doubt. But even we know a bad investment when we see one.~
@@ -711,7 +792,7 @@ EXTERN C0AQINSP INSPECTOR-AEGISFIELD-7
 
 CHAIN C0AQINSP INSPECTOR-AEGISFIELD-6
 ~I see. Though I should ask that you come to the Chief Inspector and share what you know... I feel as though our lot will be all but useless in handling this case.~
-EXTERN C0AQINSP INSPECTOR-AEGISFIELD-5
+EXTERN C0AQINSP INSPECTOR-AEGISFIELD-7
 
 CHAIN C0AQINSP INSPECTOR-AEGISFIELD-7
 ~The inspectors' office has been stretched thin enough as it is, and my fellows and I have been stumbling in the dark for the better part of a month now with no results to show for it. And with some of the conditions I've seen from the afflicted... I would prefer to see this problem dealt with as quickly as possible, no matter the means.~
@@ -865,9 +946,9 @@ CHAIN C0AMAGN QUEST1-MAGNUS-ASCLEPIOS2-3
 == C0AASCL ~As you wish.~
 == C0AASCL ~Before I run the risk of confusing you, I must ask. How much do you understand of physiology?~
 END
-  + ~CheckStatGT(Player1,16,INT)~ + ~I wager I know enoguh to keep up.~ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-4
+  + ~CheckStatGT(Player1,16,INT)~ + ~I wager I know enough to keep up.~ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-4
   + ~CheckStatGT(Player1,16,INT)~ + ~A bit, but I'm wouldn't call myself an expert.~ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-4
-  + ~!CheckStatGT(Player1,16,INT)~ + ~Not much, I'm afraid.~ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-5
+  ++ ~Not much, I'm afraid.~ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-5
   + ~!CheckStatGT(Player1,16,INT)~ + ~Physio... what?~ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-5
 
 CHAIN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-4
@@ -880,9 +961,10 @@ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-6
 
 CHAIN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-6
 ~I believe a certain amount of understanding will be necessary to truly comprehend the nature of this... 'Titan', and so for this matter I will offer my knowledge as a physician.~
-= ~There is an... idea that certain researchers have theorized of the mortal body. To put it simply, many of us believe that we are only functioning at a portion of our true potential, and there is a strength within man's body which far exceeds their normal limit. For the sake of their own preservation, one may never harness this strength, yet sometimes it can be unlocked for brief moments in moments of desperation, such as a life-or-death situation.~
-== C0AURA2J IF ~InParty("C0Aura")~ THEN ~I've heard of this too... it's called hysterical strength, when your body is forced to its absolute limit~
-= ~I do not speak of the strength that one may find simply from strenuous training. I speak of something which allows a simple mortal to display feats that are far beyond what is expected. Such examples are so rare that they are often dismissed as hearsay, a trick of the senses when the mind is affected by the stresses of the situations it is placed in.~
+= ~There is an... idea that certain researchers have theorized of the mortal body. To put it simply, many of us believe that we are only functioning at a portion of our true potential, and there is a strength within man's body which far exceeds their normal limit.~
+= ~To ensure the body does not ruin itself with overuse of its ability, one may never harness this strength, yet sometimes it can be inadvertently unlocked for brief moments in moments of true desperation.~
+== C0AURA2J IF ~InParty("C0Aura")~ THEN ~I've heard of this too... it's called hysterical strength, when your body forces itself to its absolute limit, and you achieve things that would be considered impossible. It could be a life-or-death situation, for yourself, or for someone you care about...~
+== C0AASCL ~I do not speak of the strength that one may find simply from strenuous training. I speak of something which allows a simple mortal to display feats that are far beyond what is expected. Such examples are so rare that they are often dismissed as hearsay, a trick of the senses when the mind is affected by the stresses of the situations it is placed in.~
 = ~Of course, the mere knowledge that such potential exists has led to study of whether it is possible to unlock this strength of our own volition. And that is where our mysterious concoction comes into play.~
 = ~Titan is not a poison. Though it is deeply flawed, it is intended to benefit the imbiber, to enhance and strengthen their body for a limited time. The fault is in the body's inability to manage the strength it is suddenly given.~
 END
@@ -897,11 +979,12 @@ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-8
 
 CHAIN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-8
 ~By defying the limits your own body imposes on you for your own health, the withdrawal symptoms are severe. Your heart and muscles are forced to function in a manner they are not meant to, and cannot act at their normal capacity afterwards.~
-EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-8
+EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-9
 
 CHAIN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-9
 ~If it were merely the failing of the body once the effects of the solution wore off, curing the afflicted would be a grueling, yet achievable process. However, it is not so simple.~
-== C0AMAGN ~This brings us to why Asclepios came to me today, my <PRO_GIRLBOY>. According to his study of the poor man who was suffering withdrawal, it appears once you consume Titan, your body considers it as necessary for survival as your own blood. Those who use it once are compelled to consume more under threat of unimaginable pain, but regardless of whether they decide to indulge or abstain in it... its influence will lead to their death regardless.~
+== C0AMAGN ~This brings us to why Asclepios came to me today, my <PRO_GIRLBOY>. According to his study of the poor man who was suffering withdrawal, it appears once you consume Titan, your body considers it as necessary for survival something as essential as breathing.~
+== C0AMAGN ~Those who use it once are compelled to consume more under threat of unimaginable pain, and yes, doing so may alleviate the symptoms for a time... but regardless of whether they decide to indulge or abstain in it, its influence will lead to their death regardless.~
 == C0AASCL ~Finding a way to alleviate the effects is paramount, but that is our role. Though it is not my place to dictate your current path, I believe culling the source of this problem should be your main priority.~
 END
   ++ ~I'll deal with whoever is distributing Titan while the two of you try to find a cure.~ EXTERN C0AASCL QUEST1-MAGNUS-ASCLEPIOS2-10
@@ -948,7 +1031,7 @@ END
 CHAIN C0AQTHF QUEST1-22-5
 ~They meet at the southern side of the Bridge District, right outside the Temple of Helm. I dunno what they're thinkin' gathering in a place like that... maybe they think it'll look less suspicious, or they assume nobody would ever think to look there.~
 = ~That's all I got, but I hope it leads to somethin'. I'm plannin' on leaving the city before any one of them finds out I ratted, so you probably won't see me again, mate. Good luck.~
-DO ~EscapeArea()~ EXIT 
+DO ~AddJournalEntry(%Quest1_Entry_5%,QUEST) EscapeArea()~ EXIT 
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",24)~ THEN C0AQINT2 QUEST1-INTERITUS
 ~You are late.~
@@ -1003,7 +1086,7 @@ DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",26)~
 == C0ATHF1 IF ~InParty("C0Aura")~ THEN ~Isn't that the gnome we caught in the alley?~
 == C0AURA2J IF ~InParty("C0Aura")~ THEN ~I remember you thugs... but more importantly, these gnomes... they're—~
 == C0AQINT2 ~It appears you have made a miscalculation in your... supposedly 'thorough' discretion. This does not bode well for our working relationship.~
-== C0ATHF2 ~This... this is just an unfortunate coincidence. But we can work this out. Just work with us to get rid of this lot and it'll be like nothing happened!~
+== C0ATHF2 ~This... this is just an unfortunate coincidence. But we can sort this out. Just work with us to get rid of this lot and it'll be like nothing happened!~
 == C0AQINT2 ~I think you're mistaken.~
 == C0AQINT2 ~Since you have proven yourself incapable of remaining discrete, our association is now over. This is your concern, not ours.~
 == C0ATHF1 ~What?~
@@ -1066,7 +1149,8 @@ DO ~ClearAllActions()
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",28)~ THEN C0AQMON1 QUEST1-INTERITUS-5
 ~EEEAAAAGGGGHHAGAHHAGAHAHAGGG...!~
-DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",29)~
+DO ~AddJournalEntry(%Quest1_Entry_6%,QUEST)
+SetGlobal("C0AuraBG2Quest1","GLOBAL",29)~
 == C0AQMON2 ~GHHGHHHGHGHGHLKLKLKLKHHNNNNNNGGGHHH...!~
 END
 IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-INTERITUS-5A
@@ -1239,7 +1323,7 @@ CHAIN C0AMAGN QUEST1-33-7
 = ~However... it is impossible. The research of the formula that this drug is based on, known as the Pythonic solution, has long been forbidden by the Ayrorch, and all mention of it has been wiped from academia decades ago.~
 END
   ++ ~So studying it is illegal?~ + QUEST1-33-7A
-  + ~OR(2) CheckStatGT(Player1,15,INT) CheckStatGT(Player1,15,WIS)~ + ~So whoever created Titan must have been involved in its original research?~ + QUEST1-33-7
+  + ~OR(2) CheckStatGT(Player1,15,INT) CheckStatGT(Player1,15,WIS)~ + ~So whoever created Titan must have been involved in its original research?~ + QUEST1-33-7B
 
 CHAIN C0AMAGN QUEST1-33-7A
 ~Oh, very illegal indeed. Not that there is much risk of any Lantanna knowingly studying it nowadays. Even under the infinitesimal chance that they knew its existence, they would have nowhere to start from. The Ayrorch were quite thorough with erasing everything involved with the project.~
@@ -1305,6 +1389,7 @@ CHAIN C0AMAGN QUEST1-33-13
 == C0AMAGN ~Though I claimed to have destroyed all of my past research... I could not stop myself from preserving a copy of my magnum opus, "L'an Elementume Vitaer", and keeping it at my side after my exile. All this time, it has been here with me, a piece of forbidden knowledge.~
 == C0AMAGN ~For the longest time, none but myself have known of its existence. But I did show it to one I considered a like-minded friend... I should have known better.~
 == C0AMAGN ~Asclepios is the one you are after. Of all the men I know, only he possesses the talent to replicate and continue my work.~
+DO ~AddJournalEntry(%Quest1_Entry_7%,QUEST)~
 END
 ++ ~Asclepios? The reputed "greatest healer in all the city"?~ + QUEST1-33-14
 ++ ~The man who helped Sean's father? He's the one behind making Titan?~ + QUEST1-33-14
@@ -1421,6 +1506,8 @@ DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",37)~
 == C0AASCL ~The solutions I have injected into your body are still processing the existing toxins that infest your internal organs. Were I to prematurely apply the antidote meant for final treatment, your death would be assured. Is that what you wish?~
 == C0AQDAD ~I... I do not seek death, doctor... but... this pain... perhaps it would be a blessing...~
 == C0AASCL ~Your condition is severe, but it is not beyond my ability to save. You need not die today, so long as you endure the physical pain. And you have reason to live on.~
+== C0AQDAD ~Why... why are you doing this? You... you promised to save me, yet... if you are a savior, why... do you look upon my suffering with such... such—~
+== C0AASCL ~My responsibility is to your life. To shy away from the purpose of my work because of the symptoms would be a betrayal of my duty. Nothing you have experienced so far is outside of my expectations, and so, as long as I do not falter, neither will your eventual healing.~
 == C0AASCL ~Now, do not struggle. It is time for the next dose.~
 == C0AQDAD ~But... but I... aaaAAAGGHH!~ [BEGGR06]
 END
@@ -1429,7 +1516,6 @@ END
 
 CHAIN C0AQDAD QUEST1-36-1
 ~H... help me...~
-== C0AURA2J IF ~InParty("C0Aura")~ THEN ~Master Asclepios... no, just Asclepios, I think. That's as much as you deserve.~
 == C0AASCL ~...~
 == C0AASCL ~You arrived sooner than expected.~
 DO ~StartCutSceneMode()
@@ -1481,11 +1567,9 @@ END
   ++ ~What reason could you possibly give to justify your actions?~ + QUEST1-37-5
   ++ ~Fine. Explain yourself.~ + QUEST1-37-5
   + ~InParty("C0Aura")~ + ~I have no interest in hearing your explanation. Stand down, or defend yourself.~ EXTERN C0AURA2J QUEST1-37-6
-  ++ ~Trust you? You're the cause of this! You created Titan!~ DO ~ReallyForceSpellRES("C0AUSP01",Myself)
-Enemy()~ EXIT
 
 CHAIN C0AASCL QUEST1-37-5
-~I hold no intentions of understating the weight of my deeds. Indeed, I have indulged in practices which any reasonable man would deem unethical and heartless. My attempts and failures have led to suffering I could not hope to undo. But I do so with the intention of overcoming an foe which has plagued we mortals for as long as history can remember.~
+~I hold no intentions of understating the weight of my deeds. Indeed, I have indulged in practices which any reasonable man would deem unethical and heartless. My attempts and failures have led to suffering I could not hope to undo. But I do so with the intention of overcoming a foe which has plagued we mortals for as long as history can remember.~
 == C0AURA2J IF ~InParty("C0Aura")~ THEN ~Overcoming... a foe? What do you...~
 == C0AASCL ~Disease, the harbinger of suffering and death. Those who study the natural order claim it, like many things, is a necessary aspect of life, yet do we not consider the mission to eradicate it truly righteous and just?~
 == CERNDJ IF ~InParty("CERND")~ THEN ~Nature is often deemed unkind, yet it is the trials that the ailing must suffer that lead to greater fortitude in those. You see only a piece of the whole, doctor, and thus regardless of your intent, you are misguided.~
@@ -1529,6 +1613,10 @@ CHAIN C0AASCL QUEST1-37-10
 ~So be it. Though I abhor taking lives, I have no choice but to defy you for the sake of everything I have built. I will make this as painless as possible.~
 END
 IF ~!InParty("C0Aura")~ DO ~ReallyForceSpellRES("C0AUSP01",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
 Enemy()~ EXIT
 IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-37-12
 
@@ -1536,6 +1624,10 @@ CHAIN C0AASCL QUEST1-37-11
 ~That will do. Let us do what must be done, then.~
 END
 IF ~!InParty("C0Aura")~ DO ~ReallyForceSpellRES("C0AUSP01",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
 Enemy()~ EXIT
 IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-37-12
 
@@ -1543,7 +1635,8 @@ CHAIN C0AURA2J QUEST1-37-12
 ~Please wait. I just... have one thing to ask you.~
 == C0AASCL ~I am listening.~
 == C0AURA2J ~Just... for how long have you seen things this way, master Asclepios...~
-== C0AURA2J ~...no. I should refer to you as... Asclepios Cohval, Grand Alchemist of Porthia, founder of the Twenty-Seven Theories of Alchymia. You are regarded as one of the greatest modern scholars of medicine and herblore within the Realms. I believed you left Halruaa due to simple ideological differences with your magisters... now I see that it's far more than that.~
+== C0AURA2J ~...no.~
+== C0AURA2J ~I should refer to you as... Asclepios Cohval, Grand Alchemist of Porthia, founder of the Twenty-Seven Theories of Alchymia. You are regarded as one of the greatest modern scholars of medicine and herblore within the Realms. I believed you left Halruaa due to simple ideological differences with your magisters... now I see that it's far more than that.~
 == C0AASCL ~It seems that you have read my old works, and know a little of my past, Aurelia Glimmershine.~
 == C0AURA2J ~I respect your works as a physician. Despite what you have done, I... still wouldn't know as much as I do now of medicine if not for your research.~
 == C0AASCL ~...~
@@ -1570,8 +1663,12 @@ CHAIN C0AURA2J QUEST1-37-14
 == C0AURA2J ~And... I know that not being able to achieve what I'm truly capable of does haunt me deep inside. Maybe I've reached my limit as a researcher, but... I can't stop trying. I can't let all those who are in doubt like me fall into a path like yours.~
 == C0AASCL ~I see.~
 == C0AURA2J ~Forgive me, master Asclepios. It's not that I can't understand your reasoning. I know it's what you believe, because every other path has failed you. But I don't believe that yet. And... that's why I have to stop you!~
-== C0AASCL ~So be it. You seem to have regained some conviction, at least. But it is because of such differences that we must come into conflict here. I truly regret this, but it must be done.~
+== C0AASCL ~So be it. Though our roads differ, I can admire your conviction. But it is because of such differences that we must come into conflict here. I truly regret this, but it must be done.~
 DO ~ReallyForceSpellRES("C0AUSP01",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
+CreateCreatureObjectEffect("MISTPO01","C0ABAM02",Myself)
 Enemy()~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("Defeat","LOCALS",1)~ THEN C0AASCL QUEST1-DEFEAT
@@ -1596,49 +1693,97 @@ CHAIN C0AASCL QUEST1-DEFEAT-3
 END
 IF ~!InParty("C0Aura")~ DO ~ClearAllActions()
     StartCutSceneMode()
-    StartCutScene("C0ACUT12")~ EXIT
+    StartCutSceneEx("C0ACUT12",TRUE)~ EXIT
 IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-DEFEAT-4
 
 CHAIN C0AURA2J QUEST1-DEFEAT-4
 ~Wait...! <CHARNAME>, what is that...?!~
 DO ~ClearAllActions()
     StartCutSceneMode()
-    StartCutScene("C0ACUT12")~ EXIT
+    StartCutSceneEx("C0ACUT12",TRUE)~ EXIT
 
-/*
-
-*/
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",39)~ THEN C0AURA2J QUEST1-39
 ~*cough*... *cough*... huff... ugh... oh, what an overwhelming incapacitant... it still hurts to breathe in...~
 DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",40)~
 = ~<CHARNAME>... <CHARNAME>, are you awake?~
+END
+  ++ ~I... am, yes. My vision's still blurry, though.~ + QUEST1-39-1
+  ++ ~Never mind that. What happened to Asclepios?~ + QUEST1-39-2
+
+CHAIN C0AURA2J QUEST1-39-1
+~It should be fine... it looks like whatever that was, it wasn't fatally poisonous. There shouldn't be any lasting effects... but I'll do a proper checkup later when I have a chance. As for Asclepios, he...~
+EXTERN C0AURA2J QUEST1-39-2
+
+CHAIN C0AURA2J QUEST1-39-2
+~He... he got away. I'm still not sure what happened... that phantom just appeared when we had him subdued, and did... something. The last thing I remember was seeing him fade into the mist that we were surrounded in.~
+= ~Never mind that now, though. We're alive, at least. But... the old man... that poor man's father...~
+DO ~ClearAllActions()
+    StartCutSceneMode()
+    MoveToPoint([583.262])
+    SmallWait(1)
+    Face(SE)
+    Wait(1)
+    StartDialogNoSet(Player1)~ EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",40)
+Global("C0AuraBG2Quest1DeadMan","GLOBAL",0)~ THEN C0AURA2J QUEST1-40
+~He's... he's dead.~
+DO ~SetGlobal("C0AuraBG2Quest1DeadMan","GLOBAL",1)~
+= ~It looks like he was killed during the struggle. I can't believe it... was it the mist that suffocated him to death? Or did we accidentally... no, we couldn't have...~
+= ~We didn't manage to accomplish anything, <CHARNAME>. The person responsible for all this escaped... and there's an innocent man dead in front of us.~
+END
+  ++ ~I'm sorry. I feel like we failed, too.~ + QUEST1-40-1
+  ++ ~Just another dead body. I'm not too torn up about it.~ + QUEST1-40-1
+
+CHAIN C0AURA2J QUEST1-40-1
+~I know we did our best, but... I haven't felt this hopeless in a long time. As though I just hate my lack of strength.~
+== C0AURA2J ~...I wonder... if that's how he felt... for whatever it was that made him feel he needed to go this far...~
+== C0AURA2J ~I want to take a closer look at this man, <CHARNAME>. He must have been suffering from something truly terrible, and I need to know. I have to.~
+== C0AURA2J ~...~
+== C0AURA2J ~Th–this is...~
+== C0AURA2J ~...'Kusoyarou'.~
+== JAHEIRAJ IF ~InParty("JAHEIRA")~ THEN ~This is... a truly horrific blight upon this man's flesh. One which must have amounted to unimaginable pain.~
+== CERNDJ IF ~InParty("CERND")~ THEN ~I have seen such conditions upon the skins of wild beasts in the past. The pain drives them to rage... there is ~
+== EDWINJ IF ~InParty("EDWIN")~ THEN ~Fascinating. The skin is dead and rotting, even as the rest of the man lives... or lived, once.~
+== AERIEJ IF ~InParty("AERIE")~ THEN ~B-Baervan preserve us! The skin... it's as though it's already long dead! How much suffering would this poor man have been though...?~
+== C0AURA2J ~Look, <CHARNAME>. This... discolored, greying and scabrous skin. This is... in Lantan, we know this as 'living petrifaction'—a rare, horrible mutation in which living flesh undergoes a particular necrosis.~
+== C0AURA2J ~First, your skin becomes as though leather... then, gradually, inevitably, it hardens and calluses, resembling bark, and eventually stone... and the process is excruciatingly painful, until you eventually lose all feeling but pain in the affected limbs... as the petrifaction spreads throughout your entire body.~
+== C0AURA2J ~What's worse, it has no known cure. And because it's more akin to a mutation than a disease, even healing magic fails to restore the dying flesh... it's one of the worst ways to suffer. Some resort to flaying their own skin in desperation. Most eventually go mad from the agony.~
+== C0AURA2J ~This is... the first time I've ever seen it. It's... almost like learning the most terrifying monsters in the stories you've been told were real all along.~
+== C0AURA2J ~...~
+END
+  ++ ~Wait, don't touch it!~ + QUEST1-40-2
+  ++ ~What are you doing?~ + QUEST1-40-3
+  ++ ~Don't get close to me if you plan to touch that.~ + QUEST1-40-3
+
+CHAIN C0AURA2J QUEST1-40-2
+~It's alright, <CHARNAME>. This condition isn't contagious. I won't... be affected. Not physically.~
+EXTERN C0AURA2J QUEST1-40-3
+
+CHAIN C0AURA2J QUEST1-40-3
+~I... what am I even doing? There's nothing I can do here. Why am I even pretending I can still help?~
+= ~What... what could we have done, <CHARNAME>? Even if he was still alive, even if we had stopped Asclepios... this man would still have been suffering for the rest of his life. I... I don't know...~
+END
+  ++ ~I don't know either. But it's not our fault.~ + QUEST1-40-4
+  ++ ~Maybe one day there'll be a way to help others like him. But we can't do more harm in the process.~ + QUEST1-40-5
+  ++ ~Just be happy you're not the one who has to deal with this sort of pain.~ + QUEST1-40-6
+
+CHAIN C0AURA2J QUEST1-40-4
+~Maybe I shouldn't blame anyone, not for something like this. Not even...~
+EXTERN C0AURA2J QUEST1-40-7
+
+CHAIN C0AURA2J QUEST1-40-5
+~What if nobody ever finds a way, <CHARNAME>? What if the only way was...~
+EXTERN C0AURA2J QUEST1-40-7
+
+CHAIN C0AURA2J QUEST1-40-6
+~How can I be happy, <CHARNAME>? How many people have ended up like this, begging to be saved, but...~
+EXTERN C0AURA2J QUEST1-40-7
+
+CHAIN C0AURA2J QUEST1-40-7
+~...just how many have there been, that couldn't be saved? How many before...~
+= ~...I need to get out of here, <CHARNAME>. Let's just... go back. Please.~
 EXIT
-
-/*
-
-Th–this is...
-
-...'Kusoyarou'.
-
-Look, <CHARNAME>. This... discolored, greying and scabrous skin. This is... in Lantan, we know this as 'living petrifaction'—a rare, horrible mutation in which living flesh undergoes a particular necrosis.
-
-First, your skin becomes as though leather... then, gradually, inevitably, it hardens and calluses, resembling bark, and eventually stone... and the process is excruciatingly painful, until you eventually lose all feeling in the affected limbs... as the petrifaction spreads throughout your entire body.
-
-What's worse, it has no known cure. And because it's more akin to a mutation than a disease, even healing magic fails to restore the dying flesh... it's one of the worst ways to suffer. Some resort to flaying their own skin in desperation. Most eventually go mad from the agony.
-
-This is... the first time I've ever seen it. It's... almost like learning the most terrifying monsters in the stories you've been told were real all along.
-
-...
-
-... ...
-
-Wait, don't touch it!
-
-It's alright, <CHARNAME>. This condition isn't contagious. I won't... be affected.
-
-I... what am I even doing? There's nothing I can do here. Why am I even pretending this will help?
-
-*/
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",40)~ THEN C0AEX1 QUEST1-40
 ~That was quite a brush with death, Asclepios. Though you seem not long for the world regardless. It seems I was just a little too late.~
@@ -1655,10 +1800,10 @@ DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",41)~
 == C0AASCL ~Enough... I have precious little time left as it is. I do not intend to waste what remains debating our professional ethics with each other.~
 == C0AEX1 ~Fair enough. I believe you owe me something for saving your life, though.~
 == C0AASCL ~The last variant of Titan... so be it. Take it, though I did not expect this apparition of yours to be more than a simple illusion.~
-== C0AEX1 ~Courtesy of a little assistance from a new friend. Magic has its uses.~
+== C0AEX1 ~Courtesy of a little assistance from a new friend. Those obsolete fools in Interitus may believe otherwise, but magic has its uses.~
 == C0AASCL ~Hmph.~
 == C0AASCL ~It has yet to be perfected, despite my efforts. I regret that... *cough* I will not live to see that day of accomplishment.~
-== C0AEX1 ~You're already resigned to death? And after I spared the effort to make an appearance sooner than expected, just to help you.~
+== C0AEX1 ~Oh...? You're already resigned to death, my friend? And after I spared the effort to make an appearance sooner than expected, just to help you.~
 == C0AASCL ~Is it my life you value? Or your own that you fear for, once you can no longer benefit from my research?~
 == C0AEX1 ~How little you think of me, Asclepios. Yes, once you are gone... I expect I won't live for much longer either. Even I cannot deny your understanding of medicine and healing far exceeds mine. But now that you have come into conflict with 'her', I will not need to continue to cheat death. I have almost prepared as far as I need to.~
 == C0AASCL ~Your petty goals... are not my affair. In certain respects, you have already lost to the one you hate so greatly.~
@@ -1728,7 +1873,6 @@ END
 
 CHAIN C0AMAGN QUEST1-44-1
 ~He will not be able to leave the city, I imagine. His name has already been brought to the enforcers, and they will be watchful for his presence. And the law will not be merciful on him.~
-= ~*sigh*... what a pity.~
 EXTERN C0AMAGN QUEST1-44-3
 
 CHAIN C0AMAGN QUEST1-44-2
@@ -1753,8 +1897,8 @@ CHAIN C0AMAGN QUEST1-44-4
 ~I cannot presume to truly understand his mind, of course. But he and I did spend many evenings sitting at this table, talking about our theories and philosophies as men of science and knowledge... and so my guesses may be more accurate than most, at least.~
 = ~He was never very forthright about his personal history, but under the influence of a few glasses of gin, I have learned a few things. Asclepios Cohval was once one of Halruaa's most respected scholars, a true paragon. But... there are always consequences of reaching such heights.~
 = ~Many years ago, Asclepios's beloved daughter fell victim to a never-before seen malady, one which naturally had no known cure at the time. Even for all his knowledge, he was helpless to serve who he cared for the most, and as the greatest in his field, naturally none other could succeed where he failed.~
-= ~Perhaps in desperation, he turned to... other methods. Those which held unspeakable ramifications for his ethics, and naturally his standing among his peers. But at the time, it seemed there was still a line he was unwilling to cross. In the end, not only could he not save his kin, but what he had already done was more than enough to have him exiled from his homeland.~
-= ~It appears as though he learned a certain lesson from that, and chose knowledge and what he believed the greater good over his own morality. I know from studying his past research that he has long ago discovered the cure for the ailment which took his daughter's life... alas, far too late. No doubt he believes it would have been better had he chosen the same measures when he had the chance. Were I in his place, I wonder if *I* could deny the same thought.~
+= ~Perhaps in desperation, he turned to... other methods. Those which held unspeakable ramifications for his ethics and his standing among his peers. But at the time, it seemed there was still a line he was unwilling to cross. In the end, not only could he not save his kin, but what he had already done was more than enough to have him exiled from his homeland.~
+= ~It appears as though he learned a certain lesson from that, and chose knowledge and what he believed the greater good over his own morality. I know from studying his past research that he has long since created the cure for the ailment which took his daughter's life... alas, far too late. No doubt he believes it would have been better had he chosen the same measures when he had the chance. Were I in his place, I wonder if *I* could deny the same thought.~
 END
 IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-44-5
 IF ~!InParty("C0Aura")~ EXTERN C0AMAGN QUEST1-44-6
@@ -1769,7 +1913,7 @@ CHAIN C0AURA2J QUEST1-44-5
 == C0AMAGN ~He and I have collaborated for many months now. I have kept most of the knowledge he has shared with me right here in this house. You, of course, are welcome to study it yourself, should you hold the desire.~
 == C0AURA2J ~That's... but—professor, you're planning to keep using his research?~
 == C0AMAGN ~But of course. We are Lantanna, my dear. We understand that knowledge at its purest form has no interent morality. The actions taken in gathering it is a different matter, of course, but it is up to yourself to decide right and wrong. From my perspective, the damage has been done, and so I choose to move forwards.~
-== C0AMAGN ~You could view it as a validation of the chosen means, of course. I cannot argue that. But so long as the pursuit of knowledge continues, those such as Asclepios will exist. Neither you nor I can change that. If there is one way to stop such men from falling astray, it is to lay the foundations for their path first.~
+== C0AMAGN ~You could view it as a validation of the chosen means, of course. I cannot argue with such reasoning. But so long as the pursuit of knowledge continues, those such as Asclepios will exist. Neither you nor I can change that. If there is one way to stop such men from falling astray, it is to lay the foundations for their path first.~
 == C0AURA2J ~I understand. But, still—I... I'll have to think about it.~
 == C0AMAGN ~Take your time, my dear. You have that gift yet at your disposal.~
 EXTERN C0AMAGN QUEST1-44-6
@@ -1787,7 +1931,7 @@ DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",47)~
 == C0AMAGN ~Hmph. And what brings such a distinguished officer of Interitus to an mere exiled researcher such as myself?~
 == C0AQINT2 ~You are too humble, professor. While your name may no longer grace our land's tomes of knowledge, those familiar with our history still respect your name to this day. Why, even with all our greatest minds, we could not have come close to replicating the ingenuity that was your Pythonic solution, not without the assistance of your own writings.~
 == C0AMAGN ~And that is why you made Asclepios aware of my presence, and gave him the opportunity to get close to me?~
-== C0AQINT2 ~Ah... that need not concern you any longer. I should inform you that Asclepios Cohval will no longer be a problem. The local authorities have discovered his body and confirmed his death. And with him, the threat of Titan will cease, now that the source has been eliminated.~
+== C0AQINT2 ~Ah... that need not concern you any longer. I should inform you that Asclepios Cohval will no longer be a problem. The local authorities have discovered his body and confirmed his death. And with him gone, the threat of Titan will cease, now that the source has been eliminated.~
 == C0AMAGN ~Will it, now? I was under the impression that Asclepios was but your collaborator. How else could his creation of Titan, derived from Lantanese alchemy, have come to spread here of all places?~
 == C0AQINT2 ~You accuse us? You misunderstand our goals, professor. Asclepios was a heretic, a short-sighted human, and a wretched practitioner of magic. True, we made use of his services as an alchemist to further our own research, but the production and distribution of Titan was by his own making. We disavow his actions, and ended our association with him once his insane actions were known to us.~
 == C0AMAGN ~I suppose I have no evidence to prove otherwise. Your lot are skilled at covering your tracks, if nothing else.~
@@ -1806,7 +1950,7 @@ DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",47)~
 == C0AQINT2 ~Our nation is one blessed with the greatest gifts of all—knowledge, innovation, imagination... yet how many outside of our home has the wisdom to consider as such? To the realms, our kind are nothing more than a spectacle at best, insects at worst.~
 == C0AQINT2 ~While we have used such notions as our means of protection, we Lantanna have still been forced to suffer the consequences caused by the barbarism of others. The chaos of the Time of Troubles, when foul magic ran wild and tore the realms apart... even then, when we Lantanna could have been the saviors of many, we could have taken a rightful position of power, yet our narrowminded leaders did nothing, while the world beyond overlooked us as always. Does the level of ignorance not disgust you?~
 == C0AMAGN ~That is how you justify your actions? Perhaps you have forgotten what makes a researcher. Our work is precious for its own sake, not for petty gains such as personal standing.~
-== C0AQINT2 ~Nor do I care about the approval of these barbarians. But you should look at yourself, professor. For all your knowledge, you should be in a position fit for your greatness... yet here you are, living squalor, gathering knowledge for those to whom it serves nothing.~
+== C0AQINT2 ~Nor do I care about the approval of these barbarians. But you should look at yourself, professor. For all your knowledge, you should be in a position fit for your greatness, with innumerable students as your side... yet here you are, alone, living in squalor, gathering knowledge around those for whom it serves nothing.~
 == C0AQINT2 ~I find it galling. And, as Interitus, I believe the time for our influence in shaping the realms to be far past due.~
 == C0AURA2J IF ~InParty("C0Aura")~ THEN ~You—you're speaking absolute nonsense!~
 == C0AMAGN ~And how do you intend to do so, if you would care to explain? Your research on Titan is halted. Unless you have further plans of expanding your influence, which I know is not supported by the Ayrorch?~
@@ -1816,12 +1960,12 @@ DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",47)~
 == C0AQINT2 ~But rest assured that this will not be our last meeting. Soon, these unenlightened lands will understand what knowledge is truly capable of. When Lantan is recognized as the power that it is, those such as you, professor, who wither away in exile, can finally claim the station you are worthy of.~
 == C0AMAGN ~Ha!~
 == C0AQINT2 ~Do you find my words amusing?~
-== C0AMAGN ~I beg your pardon. It is just that I have not seen such rigid, narrow-minded thoughts coming from another of the homeland for many, many years. I presumed the passing of times, and lessons taught by past failures, may have eroded away at the same intentions that brought you to such depths.~
+== C0AMAGN ~I beg your pardon. It is just that I have not seen such rigid, shallow thoughts coming from another of the homeland for many, many years. I presumed the passing of times, and lessons taught by past failures, may have eroded away at the same intentions that brought you to such depths.~
 == C0AQINT2 ~...~
 == C0AMAGN ~In this age, you dare not even wear the colors you so arrogantly display here and now within the land you claim to love. In your mad pursuits, you intend to make enemies both the realms and your own people, simply because you have allowed any logic or reason to be devoured utterly by ego. You pursue an impossible dream, one which you cling desperately onto as you have long forsaken any chance of returning to the right path.~
 == C0AMAGN ~How laughable, and pitiable.~
 == C0AQINT2 ~Pity? Unlike those who bow to their lessers, who hide away with their boundless knowledge, betraying their duty to the homeland. We, the Interitus, who offer our blood and sweat to our land, have no use for pity, neither to give, nor receive it from others.~
-== C0AMAGN ~I pity that your minds have gone to waste chasing such a worthless endeavor. Truly, by ideology, you all have died long ago.~
+== C0AMAGN ~I pity that your minds have gone to waste chasing such a worthless endeavor. Truly, by ideology, you all have died long ago. If there is nothing else, I ask that you begone. It is courtesy for a scientist to keep an open mind, yet I see little progress to be made in conversing with ghosts.~
 == C0AQINT2 ~...!~
 == C0AQINT2 ~...Hahaha...~
 DO ~StartCutSceneMode()
@@ -1853,7 +1997,8 @@ DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",48)~
 == C0AQINT2 IF ~InParty("C0Aura")~ THEN ~Surely you jest, madame. This is but a gesture by us to our homeland's treasured jewel.~
 == C0AQINT2 IF ~InParty("C0Aura")~ THEN ~It should arrive in Athkatla in... oh, five days, by my estimation. I am certain its nature will make quite the pleasant *surprise* for you.~
 == C0AQINT2 IF ~InParty("C0Aura")~ THEN ~And with that, I bid you all adieu.~
-DO ~StartCutSceneMode()
+DO ~AddJournalEntry(%Quest1_Entry_8%,QUEST_DONE)
+StartCutSceneMode()
 	Wait(1)
 	ActionOverride("C0AQINT1",FaceObject("C0AQINT2"))
 	ActionOverride("C0AQINT3",FaceObject("C0AQINT2"))
@@ -1890,8 +2035,8 @@ CHAIN C0AURA2J QUEST1-52-1
 EXTERN C0AURA2J QUEST1-52-3
 
 CHAIN C0AURA2J QUEST1-52-2
-~But— well, heehee... I guess I can't... really argue with that.~
-EXTERN C0AURA2J QUEST1-52-3
+~But— well, heehee... I guess I can't... really argue with that. Though, there's something that concerns me.~
+EXTERN C0AURA2J QUEST1-52-1
 
 CHAIN C0AURA2J QUEST1-52-3
 ~Wait, look over there, <CHARNAME>! There's more of them!~
@@ -1902,7 +2047,113 @@ DO ~ClearAllActions()
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest1","GLOBAL",53)~ THEN C0AREES QUEST1-53
 ~Looks like I came late. Are you both alright?~
 DO ~SetGlobal("C0AuraBG2Quest1","GLOBAL",54)~
-EXIT
+END
+IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-53-1
+  ++ ~Reese? Why are you here?~ + QUEST1-53-2
+  ++ ~You're that assistant, aren't you? Though it seems you're more than that.~ + QUEST1-53-2
+
+CHAIN C0AURA2J QUEST1-53-1
+~Reese? What are you doing here...? And... did you just fire that smokepowder bolt?~
+EXTERN C0AREES QUEST1-53-2
+
+CHAIN C0AREES QUEST1-53-2
+~I believe I owe you an explanation as well as an apology for my part in getting you involved in this whole mess. I'll begin by introducing myself properly.~
+END
+IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-53-3
+IF ~!InParty("C0Aura")~ EXTERN C0AREES QUEST1-53-3A
+
+CHAIN C0AURA2J QUEST1-53-3
+~I think I understand now... you're part of Oculus, aren't you?~
+== C0AREES ~Correct, I am.~
+END
+  ++ ~What is 'Oculus'?~ EXTERN C0AURA2J QUEST1-53-4
+
+CHAIN C0AURA2J QUEST1-53-4
+~It's... well, you can consider the closest thing my people have to a military. Its members are among the most disciplined and skilled in battle that the Lantanna have to offer. Our home may not be built for war, but we still have to train select members to be prepared to fight for our defence. My sister's been a captain of Oculus for several years now.~
+EXTERN C0AREES QUEST1-53-5
+
+CHAIN C0AREES QUEST1-53-3A
+~I'm an enforcer of Oculus, which you Lantan's equivalent of a military force. Few outside of our nation know of our existence, as we have maintained the image of a pacifistic nation. While we strive to avoid conflict, there is still a need for skilled individuals to be prepared to defend our nation when necessary.~
+EXTERN C0AREES QUEST1-53-5
+
+CHAIN C0AREES QUEST1-53-5
+~However, Oculus's duties involve more than training soldiers for protecting the nation's borders. Over time, we have cultivated an information network throughout the realms as well, and it is among our tasks to protect our nation's secrets from being stolen and exposed, as well as eliminating potential threats.~
+END
+  ++ ~And that includes the Interitus, who I assume are your enemies.~ + QUEST1-53-6
+  ++ ~Does that mean you are here to keep an eye on Professor Caridius?~ + QUEST1-53-7
+
+CHAIN C0AREES QUEST1-53-6
+~We have fought against Interitus within the shadows for many years now, attempting to completely eradicate their influence in Lantan as well as putting a stop to their schemes throughout the realms. As you have no doubt seen, their extreme actions threaten both our nation and those who their fanatical beliefs deem to be inferior.~
+EXTERN C0AREES QUEST1-53-7
+
+CHAIN C0AREES QUEST1-53-7
+~My original directive was to seek out Professor Caridius, who despite his exile is nonetheless an esteemed and valuable asset for Lantan. By taking the role of his student, I may both observe his actions while also allowing for the results of his research to be conveyed back to Lantan.~
+= ~Moreover, my presence allowed for the professor to be absolved of any potential suspicion of involvement of Interitus when signs of their presence, as well as the spread of the Titan compound, surfaced here in Amn. Regarding that matter... I fear I must apologize to you.~
+END
+  ++ ~Apologize to me? What for?~ + QUEST1-53-8
+  ++ ~It wasn't a coincidence that we met you at the Promenade, was it?~ + QUEST1-53-8
+
+CHAIN C0AREES QUEST1-53-8
+~It was my intention to make contact with you, or more specifically, with your companion, dame Aurelia Glimmershine. I used her assistant, the young gnome from the Jansen family, as an intermediary to draw her interest.~
+END
+IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-53-9
+  ++ ~Why did you want to contact Aura?~ + QUEST1-53-10
+
+CHAIN C0AURA2J QUEST1-53-9
+~You were after me?~
+== C0AREES ~As I said, I owe you an apology. The professor could be proven to be innocent of involvement with Interitus, but you are another skilled artificer with connections to Lantan, and I had to be certain of whether or not you were also free from suspicion.~
+EXTERN C0AREES QUEST1-53-10
+
+CHAIN C0AREES QUEST1-53-10
+~Professor Caridius could be proven to be innocent of involvement with Interitus, but dame Aurelia is another skilled artificer with connections to Lantan, and I had to be certain of whether or not she was also free from suspicion.~
+EXTERN C0AREES QUEST1-53-11
+
+CHAIN C0AREES QUEST1-53-11
+~Once I had made certain of that, I had intended to keep you from being further involved in our affairs... but, unexpectedly, the incident of the man poisoned by Titan occurred, and you unexpectedly played a vital part in solving the case.~
+END
+IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-53-12
+  ++ ~And the one who launched an exploding bolt at those abominations to save Aura... that was also you, I assume?~ + QUEST1-53-13
+  ++ ~So, we've dealt with Titan, and also quite a few members of Interitus. What now?~ + QUEST1-53-14
+
+CHAIN C0AURA2J QUEST1-53-12
+~So... were you the one who saved me from those abominations, using that smokepowder bolt?~
+EXTERN C0AREES QUEST1-53-13
+
+CHAIN C0AREES QUEST1-53-13
+~Yes.~
+EXTERN C0AREES QUEST1-53-14
+
+CHAIN C0AREES QUEST1-53-14
+~You've done an unspeakably large favor for Lantan, regardless of your intentions. Titan is no longer a threat, and Interitus will have suffered a massive blow this day with the loss of several of their members as well as the destruction of the Eye of Akintaer.~
+END
+IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-53-15
+IF ~!InParty("C0Aura")~ EXTERN C0AREES QUEST1-53-17
+
+CHAIN C0AURA2J QUEST1-53-15
+~So... that really is the Eye of Akintaer? I... didn't want to believe it, even though I recognized it.~
+END
+  + ~OR(2)
+  Class(Player1,BARD_ALL)
+  Class(Player1,MAGE_ALL)~ + ~I've heard of this name before. It's a Netherese artifact, designed to stop magic within a large area. Have you seen it before, Aura?~ + QUEST1-53-16
+  + ~!Class(Player1,BARD_ALL)
+    !Class(Player1,MAGE_ALL)~ + ~You know what this is, Aura?~ + QUEST1-53-16
+
+CHAIN C0AURA2J QUEST1-53-16
+~I'm very familiar with it... even though it brings back nothing but bad memories. Several years ago, when I ended up in my horrible shipwreck accident and washed up in Kozakura... this Netherese artifact was on that same ship when it sunk.~
+== C0AREES ~Considering the circumstances, Oculus has had much difficulty investigating that incident. However, if I'm not mistaken, you were involved in the archeological expedition when it was retrieved?~
+== C0AURA2J ~Yes, it was an excavation I was proud of. I wanted to bring it back home, and then... seeing it again, I'm starting to realize that there was no accident after all.~
+== C0AREES ~It's highly likely that members of Interitus had infiltrated the members of the Lantanna that were with you at the time. It seems this artifact was their goal, or its unexpected acquisition incited them to steal it... and eliminate any potential witnesses along the way.~
+== C0AURA2J ~I started suspecting it when their lieutenant spoke to me... seeing the Eye here again just made me sure of what happened.~
+EXTERN C0AREES QUEST1-53-17
+
+CHAIN C0AREES QUEST1-53-17
+~Its presence here serves as further proof of Interitus's past and present crimes, and as such, I must bring it back to Lantan. Moreover, there may yet be a chance of restoring it, even in its current state.~
+== C0AREES ~And with that, I believe I have briefed you on all that there is to say. If all goes well, my captain will ensure that you need not worry about Interitus again. Soon they will no longer be a threat, and all of Lantan may breathe more easily.~
+== C0AREES ~However... though my captain may consider this classified, in case Interitus prove to be a threat to you once more... I should notify you of one last detail, in case it leads you to any useful information in the future. There is sufficient proof to believe they are involved with a mysterious benefactor known as the 'Overseer'.~
+== C0AURA2J ~The 'Overseer'? Who... is that?~
+== C0AREES ~I fear there is nothing else I can tell you, not from lack of desire but lack of ability. We know next to nothing of this 'Overseer' as of right now, of who or where they may be, only that they are capable of creating truly mighty and powerful creations made for destruction... such as the automaton you have fought. But should my fellow enforcers discover more, we will do our very best to inform you.~
+== C0AREES ~For now, I must return to my task of continuing to hunt down what remains of Interitus in this region. We may not meet again for some time. I salute you as an ally of Lantan, a friend of Wisdom, and wish you good luck on your journey.~
+DO ~EscapeArea()~ EXIT
 
 ///////////////////////////
 
@@ -2305,7 +2556,7 @@ END
 
 CHAIN C0AURA2J QUEST2-5-1
 ~Sorry, I just... can't... get these two pieces to secure themselves together... ugh, I give up. Guess I need to build up some muscle for this kind of thing.~
-= ~<CHARNAME>, could you... help me out on this? Just put the parts into the generators in the right order. I've labelled the parts so you know which goes first.~
+= ~<CHARNAME>, could you... help me out on this? Just put the parts into the generators in the right order. I've labelled the parts so you know which goes first. Oh, just in case there's anything in the generators, I'll put it on the shelf to the right.~
 DO ~ActionOverride(Player1,TakePartyItem("C0AMISC1")
 ActionOverride(Player1,TakePartyItem("C0AMISC2")
 ActionOverride(Player1,TakePartyItem("C0AMISC3")
@@ -2374,17 +2625,44 @@ CHAIN C0AUKARI QUEST2-FIRE-BATTLE-4-2
 EXTERN C0AUKARI QUEST2-FIRE-BATTLE-4-3
 
 CHAIN C0AUKARI QUEST2-FIRE-BATTLE-4-3
-~As for an introduction, you may refer to me as Karihi, arch-pyromancer and headmistress of the Academy of Flame Shapers. It is an institution created by myself in order to train arcanists hoping to master the energies of elemental fire.~
+~In terms of introductions, you may refer to me as Karihi, arch-pyromancer and headmistress of the Academy of Flame Shapers. It is an institution created by myself in order to train arcanists hoping to master the energies of elemental fire.~
 END
   ++ ~I'm <CHARNAME>.~ + QUEST2-FIRE-BATTLE-4-4
-  ++ ~I feel like I've heard of you somewhere before...~ EXTERN C0AURA2J QUEST2-FIRE-BATTLE-4-5
+  ++ ~I feel like I've heard of you somewhere before...~ EXTERN C0AUKARI QUEST2-FIRE-BATTLE-4-5
 
 CHAIN C0AUKARI QUEST2-FIRE-BATTLE-4-4
 ~<CHARNAME>, is it? I believe I have heard tales of you, now that I think of it... quite an adventurer and troubleseeker you are, from what I hear... much like someone I know.~
-EXTERN C0AURA2J QUEST2-FIRE-BATTLE-4-5
+EXTERN C0AUKARI QUEST2-FIRE-BATTLE-4-5
 
-CHAIN C0AURA2J QUEST2-FIRE-BATTLE-4-5
-~It's nice to meet a friendly face. I'm Aura, of the Lantanese clan of Glimmershine.~
+CHAIN C0AUKARI QUEST2-FIRE-BATTLE-4-5
+~Perhaps you have heard of my name in the past? It has been many years since my adventuring days, but perhaps I still have a reputation outside of Silverymoon? No? No matter, there is still time, once my apprentices start to prove their merit.~
+END
+IF ~Dead("C0Aura")~ EXTERN C0AUKARI QUEST2-FIRE-BATTLE-4-DEAD
+IF ~!Dead("C0Aura")~ EXTERN C0AUKARI QUEST2-FIRE-BATTLE-4-ALIVE
+
+CHAIN C0AUKARI QUEST2-FIRE-BATTLE-4-DEAD
+~That said, perhaps we are wasting time here conversing, as I see one of your allies seems to have fallen by the hands of this plane's denizens? You are quite fortunate that I come prepared. I have a frequent need for Rods of Resurrection when faced with the ineptitude of my students.~
+DO ~SetGlobal("C0AuraKarihiRevived","GLOBAL",1)
+ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+ReallyForceSpellRES("SPPR712","C0Aura")
+Wait(1)
+ActionOverride("C0Aura",JoinParty())
+Wait(1)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest2FireBattle","GLOBAL",5)
+Global("C0AuraKarihiRevived","GLOBAL",1)~ THEN C0AUKARI QUEST2-FIRE-BATTLE-4-REVIVED
+~There you go.~ [C0BLANK]
+DO ~SetGlobal("C0AuraKarihiRevived","GLOBAL",-1)~
+== C0AURA2J ~Oww... that's a sort of pain I'd rather not feel again if I can avoid it. Oh, there you are, <CHARNAME>. And, um... who's this?~
+== C0AUKARI ~Your benevolent savior, Archmage Karihi. Be grateful for my generosity, would you? I will not even charge you for this expense.~
+EXTERN C0AUKARI QUEST2-FIRE-BATTLE-4-ALIVE
+
+CHAIN C0AUKARI QUEST2-FIRE-BATTLE-4-ALIVE
+~There is something familiar about your gnome companion... though I cannot put my finger on it. But I feel unnaturally at ease to see her, despite this being our first meeting...~
+== C0AURA2J ~Well... it's nice to meet a friendly face. I'm Aura, of the Lantanese clan of Glimmershine.~
 == C0AUKARI ~'Glimmershine'? Lantanese clan...? Ah... I see now. What an unexpected coincidence.~
 == C0AURA2J ~Hmm?~
 == C0AUKARI ~Your grandmother is Minerva Glimmershine, if I am not mistaken? You resemble her closely in appearance.~
@@ -2668,10 +2946,37 @@ DO ~SetGlobal("C0AuraC4CutScene","GLOBAL",4)~
 == C0AQINT2 ~Do I? And what has the Interitus done to earn your ire?~
 == C0DEDAL ~Against the will of the Ayrorch, I have provided you with a duty, and the chance to work towards the future of the homeland. Had you done as required, I would not be here tonight. The unsanctioned distribution of unstable Titan, sequestering the Eleventh Workshop's prototype automation...~
 == C0DEDAL ~And there is the matter of your attempts on the life of my young niece.~
-== C0AQINT2 ~Your Eminence, sir, a moment... I believe the long journey has taken leave of your senses. These are some rather heavy accusations you are imposing, and quite unfounded.~
-== C0DEDAL ~~
-== C0AQINT2 ~That is what we all wish to see, is it not, Your Eminence? To see Lantan, our glorious fatherland, that rightfully deserves to be above these primitives, rise above and topple the benighted?~
-== C0DEDAL ~Hmm.~
+== C0AQINT2 ~Your Eminence, sir, a moment... I believe the long journey has taken leave of your senses. These are some rather heavy accusations you are imposing, and quite unfounded. Feeble as we are now, the Interitus still owes all that we are now to your benevolence.~
+== C0DEDAL ~Enough, Otho. What you have done of your own accord, and its consequences, will be evaluated in due time. I am here for the results of your work, no more. The "L'an Elementume Vitaer", if you will.~
+== C0AQINT2 ~Of course, of course. Returned to its rightful owner, as it should be. Along with the newly-acquired research, though it is no doubt primitive compared to the magnificent works of your former teacher, or High Artificer Glaphyra... rest her soul.~
+== C0DEDAL ~...~
+== C0AQINT2 ~Ah... I take it you prefer not to be reminded of your late sister, Your Eminence. Forgive me for my impertinence.~
+== C0DEDAL ~That is all in the past, Otho. We Lantanna look to the future, and never allow our failures to cloud our judgment. You still understand this simple creed, I hope?~
+== C0AQINT2 ~I... well, of course I do, Your Eminence. My pride as a member of the homeland is without question.~
+== C0DEDAL ~Good. Then you and all under your command are to cease all your current activity and return with me to Lantan, without delay.~
+== C0AQINT2 ~What?!~
+== C0DEDAL ~I have been patient, Otho. Where our kin see naught but the crimes of your predecessors, I offered you the benefit of the doubt, that you would faithfully serve the land you claim to love when given the opportunity. And while I do not condone the beliefs of your organization, your contribution up to now has been of undeniable merit.~
+== C0DEDAL ~However... while I am willing to compromise on many things, your recent actions have gone beyond the terms of our cooperation. Our duty is to the homeland, and while that may mean we must be prepared for the potential threat of the outerlands... that does not equate to deliberately sowing discord, nor using innocents as your disposable test subjects.~
+== C0DEDAL ~And... turning our own creations upon another Lantanna, putting further weight on your past sins... you have crossed a line, Otho, one which I cannot overlook.~
+== C0AQINT2 ~Please, Your Eminence. I am willing to acknowledge my errors in judgment. Perhaps we overstepped in our experimentation with your teacher's research... but Interitus would never act against Lantan, nor any Lantanna who calls it home.~
+== C0DEDAL ~These games of deception are beneath us. I am well aware that the Eye of Akintaer was believed lost in the Great Ice Sea, along with my niece, six years ago. To find out that it has been in your possession all this time... you have kept many secrets from me.~
+== C0AQINT2 ~Ah... I see. It seems that I have underestimated your information network. You may have taken us under your wing, but it seems even then, you still have never trusted us fully.~
+== C0DEDAL ~You have had as much of my trust as is deserved. I offered you a chance... a choice not to repeat your mistakes, and you have chosen wrongly. This must end, Otho. No more.~
+== C0AQINT2 ~End? No, I fear it cannot end so easily, not while our nation's safety hangs by a thread... as a fellow Lantanna, surely you would be willing to hear my case, before rushing to a decision?~
+== C0DEDAL ~...~
+== C0DEDAL ~I am listening.~
+== C0AQINT2 ~Your Eminence, look around you... at this primitive scene before you. If I may ask, what do you see?~
+== C0DEDAL ~...~
+== C0DEDAL ~A realm engulfed in darkness.~
+== C0AQINT2 ~Pitiable, is it not?~
+== C0AQINT2 ~I will not deny that we who serve Interitus view these barbarians of the outerlands with a contempt that those who have lived in our nation's comforts... those who have never seen the stupidity, the brutality and ignorance, would understandably balk at. Few have the vision of those like yourself, who are wise enough to truly see the threat that looms beyond us. That darkness will consume us as well, one day, should we not act.~
+== C0AQINT2 ~You may question our methods, but you may never doubt our loyalty. We live to serve the interests of our home, yet that service requires more than to simply protect ourselves. What our people need is not a shield, but a blade. After all... what do you carry your blade for, Your Eminence?~
+== C0DEDAL ~...~
+== C0DEDAL ~For duty. For the safety and prosperity of Lantan, and the minds that have shaped it into our home.~
+== C0AQINT2 ~That is what we all wish to see, is it not? To see Lantan, our glorious nation, that rightfully deserves to be above these ignorant savages, rise above and topple the benighted?~
+== C0DEDAL ~And that is what you truly desire? You, and all who wear your colors?~
+== C0AQINT2 ~It is what *all* Lantanna should aspire for, Your Eminence.~
+== C0DEDAL ~I see.~
 DO ~ClearAllActions()
 StartCutSceneMode()
 StartCutScene("C0ACUTS4")~ EXIT
@@ -2688,7 +2993,7 @@ StartCutSceneMode()
 StartCutScene("C0ACUTS5")~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraC4CutScene","GLOBAL",5)~ THEN C0DEDAL C0AuraC4CutScene-5
-~"To rise above and topple the benighted"? Hmph, and what would become of us then...?~ [C0BLANK]
+~"To rise above and topple the benighted"? Hmph, and would we even recognize ourselves then...?~ [C0BLANK]
 DO ~SetGlobal("C0AuraC4CutScene","GLOBAL",6)
 ClearAllActions()
 StartCutSceneMode()
@@ -2703,7 +3008,7 @@ DO ~SetGlobal("C0AuraC4CutScene","GLOBAL",7)~
 == C0AFRITZ ~It will be done.~
 == C0DEDAL ~...Fritz.~
 == C0AFRITZ ~Yes, sir?~
-== C0DEDAL ~In the past decade of my actions for our the homeland, my blade has been stained with naught but the blood of fellow Lantanna. Is this not a paradox?~
+== C0DEDAL ~In the past decade of my actions for our homeland, my blade has been stained with naught but the blood of fellow Lantanna. Is this not laughable?~
 == C0AFRITZ ~Director, you...~
 == C0DEDAL ~I am far beyond regrets. And yet, how did it come to this? We were meant to be one people, the pioneers of the Realms's future. This was never meant to be the way.~
 == C0AFRITZ ~We... knew what taking this path would cost us, teacher. All of us did. We all chose it regardless.~
@@ -2712,8 +3017,8 @@ DO ~SetGlobal("C0AuraC4CutScene","GLOBAL",7)~
 == C0AFRITZ ~I... yes. He is not well. I have responded to him, many times, urging him to consider retirement... but he will not hear of it. Not so long as he believes the Ayrorch needs him.~
 == C0DEDAL ~Perhaps you should return to Lantan and see him. I give you leave to. Over a century's loyal service... he deserves a loved one at his side for his remaining years.~
 == C0AFRITZ ~When my mission here is complete... director, I hope you understand one crucial thing.~
-== C0DEDAL ~It was never a choice I had to make between you, my teacher, against my father. I wish to be the shield for our homeland, just as you... just as he. When the time comes, he will understand.~
-== C0DEDAL ~I do not doubt you, Fritz. I merely do not wish for you to follow me believing my way is the truth. There will be those who oppose me, with logical reason. It may be your father, my brother, my nieces... none of them would approve of what I have done. Especially not Aurelia.~
+== C0AFRITZ ~It was never a choice I had to make between you, my teacher, against my father. I wish to be the shield for our homeland, just as you... just as he. When the time comes, he will understand.~
+== C0DEDAL ~I do not doubt you, Fritz. I merely do not wish for you to follow me believing my way is the sole truth. There will be those who oppose me, with logical reason. It may be your father, my brother, my nieces... none of them would approve of what I have done. Especially not Aurelia.~
 == C0AFRITZ ~Dame Aurelia... did you not plan to meet her, director? If we follow that ship, we might still—~
 == C0DEDAL ~No. I believe she is steadfast towards whatever cause she is working towards. I do not want to impede her.~
 == C0DEDAL ~We will continue our plans here and await her return. Come, Fritz.~
@@ -2742,7 +3047,22 @@ EXIT
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",3)~ THEN C0CARNIF quest3-3
 ~Woof! Arooo! *pant* *wag*~ [C0BLANK]
 DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",4)~
-== C0AURA2J ~Carnifex? Is that you? Then that means... *gasp!* <CHARNAME>, let's go inside!~
+== C0AURA2J ~Carnifex? Is that you? Then that means... *gasp* Juno's here in the city, isn't she?~
+END
+  ++ ~Do you recognize this hound?~ EXTERN C0AURA2J quest3-3-1
+  ++ ~He belongs to your sister?~ EXTERN C0AURA2J quest3-3-2
+
+CHAIN C0AURA2J quest3-3-1
+~Yes, he's been my sister's partner for many years, and a very well-trained hunting hound.~
+EXTERN C0AURA2J quest3-3-2
+
+CHAIN C0AURA2J quest3-3-2
+~Juno rescued him when we were camping together in the jungle, a long time ago. He was still just a tiny pup back then. And even though he looks scary—and definitely is, if you're a criminal, he's very friendly to everyone in my family.~
+= ~If he's here... Juno wants to see me again, doesn't she? Is Luna here too? I have to find out! Carnifex, where are they right now?~
+== C0CARNIF ~Woof!~
+DO ~EscapeArea()~
+== C0AURA2J IF ~AreaCheck("AR0400")~ THEN ~It looks like... he's heading towards the Jansen home. My sisters must be waiting for me there! <CHARNAME>, let's go right now!~
+== C0AURA2J IF ~!AreaCheck("AR0400")~ THEN ~It looks like... he's heading towards the slums. My sisters must be waiting for me at the Jansen home! <CHARNAME>, let's go right now!~
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",5)~ THEN MAJAN quest3-5
@@ -2840,9 +3160,166 @@ ActionOverride(Player1,ApplySpellRES("C0AUIN3",Myself))
 ActionOverride(Player1,ApplySpellRES("C0AUIN3A",Myself))
 EscapeAreaMove("AR0403",720,432,N)~ EXIT
 
-CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0DEDAL DEDAL-0
-~It is my honor to meet you, <CHARNAME>. Dedalus Dinelstrand, Artificer of Lantan. I have heard many great tales of you from Aurelia.~
-= ~I owe you many thanks for taking care of my niece. She is the jewel of the Glimmershine clan, but her curiosity oft has a tendency to land herself in trouble.~
+CHAIN IF WEIGHT #-1 ~NumTimesTalkedTo(0)
+Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0AJUNO JUNO-0
+~I'm glad we're finally able to meet, <CHARNAME>. After everything Aura's told me about you, I would've been disappointed if I didn't have a chance to talk to you at least once.~
+= ~As you already know, I'm Aura's eldest sister, Juno. I owe you a lot for taking care of her, and teaching her everything you have during your adventures together.~
+END
+  ++ ~She's been an incomparable ally, and a good friend. I'm glad to have her around.~ + JUNO-0-1
+  ++ ~I think I also owe you for your part in raising her. She's said many good things about you.~ + JUNO-0-2
+  ++ ~Her skills are useful. That's all I care about.~ + JUNO-0-3
+
+CHAIN C0AJUNO JUNO-0-1
+~I'm glad you've managed to build such a strong bond with her. It may be a surprise to hear, seeing her as she is now, but a long time ago, she... struggled to connect with people. You've given her a lot of confidence, and it's changed her for the better.~
+EXTERN C0AJUNO JUNO-0-4
+
+CHAIN C0AJUNO JUNO-0-2
+~I think you've overestimated my part in making my sister who she is now. I know she looks up to me, but in many ways, she's also far surpassed me, and it's her admiration of you that's driving her to improve herself further now.~
+EXTERN C0AJUNO JUNO-0-4
+
+CHAIN C0AJUNO JUNO-0-3
+~Hmm. While I can say that, seeing how she is now, I can trust Aura's judgment of people, I do hope you recognize her value as a friend and treat her with the respect she deserves. With what she's said about you, however, I'm willing to give the benefit of the doubt.~
+EXTERN C0AJUNO JUNO-0-4
+
+CHAIN C0AJUNO JUNO-0-4
+~While this family reunion will likely be shorter than I like, as long as I am here I hope that we may develop a friendship of our own. In time, I expect that even the rest of my family will want to become acquainted with you.~
+= ~If there is something you wish to talk to me about, please don't hesitate to ask. And I'm certain Luna and my uncle will be eager to introduce themselves as well, if they haven't already.~
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0AJUNO JUNO-1
+~Yes, <CHARNAME>? Is there something I can do for you?~
+END
+  ++ ~I'd like to know more about your family.~ + JUNO-1-FAMILY
+  ++ ~I'd like to know more about you.~ + JUNO-1-SELF
+  ++ ~Nothing right now. Excuse me.~ EXIT
+
+CHAIN C0AJUNO JUNO-1-FAMILY
+~Of course. Is there anyone in particular you want to talk about?~
+END
+  + ~Global("C0AuraJunoFamily1","GLOBAL",0)~ + ~What can you tell me about Aura?~ DO ~SetGlobal("C0AuraJunoFamily1","GLOBAL",1)~ + JUNO-1-FAMILY-1
+  + ~Global("C0AuraJunoFamily2","GLOBAL",0)~ + ~What can you tell me about Luna?~ DO ~SetGlobal("C0AuraJunoFamily2","GLOBAL",2)~ + JUNO-1-FAMILY-2
+  + ~Global("C0AuraJunoFamily3","GLOBAL",0)~ + ~What can you tell me about your uncle, Dedalus?~ DO ~SetGlobal("C0AuraJunoFamily3","GLOBAL",3)~ + JUNO-1-FAMILY-3
+  ++ ~I'd like to know more about you.~ + JUNO-1-SELF
+  ++ ~Actually, never mind. I'll be going now.~ EXIT
+
+CHAIN C0AJUNO JUNO-1-FAMILY2
+~Is there anyone in particular you want to talk about?~
+END
+  + ~Global("C0AuraJunoFamily1","GLOBAL",0)~ + ~What can you tell me about Aura?~ DO ~SetGlobal("C0AuraJunoFamily1","GLOBAL",1)~ + JUNO-1-FAMILY-1
+  + ~Global("C0AuraJunoFamily2","GLOBAL",0)~ + ~What can you tell me about Luna?~ DO ~SetGlobal("C0AuraJunoFamily2","GLOBAL",2)~ + JUNO-1-FAMILY-2
+  + ~Global("C0AuraJunoFamily3","GLOBAL",0)~ + ~What can you tell me about your uncle, Dedalus?~ DO ~SetGlobal("C0AuraJunoFamily3","GLOBAL",3)~ + JUNO-1-FAMILY-3
+  ++ ~I'd like to know more about you.~ + JUNO-1-SELF
+  ++ ~Actually, never mind. I'll be going now.~ EXIT
+
+CHAIN C0AJUNO JUNO-1-FAMILY-1
+~About Aura? I think you know as much about her as there can be said, having played the role of her leader for so long.~
+= ~Perhaps I should be the one asking you. What are your impressions of my little sister, given all you know about her character?~
+END
+  ++ ~She's pure-hearted and idealistic. And even though she has her doubts, she's brave enough to face them.~ + JUNO-1-FAMILY-1-1
+  ++ ~There's still a lot she has to understand about people, and the world. But she's willing and ready to learn.~ + JUNO-1-FAMILY-1-1
+  ++ ~I think she's far too naive. If I weren't around, I doubt she would last long in the world.~ + JUNO-1-FAMILY-1-2
+  ++ ~I'd much rather just know what you think.~ + JUNO-1-FAMILY-1-3
+
+CHAIN C0AJUNO JUNO-1-FAMILY-1-1
+~That is how she has always been. It is something that many could do well to emulate, though it also makes me fear for her future sometimes, as she is keen to take on others' burdens as their own.~
+EXTERN C0AJUNO JUNO-1-FAMILY-1-3
+
+CHAIN C0AJUNO JUNO-1-FAMILY-1-2
+~Perhaps. I cannot deny that she tries too hard, and too often, to see the best in all things. But I do not believe it to be necessarily a flaw. It merely requires an additional hand as guidance.~
+EXTERN C0AJUNO JUNO-1-FAMILY-1-3
+
+CHAIN C0AJUNO JUNO-1-FAMILY-1-3
+~What you see in her is exactly the same as what I do. My sister has grown, but her innermost self has not changed. As such, I doubt my insight will add more than what you already know.~
+END
+IF ~Global("C0AuraRomanceActive","GLOBAL",2)~ + JUNO-1-FAMILY-1-4
+IF ~!Global("C0AuraRomanceActive","GLOBAL",2)~ + JUNO-1-FAMILY2
+
+CHAIN C0AJUNO JUNO-1-FAMILY-1-4
+~Though, that aside, I understand that Aura is... especially fond of you, not only as a leader but also as a person. She has never said it plainly in her letters, but I know her well enough to understand what you mean to her.~
+= ~Forgive me for saying this, but I still have a responsibility as a sister to ask that you take care of her. She has always given her all for those she cares about. I hope you will give no less in return.~
+END
+  ++ ~There's no need to doubt me. Aura is very close to my heart.~ + JUNO-1-FAMILY-1-5
+  ++ ~I understand your concerns. But I assure you that I care about Aura greatly.~ + JUNO-1-FAMILY-1-5
+  ++ ~You may be her sister, but I still don't appreciate your insinuations about our relationship.~ + JUNO-1-FAMILY-1-6
+
+CHAIN C0AJUNO JUNO-1-FAMILY-1-5
+~I understand. I wish for my sister's happiness above all, and I trust that you are able to give it to her.~
+EXTERN C0AJUNO JUNO-1-FAMILY-1-6
+
+CHAIN C0AJUNO JUNO-1-FAMILY-1-6
+~It is not my place to involve myself in your relationship. I believe that Aura knows who to entrust her heart with, and so now that I have said my part, I won't interrogate you any further on the matter.~
+EXTERN C0AJUNO JUNO-1-FAMILY2
+
+CHAIN C0AJUNO JUNO-1-FAMILY-2
+~If you are accustomed to Aura's personality, I should warn you ahead of time that Luna is... quite different. She can be abrasive, especially when in an unfamiliar position.~
+= ~She has always been this way. I fear a large part of it is likely my fault—I wasn't as large of a part of her life during her childhood as I should've been. I hoped not to repeat my mistake after Aura was born, but that has only made her envious.~
+= ~Please don't be too hard on her, if she says or does anything that offends you. She truly means no harm, and her time with the Seekers of Gond has helped to temper her personality, though she still has some progress to make.~
+EXIT
+
+CHAIN C0AJUNO JUNO-1-FAMILY-3
+~My uncle, Dedalus Dinelstrand, is one of the esteemed High Artificers of our homeland, and a master artificer. He is the half-brother of Kairos, my father, and although he does not share our name, he is as close as any immediate member of our family.~
+= ~If you intend to speak with him, be aware that he is... rather reserved. His duties as an inventor of Lantanese weaponry has instilled upon him a strong sense of discipline and caution, and this carries over to his daily life.~
+= ~However, I know he has visited Candlekeep in the past, and has great respect for its many scholars and readers. You may find some common ground with him in that.~
+EXTERN C0AJUNO JUNO-1-FAMILY2
+
+CHAIN C0AJUNO JUNO-1-SELF
+~I'm the eldest child of our family, and I've had a hand in raising my siblings—all five of them—throughout my life, making sure they're prepared for whatever life they choose to lead, whether it's within Lantan or elsewhere.~
+= ~Nowadays, I serve as a member of the closest thing Lantan has to a proper military force. I trained Aura in archery from a young age, though it is the only practical skill I was capable of imparting upon her. I'm fairly competent with artifice, as most of my family are, but in that regard she is far above me in talent.~
+EXTERN C0AJUNO JUNO-1-FAMILY2
+
+CHAIN IF WEIGHT #-1 ~NumTimesTalkedTo(0)
+Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0ALUNA LUNA-1
+~So you're <CHARNAME>? I've heard all about you. After all, you're all that Aura's been writing to us about recently.~
+= ~You sure it's not my sisters that you want to talk to? I'm sure there's nothing about me that interests you. My sisters have all the talent and accomplishments nowadays.~
+END
+  ++ ~I'd still like to get acquainted with you, regardless.~ + LUNA-1-1
+  ++ ~Sounds like you feel rather overshadowed by your sisters.~ + LUNA-1-2
+
+CHAIN C0ALUNA LUNA-1-1
+~Really? You'd actually care to know? Fine, just don't set your expectations too high. Luna Glimmershine, second eldest child of the clan, Seeker of the Gondar church. In other words, I'm just a priestess. Nothing exceptional.~
+EXTERN C0ALUNA LUNA-1-3
+
+CHAIN C0ALUNA LUNA-1-2
+~Me? I wouldn't dare. I'm just one among many of the Glimmershine clan's daughters, as well as an honored priestess of the church of Gond. Plenty of expectations are set upon me, for how little of worth that I truly do.~
+EXTERN C0ALUNA LUNA-1-3
+
+CHAIN C0ALUNA LUNA-1-3
+~The duties for a priestess of Gond sound grandiose when put into words, but in truth, I do very little as opposed to all the hard workers in my family. I can't protect Lantan with a weapon, and I'm certainly not brave enough to go venturing the world like my little sister, trying to learn as much as she can.~
+= ~If you want to hear me preach, I certainly know how to do that, but I'm happier staying away from my scriptures while I have this opportunity. And if you're after anything else, you're out of luck, really.~
+= ~Anyway, if you'll excuse me, I'll go back to enjoying this sisterly reunion. We won't be here forever, after all, and you'll have my darling sister back before long.~
+EXIT
+
+CHAIN IF ~Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0ALUNA LUNA-2
+~Back again, <CHARNAME>? I'm really not that interesting.~
+END
+  + ~Global("C0AuraLuna1","GLOBAL",0)~ + ~I wanted to hear your thoughts about your family.~ DO ~SetGlobal("C0AuraLuna1","GLOBAL",1)~ + LUNA-2-1
+  + ~Global("C0AuraLuna2","GLOBAL",0)~ + ~I'd still like to know more about you.~ DO ~SetGlobal("C0AuraLuna2","GLOBAL",1)~ + LUNA-2-2
+  ++ ~I'll leave you alone, then.~ EXIT
+
+CHAIN C0ALUNA LUNA-2-1
+~About them, of course it's about them... why don't you ask them yourself? I'm sure you'll hear more of what you want without me getting in the way.~
+END
+  ++ ~You seem to have a rather large chip on your shoulder.~ + LUNA-2-3
+  ++ ~Do they upset you that much? From what I hear, Aura thinks highly of you.~ + LUNA-2-4
+  ++ ~Never mind, then. Excuse me.~ EXIT
+
+CHAIN C0ALUNA LUNA-2-2
+~There's really nothing more to tell. I don't have any exciting stories like all the ones Aura's got, and I'm not some genius with the future of our people in my sights. I'm nobody to you.~
+EXIT
+
+CHAIN C0ALUNA LUNA-2-3
+~What, you think I've got a grudge? Hardly. I'm in the type of position that I deserve. After all, I'm not a brave soldier or a prodigy of our peoples' craft. I still have to do my part for the Lantanna.~
+= ~If I had any ambitions of being more than what I am, I learned to live with the disappointment a long time ago. That's all.~
+EXIT
+
+CHAIN C0ALUNA LUNA-2-4
+~Of course she does. I've never seen her say otherwise. That's just how she is, and naturally there's no reason for me to complain about it. Frankly, if she have bad things to say about me, I might have fewer issues.~
+EXTERN C0ALUNA LUNA-2-3
+
+CHAIN IF WEIGHT #-1 ~NumTimesTalkedTo(0)
+Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0DEDAL DEDAL-0
+~It is my honor to meet you, <CHARNAME>. Dedalus Dinelstrand, High Artificer of the Eleventh of the Great Workshops of Lantan. I have heard many tales of you from Aurelia.~
+= ~You have my gratitude for taking care of my niece. She is the jewel of the Glimmershine clan, but her curiosity oft has a tendency to land herself in trouble.~
 END
 ++ ~It is no trouble. I greatly value Aura's company.~ + DEDAL-0-1
 ++ ~That much, I know from experience.~ + DEDAL-0-2
@@ -2878,7 +3355,7 @@ CHAIN C0DEDAL DEDAL-0-6
 ~If you have anything you wish to know of myself or my nieces, we will be here awhile yet. For now, there is much I wish to ask Aurelia. Excuse me.~
 EXIT
 
-CHAIN IF WEIGHT #-1 ~~ THEN C0DEDAL DEDAL-1-0
+CHAIN IF ~Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0DEDAL DEDAL-1-0
 ~<CHARNAME>. What can I do for you?~
 END
 ++ ~Tell me of yourself, master Dedalus.~ + DEDAL-1-1
@@ -2981,7 +3458,7 @@ CHAIN C0AJUNO quest3-12-2
 ~I'm uncertain whether Aura has told you before, but I am a captain of Oculus, an elite group of agents who serve Lantan. Some call us the Hands of Gond, though we primarily answer to the Ayrorch over the church itself. These others here are my subordinates.~
 = ~You are my sister's close companion, and so despite the fact I should not ordinarily share information with outsiders, I will tell you the truth. Our original purpose for arriving in Amn was not solely for a family reunion, but to investigate certain unauthorized Lantanese operations outside of the homeland.~
 = ~I don't know how much you are aware of the situation, but Oculus has discovered during our investigations of the presence of a criminal organization, the Interitus, who have attempted to subtly cause chaos within Amn while simultaneously testing illegal experiments throughout the nation.~
-= ~Fortunately, we have mostly removed these operations by the efforts of our own agents. The only remaining factor is the mastermind behind them, who has yet to be apprehended.~
+= ~Fortunately, we have mostly removed these operations by the efforts of our own agents. The only remaining factor is the mastermind behind them, who has yet to be apprehended. The only thing we know of them, aside from the knowledge they are certainly in Amn, is the title that their allies know them by... the 'Overseer'.~
 END
   + ~GlobalGT("C0AuraBG2Quest1","GLOBAL",53)~ + ~I'm aware of Oculus and the Interitus. Reese is one of your agents, correct?~ + quest3-12-3
   ++ ~Do you believe your uncle is this mastermind?~ + quest3-12-4
@@ -2993,7 +3470,7 @@ EXTERN C0AJUNO quest3-12-4
 
 CHAIN C0AJUNO quest3-12-4
 ~The known citizens of Lantan here in Amn are few, and those exceptional enough to perform dangerous experiments even fewer. Ultimately, we narrowed it down to three people of interest.~
-= ~The first was former High Artificer Caridius Magnussen. From careful investigation, we removed him as a suspect. The second was my uncle, Dedalus Dinelstrand, who had undisclosed records of travel to Amn that we found through much effort. The third... was Aura herself.~
+= ~The first was former artificer Caridius Magnussen. From careful investigation, we removed him as a suspect. The second was my uncle, Dedalus Dinelstrand, who had undisclosed records of travel to Amn that we found through much effort. The third... was Aura herself.~
 = ~Although this is my personal feelings rather than evidence, I didn't believe for a second that my sister would be responsible. When my uncle made known his plans to come and visit her, I used my relation to the family as an excuse to follow and keep him under watch.~
 END
   ++ ~You didn't do a very good job of it.~ EXTERN C0AJUNO quest3-12-5
@@ -3310,10 +3787,24 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",34)~
 == C0AURA2P ~<CHARNAME>... you're not a Lantanna, but as someone who's taught me much in our journey, whether knowingly or not... you see things the same way as I do, right?~
 END
   ++ ~I do. Your uncle is endangering your home, not protecting it.~ EXTERN C0DEDAL quest3-33-1
-  ++ ~This doesn't concern me. Leave me out of this.~ EXTERN C0DEDAL quest3-33-1
-  ++ ~I actually agree with your uncle's position.~EXTERN C0DEDAL quest3-33-1
+  ++ ~This doesn't concern me. Leave me out of this.~ EXTERN C0DEDAL quest3-33-2
+  ++ ~I actually agree with your uncle's position.~ EXTERN C0DEDAL quest3-33-2
 
 CHAIN C0DEDAL quest3-33-1
+~You, <CHARNAME>? Though the affairs of the outerland have yet to affect Lantan, I have heard much of the conflict in the Sword Coast, of which you had a part in combating.~
+= ~Did you not personally see how little it took to spark the flames of warfare between opposing nations? When the need for survival was used as a pretext for conquering others simply because the victory seemed possible?~
+END
+  ++ ~It's true—I did see it. But I also saw how easily two nations were almost manipulated into war. All it took was for both sides to believe the other would strike first. You're giving every nation you fear a reason to act against you.~ + quest3-33-2
+  ++ ~You may have a point. But if you think that the solution is to hold a blade over the necks of those who threaten you, all you're doing is proving to others that you're the threat that should be feared.~ + quest3-33-2
+  ++ ~You're right. And it's because of that which I can say that you're just repeating the same mistakes of those I've seen before, in a much greater scale. Stop this madness, before you invoke the consequences that you've been trying to prevent.~ + quest3-33-2
+  ++ ~That doesn't matter. Right now, you need to be stopped, and I see the reasons for it right before my eyes.~ + quest3-33-3
+
+CHAIN C0DEDAL quest3-33-2
+~Hmm.~
+== C0AURA2P ~Uncle, please listen. I've seen the sorts of chaos that leads to conflict. I know what could become of our people if we just continue to do nothing. But we—all Lantanna—need to work together to find a better way. You don't have to shoulder the burden for our whole nation by yourself.~
+EXTERN C0DEDAL quest3-33-3
+
+CHAIN C0DEDAL quest3-33-3
 ~...Enough.~
 = ~I cannot deny that you have grounds for your reasoning, as I do mine. But though we may speak in hypotheticals, the truth cannot be known until it comes to light.~
 = ~Should I stop now, everything I have built will have been for nothing. And if the future is as I fear it, and we are unprepared... that is what I would truly regret.~
@@ -3411,6 +3902,7 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",38)~
 == C0DEDAL ~Why... why is this...~
 == C0AJUNO ~How do we stop them, uncle? Is this not your doing?!~
 == C0DEDAL ~My master control... they're not responding to it...~
+== C0AGOL02 ~THREATS ANALYZED. WANTED TARGET IS WITHIN RANGE. ORIGINAL DIRECTIVE ASSIGNED BY THE OVERSEER WILL NOW BE EXECUTED. ALL PRESENT MUST BE TERMINATED.~
 == C0DEDAL ~Is this... what was intended all along...? You... you foolish...~
 == C0ALUNA ~This—oh, gods damn it! Aura, Juno, get back! That one's coming right at you!~
 == C0DEDAL ~No—!~
@@ -3431,7 +3923,7 @@ StartCutScene("C0ACUT26")~ EXIT
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",38)~ THEN C0AGNO06 quest3-38-1
 ~N... negative, ma'am! The door's suddenly been sealed! We're trapped!~
 DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",39)~
-== C0AJUNO ~Of all the...! We'll do this the hard way then. <CHARNAME>, we need to bring down these rogue automatons! Protect my sister! Luna, stay clear of the battle! We need you to take care of the wounded this is over!~
+== C0AJUNO ~Of all the...! We'll do this the hard way then. <CHARNAME>, we need to bring down these rogue automatons! Protect my sister! Luna, stay clear of the battle! We need you to take care of the wounded once this is over!~
 == C0ALUNA ~I... alright! Be careful!~
 == C0AURA2P ~I'm with you, <CHARNAME>!~
 END
@@ -3647,7 +4139,7 @@ DO ~GiveItemCreate("C0AAMU1",Player1,1,0,0) GiveItemCreate("C0AMISC8","C0Aura",1
 == C0AURA2J IF ~InParty("C0Aura")~ THEN  ~Thank you, Juno... take care of yourselves here, and on the way back. You too, Luna. I love you both.~
 == C0AURA2P IF ~!InParty("C0Aura")~ THEN  ~Thank you, Juno... take care of yourselves here, and on the way back. You too, Luna. I love you both.~
 == C0ALUNA ~Don't worry about us. We're the ones who should be worried.~
-DO ~AddJournalEntry(%Quest3_Entry_4%,QUEST) AddExperienceParty(60000)~
+DO ~AddJournalEntry(%Quest3_Entry_4%,QUEST_DONE) AddExperienceParty(60000)~
 == C0AJUNO ~Good luck, <CHARNAME>. Keep my little sister safe. She's a treasure to Lantan, to her people... and to us, more than anything. May Gond's blessing be with you.~
 END
 IF ~!InParty("C0Aura")~ DO ~ActionOverride("C0Aura",JoinParty())~ EXIT
@@ -3778,7 +4270,7 @@ StartCutScene("c0acut31")~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3PostTalk","GLOBAL",5)~ THEN C0AURA2J quest3-45-uncle5
 ~Well... that's that, I suppose. Who knows how long it'll be before I see him again.~
-DO ~AddJournalEntry(%Quest3_Entry_5%,QUEST) SetGlobal("C0AuraBG2Quest3PostTalk","GLOBAL",6)~
+DO ~AddJournalEntry(%Quest3_Entry_5%,QUEST_DONE) SetGlobal("C0AuraBG2Quest3PostTalk","GLOBAL",6)~
 END
   ++ ~Are you okay, Aura?~ EXTERN C0AURA2J quest3-45-uncle5-1
   ++ ~He seemed to be handling things well, all in all.~ EXTERN C0AURA2J quest3-45-uncle5-2
@@ -3793,7 +4285,8 @@ CHAIN C0AURA2J quest3-45-uncle5-2
 EXTERN C0AURA2J quest3-45-uncle5-3
 
 CHAIN C0AURA2J quest3-45-uncle5-3
-~The last bit of knowledge my uncle gave me concerns me a little... the Fourth Workshop, the lost and forbidden knowledge of my people... if my aunt Glaphyra really has something to do with it, I need to find out the truth someday.~
+//~The last bit of knowledge my uncle gave me concerns me a little... the Fourth Workshop, the lost and forbidden knowledge of my people... if my aunt Glaphyra really has something to do with it, I need to find out the truth someday.~
+~I hope the Ayrorch don't judge him too harshly... I know he cares about our nation, and all of us, as much as anyone if not more. Maybe I can try to speak on his behalf, when I return home...~
 = ~For now, though, your situation is more important, <CHARNAME>. I'll worry about my own problems once I finally make my way home to Lantan. I came to have a last talk with my uncle, I'm satisfied. Let's go.~
 EXIT
 

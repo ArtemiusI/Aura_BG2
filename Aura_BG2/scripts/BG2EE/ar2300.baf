@@ -1,0 +1,11 @@
+// Tamia Encounter
+
+IF
+  InMyArea(Player1)
+  Global("C0AuraSahuaginFears","GLOBAL",1)
+THEN
+  RESPONSE #100
+    ActionOverride("C0AURA",JumpToPoint([194.904]))
+    SetGlobal("C0AuraSahuaginFears","GLOBAL",2)
+    Continue()
+END

@@ -116,6 +116,18 @@ THEN
 		Continue()
 END
 
+// Death's Razor
+
+IF
+	Global("C0AuraImportItem10","GLOBAL",0)
+	PartyHasItem("C0AUSW03")
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		SetGlobal("C0AuraImportItem10","GLOBAL",1)
+		Continue()
+END
+
 IF
 	Global("C0AuraImportNeeraHelm","GLOBAL",0)
 	PartyHasItem("C0AUTT03")

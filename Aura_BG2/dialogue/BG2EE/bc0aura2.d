@@ -62,16 +62,17 @@ RealSetGlobalTimer("C0AuraAerieRestTalkTimer","GLOBAL",3600)~
 EXIT
 
 CHAIN IF WEIGHT #-1
-~Global("C0AuraAerieRestTalk","GLOBAL",1)~ THEN BC0AURA2 C0AURA-AERIE-RESTTALK
+~Global("C0AuraAerieRestTalk1","GLOBAL",1)~ THEN BC0AURA2 C0AURA-AERIE-RESTTALK
 ~Zzzz... mmm, zzz....~ [C0BLANK]
-DO ~SetGlobal("C0AuraAerieRestTalk","GLOBAL",2)~
+DO ~SetGlobal("C0AuraAerieRestTalk1","GLOBAL",2)
+SetGabber(Player1)~
 == AERIEJ ~Shh, <CHARNAME>. Don't disturb her. She's very tired after the day we've been through.~
 == BC0AURA2 ~Zzz... m... mother? Mother, can I watch Juno practice in the field again? Mmph... okay, back before supper... Zzz...~
 == AERIEJ ~She mumbles a lot in her sleep. *giggle* It's rather adorable.~
 END
 ++ ~She seems to favor your company.~ EXTERN AERIEJ C0AURA-AERIE-RESTTALK.1
 ++ ~You can't stay here with her head on your lap, Aerie. You need to rest too.~ EXTERN AERIEJ C0AURA-AERIE-RESTTALK.2
-++ ~I'll leave you two alone.~ EXTERN AERIEJ C0AURA-AERIE-RESTTALK.3
+++ ~I'll leave you two alone.~ EXTERN BC0AURA2 C0AURA-AERIE-RESTTALK.4
 
 CHAIN AERIEJ C0AURA-AERIE-RESTTALK.1
 ~Do you really think so, <CHARNAME>? Although, I suppose she does come to talk with me a lot.~
@@ -91,7 +92,16 @@ END
 CHAIN BC0AURA2 C0AURA-AERIE-RESTTALK.4
 ~Zzz... mmph... cherry blossoms in the spring... wish I could see 'em again... Zzz...~
 == AERIEJ ~Don't worry about me, <CHARNAME>. I'll stay here for a while. You should get some rest.~
-DO ~RestParty()~ EXIT
+DO ~ClearAllActions()
+StartCutSceneMode()
+FadeToColor([0.0],0)
+Wait(2)
+RestPartyEx(0,0,FALSE)
+FadeToColor([0.0],0)
+Wait(3)
+FadeFromColor([30.0],0)
+Wait(2)
+EndCutSceneMode()~ EXIT
 
 INTERJECT BAERIE 448 C0AuraAerieKorganConflict
 == BC0AURA2 IF ~IsValidForPartyDialog("C0Aura") GlobalGT("C0AuraAerieFriendship","GLOBAL",0)~ THEN ~Aerie! Oh, for goodness sake... I'll go after her, <CHARNAME>, just wait a moment.~
@@ -139,7 +149,7 @@ Range("C0Aura",15)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraAerieFriendship","GLOBAL",3)~ THEN BAERIE C0AuraAerie4
 ~Aura, do you have a moment? I could use some help!~ [C0BLANK]
-DO ~RealSetGlobalTimer("C0AuraAerieRestTalkTimer","GLOBAL",ONE_HOUR)
+DO ~RealSetGlobalTimer("C0AuraAerieRestTalkTimer","GLOBAL",1800)
 IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
 == BC0AURA2 ~Hold on, just let me... aha! Okay, what do you need? I'll help however I can.~
 == BAERIE ~I've been trying to figure out some of these spells... I've been practicing and studying, but it feels like I've hit a dead end. I thought maybe you could help.~
@@ -151,7 +161,7 @@ IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
 == BC0AURA2 IF ~Global("C0AuraKnowsBG1","GLOBAL",1)~ THEN ~Well, I do, but... Quayle's a lot different now from what I remember. He was quite the funny fellow, you know.~
 == BAERIE IF ~Global("C0AuraKnowsBG1","GLOBAL",1)~ THEN ~Was he? I have a hard time imagining that... actually, I can see it a little. He does still mention his brilliant brain once in a while. *giggle*~
 == BAERIE ~Thank you for spending time with me, Aura. Having someone to talk to... it makes the difficult things a bit more passable.~
-== BC0AURA2 ~I like talking with you, Aerie... aaah! We completely forgot the main topic. You needed help studying some spells, didn't you?~
+== BC0AURA2 ~I like talking with you too, Aerie... aaah! We completely forgot the main topic. You needed help studying some spells, didn't you?~
 == BAERIE ~Oh, that's right. It's these ones here... yes, that one in particular...~
 EXIT
 
@@ -252,7 +262,8 @@ Range("C0Aura",15)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraAerieFriendship","GLOBAL",9)~ THEN BAERIE C0AuraAerie8
 ~D-does anything still hurt?~ [C0BLANK]
-DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
+DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)
+SetGabber(Player1)~
 == BC0AURA2 ~N... no—*oww*!~
 == BAERIE ~*sigh*~
 END
@@ -277,7 +288,16 @@ CHAIN BAERIE C0AuraAerie8-2
 == BAERIE ~Don't laugh. You're still owed a scolding for half scaring me to death, you know that?~
 == BC0AURA2 ~Alright... but, um, just save it for when I'm not aching all over anymore. I'll take all the scolding I deserve then.~
 == BAERIE ~Oh, you silly creature! I wasn't being serious. Just do me a favor and have some rest. I'll check up on you again in the morning.~
-DO ~RestParty()~ EXIT
+DO ~ClearAllActions()
+StartCutSceneMode()
+FadeToColor([0.0],0)
+Wait(2)
+RestPartyEx(0,0,FALSE)
+FadeToColor([0.0],0)
+Wait(3)
+FadeFromColor([30.0],0)
+Wait(2)
+EndCutSceneMode()~ EXIT
 
 CHAIN
 IF ~InParty("C0Aura")
@@ -338,7 +358,7 @@ Range("Anomen",15)
 Global("AnomenIsKnight","GLOBAL",1)
 Global("AnomenIsNotKnight","GLOBAL",0)
 Global("C0AuraAnomen1","GLOBAL",1)~ THEN BC0AURA2 C0AuraAnomen2
-~Anomen? Um, do you have a moment?~ [C0BLANK]
+~Anomen? Can I say something to you?~ [C0BLANK]
 DO ~SetGlobal("C0AuraAnomen1","GLOBAL",2)~
 == BANOMEN ~Of course. What is it?~
 == BC0AURA2 ~Just wanted to say, um... how should I say it? Congratulations on becoming a knight. I don't know what it means exactly, but it's clearly important to you. Everyone's very happy for you.~
@@ -349,6 +369,32 @@ DO ~SetGlobal("C0AuraAnomen1","GLOBAL",2)~
 == BANOMEN ~Hah. Well, mayhap I deserved to be called 'a great big jerk'. I shall hang that title in the recesses of my mind, to remind myself what not to be.~
 == BC0AURA2 ~...Ha ha.~
 == BANOMEN ~I jest, of course. But in earnestness, it is a good lesson, no?~
+EXIT
+
+CHAIN
+IF ~InParty("Anomen")
+Range("Anomen",15)
+!StateCheck("Anomen",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("AnomenIsKnight","GLOBAL",1)
+Global("AnomenIsNotKnight","GLOBAL",0)
+Global("C0AuraAnomen2","GLOBAL",0)~ THEN BANOMEN C0AuraAnomen3
+~If I may, Aura... I wish to apologize.~ [C0BLANK]
+DO ~SetGlobal("C0AuraAnomen2","GLOBAL",1)~
+== BC0AURA2 ~Anomen, you already have. It's all water under the bridge now, okay?~
+== BANOMEN ~I feel I have not been sincere enough. And if it is not an apology you desire, then allow me to express my admiration instead.~
+== BC0AURA2 ~Me? I'm really not that impressive. You're the one who's achieved your life's goal, Anomen. I think that's what's admirable.~
+== BANOMEN ~Yes, I... have fulfilled my dream indeed. Yet somehow, I still do not feel fully whole. Perhaps it is because I have realized how little I truly knew. As a student of knowledge, perhaps you may hear me out, and offer any advice if you may...~
+== BC0AURA2 ~Sure.~
+== BANOMEN ~I am grateful. Then I shall burden with you with my thoughts. 'Tis undeniable that before my knighthood, I clung onto what sense of superiority I could justify to myself. And like a selfish child, I cared little for the motivations of anyone but myself.~
+== BANOMEN ~But... whether it is because of the sense of accomplishment I now feel, or because I have set some of my past burdens aside, I have become more aware. And I have seen the dedication of others I once saw as beneath me.~
+== BANOMEN ~I have witnessed the long hours in which you have worked your craft, so that our battles may end in decisive victory, I am well aware that it is not what brings you joy, for you are averse to all this bloodshed that I consider natural. Yet you dedicate yourself regardless. There is something from that which I could learn.~
+== BC0AURA2 ~I understand you, Anomen. And, well... I may not know anything about being a knight, but would you like to hear what my advice is?~
+== BANOMEN ~Certainly.~
+== BC0AURA2 ~We're all going to stumble once in a while. The more we push ourselves, no matter what it is we're aiming for, the more likely it'll happen. Sometimes it's what it takes to start paying attention to the ground again. But there's nothing wrong with that. All it takes is to pick yourself up and keep trying.~
+== BC0AURA2 ~And if you can't do it yourself, then... there's always someone who can help you. As long as you let them. That's why you have to keep your friends close, you know?~
+== BANOMEN ~I see. Yes, that is... quite logical. But... you would consider me a friend already? Despite all my obvious faults?~
+== BC0AURA2 ~Learning takes time. I might not look it, but I am quite a bit older than you, you know. I've had to do my own share of growing up already. So cheer up, won't you? I know you'll figure it all out. You're already on the right path.~
 EXIT
 
 // Cernd
@@ -490,8 +536,8 @@ DO ~SetGlobal("C0AuraEdwin1","GLOBAL",2)~
 EXIT
 
 CHAIN
-IF ~InParty("C0Aura")
-Range("C0Aura",15)
+IF ~InParty("Edwin")
+Range("Edwin",15)
 !StateCheck("Edwin",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Gender("Edwin",FEMALE)
@@ -806,7 +852,8 @@ DO ~SetGlobal("C0AuraJan1","GLOBAL",1)~
 == BC0AURA2 ~Heehee. We're really just a bunch of shut-ins who spend all day thinking. Have you been to my homeland before, Jan?~
 == BJAN ~I haven't had the pleasure, no. I can tell you about my mother's uncle Balroo though. He spent five years studying at the Sambaran academy, and came back with a wealth of knowledge and plenty of goodies to share with the family... well, at least the things he could carry with his remaining arm, that is.~
 == BC0AURA2 ~Oh no... what happened to his arm?~
-== BJAN ~That's a sad story, my dear. Silly old Balroo was studying the crafting of black powder and believed he had managed to improve upon the design. From what I was told, he built his own arquebus and loaded it with some experimental powder he had alchemised, then tested it on a training dummy he set up. Of course, the truth was that he was just terribly, terribly drunk off homebrewed turnip ale and completely lost his sense of judgment. The first shot took his arm from the recoil. He was dismissed from the academy for reckless endangerment and damages to academy grounds not long after. *sigh* A terrible, terrible affair it was.~
+== BJAN ~That's a sad story, my dear. Silly old Balroo was studying the crafting of black powder and believed he had managed to improve upon the design. From what I was told, he built his own arquebus and loaded it with some experimental powder he had alchemised, then tested it on a training dummy he set up.~
+== BJAN ~Of course, the truth was that he was just terribly, terribly drunk off homebrewed turnip ale and completely lost his sense of judgment. The first shot took his arm from the recoil. The second—only the gods know how it went off—destroyed the entire west wing of the dormitory and put at least a dozen people in the infirmary. He was dismissed from the academy for reckless endangerment and damages to academy grounds not long after. *sigh* A terrible, terrible affair it was.~
 == BC0AURA2 ~That's awful, Jan. I'm so sorry your family's experience with Lantan was... like that. Is there anything I can do?~
 == BJAN ~Very kind of you to ask, lass, but you needn't worry your clever head over it. Balroo's stayed positive about the whole experience, and still has plenty of good stories to tell about his studies. Not to mention the prosthetic the Lantanna crafted for him has served him well these years. He still wants to go back to your lovely nation, but mother won't hear a word of it. Said she'd nail his remaining hand to the table if she ever saw him packing his bags.~
 == BC0AURA2 ~Oh... haha. It's reassuring that he can at least try to keep his spirits up despite his loss. The Lantanna... we try to learn from failure, but some of us don't always take it well, especially when it costs us.~
@@ -880,6 +927,25 @@ DO ~SetGlobal("C0AuraKeldorn1","GLOBAL",1)~
 == BC0AURA2 ~Thank you for your concern, Keldorn. But there's some things I can only learn by being here. I know I'm out of place, but... it's a choice I made knowing the risks.~
 == BC0AURA2 IF ~Global("C0AuraKnowsBG1","GLOBAL",1)~ THEN ~Besides... I owe <CHARNAME> for more than a few reasons. If <PRO_HESHE> needs me, that's more important than anything.~
 == BKELDOR ~I understand. I do not doubt your conviction, and be it within my power, I shall strive to ensure you are safe and well. *sigh* Still, some doubts are hard to lay to rest.~
+EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Keldorn",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+!GlobalGT("LadyMaria","GLOBAL",0)
+Global("C0AuraKeldorn2","GLOBAL",0)~ THEN BKELDOR C0AuraKeldorn2
+~I have heard you speak of sisters, Aura. Several of them, if I am not mistaken?~ [C0BLANK]
+DO ~SetGlobal("C0AuraKeldorn2","GLOBAL",1)~
+== BC0AURA2 ~Yes, sir. I'm the third daughter of my family.~
+== BKELDOR ~Though I know little of Lantan, if you are of any example, it appears your people's familial bonds are strong. I can see you treasure the memory of your sisters greatly.~
+== BC0AURA2 ~They've raised me to become who I am now. If not for everything I've learned from them, I probably wouldn't even be here.~
+== BKELDOR ~One's upbringing may tell much of those whom had a hand in it. From your example, I can say your family are of indisputably noble character.~
+== BC0AURA2 ~What brought this up, sir?~
+== BKELDOR ~I was merely regretting that I am not more involved in my own daughters' upbringings. Like any father, I often worry for their futures.~
+== BC0AURA2 ~I'm certain you have nothing to worry about. With your strong sense of duty and principles, I'm sure your family will learn from your example. I know I'm trying to.~
+== BKELDOR ~You honor me, dear girl, but the duty of a father is rarely so simple. Though if you truly see virtues in myself worth emulating, then I will do my best to continue to serve as an example.~
 EXIT
 
 // Korgan
@@ -985,6 +1051,44 @@ IF ~InParty("C0Aura")
 Range("C0Aura",15)
 !StateCheck("Minsc",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraMinscRestTalk1","GLOBAL",1)~ THEN BMINSC C0AuraMinsc4
+~Rest, Boo! The night has come, and you must have your rest. Heroes must have their sleep to gather the strength to give the mightiest kicks to the backsides of evil once the sun rises!~
+DO ~SetGlobal("C0AuraMinscRestTalk1","GLOBAL",2)~
+== BC0AURA2 ~What is it, Minsc? Is Boo feeling restless?~
+== BMINSC ~Oh, friend Aura. Boo is usually sleeping as soundly as a baby in this hour, but tonight... Minsc thinks the strain of the evil we have fought is getting to poor Boo. Or maybe it is getting to Minsc, and Boo is feeling concern. I am unsure. But he needs his rest! Minsc cannot sleep without knowing Boo is resting first.~
+== BC0AURA2 ~Hmm, have you tried singing to him? I've always found a soothing lullaby helps put me to sleep.~
+== BMINSC ~Boo likes to listen to singing, but Minsc... Dynaheir has always said Minsc's voice sounds like thunder blowing through horns. And Minsc only knows one Rashemi song for children...~
+== BMINSC ~'O, little babe, rest in your cradle,
+When the night devours the sun, who comes to knock at this hour?
+May it be the wind, or a young wolf,
+Be not afraid, of the howls at the door...'~
+== BMINSC ~'Hmm-mm-hmm...' ehh... Minsc only remembers a little bit. The words are very different in our tongue, and it has been a very long time. Minsc would not like to get it wrong.~
+== BMINSC ~Dynaheir would have known the song, if she were still with us. She was the wisest woman Minsc knew, and she knew everything. Ah, Dynaheir... Minsc is so often lost without her.~
+== BC0AURA2 ~Minsc... would you like me to sing instead? I'm not that skilled, but I know a few songs.~
+== BMINSC ~*sniff* Minsc... would like to hear a song.~
+== BC0AURA2 ~Okay, let me think...~
+== BC0AURA2 ~'Hush-a-bye, hush-a-bye, little one, sleep, sleep...
+Good little one, rest in your cradle, listen to this lullaby,
+For what do I pray? Where do my prayers go?
+For my child, towards the eastward wind, fly...'~
+== BMINSC ~Boo, are you listening? Boo? Ah, you are sleeping at last... that's good... *yawn*~
+== BMINSC ~Zzz...~
+DO ~ClearAllActions()
+StartCutSceneMode()
+FadeToColor([0.0],0)
+Wait(2)
+RestPartyEx(0,0,FALSE)
+FadeToColor([0.0],0)
+Wait(3)
+FadeFromColor([30.0],0)
+Wait(2)
+EndCutSceneMode()~ EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Minsc",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraMinsc1","GLOBAL",0)~ THEN BMINSC C0AuraMinsc1
 ~Ah, that's not right! These mighty arms of justice can strike down evil like mowing grass, but too short to reach this sly and wicked itch? I need bigger arms!~ [MINSC37]
 DO ~SetGlobal("C0AuraMinsc1","GLOBAL",1)~
@@ -993,7 +1097,9 @@ DO ~SetGlobal("C0AuraMinsc1","GLOBAL",1)~
 == BC0AURA2 ~Why don't you let him out once in a while? It's not good for animals to be cooped up for too long.~
 == BMINSC ~Minsc lets Boo run free during our meal breaks and before bedtime, but he says it is not enough. He wishes to race across fields and climb tall hills as we do!~
 == BC0AURA2 ~But he can't do that. What if he gets stepped on? Or if he runs into a bear? *shudder*~
-== BMINSC ~Minsc agrees, but he cannot bear having his toes nibbled during bedtime by a frustrated Boo for much longer. You are a clever artisan, Aura! Help us think of an idea!~
+== BMINSC ~Minsc agrees, but he cannot bear—~
+== BC0AURA2 ~*violent shudder*~
+== BMINSC ~Erm... cannot *stand* having his toes nibbled during bedtime by a frustrated Boo for much longer. You are a clever artisan, Aura! Help us think of an idea!~
 == BC0AURA2 ~Well, Muffy gets antsy too if he doesn't get his playtime... you know, I might be able to do something, Minsc. Just leave it to me!~
 EXIT
 
@@ -1035,35 +1141,6 @@ DO ~SetGlobal("C0AuraMinsc2","GLOBAL",1)~
 == BMINSC ~Boo wanted to ask if Aura wanted any strawberries.~
 == BC0AURA2 ~Strawberries! Yes, please and thank you!~
 DO ~RealSetGlobalTimer("C0AuraMinscRestTalkTimer","GLOBAL",3600)~ EXIT
-
-CHAIN
-IF ~InParty("C0Aura")
-Range("C0Aura",15)
-!StateCheck("Minsc",CD_STATE_NOTVALID)
-!StateCheck("C0Aura",CD_STATE_NOTVALID)
-Global("C0AuraMinscRestTalk1","GLOBAL",1)~ THEN BMINSC C0AuraMinsc4
-~Rest, Boo! The night has come, and you must have your rest. Heroes must have their sleep to gather the strength to give the mightiest kicks to the backsides of evil once the sun rises!~
-DO ~SetGlobal("C0AuraMinscRestTalk1","GLOBAL",2)~
-== BC0AURA2 ~What is it, Minsc? Is Boo feeling restless?~
-== BMINSC ~Oh, friend Aura. Boo is usually sleeping as soundly as a baby in this hour, but tonight... Minsc thinks the strain of the evil we have fought is getting to poor Boo. Or maybe it is getting to Minsc, and Boo is feeling concern. I am unsure. But he needs his rest! Minsc cannot sleep without knowing Boo is resting first.~
-== BC0AURA2 ~Hmm, have you tried singing to him? I've always found a soothing lullaby helps put me to sleep.~
-== BMINSC ~Boo likes to listen to singing, but Minsc... Dynaheir has always said Minsc's voice sounds like thunder blowing through horns. And Minsc only knows one Rashemi song for children...~
-== BMINSC ~'O, little babe, rest in your cradle,
-When the night devours the sun, who comes to knock at this hour?
-May it be the wind, or a young wolf,
-Be not afraid, of the howls at the door...'~
-== BMINSC ~'Hmm-mm-hmm...' ehh... Minsc only remembers a little bit. The words are very different in our tongue, and it has been a very long time. Minsc would not like to get it wrong.~
-== BMINSC ~Dynaheir would have known the song, if she were still with us. She was the wisest woman Minsc knew, and she knew everything. Ah, Dynaheir... Minsc is so often lost without her.~
-== BC0AURA2 ~Minsc... would you like me to sing instead? I'm not that skilled, but I know a few songs.~
-== BMINSC ~*sniff* Minsc... would like to hear a song.~
-== BC0AURA2 ~Okay, let me think...~
-== BC0AURA2 ~'Hush-a-bye, hush-a-bye, little one, sleep, sleep...
-Good little one, rest in your cradle, listen to this lullaby,
-For what do I pray? Where do my prayers go?
-For my child, towards the eastward wind, fly...'~
-== BMINSC ~Boo, are you listening? Boo? Ah, you are sleeping at last... that's good... *yawn*~
-== BMINSC ~Zzz...~
-DO ~RestParty()~ EXIT
 
 // Nalia
 
@@ -1268,7 +1345,7 @@ DO ~SetGlobal("C0AuraValygar3","GLOBAL",1)~
 == BC0AURA2 ~Valygar...~
 == BC0AURA2 ~I actually understand how you feel. Knowledge isn't inherently evil, but it does lead to obsession... I've seen it sometimes back in Lantan, too. Friends and family who are so devoted to their work, they don't notice how they're hurting themselves and others in the process.~
 == BVALYGA ~That is what I have seen as well, aye.~
-== BC0AURA2 ~But... I think that's why we need to look out for each other. If we think someone's losing themselves, we need to be there to take their hand and pull them back. And I think to Lavok... finding about you meant something to him.~
+== BC0AURA2 ~But... I think that's why we need to look out for each other. If we think someone's losing themselves, we need to be there to take their hand and pull them back. And I think to Lavok... finding out about you meant something to him.~
 == BVALYGA ~And you truly believe that? I had not thought such optimism existed.~
 == BC0AURA2 ~I don't know for sure. But I feel like it's the right thing to believe. And... Valygar, if you think I'll fall into obsession, I'd like you to let me know, as a friend.~
 == BVALYGA ~I see. For your sake, I'll do my best.~
@@ -1322,7 +1399,7 @@ DO ~SetGlobal("C0AuraWilson1","GLOBAL",2)~
 == BWILSON ~Snore... Snuffle.~
 == BC0AURA2 ~No. Nope! Can't stand it anymore! Hey, get up! UP! *whistle* *FFFFWWWW*!~
 == BWILSON ~Growwwwl? Mumble, mumble...~
-== BC0AURA2 ~No, not "growl". I–I've told you already, this is my spot, yours is over there. Waaay over there! Where I can't hear you snoring!~
+== BC0AURA2 ~No, not "growl". I–I've told you already, this is my spot, yours is over there. Waaay over there! Where I can't hear you snoring! Or... or doing anything!~
 == BWILSON ~Rff. Mumble... *CHOMP*~
 == BC0AURA2 ~A—aaah! Stop, stop it! Let go of my gown! Ohh... why? Why do you have to be here?~
 == BWILSON ~Snuff. Snort! Yawn... zzz...~
@@ -1402,7 +1479,7 @@ DO ~IncrementGlobal("C0AuraYoshimo1","GLOBAL",1)~
 == BC0AURA2 ~Oh... yes, it's true, Yoshimo-san. But I wouldn't call it many years... it was only five, really.~
 == BYOSHIM ~Ah, no honorifics are necessary, my dear. After spending so many journeys in these lands, I have grown accustomed to not using them. And five years are not so few, I think—short-lived as we humans are.~
 == BC0AURA2 ~You must miss Kozakura dearly. It hasn't even been that long since I left... and I still miss the islands, and the cherry trees in bloom.~
-== BYOSHIM ~A beautiful sight, aye. It gladdens me to see you are so fully charmed by my dear hongoku. I even see all the treasures you carry, the magatama, the cherry blossoms embossed on your armor, and—what's this? Why, it's a kokeshi, in your own sweet image!~
+== BYOSHIM ~A beautiful sight, aye. It gladdens me to see you are so fully charmed by my dear hongoku. I even see all the treasures you carry, the magatama, the cherry blossoms embossed on your armor, and—what's this? Why, it's a charm hanging from your bow, in your own sweet image!~
 == BC0AURA2 ~H–hey! Aw, Yoshimo... come on, give that back already!~
 == BYOSHIM ~Ha ha. Teasing aside... truly, seeing the impression Kozakura has left on you pleases my heart. I have always thought, 'tis a pity the East lies so far from these lands, that more could not have the chance to see that place, to embrace it, fully within their hearts.~
 == BYOSHIM ~For me... well, long as the journey may be, one day, I hope to return.~

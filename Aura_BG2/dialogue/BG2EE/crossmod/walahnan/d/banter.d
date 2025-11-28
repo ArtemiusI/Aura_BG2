@@ -50,7 +50,7 @@ Global("C0AuraL#2Walahnan","GLOBAL",0)~ THEN BC0AUR25 bantertob
 DO ~SetGlobal("C0AuraL#2Walahnan","GLOBAL",1)~
 == L#2WH25B ~*You* need to learn something from *me*? Huh, I feel like I should be honored, or something. Ask away.~
 == BC0AUR25 ~I was just wondering, just how far can magic affect the passage of time, and the events that push it forward?~
-== L#2WH25B ~I... don't think I can answer that, Aura. There's still a lot about time that I, or any chronomancer for that matter, has yet to. Changing the past to affect the present isn't possible yet, as far as I know, but who knows in the... er, future?~
+== L#2WH25B ~I... don't think I can answer that, Aura. There's still a lot about time that I, or any chronomancer for that matter, has yet to learn. Changing the past to affect the present isn't possible yet, as far as I know, but who knows in the... er, future?~
 == BC0AUR25 ~It's just... I've been told many times that this sort of theory is ridiculous. "You can't change the past, or you already would've". You know? We call it a paradox. Just trying to think about it logically makes one's head spin.~
 == L#2WH25B ~The whole "killing your own grandfather" thing, yes, I know. I can't explain it in a way that follows logic completely, but think of it this way. Everything you do changes the future, even if it's only a little. The present we live in is the only one to us, but there could be countless others out there.~
 == L#2WH25B ~One where you didn't eat dinner last night and fought the next battle hungry, changing the course of the fight, for example. Or one where we didn't have this conversation now. Our past isn't the only one there is. So if you changed something in your past, it wouldn't be "yours" anymore, in a manner of speaking.~

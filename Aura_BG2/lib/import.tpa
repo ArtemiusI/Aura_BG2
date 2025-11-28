@@ -7,3 +7,4 @@
   EXTEND_TOP ~ar2100.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/import/ar2100.baf~ EVALUATE_BUFFER
   EXTEND_TOP ~ar0602.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/import/ar0602.baf~ EVALUATE_BUFFER
   EXTEND_TOP ~neera.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/import/neera.baf~ EVALUATE_BUFFER
+  EXTEND_TOP ~maevar.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/import/maevar.baf~ EVALUATE_BUFFER

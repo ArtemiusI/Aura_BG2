@@ -5,14 +5,24 @@ CHAIN IF WEIGHT #-1 ~IsGabber("C0Aura")~ THEN C0AUIN3 a0
 END 
 + ~OR(2)
 AreaCheck("c0au01")
-AreaCheck("ar4500")~ + ~Upgrades.~ DO ~RemoveFamiliar()~ + upgrades
-+ ~Global("RepairCount","LOCALS",3)
+AreaCheck("ar4500")~ + ~Upgrades.~ DO ~RemoveFamiliar()
+Rest()
+ReallyForceSpellRES("c0repair",Myself)~ + upgrades
++ ~AreaCheck("c0au01")
+AreaCheck("ar4500")
+CombatCounter(0)
+HPPercentLT(Myself,100)~ + ~Repair.~ + repair
++ ~!AreaCheck("c0au01")
+!AreaCheck("ar4500")
+Global("RepairCount","LOCALS",3)
 CombatCounter(0)
 HPPercentLT(Myself,100)~ + ~Repair (3/3).~ + repair
-+ ~Global("RepairCount","LOCALS",2)
++ ~!AreaCheck("c0au01")
+!AreaCheck("ar4500")Global("RepairCount","LOCALS",2)
 CombatCounter(0)
 HPPercentLT(Myself,100)~ + ~Repair (2/3).~ + repair
-+ ~Global("RepairCount","LOCALS",1)
++ ~!AreaCheck("c0au01")
+!AreaCheck("ar4500")Global("RepairCount","LOCALS",1)
 CombatCounter(0)
 HPPercentLT(Myself,100)~ + ~Repair (1/3).~ + repair
 ++ ~Open inventory.~ DO ~StartStore("C0AUTINV",Lasttalkedtoby(Myself))~ EXIT
@@ -26,18 +36,6 @@ HPPercentLT(Myself,100)~ + ~Repair (1/3).~ + repair
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2AutomatonControl","GLOBAL",1) IsGabber(Player1)~ THEN C0AUIN3 a0
 ~The automaton stands at attention.~
 END 
-+ ~OR(2)
-AreaCheck("c0au01")
-AreaCheck("ar4500")~ + ~Upgrades.~ DO ~RemoveFamiliar()~ + upgrades
-+ ~Global("RepairCount","LOCALS",3)
-CombatCounter(0)
-HPPercentLT(Myself,100)~ + ~Repair (3/3).~ + repair
-+ ~Global("RepairCount","LOCALS",2)
-CombatCounter(0)
-HPPercentLT(Myself,100)~ + ~Repair (2/3).~ + repair
-+ ~Global("RepairCount","LOCALS",1)
-CombatCounter(0)
-HPPercentLT(Myself,100)~ + ~Repair (1/3).~ + repair
 ++ ~Open inventory.~ DO ~StartStore("C0AUTINV",Lasttalkedtoby(Myself))~ EXIT
 + ~Global("Standby","LOCALS",0)~ + ~Standby.~ DO ~SetGlobal("Standby","LOCALS",1)~ EXIT
 + ~Global("Standby","LOCALS",1)~ + ~Follow.~ DO ~SetGlobal("Standby","LOCALS",0)~ EXIT
@@ -69,19 +67,23 @@ Global("C0AutoUpgradeOffense3","GLOBAL",3)~ + ~Upgrade offenses.~ + UPGRADE-OFFE
 + ~Global("C0AutoUpgradeDefense1","GLOBAL",3)
 Global("C0AutoUpgradeDefense2","GLOBAL",3)
 Global("C0AutoUpgradeDefense3","GLOBAL",3)~ + ~Upgrade defenses.~ + UPGRADE-DEFENSE-ALL
-+ ~PartyHasItem("c0abook1")
++ ~OR(2)
+PartyHasItem("c0abook1")
 PartyHasItem("c0abook2")
-OR(4)
+OR(5)
 !Global("C0AutoUpgradeSpecial1","GLOBAL",1)
 !Global("C0AutoUpgradeSpecial2","GLOBAL",1)
 !Global("C0AutoUpgradeSpecial3","GLOBAL",1)
-!Global("C0AutoUpgradeSpecial4","GLOBAL",1)~ + ~Special upgrades.~ + UPGRADE-SPECIAL
-+ ~PartyHasItem("c0abook1")
+!Global("C0AutoUpgradeSpecial4","GLOBAL",1)
+!Global("C0AutoUpgradeSpecial5","GLOBAL",4)~ + ~Special upgrades.~ + UPGRADE-SPECIAL
++ ~OR(2)
+PartyHasItem("c0abook1")
 PartyHasItem("c0abook2")
 Global("C0AutoUpgradeSpecial1","GLOBAL",1)
 Global("C0AutoUpgradeSpecial2","GLOBAL",1)
 Global("C0AutoUpgradeSpecial3","GLOBAL",1)
-Global("C0AutoUpgradeSpecial4","GLOBAL",1)~ + ~Special upgrades.~ + UPGRADE-SPECIAL-ALL
+Global("C0AutoUpgradeSpecial4","GLOBAL",1)
+Global("C0AutoUpgradeSpecial5","GLOBAL",4)~ + ~Special upgrades.~ + UPGRADE-SPECIAL-ALL
 ++ ~Check current upgrades.~ + CHECK-UPGRADES
 ++ ~Do nothing.~ DO ~SetGlobal("Upgraded","LOCALS",1)~ EXIT
 
@@ -102,19 +104,23 @@ Global("C0AutoUpgradeOffense3","GLOBAL",3)~ + ~Upgrade offenses.~ + UPGRADE-OFFE
 + ~Global("C0AutoUpgradeDefense1","GLOBAL",3)
 Global("C0AutoUpgradeDefense2","GLOBAL",3)
 Global("C0AutoUpgradeDefense3","GLOBAL",3)~ + ~Upgrade defenses.~ + UPGRADE-DEFENSE-ALL
-+ ~PartyHasItem("c0abook1")
++ ~OR(2)
+PartyHasItem("c0abook1")
 PartyHasItem("c0abook2")
-OR(4)
+OR(5)
 !Global("C0AutoUpgradeSpecial1","GLOBAL",1)
 !Global("C0AutoUpgradeSpecial2","GLOBAL",1)
 !Global("C0AutoUpgradeSpecial3","GLOBAL",1)
-!Global("C0AutoUpgradeSpecial4","GLOBAL",1)~ + ~Special upgrades.~ + UPGRADE-SPECIAL
-+ ~PartyHasItem("c0abook1")
+!Global("C0AutoUpgradeSpecial4","GLOBAL",1)
+!Global("C0AutoUpgradeSpecial5","GLOBAL",4)~ + ~Special upgrades.~ + UPGRADE-SPECIAL
++ ~OR(2)
+PartyHasItem("c0abook1")
 PartyHasItem("c0abook2")
 Global("C0AutoUpgradeSpecial1","GLOBAL",1)
 Global("C0AutoUpgradeSpecial2","GLOBAL",1)
 Global("C0AutoUpgradeSpecial3","GLOBAL",1)
-Global("C0AutoUpgradeSpecial4","GLOBAL",1)~ + ~Special upgrades.~ + UPGRADE-SPECIAL-ALL
+Global("C0AutoUpgradeSpecial4","GLOBAL",1)
+Global("C0AutoUpgradeSpecial5","GLOBAL",4)~ + ~Special upgrades.~ + UPGRADE-SPECIAL-ALL
 ++ ~Check current upgrades.~ + CHECK-UPGRADES
 ++ ~Do nothing.~ DO ~SetGlobal("Upgraded","LOCALS",1)~ EXIT
 
@@ -161,10 +167,14 @@ END
 CHAIN C0AUIN3 UPGRADE-SPECIAL
 ~This unit may acquire the following offensive upgrades:~
 END
-+ ~GlobalLT("C0AutoUpgradeSpecial1","GLOBAL",1)~ + ~Teleportation~ + UPGRADE-TELEPORT
-+ ~GlobalLT("C0AutoUpgradeSpecial2","GLOBAL",1)~ + ~Golem Slow~ + UPGRADE-SLOW
-+ ~GlobalLT("C0AutoUpgradeSpecial3","GLOBAL",1)~ + ~Golem Haste~ + UPGRADE-HASTE
-+ ~GlobalLT("C0AutoUpgradeSpecial4","GLOBAL",1)~ + ~Gas Cloud~ + UPGRADE-GASCLOUD
++ ~PartyHasItem("c0abook1") Global("C0AutoUpgradeSpecial5","GLOBAL",0)~ + ~Arcane Augmentation I~ + UPGRADE-ARCANE-1
++ ~PartyHasItem("c0abook1") Global("C0AutoUpgradeSpecial5","GLOBAL",1)~ + ~Arcane Augmentation II~ + UPGRADE-ARCANE-2
++ ~PartyHasItem("c0abook1") Global("C0AutoUpgradeSpecial5","GLOBAL",2)~ + ~Arcane Augmentation III~ + UPGRADE-ARCANE-3
++ ~PartyHasItem("c0abook1") Global("C0AutoUpgradeSpecial5","GLOBAL",3)~ + ~Arcane Augmentation IV~ + UPGRADE-ARCANE-4
++ ~PartyHasItem("c0abook2") GlobalLT("C0AutoUpgradeSpecial1","GLOBAL",1)~ + ~Teleportation~ + UPGRADE-TELEPORT
++ ~PartyHasItem("c0abook2") GlobalLT("C0AutoUpgradeSpecial2","GLOBAL",1)~ + ~Golem Slow~ + UPGRADE-SLOW
++ ~PartyHasItem("c0abook2") GlobalLT("C0AutoUpgradeSpecial3","GLOBAL",1)~ + ~Golem Haste~ + UPGRADE-HASTE
++ ~PartyHasItem("c0abook2") GlobalLT("C0AutoUpgradeSpecial4","GLOBAL",1)~ + ~Gas Cloud~ + UPGRADE-GASCLOUD
 ++ ~Go back.~ + upgrades2
 
 CHAIN C0AUIN3 UPGRADE-AUGMENTED-BLADE-1
@@ -172,7 +182,8 @@ CHAIN C0AUIN3 UPGRADE-AUGMENTED-BLADE-1
 
 Requirements: 12th level artificer, one basic melee weapon of +2 enchantment value, one Scroll of Enchanted Weapon, 5,000 gold.~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("sw2h11")~ + ~\[Two-handed Sword +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -186,7 +197,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("ohsw1h55")~ + ~\[Scimitar +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -200,7 +212,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("ohsw1h53")~ + ~\[Ninjatō +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -214,7 +227,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("sw1h41")~ + ~\[Long Sword +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -228,7 +242,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("sw1h55")~ + ~\[Katana +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -242,7 +257,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("sw1h42")~ + ~\[Bastard Sword +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -256,7 +272,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("staf18")~ + ~\[Quarterstaff +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -270,7 +287,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("ohsw1h51")~ + ~\[Wakizashi +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -284,7 +302,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 !PartyHasItem("sw1h09")
@@ -299,7 +318,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("sw1h09")~ + ~\[Short Sword +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -313,7 +333,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 !PartyHasItem("ohblun51")
@@ -328,7 +349,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("ohblun51")~ + ~\[Club +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -342,7 +364,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("blun21")~ + ~\[Mace +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -356,7 +379,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("hamm08")~ + ~\[War Hammer +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -370,7 +394,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("halb17")~ + ~\[Halberd +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -384,7 +409,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("blun13")~ + ~\[Flail +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -398,7 +424,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("dagg15")~ + ~\[Dagger +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -412,7 +439,8 @@ SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl6m")
 PartyGoldGT(4999)
 PartyHasItem("ax1h11")~ + ~\[Battle Axe +2\] Upgrade to Augmented Blade II.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",1)
@@ -433,7 +461,8 @@ CHAIN C0AUIN3 UPGRADE-AUGMENTED-BLADE-2
 
 Requirements: 16th level artificer, one Adamantine Dust, two Diamonds, one Scroll of Enchanted Weapon, 7,500 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
 PartyHasItem("scrl6m")
 PartyHasItem("dwdust")
 PartyGoldGT(7499)
@@ -457,7 +486,8 @@ CHAIN C0AUIN3 UPGRADE-AUGMENTED-BLADE-3
 
 Requirements: 24th level artificer, one Mithril Alloy, two Rogue Stones, one Scroll of Enchanted Weapon, 10,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,23)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,23)
 PartyHasItem("scrl6m")
 PartyHasItem("c0amith")
 PartyGoldGT(9999)
@@ -473,7 +503,8 @@ CHAIN C0AUIN3 UPGRADE-WEAPON-IMPACT-1
 
 Requirements: 9th level artificer, one War Hammer +1, one Scroll of Knock, 5,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,8)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,8)
 PartyHasItem("scrl91")
 PartyHasItem("hamm02")
 PartyGoldGT(4999)~ + ~Upgrade to Weapon of Impact I.~ DO ~SetGlobal("C0AutoUpgradeOffense2","GLOBAL",1)
@@ -494,7 +525,8 @@ CHAIN C0AUIN3 UPGRADE-WEAPON-IMPACT-2
 
 Requirements: 13th level artificer, one War Hammer +2, one Diamond, 8,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,12)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,12)
 PartyHasItem("misc42")
 PartyHasItem("hamm08")
 PartyGoldGT(7999)~ + ~Upgrade to Weapon of Impact II.~ DO ~SetGlobal("C0AutoUpgradeOffense2","GLOBAL",2)
@@ -515,7 +547,8 @@ CHAIN C0AUIN3 UPGRADE-WEAPON-IMPACT-3
 
 Requirements: 18th level artificer, one War Hammer +3, one Scroll of Bigby's Crushing Hand, 12,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,17)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,17)
 PartyHasItem("scrlb2")
 PartyHasItem("hamm12")
 PartyGoldGT(11999)~ + ~Upgrade to Weapon of Impact III.~ DO ~SetGlobal("C0AutoUpgradeOffense2","GLOBAL",3)
@@ -536,7 +569,8 @@ CHAIN C0AUIN3 UPGRADE-KEEN-EDGE-1
 
 Requirements: 9th level artificer, one Bastard Sword +1, one Long Sword +1, 4,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,8)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,8)
 PartyHasItem("sw1h02")
 PartyHasItem("sw1h05")
 PartyGoldGT(3999)~ + ~Upgrade to Keen Edge I.~ DO ~SetGlobal("C0AutoUpgradeOffense3","GLOBAL",1)
@@ -557,7 +591,8 @@ CHAIN C0AUIN3 UPGRADE-KEEN-EDGE-2
 
 Requirements: 13th level artificer, one Long Sword +2, one Diamond, 8,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,12)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,12)
 PartyHasItem("sw1h41")
 PartyHasItem("misc42")
 PartyGoldGT(7999)~ + ~Upgrade to Keen Edge II.~ DO ~SetGlobal("C0AutoUpgradeOffense3","GLOBAL",2)
@@ -578,7 +613,8 @@ CHAIN C0AUIN3 UPGRADE-KEEN-EDGE-3
 
 Requirements: 18th level artificer, one Long Sword +3, one Scroll of Black Blade of Disaster, 12,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,17)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,17)
 PartyHasItem("sw1h73")
 PartyHasItem("scrl9x")
 PartyGoldGT(11999)~ + ~Upgrade to Keen Edge III.~ DO ~SetGlobal("C0AutoUpgradeOffense3","GLOBAL",3)
@@ -599,7 +635,8 @@ CHAIN C0AUIN3 UPGRADE-REINFORCED-PLATING-1
 
 Requirements: 9th level artificer, one Full Plate Mail, one Scroll of Armor, 2,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,8)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,8)
 PartyHasItem("plat04")
 PartyHasItem("scrl67")
 PartyGoldGT(1999)~ + ~Upgrade to Reinforced Plating I.~ DO ~SetGlobal("C0AutoUpgradeDefense1","GLOBAL",1)
@@ -620,7 +657,8 @@ CHAIN C0AUIN3 UPGRADE-REINFORCED-PLATING-2
 
 Requirements: 12th level artificer, one Full Plate Mail +1, one Scroll of Protection from Normal Weapons, 6,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("plat14")
 PartyHasItem("scrl6t")
 PartyGoldGT(5999)~ + ~Upgrade to Reinforced Plating II.~ DO ~SetGlobal("C0AutoUpgradeDefense1","GLOBAL",2)
@@ -641,7 +679,8 @@ CHAIN C0AUIN3 UPGRADE-REINFORCED-PLATING-3
 
 Requirements: 16th level artificer, one Full Plate Mail +2, one Scroll of Absolute Immunity, 10,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
 PartyHasItem("plat23")
 PartyHasItem("scrl9p")
 PartyGoldGT(9999)~ + ~Upgrade to Reinforced Plating III.~ DO ~SetGlobal("C0AutoUpgradeDefense1","GLOBAL",3)
@@ -655,7 +694,8 @@ SetGlobal("ReinforcedPlating","LOCALS",1)
 CreateVisualEffectObject("icarmor",Myself)
 ApplySpellRES("c0auto4c",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
 !PartyHasItem("plat23")
 PartyHasItem("plat19")
 PartyHasItem("scrl9p")
@@ -677,7 +717,8 @@ CHAIN C0AUIN3 UPGRADE-ANTIMAGIC-SHIELDING-1
 
 Requirements: 12th level artificer, one Potion of Magic Protection, 4,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("potn34")
 PartyGoldGT(3999)~ + ~Upgrade to Anti-Magic Shielding I.~ DO ~SetGlobal("C0AutoUpgradeDefense2","GLOBAL",1)
 TakePartyItemNum("potn34",1)
@@ -695,7 +736,8 @@ CHAIN C0AUIN3 UPGRADE-ANTIMAGIC-SHIELDING-2
 
 Requirements: 17th level artificer, one Star Sapphire, one Scroll of Spell Deflection, 8,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,16)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,16)
 PartyHasItem("scrl7v")
 PartyHasItem("misc41")
 PartyGoldGT(7999)~ + ~Upgrade to Anti-Magic Shielding II.~ DO ~SetGlobal("C0AutoUpgradeDefense2","GLOBAL",2)
@@ -716,7 +758,8 @@ CHAIN C0AUIN3 UPGRADE-ANTIMAGIC-SHIELDING-3
 
 Requirements: 23rd level artificer, two Star Sapphires, one Scroll of Protection from Magic, one Scroll of Spell Trap, 10,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,22)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,22)
 PartyHasItem("scrl07")
 PartyHasItem("scrl9l")
 NumItemsPartyGT("misc41",1)
@@ -740,7 +783,8 @@ CHAIN C0AUIN3 UPGRADE-SELFREPAIRING-THAUMATURGY-1
 
 Requirements: 13th level artificer, one Emerald, one Potion of Regeneration, 3,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,12)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,12)
 PartyHasItem("misc43")
 PartyHasItem("potn42")
 PartyGoldGT(2999)~ + ~Upgrade to Self-Repairing Thaumaturgy I.~ DO ~SetGlobal("C0AutoUpgradeDefense3","GLOBAL",1)
@@ -761,7 +805,8 @@ CHAIN C0AUIN3 UPGRADE-SELFREPAIRING-THAUMATURGY-2
 
 Requirements: 17th level artificer, one Emerald, one Pearly White Ioun Stone, 5,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,16)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,16)
 PartyHasItem("misc43")
 PartyHasItem("HELM18")
 PartyGoldGT(4999)~ + ~Upgrade to Self-Repairing Thaumaturgy II.~ DO ~SetGlobal("C0AutoUpgradeDefense3","GLOBAL",2)
@@ -782,7 +827,8 @@ CHAIN C0AUIN3 UPGRADE-SELFREPAIRING-THAUMATURGY-3
 
 Requirements: 22nd level artificer, two Emeralds, one Ring of Regeneration, 8,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,21)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,21)
 PartyHasItem("ring31")
 NumItemsPartyGT("misc43",1)
 PartyGoldGT(7999)~ + ~Upgrade to Self-Repairing Thaumaturgy III.~ DO ~SetGlobal("C0AutoUpgradeDefense3","GLOBAL",3)
@@ -803,7 +849,8 @@ CHAIN C0AUIN3 UPGRADE-TELEPORT
 
 Requirements: 14th level artificer, one Rogue Stone, 2,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,13)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,13)
 PartyHasItem("misc45")
 PartyGoldGT(1999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial1","GLOBAL",1)
 TakePartyItemNum("misc45",1)
@@ -821,7 +868,8 @@ CHAIN C0AUIN3 UPGRADE-SLOW
 
 Requirements: 12th level artificer, two Scrolls of Slow, 4,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl1o")
 PartyGoldGT(3999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial2","GLOBAL",1)
 TakePartyItemNum("scrl1o",2)
@@ -840,7 +888,8 @@ CHAIN C0AUIN3 UPGRADE-HASTE
 
 Requirements: 12th level artificer, two Scrolls of Haste, 4,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
 PartyHasItem("scrl1h")
 PartyGoldGT(3999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial3","GLOBAL",1)
 TakePartyItemNum("scrl1h",2)
@@ -859,7 +908,8 @@ CHAIN C0AUIN3 UPGRADE-GASCLOUD
 
 Requirements: 16th level artificer, one Scroll of Death Fog, one Scroll of Cloudkill, 6,000 gold~
 END
-+ ~ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
 PartyHasItem("scrl7r")
 PartyHasItem("scrl2e")
 PartyGoldGT(5999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial4","GLOBAL",1)
@@ -872,6 +922,90 @@ DestroyGold(6000)
 SetGlobal("GasCloud","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 AddSpecialAbility("c0auto0a")
+SetGlobal("Upgraded","LOCALS",1)~ EXIT
+++ ~Go back.~ + upgrades2
+
+CHAIN C0AUIN3 UPGRADE-ARCANE-1
+~Arcane Augmentation I: Using the research material from Lavok's Imaskari Tome of Golemcraft, an automaton may be imbued with sufficient magical power to cast spells up to 2nd level.
+
+Requirements: 11th level artificer, 2,000 gold. A mage of at least 5th level must be present in the party.~
+END
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
+OR(6)
+ClassLevelGT(Player1,WIZARD,5)
+ClassLevelGT(Player2,WIZARD,5)
+ClassLevelGT(Player3,WIZARD,5)
+ClassLevelGT(Player4,WIZARD,5)
+ClassLevelGT(Player5,WIZARD,5)
+ClassLevelGT(Player6,WIZARD,5)
+PartyGoldGT(1999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",1)
+TakePartyGold(2000)
+DestroyGold(2000)
+CreateVisualEffectObject("SPROTECT",Myself)
+SetGlobal("Upgraded","LOCALS",1)~ EXIT
+++ ~Go back.~ + upgrades2
+
+CHAIN C0AUIN3 UPGRADE-ARCANE-2
+~Arcane Augmentation II: Using the research material from Lavok's Imaskari Tome of Golemcraft, an automaton may be imbued with sufficient magical power to cast spells up to 4th level. 
+
+Requirements: 16th level artificer, 5,000 gold. A mage of at least 9th level must be present in the party.~
+END
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
+OR(6)
+ClassLevelGT(Player1,WIZARD,9)
+ClassLevelGT(Player2,WIZARD,9)
+ClassLevelGT(Player3,WIZARD,9)
+ClassLevelGT(Player4,WIZARD,9)
+ClassLevelGT(Player5,WIZARD,9)
+ClassLevelGT(Player6,WIZARD,9)
+PartyGoldGT(4999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",2)
+TakePartyGold(5000)
+DestroyGold(5000)
+CreateVisualEffectObject("SPROTECT",Myself)
+SetGlobal("Upgraded","LOCALS",1)~ EXIT
+++ ~Go back.~ + upgrades2
+
+CHAIN C0AUIN3 UPGRADE-ARCANE-3
+~Arcane Augmentation III: Using the research material from Lavok's Imaskari Tome of Golemcraft, an automaton may be imbued with sufficient magical power to cast spells up to 6th level. 
+
+Requirements: 22nd level artificer, 10,000 gold. A mage of at least 14th level must be present in the party.~
+END
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,21)
+OR(6)
+ClassLevelGT(Player1,WIZARD,14)
+ClassLevelGT(Player2,WIZARD,14)
+ClassLevelGT(Player3,WIZARD,14)
+ClassLevelGT(Player4,WIZARD,14)
+ClassLevelGT(Player5,WIZARD,14)
+ClassLevelGT(Player6,WIZARD,14)
+PartyGoldGT(0999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",3)
+TakePartyGold(10000)
+DestroyGold(10000)
+CreateVisualEffectObject("SPROTECT",Myself)
+SetGlobal("Upgraded","LOCALS",1)~ EXIT
+++ ~Go back.~ + upgrades2
+
+CHAIN C0AUIN3 UPGRADE-ARCANE-4
+~Arcane Augmentation IV: Using the research material from Lavok's Imaskari Tome of Golemcraft, an automaton may be imbued with sufficient magical power to cast spells up to 8th level. 
+
+Requirements: 28th level artificer, 20,000 gold. A mage of at least 18th level must be present in the party.~
+END
++ ~Kit(Lasttalkedtoby(Myself),C0AURA)
+ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
+OR(6)
+ClassLevelGT(Player1,WIZARD,17)
+ClassLevelGT(Player2,WIZARD,17)
+ClassLevelGT(Player3,WIZARD,17)
+ClassLevelGT(Player4,WIZARD,17)
+ClassLevelGT(Player5,WIZARD,17)
+ClassLevelGT(Player6,WIZARD,17)
+PartyGoldGT(19999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",4)
+TakePartyGold(20000)
+DestroyGold(20000)
+CreateVisualEffectObject("SPROTECT",Myself)
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -900,6 +1034,10 @@ CHAIN C0AUIN3 CHECK-UPGRADES
 == C0AUIN3 IF ~Global("C0AutoUpgradeSpecial2","GLOBAL",1)~ THEN ~Golem Slow: This unit may cast Golem Slow twice per day.~
 == C0AUIN3 IF ~Global("C0AutoUpgradeSpecial3","GLOBAL",1)~ THEN ~Golem Haste: This unit may cast Golem Haste twice per day.~
 == C0AUIN3 IF ~Global("C0AutoUpgradeSpecial4","GLOBAL",1)~ THEN ~Gas Cloud: This unit may cast Gas Cloud once per day.~
+== C0AUIN3 IF ~Global("C0AutoUpgradeSpecial5","GLOBAL",1)~ THEN ~Arcane Augmentation I: This unit may cast up to 2nd level spells.~
+== C0AUIN3 IF ~Global("C0AutoUpgradeSpecial5","GLOBAL",2)~ THEN ~Arcane Augmentation II: This unit may cast up to 4th level spells.~
+== C0AUIN3 IF ~Global("C0AutoUpgradeSpecial5","GLOBAL",3)~ THEN ~Arcane Augmentation III: This unit may cast up to 6th level spells.~
+== C0AUIN3 IF ~Global("C0AutoUpgradeSpecial5","GLOBAL",4)~ THEN ~Arcane Augmentation IV: This unit may cast up to 8th level spells.~
 EXTERN C0AUIN3 upgrades2
 
 CHAIN C0AUIN3 disableAI

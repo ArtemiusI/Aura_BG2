@@ -1,5 +1,5 @@
 CHAIN IF ~IsGabber(Player1) CombatCounter(0) !Detect([ENEMY]) Global("C0AuraInsulted","GLOBAL",0)~ THEN C0AURA2J pid
-~How's it going?~ [AURAf]
+~Yep?~ [C0AU022]
 END
  + ~!AreaCheck("C0AU01") Global("NoCraftOnlyOnce","LOCALS",0)~ + ~I'd like you to craft something for me.~ DO ~SetGlobal("NoCraftOnlyOnce","LOCALS",1)~ + NOCRAFT
  + ~AreaCheck("C0AU01")~ + ~I'd like you to craft something for me.~ + CRAFT

@@ -36,7 +36,6 @@ THEN
 		SetGlobal("BD_CUTSCENE_BREAKABLE","GLOBAL",0)
 		SetAreaScript("",OVERRIDE)
 		RestParty()
-		AdvanceTime(SIXTEEN_HOURS)
 		FadeFromColor([30.0],0)
 		EndCutSceneMode()
 END
