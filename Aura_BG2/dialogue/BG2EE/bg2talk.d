@@ -481,16 +481,16 @@ CHAIN BC0AURA2 FRIEND-5-4
 END
   ++ ~You cheeky brat.~ + FRIEND-5-5
   + ~!Dead("Imoen2")
-     GlobalLT("Chapter","GLOBAL",4)
+     GlobalLT("Chapter","GLOBAL",%bg2_chapter_4%)
      Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I don't think it'd suit me. Imoen might jump at the opportunity, though.~ + FRIEND-5-IMOEN-1
   + ~!Dead("Imoen2")
-     !GlobalLT("Chapter","GLOBAL",4)
+     !GlobalLT("Chapter","GLOBAL",%bg2_chapter_4%)
      Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I don't think it'd suit me. Imoen might jump at the opportunity, though.~ + FRIEND-5-IMOEN-2
   + ~!Dead("Imoen2")
-     GlobalLT("Chapter","GLOBAL",4)
+     GlobalLT("Chapter","GLOBAL",%bg2_chapter_4%)
      !Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I don't think it'd suit me. Imoen might jump at the opportunity, though.~ + FRIEND-5-IMOEN-3
   + ~!Dead("Imoen2")
-     !GlobalLT("Chapter","GLOBAL",4)
+     !GlobalLT("Chapter","GLOBAL",%bg2_chapter_4%)
      !Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I don't think it'd suit me. Imoen might jump at the opportunity, though.~ + FRIEND-5-IMOEN-4
   ++ ~Let me think about it. I'll tell you when I've made up my mind.~ + FRIEND-5-6
   ++ ~Why not. I wouldn't mind the opportunity to something new.~ + FRIEND-5-7
@@ -1277,7 +1277,7 @@ DO ~SetGlobal("C0AuraRomanceActive","GLOBAL",3)~ EXIT
 
 CHAIN IF ~Global("C0AuraBG2RomanceTalk","GLOBAL",12)~ THEN BC0AURA2 ROM-6
 ~There's the last parts replaced... I'll have to get new ones when I have a chance.~ [C0BLANK]
-DO ~SetGlobal("C0AuraBG2RomanceTalk","GLOBAL",14)~
+DO ~SetGlobal("C0AuraBG2RomanceTalk","GLOBAL",13)~
 = ~Can you find my tin of powdered graphite, <CHARNAME>? It's made of brass, and labelled at the bottom... yes, that's the one.~
 = ~I'll just put some on these cloths and we can rub it on the joints of the automaton together, and then we'll have finished its maintenance.~
 = ~It's pretty simple, isn't it? At this rate, it won't be long before you could completely control and take care of this on your own. Until then, though... it's nice to have someone to work together with after so long.~
@@ -1502,7 +1502,7 @@ END
 CHAIN BC0AURA2 ROM-8-8
 ~Oh, alright... maybe you won't laugh at me. And even if you do, I'll probably be able to live with the embarrassment, as long as it's just you.~
 = ~I was thinking how envious I am towards all the people that must've been around you, who cared for you and had a hand in making you the person you are now. And it... makes me just a little sad that I can't count myself among them.~
-= ~It's not as wild as I make it sound. When I was young, I wasn't always bound for the Sambaran academy in my homeland. I could've chosen to study in another land, where the academic opportunities might've fit me more... such as focusing on interest in magic I had, for example.~
+= ~It's not as wild as I make it sound. When I was young, I wasn't always bound for the Sambaran academy in my homeland. I could've chosen to study in another land, where the academic opportunities might've fit me more... such as focusing on the interest in magic I had, for example.~
 = ~Even if it wasn't on my mind at the time, I could've chosen to come to study in Candlekeep, who have had friendly exchanges with my homeland in the past. And maybe I would've met you... and gotten a chance to become friends with you sooner.~
 = ~But that's too far in the past to be worth thinking about. And besides, I'm lucky just to know you now. But I can't help but wonder what it could've been like, if I had made just a few different choices a long time ago.~
 END
@@ -1765,15 +1765,17 @@ END
 CHAIN BC0AURA2 ROM-11-10
 ~<CHARNAME>... oh, that's just what I wanted to hear. I just didn't think you'd actually see me as someone who could match up to you.~
 END
-IF ~OR(8)
-	Global("AerieRomanceActive","GLOBAL",2)
-	Global("AnomenRomanceActive","GLOBAL",2)
-	Global("JaheiraRomanceActive","GLOBAL",2)
-	Global("ViconiaRomanceActive","GLOBAL",2)
-	Global("RasaadRomanceActive","GLOBAL",2)
-	Global("DornRomanceActive","GLOBAL",2)
-	Global("NeeraRomanceActive","GLOBAL",2)
-	Global("HexxatRomanceActive","GLOBAL",2)~ + ROM-11-CONFLICT
+IF ~OR(10)
+	Global("AerieRomanceActive","GLOBAL",1)
+	Global("AnomenRomanceActive","GLOBAL",1)
+	Global("JaheiraRomanceActive","GLOBAL",1)
+	Global("ViconiaRomanceActive","GLOBAL",1)
+	Global("RasaadRomanceActive","GLOBAL",1)
+	Global("DornRomanceActive","GLOBAL",1)
+	Global("NeeraRomanceActive","GLOBAL",1)
+	Global("HexxatRomanceActive","GLOBAL",1)
+  Global("YoshimoRomanceActive","GLOBAL",1)
+  Global("YoshimoRomanceActive","GLOBAL",2)~ + ROM-11-CONFLICT
 IF ~True()~ + ROM-11-12
 
 CHAIN BC0AURA2 ROM-11-11
@@ -1785,7 +1787,11 @@ CHAIN BC0AURA2 ROM-11-CONFLICT
 = ~If there is, though, please don't feel like you have to say otherwise. I'd like to know now, before it's too late.~
 END
   ++ ~I do have feelings for another... but I still want to nurture our friendship, Aura. Please don't doubt that.~ + ROM-11-11
-  ++ ~There's no one else that's more important to me, not in the way you're thinking. I promise.~ + ROM-11-12
+  + ~!Global("YoshimoRomanceActive","GLOBAL",1)
+     !Global("YoshimoRomanceActive","GLOBAL",2)~ + ~There's no one else that's more important to me, not in the way you're thinking. I promise.~ + ROM-11-12
+  + ~OR(2)
+     Global("YoshimoRomanceActive","GLOBAL",1)
+     Global("YoshimoRomanceActive","GLOBAL",2)~ + ~There's no one else that's more important to me, not in the way you're thinking. I promise.~ + ROM-11-12-YR
 
 CHAIN BC0AURA2 ROM-11-12
 ~Then... can I give you a hug? I feel like you've needed one for a long time... and it'd make me even happier as well.~
@@ -1794,6 +1800,26 @@ END
   ++ ~Sure. Come here.~ + ROM-11-14
   ++ ~Not right now. Maybe later.~ + ROM-11-15
   ++ ~No, thanks. I'm not in the mood.~ + ROM-11-15
+
+CHAIN BC0AURA2 ROM-11-12-YR
+~No one? But I thought... you and Yoshimo... don't the two of you care about each other?~
+END
+  + ~Global("YoshimoRomanceActive","GLOBAL",1)~ + ~We're close friends, but it's different from how I see you.~ DO ~SetGlobal("YoshimoRomanceActive","GLOBAL",3)~ + ROM-11-12-YR-1
+  + ~Global("YoshimoRomanceActive","GLOBAL",2)~ + ~We... do, yes. But I care about you a lot as well.~ + ROM-11-12-YR-2
+  ++ ~I think you've misunderstood. He and I... we haven't even known each other for that long.~ DO ~SetGlobal("YoshimoRomanceActive","GLOBAL",3)~ + ROM-11-12-YR-1
+  ++ ~Maybe... but I can't decide about whom I care for more... you, or him.~ + ROM-11-12-YR-2
+  ++ ~It doesn't matter. I care about you just as much as I do about him. Is that so wrong?~ + ROM-11-12-YR-2
+
+CHAIN BC0AURA2 ROM-11-12-YR-1
+~Oh, so... that's how it is. I must have been overthinking. Maybe I was getting jealous... which isn't me at all. But then, none of this is normal for me. either.~
+EXTERN BC0AURA2 ROM-11-12
+
+CHAIN BC0AURA2 ROM-11-12-YR-2
+~No, I... I can't do it, <CHARNAME>, not like this.~
+= ~I'm sorry, <CHARNAME>. This was the wrong time for me to push these thoughts towards you. It isn't fair to either of you... not when it's obvious how much you think about him.~
+= ~My emotions... they won't change. But I don't want to force you to decide, not now—I can't do something that selfish. These feelings I hold for you... just having them is enough for me. Whatever is in the future... that's up to you to decide.~
+= ~Let's not bring this up again, <CHARNAME>... not until you know what it is you want. Thank you for listening to me.~
+DO ~SetGlobal("C0AuraRomanceYRGlob","GLOBAL",1)~ EXIT
 
 CHAIN BC0AURA2 ROM-11-13
 ~Well... I wouldn't object to it, but one step at a time. Also, I don't think I can muster up the courage to ask for more. Not yet. So, would you come here already?~
@@ -2132,7 +2158,7 @@ EXIT
 
 /// BRYNNLAW
 
-CHAIN IF ~Global("C0AuraBG2BrynnlawTalk","GLOBAL",1)~ THEN BC0AURA2 BRYNNLAW
+CHAIN IF ~Global("C0AuraBG2BrynnlawTalk","GLOBAL",1)~ THEN C0AURA2J BRYNNLAW
 ~We're finally getting off? Ooh... thank goodness... I don't know if I could've managed another day on a ship. Even if this place looks seedy and dangerous, it'll be a relief to know we at least won't get swallowed by it.~ [C0BLANK]
 DO ~SetGlobal("C0AuraBG2BrynnlawTalk","GLOBAL",2)~
 END
@@ -2141,31 +2167,31 @@ END
   ++ ~I was hoping you'd eventually overcome your fear of sea travel.~ + BRYNNLAW-3
   ++ ~Pull yourself together. Now is the worst possible time for you to break down on me.~ + BRYNNLAW-0
 
-CHAIN BC0AURA2 BRYNNLAW-0
+CHAIN C0AURA2J BRYNNLAW-0
 ~I... I won't, <CHARNAME>. Break down, I mean. I know how important it is for you that we came here... I won't let it drag us down.~
-EXTERN BC0AURA2 BRYNNLAW-8
+EXTERN C0AURA2J BRYNNLAW-8
 
-CHAIN BC0AURA2 BRYNNLAW-1
+CHAIN C0AURA2J BRYNNLAW-1
 ~I thought, given how much time has passed, and how much I've grown, that maybe it wouldn't frighten me as much... and even if there was a chance I experienced something as awful as when I drowned before, I'm skilled enough to find a way out this time... but I couldn't even think of anything. I just kept shivering the whole time.~
-== BC0AURA2 IF ~OR(2)
+== C0AURA2J IF ~OR(2)
 Global("C0AuraRomanceActive","GLOBAL",1)
 Global("C0AuraRomanceActive","GLOBAL",2)~ THEN ~I'm glad you were close to me for the whole journey, <CHARNAME>. If not, maybe I would have fallen apart all over again. I think the only solution I could think of was that you'd be here to protect me.~
-== BC0AURA2 ~I should be stronger, <CHARNAME>. I know I'm stronger than I was. Why should something like this still hold me back? Am I failing you?~
+== C0AURA2J ~I should be stronger, <CHARNAME>. I know I'm stronger than I was. Why should something like this still hold me back? Am I failing you?~
 END
   ++ ~Some things can't just be overcome with strength, Aura. Trauma is one of them.~ + BRYNNLAW-4
   ++ ~There'll always be something too much for you to withstand. It's nothing to be ashamed of.~ + BRYNNLAW-4
   ++ ~Stop thinking like that. You're strong. I know you're strong. You can put this behind you one day. It doesn't have to be now.~ + BRYNNLAW-4
   ++ ~If you keep snivelling like this, then yes. I'm disappointed in you.~ + BRYNNLAW-5
 
-CHAIN BC0AURA2 BRYNNLAW-2
+CHAIN C0AURA2J BRYNNLAW-2
 ~You too? I was a little worried you might've been disappointed that something like this would be enough to shake me up... in a strange way, I'm glad to know you're not so different from me.~
-EXTERN BC0AURA2 BRYNNLAW-1
+EXTERN C0AURA2J BRYNNLAW-1
 
-CHAIN BC0AURA2 BRYNNLAW-3
+CHAIN C0AURA2J BRYNNLAW-3
 ~I... I was hoping so, as well...~
-EXTERN BC0AURA2 BRYNNLAW-1
+EXTERN C0AURA2J BRYNNLAW-1
 
-CHAIN BC0AURA2 BRYNNLAW-4
+CHAIN C0AURA2J BRYNNLAW-4
 ~I—thank you, <CHARNAME>, that helps. I just needed a bit of encouragement... I'll be fine, really. I made it through, and I have friends with me this time.~
 = ~Whatever I'm going through, I'm worried that Imoen could be facing something several times worse in that... Spellhold. Just looking at that tower frightens me.~
 = ~Don't let me hold you back, <CHARNAME>. I made a promise I'd follow you through this, and I won't be a burden now.~
@@ -2177,31 +2203,31 @@ Global("C0AuraRomanceActive","GLOBAL",2)~ + ~Come here. Let me hold you for a bi
   ++ ~Imoen's important, but so are you. We can take as much time as you need to recover.~ + BRYNNLAW-7
   ++ ~Let's get a move on, then. We've wasted enough time as it is.~ + BRYNNLAW-8
 
-CHAIN BC0AURA2 BRYNNLAW-5
+CHAIN C0AURA2J BRYNNLAW-5
 ~I'm... I'm sorry...~
 EXIT
 
-CHAIN BC0AURA2 BRYNNLAW-6
+CHAIN C0AURA2J BRYNNLAW-6
 ~Yes... please...~
 = ~Hehe... you're like a magical remedy, <CHARNAME>. Maybe I should be studying you instead.~
-EXTERN BC0AURA2 BRYNNLAW-9
+EXTERN C0AURA2J BRYNNLAW-9
 
-CHAIN BC0AURA2 BRYNNLAW-7
+CHAIN C0AURA2J BRYNNLAW-7
 ~I'll be okay... I just need a few deep breaths... and a bit of walking to shake off the nerves.~
-EXTERN BC0AURA2 BRYNNLAW-9
+EXTERN C0AURA2J BRYNNLAW-9
 
-CHAIN BC0AURA2 BRYNNLAW-8
+CHAIN C0AURA2J BRYNNLAW-8
 ~Yes... we should keep going.~
 = ~...I'm brave... I'm brave. I'm brave.~
 EXIT
 
-CHAIN BC0AURA2 BRYNNLAW-9
+CHAIN C0AURA2J BRYNNLAW-9
 ~See? I'm already back to normal. Once, even that might've been too much for me. Come on, <CHARNAME>. Imoen's waiting.~
 EXIT
 
 /// SPELLHOLD
 
-CHAIN IF ~Global("C0AuraBG2SpellholdTalk","GLOBAL",1)~ THEN BC0AURA2 SPELLHOLD
+CHAIN IF ~Global("C0AuraBG2SpellholdTalk","GLOBAL",1)~ THEN C0AURA2J SPELLHOLD
 ~This... this place is even worse from the inside, <CHARNAME>. It shouldn't exist... not the way it is now.~ [C0BLANK]
 DO ~SetGlobal("C0AuraBG2SpellholdTalk","GLOBAL",2)~
 END
@@ -2209,19 +2235,19 @@ END
   ++ ~Magic is dangerous. Something needs to keep them under control.~ + SPELLHOLD-2
   ++ ~We don't have time for this right now, Aura. Let's find Imoen and get out.~ + SPELLHOLD-0
 
-CHAIN BC0AURA2 SPELLHOLD-0
+CHAIN C0AURA2J SPELLHOLD-0
 ~Fine.~
-EXTERN BC0AURA2 SPELLHOLD-6
+EXTERN C0AURA2J SPELLHOLD-6
 
-CHAIN BC0AURA2 SPELLHOLD-1
+CHAIN C0AURA2J SPELLHOLD-1
 ~No matter how much of a danger a mage should be, they should still be treated like a person... not a dangerous animal, or an experiment. This is all wrong.~
-EXTERN BC0AURA2 SPELLHOLD-3
+EXTERN C0AURA2J SPELLHOLD-3
 
-CHAIN BC0AURA2 SPELLHOLD-2
+CHAIN C0AURA2J SPELLHOLD-2
 ~I understand that, <CHARNAME>, really, I do, but... even a mage is more than just their magic. And restraint... shouldn't be handled like this.~
-EXTERN BC0AURA2 SPELLHOLD-3
+EXTERN C0AURA2J SPELLHOLD-3
 
-CHAIN BC0AURA2 SPELLHOLD-3
+CHAIN C0AURA2J SPELLHOLD-3
 ~We in Lantan have an asylum as well... the Poenitens Sanctum. I've never seen what it's like, and my father turns quiet every time I've ever asked him about it... but even then, I hope it's nothing close to being like this. I don't ever want to think so poorly of my own people.~
 = ~It's a last resort for those whose innovations are becoming too dangerous, and even then, they still have a right to free will... some of our academic works were written from within its halls, but here... it doesn't seem to matter who gets brought in.~
 = ~Everybody looks so lost, either completely defeated, or broken... I hate this place, <CHARNAME>. I hate everything about it.~
@@ -2230,15 +2256,15 @@ END
   ++ ~It's extreme, but I think the idea of such a place is a necessary evil. Otherwise, we may just be allowing for something worse.~ + SPELLHOLD-5
   ++ ~We won't be here long. Once we have Imoen, we'll be out of here.~ + SPELLHOLD-6
 
-CHAIN BC0AURA2 SPELLHOLD-4
+CHAIN C0AURA2J SPELLHOLD-4
 ~There must be a limit to what's allowed, and some people who cross that line may be dangerous. But if they can be helped, they should. This... I don't see any attempts to help anyone here.~
-EXTERN BC0AURA2 SPELLHOLD-6
+EXTERN C0AURA2J SPELLHOLD-6
 
-CHAIN BC0AURA2 SPELLHOLD-5
+CHAIN C0AURA2J SPELLHOLD-5
 ~And how do we know a place like this won't just make them worse? What if they're made to be forced to stay here forever? Isn't that terrifying?~
-EXTERN BC0AURA2 SPELLHOLD-6
+EXTERN C0AURA2J SPELLHOLD-6
 
-CHAIN BC0AURA2 SPELLHOLD-6
+CHAIN C0AURA2J SPELLHOLD-6
 ~Let's... let's get moving, <CHARNAME>. I don't know which I want more, to get out of here or blow it all up... the only thing that might be holding me back are these poor souls here. I hope there's still a chance for them.~
 EXIT
 
@@ -2362,6 +2388,7 @@ DO ~ClearAllActions()
 StartCutSceneMode()
 CreateCreatureObjectOffset("C0ACERI2","C0Aura",[10.-20])
 Wait(2)
+PlaySong(%C0AUROM%)
 ActionOverride("C0ACERI",StartDialogNoSet(Player1))~ EXIT
 
 CHAIN IF ~Global("C0AuraBG2FriendshipLetter","GLOBAL",4)~ THEN C0ACERI2 friend-letter3
@@ -2539,9 +2566,9 @@ CHAIN BC0AUR25 tob-siege-6
 EXTERN BC0AUR25 tob-siege-4
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBSwordTalk","GLOBAL",1)~ THEN BC0AUR25 tob-swordtalk
-~*huff* *breathe* Hah! Hyah! *pant* *gasp*...~
+~*huff* *breathe* Hah... ah...! *pant* *gasp*...~
+= ~To swing a sword... I've mastered so many things, but I still can't... but I have to keep trying.~
 DO ~SetGlobal("C0AuraToBSwordTalk","GLOBAL",2)~
-= ~It's still difficult... I've mastered so many things, but still not this... but I have to keep trying.~
 END
   ++ ~You're practicing swordplay? And with your uncle's sword, as well.~ + tob-swordtalk-1
   ++ ~Stop that and get some rest, already. Keep that sort of fighting to the trained ones.~ + tob-swordtalk-0
@@ -2551,7 +2578,7 @@ CHAIN BC0AUR25 tob-swordtalk-0
 DO ~RestParty()~ EXIT
 
 CHAIN BC0AUR25 tob-swordtalk-1
-~I'm still trying to master it, <CHARNAME>... just like uncle Dedalus did. It follows my every thought perfectly, like it was made for my hands... but I just can't fully understand it yet.~
+~I'm still trying to master this sword, <CHARNAME>... just like uncle Dedalus did. It follows my every thought perfectly, like it was made for my hands... but I just can't fully understand it yet.~
 = ~Before now, I've never had an interest in swordsmanship... the only instruction I've ever gotten was from Reika-san, who once mentioned that the sword is an extension of one's will, and must always be swung with intent... but only after I saw what my uncle was willing to do, did I realize what she really meant.~
 = ~My uncle hated conflict and death as much as I do, <CHARNAME>, I know that. And if we were taught to hate it, there must be countless others like us who feel the same way, and shouldn't ever have to suffer it themselves... but someone has to face it. Not everyone can hide.~
 = ~I know. That's why my uncle chose to make and master a sword, despite wishing to the bottom of his heart that he would never have to draw it... and now, that sword is in my hands. I have to be ready for the same responsibility.~
@@ -2635,7 +2662,7 @@ CHAIN BC0AUR25 tob-nearend-10
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",2)~ THEN BC0AUR25 tob-rom-1
-~From one battle, right into the next... it's always up to us in the end.~
+~From one battle, right into the next... it's always up to us in the end.~ [C0BLANK]
 DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
 = ~I guess some proper rest and a moment of peace was never on the table, huh? I was hoping to spend some time together in peace after everything we've been through.~
 END
@@ -2706,8 +2733,35 @@ CHAIN BC0AUR25 tob-rom-1-11
 = ~If this is going to be the most important fight, <CHARNAME>, and maybe even the last... I'll do everything I can for you... and for our future.~
 EXIT
 
-CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",4)~ THEN BC0AUR25 tob-rom-2
-~So... I guess we won. The siege is broken, and we brought down the giant, but... did we really win, <CHARNAME>?~
+CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",4)~ THEN BC0AUR25 AURA-POST-WRAITH
+~I... what have I done, <CHARNAME>? Why have I... ruined so much?~ [C0BLANK]
+DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
+END
+  ++ ~None of what happened was your fault.~ + AURA-POST-WRAITH-1
+  ++ ~That was just a trick, Aura. A cruel, evil trick.~ + AURA-POST-WRAITH-1
+  ++ ~I don't know.~ + AURA-POST-WRAITH-1
+
+CHAIN BC0AUR25 AURA-POST-WRAITH-1
+~I know. I shouldn't believe a word of what was said. But how can I do that? Those terrible, dark emotions came from myself. My own heart gave them the weapons they needed to hurt me.~
+= ~I could almost admire how well those shadows played their tricks... they attacked me in the one way I could never defend myself, whether through logic or emotion...~
+= ~Their intentions were all false, but I can't deny the point they've made... or, maybe, it's my own guilt surfaced. I've kept it buried all this time, believing I've been doing the right thing. Even with all the death, all those who have been hurt...~
+= ~<CHARNAME>... did I deserve to be brought back? Would things have been better if my body had sunk into the ocean, all those years ago?~
+END
+ ++ ~No, Aura. You mustn't think that. Your mentor gave you life because she believed you deserved it, and she died for you because she felt you were worth it.~ EXTERN BC0AUR25 AURA-POST-WRAITH-2
+ ++ ~Some things are outside of our control, Aura. You can't regret everything that goes wrong. Just be the best that you can.~ EXTERN BC0AUR25 AURA-POST-WRAITH-2
+ ++ ~That's a question... and a burden that you'll have to bear. I can't help you.~ EXTERN BC0AUR25 AURA-POST-WRAITH-3
+
+CHAIN BC0AUR25 AURA-POST-WRAITH-2
+~I... I know that's the right way to think. I'd be betraying the memory of everyone that's ever cared for me if I felt otherwise. I need to... I need to believe in myself...~
+EXTERN BC0AUR25 AURA-POST-WRAITH-3
+
+CHAIN BC0AUR25 AURA-POST-WRAITH-3
+~Oh... why am I letting that horrible apparition get to me like this?! Agh! I should be better...~
+= ~At least I have you, <CHARNAME>. I don't think I would've been able to handle what just happened otherwise. Thank you for being my support... always.~
+EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",6)~ THEN BC0AUR25 tob-rom-2
+~So... I guess we won. The siege is broken, and we brought down the giant, but... did we really win, <CHARNAME>?~ [C0BLANK]
 DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
 = ~I know we should be glad to even be alive. And what happened to Saradush isn't our fault. But I still can't help but think that we still lost.~
 = ~We... did what we could, right? <CHARNAME>, tell me this was the best we could have done.~
@@ -2793,36 +2847,8 @@ CHAIN BC0AUR25 tob-rom-2-14
 ~*sigh* Never mind. I can't answer my own questions, and I don't want to waste your time either, <CHARNAME>. Let's go. There's actual important things to worry about.~
 EXIT
 
-CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",6)~ THEN BC0AUR25 AURA-POST-WRAITH
-~I... what have I done, <CHARNAME>? Why have I... ruined so much?~
-DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
-END
-  ++ ~None of what happened was your fault.~ + AURA-POST-WRAITH-1
-  ++ ~That was just a trick, Aura. A cruel, evil trick.~ + AURA-POST-WRAITH-1
-  ++ ~I don't know.~ + AURA-POST-WRAITH-1
-
-CHAIN BC0AUR25 AURA-POST-WRAITH-1
-~I know. I shouldn't believe a word of what was said. But how can I do that? Those terrible, dark emotions came from myself. My own heart gave them the weapons they needed to hurt me.~
-= ~I could almost admire how well those shadows played their tricks... they attacked me in the one way I could never defend myself, whether through logic or emotion...~
-= ~Their intentions were all false, but I can't deny the point they've made... or, maybe, it's my own guilt surfaced. I've kept it buried all this time, believing I've been doing the right thing. Even with all the death, all those who have been hurt...~
-= ~<CHARNAME>... did I deserve to be brought back? Would things have been better if my body had sunk into the ocean, all those years ago?~
-END
- ++ ~No, Aura. You mustn't think that. Reika gave you life because she believed you deserved it, and she died for you because she felt you were worth it.~ EXTERN BC0AUR25 AURA-POST-WRAITH-2
- ++ ~Some things are outside of our control, Aura. You can't regret everything that goes wrong. Just be the best that you can.~ EXTERN BC0AUR25 AURA-POST-WRAITH-2
- ++ ~That's a question... and a burden that you'll have to bear. I can't help you.~ EXTERN BC0AUR25 AURA-POST-WRAITH-3
-
-CHAIN BC0AUR25 AURA-POST-WRAITH-2
-~I... I know that's the right way to think. I'd be betraying the memory of everyone that's ever cared for me if I felt otherwise. I need to... I need to believe in myself...~
-EXTERN BC0AUR25 AURA-POST-WRAITH-3
-
-CHAIN BC0AUR25 AURA-POST-WRAITH-3
-~Oh... why am I letting that horrible apparition get to me like this?! Agh! I should be better...~
-= ~At least I have you, <CHARNAME>. I don't think I would've been able to handle what just happened otherwise. Thank you for being my support... always.~
-EXIT
-
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",8)~ THEN BC0AUR25 tob-rom-3
-~Hey, <CHARNAME>? Can we talk for a bit? I wanted to ask how you're feeling.~
-DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
+~Hey, <CHARNAME>? Can we talk for a bit? I wanted to ask how you're feeling.~ [C0BLANK]
 END
   ++ ~I'm fine. What about you? These past few weeks have been especially hard on you.~ + tob-rom-3-1
   ++ ~Don't worry about me.~ + tob-rom-3-2
@@ -2898,8 +2924,7 @@ CHAIN BC0AUR25 tob-rom-3-12
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",10)~ THEN BC0AUR25 tob-rom-4
-~Do you have a dream for the future, <CHARNAME>?~
-DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
+~Do you have a dream for the future, <CHARNAME>?~ [C0BLANK]
 END
   ++ ~Of course I do. Who doesn't?~ + tob-rom-4-1
   ++ ~Would you like to hear about it?~ + tob-rom-4-2
@@ -2964,8 +2989,7 @@ CHAIN BC0AUR25 tob-rom-4-12
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",12)~ THEN BC0AUR25 tob-rom-5
-~Heehee...~
-DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
+~Heehee...~ [C0BLANK]
 END
   ++ ~You're finally smiling again.~ + tob-rom-5-1
   ++ ~What's put you in a good mood?~ + tob-rom-5-2
@@ -3016,8 +3040,7 @@ CHAIN BC0AUR25 tob-rom-5-9
 EXTERN BC0AUR25 tob-rom-5-7
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",14)~ THEN BC0AUR25 tob-rom-6
-~I've been thinking about Lantan lately. While we're here in the middle of a war, my kinsmen are working hard, trying to improve upon the future.~
-DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
+~I've been thinking about Lantan lately. While we're here in the middle of a war, my kinsmen are working hard, trying to improve upon the future.~ [C0BLANK]
 = ~It's almost like I've lived in two different worlds by now. Do you think they even know what's been happening here, <CHARNAME>?~
 END
   ++ ~I'd assume they would.~ + tob-rom-6-1
@@ -3093,9 +3116,9 @@ CHAIN BC0AUR25 tob-rom-6-12
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",16)~ THEN BC0AUR25 tob-rom-7
-~*scribble scribble*... <DAYANDMONTH>, <YEAR>.~
-DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
-= ~That's today's date, according to my journal. It feels like it's been a long journey, but it hasn't really. A lot has just happened in that time... hasn't it?~
+~*scribble scribble*... <DAYANDMONTH>, <YEAR>.~ [C0BLANK]
+= ~That's today's date, according to my journal. I've never told you, but I've been recording everything. Down to the finest detail. Just in case... I have to try and convince myself one day that it all wasn't a dream.~
+= ~It feels like it's been a long journey, but it hasn't really. A lot has just happened in that time... hasn't it?~
 END
   ++ ~About as much as someone might expect in a normal lifetime.~ + tob-rom-7-1
   ++ ~You're not getting tired of adventuring, are you?~ + tob-rom-7-2
@@ -3120,7 +3143,7 @@ EXTERN BC0AUR25 tob-rom-7-4
 
 CHAIN BC0AUR25 tob-rom-7-4
 ~*sigh* I just don't think it's fair. Nobody should have been forced to go through so much, not you, not any of the Bhaalspawn.~
-= ~I had a dream last night, you know. I was at home again. My parents, my sisters, my uncle... they were all there. I hadn't forgotten about all of this, yet... as strange as it was, things felt just like they were before I left home~
+= ~I had a dream last night, you know. I was at home again. My parents, my sisters, my uncle... they were all there. I hadn't forgotten about all of this, yet... as strange as it was, things felt just like they were before I left home.~
 = ~The only difference was you. There, when I thought I had just woken up and gotten out of bed, and this life was the dream... I realized you were next to me. And it felt so normal.~
 = ~I... really want that, <CHARNAME>. I know things may never be the way I remember them, but still... I want to have a chance at peace, and I want to have you there to live it with me.~
 = ~Can—can you promise me, <CHARNAME>? Will we be able to have that, one day?~
@@ -3149,7 +3172,7 @@ CHAIN BC0AUR25 tob-rom-7-8
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",18)~ THEN BC0AUR25 tob-rom-8
-~I never thought I'd receive a message from my grandmother now of all times. And I really thought nothing would surprise me anymore...~
+~I never thought I'd receive a message from my grandmother now of all times. And I really thought nothing would surprise me anymore...~ [C0BLANK]
 DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
 = ~For my whole life, I've wanted to meet her, the legendary adventurer who my father's always talked about... and I never found the slightest trace. And now she's found me instead.~
 = ~There's a lot I would've liked to say to her face to face, both for my own sake, and for my father who's missed her greatly. There was a long while where I wondered if she even knew I existed... but I guess she's looking out for me in her own way.~
@@ -3172,8 +3195,7 @@ EXTERN BC0AUR25 tob-rom-8-4
 
 CHAIN BC0AUR25 tob-rom-8-4
 ~I wonder just how much she knows about everything... but she's been involved in things that might've been just as great as what we've been through. So maybe she feels these things that helped her once might do the same for me.~
-= ~Maybe I've told you this, already, but... my grandmother followed someone like you, the true hero of the book she wrote about her travels in the North. For whatever reason, she kept the details vague... and many publishers inserted their own interpretations on who they could've been.~
-= ~Sometimes when I think about the story... I can't help but imagine the two of them were just like us. They walked, and fought, and laughed at the lightest moments alongside each other, and depended on each other when they needed each other.~
+= ~Sometimes when I think about the story... the one where these artifacts once came from, I can't help but imagine she... and the person she followed... were just like us. They walked, and fought, and laughed at the lightest moments alongside each other, and depended on each other when they needed each other.~
 = ~Maybe they even fell in love the same way as we did... can you imagine that, <CHARNAME>? If we're actually the sequel to a greater story, with the same connections and ending?~
 END
   ++ ~That seems a bit of a reach.~ + tob-rom-8-5
@@ -3203,7 +3225,7 @@ CHAIN BC0AUR25 tob-rom-8-9
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBLoveTalk","GLOBAL",20)~ THEN PLAYER1 tob-final
-~You feel a pair of arms wrapping around you from behind, hands holding yours, and then a face pressed against your back.~
+~You feel a pair of arms wrapping around you from behind, hands holding yours, and then a face pressed against your back.~ [C0BLANK]
 DO ~IncrementGlobal("C0AuraToBLoveTalk","GLOBAL",1)~
 == C0AUR25J ~Mmph...~
 END

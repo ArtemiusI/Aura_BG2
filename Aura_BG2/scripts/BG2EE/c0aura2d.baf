@@ -9,6 +9,7 @@ IF
     TimeOfDay(NIGHT)
 THEN
   RESPONSE #100
+    RealSetGlobalTimer("C0AuraBG2RomanceTimer","GLOBAL",3600)
     SetGlobal("C0AuraBG2RomanceTalk","GLOBAL",12)
         ClearAllActions()
         StartCutSceneMode()
@@ -16,7 +17,6 @@ THEN
         FadeToColor([30.0],0)
         Wait(3)
         ApplySpellRES("C0CCBLKS",Myself)
-        SmallWait(1)
 	PlaySong(%C0AUROM%)
 	Interact(Player1)
 END
@@ -32,6 +32,7 @@ IF
 	Global("C0AuraBG2RomanceTalk","GLOBAL",23)
 THEN
   RESPONSE #100
+    RealSetGlobalTimer("C0AuraBG2RomanceTimer","GLOBAL",3600)
     SetGlobal("C0AuraBG2RomanceTalk","GLOBAL",24)
     RestParty()
 END
@@ -55,7 +56,6 @@ THEN
         FadeToColor([30.0],0)
         Wait(3)
         ApplySpellRES("C0CCBLKS",Myself)
-        SmallWait(1)
 	PlaySong(%C0AUROM%)
 	Interact(Player1)
 END
@@ -82,7 +82,6 @@ THEN
         FadeToColor([30.0],0)
         Wait(3)
         ApplySpellRES("C0CCBLKS",Myself)
-        SmallWait(1)
         Interact("Aerie")  // Aerie
 END
 
@@ -94,21 +93,22 @@ IF
     See("Aerie")
     !StateCheck("Aerie",CD_STATE_NOTVALID)
     !StateCheck(Myself,CD_STATE_NOTVALID)
-  Global("C0AuraAerieFriendship","GLOBAL",8)
-	GlobalTimerExpired("C0AuraAerieFriendshipRestTalkTimer","GLOBAL")
-	AreaType(FOREST)
-	TimeOfDay(NIGHT)
+    Global("C0AuraAerieFriendship","GLOBAL",8)
+	  GlobalTimerExpired("C0AuraAerieFriendshipRestTimer","GLOBAL")
+	  AreaType(OUTDOOR)
+	  TimeOfDay(NIGHT)
 THEN
   RESPONSE #100
-    SetGlobal("C0AuraAerieFriendship","GLOBAL",9)
+        SetGlobal("C0AuraAerieFriendship","GLOBAL",9)
         ClearAllActions()
         StartCutSceneMode()
         Wait(2)
         FadeToColor([30.0],0)
         Wait(3)
         ApplySpellRES("C0CCBLKS",Myself)
-        SmallWait(1)
-        Interact("Aerie")  // Aerie
+        PlaySong(34)
+        RealSetGlobalTimer("C0AuraAerieFriendshipTimer","GLOBAL",3600)
+        ActionOverride("AERIE",Interact("C0Aura"))
 END
 
 // Minsc banter - at rest
@@ -132,8 +132,7 @@ THEN
         FadeToColor([30.0],0)
         Wait(3)
         ApplySpellRES("C0CCBLKS",Myself)
-        SmallWait(1)
-    ActionOverride("MINSC",Interact("C0Aura"))
+        ActionOverride("MINSC",Interact("C0Aura"))
 END
 
 // Wilson banter - at rest
@@ -144,6 +143,7 @@ IF
     See("Wilson")
     !StateCheck("Wilson",CD_STATE_NOTVALID)
     !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("C0AuraWilson1","GLOBAL",0)
 	GlobalTimerExpired("C0AuraWilsonRestTalkTimer","GLOBAL")
 	AreaType("OUTDOOR")
 	TimeOfDay(NIGHT)
@@ -156,6 +156,5 @@ THEN
         FadeToColor([30.0],0)
         Wait(3)
         ApplySpellRES("C0CCBLKS",Myself)
-        SmallWait(1)
-    Interact("WILSON")
+    ActionOverride("WILSON",Interact("C0AURA"))
 END

@@ -101,6 +101,10 @@ INCLUDE ~%MOD_FOLDER%/lib/aura_bg2.tpa~
 INCLUDE ~%MOD_FOLDER%/lib/journal.tpa~
 INCLUDE ~%MOD_FOLDER%/lib/crossmod.tpa~
 
+BEGIN ~Aura NPC for Baldur's Gate 2: Enhanced Edition-NPC Portraits~
+REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
+		COPY ~%MOD_FOLDER%/portraits/npc~ ~override~
+
 BEGIN ~BG2 Default (The Artisan)~
 FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
   REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
@@ -158,7 +162,7 @@ FORCED_SUBCOMPONENT ~Choose a portrait for Aura:~
 		COPY ~%MOD_FOLDER%/alt-portrait/originalbg2/AuraM.bmp~ ~override/Aura2M.bmp~
 		COPY ~%MOD_FOLDER%/alt-portrait/originalbg2/AuraS.bmp~ ~override/Aura2S.bmp~
   
-BEGIN ~ADD-ON: Import BG1 upgrades into BG2~
+BEGIN ~Aura NPC for Baldur's Gate 2: Enhanced Edition-Import BG1 upgrades into BG2~
   REQUIRE_COMPONENT ~Setup-Aura_BG2.tp2~ ~0~ ~The main component must be installed.~
   REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) ~This component must be installed on BG2:EE or EET.~
 INCLUDE ~%MOD_FOLDER%/lib/import.tpa~

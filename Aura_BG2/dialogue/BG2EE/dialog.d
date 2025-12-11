@@ -56,11 +56,20 @@ BEGIN C0AMISC8
 BEGIN C0AUSPE1
 BEGIN BC0AUR25
 BEGIN C0AU25WR
-BEGIN C0AU25W2
 BEGIN C0ACERI
 BEGIN C0ACERI2
 BEGIN C0LIRO
 BEGIN C0LIRO2
+BEGIN C0AUIMIX
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraToBImixAngry","GLOBAL",1)~ THEN C0AUIMIX IMIX
+~YOU...! You carry the stolen essence of my foolish, dead spawn! You shall pay in kind with your divine blood, godling!~ [C0BLANK]
+DO ~SetGlobal("C0AuraToBImixAngry","GLOBAL",2)
+ReallyForceSpell(Myself,WARRIOR_HARDINESS)
+ReallyForceSpell(Myself,WARRIOR_GREATER_WHIRLWIND)
+ReallyForceSpell(Myself,WARRIOR_CRITICAL_STRIKE)
+ReallyForceSpellRES("C0AQEF12",Myself)~ EXIT
+
 
 CHAIN IF WEIGHT #-1 ~IsGabber("C0Aura")~ THEN C0AMISC8 SUNSHOOTERLENS
 ~Attach the lens to the Sunshooter?~ [C0BLANK]
@@ -795,7 +804,7 @@ CHAIN C0AQINSP INSPECTOR-AEGISFIELD-6
 EXTERN C0AQINSP INSPECTOR-AEGISFIELD-7
 
 CHAIN C0AQINSP INSPECTOR-AEGISFIELD-7
-~The inspectors' office has been stretched thin enough as it is, and my fellows and I have been stumbling in the dark for the better part of a month now with no results to show for it. And with some of the conditions I've seen from the afflicted... I would prefer to see this problem dealt with as quickly as possible, no matter the means.~
+~Until this case affects those of high status, my higher-ups are stubbornly refusing to treat it with the severity it deserves, and the rare few among us who share my concerns have been stumbling in the dark for the better part of a month now with no results to show for it. And with some of the conditions I've seen from the afflicted... I would prefer to see this problem dealt with as quickly as possible, no matter the means.~
 = ~You have solved one problematic case as it is, and though this may be beyond my station to say, I feel more confidence allowing you the freedom to investigate under your own terms than wasting both our time on customary procedures. Be careful, though. Other inspectors will no doubt pass through here, and they will not have the history that you and I share.~
 = ~Now, as I have completed my task here, I must return and begin writing my report. Farewell.~
 DO ~EscapeArea()~ EXIT
@@ -1573,6 +1582,7 @@ CHAIN C0AASCL QUEST1-37-5
 == C0AURA2J IF ~InParty("C0Aura")~ THEN ~Overcoming... a foe? What do you...~
 == C0AASCL ~Disease, the harbinger of suffering and death. Those who study the natural order claim it, like many things, is a necessary aspect of life, yet do we not consider the mission to eradicate it truly righteous and just?~
 == CERNDJ IF ~InParty("CERND")~ THEN ~Nature is often deemed unkind, yet it is the trials that the ailing must suffer that lead to greater fortitude in those. You see only a piece of the whole, doctor, and thus regardless of your intent, you are misguided.~
+== C0AASCL ~I have travelled far and wide to learn all there is of healing, of the mortal body and the natural forces that may heal or harm it... or in some cases, both. There is a saying I have learned from Shou healers... "to fight poison with poison", so to speak, and make use of that which harms as a weapon against harm itself.~
 == C0AASCL ~Though I have committed worse acts than others of my path, I have done so because the accepted methods are insufficient for the purposes of truly combating the suffering that disease has inflicted upon those undeserving. As I know it, my greatest fault has not been the deliberate pain I have inflicted for the sake of my research, but my failure.~
 == C0AQDAD ~Nn...ugh...~
 == C0AASCL ~...Too many are given up for lost due to the inadequacy of those who claim to understand healing. My desire is to save them. No matter the cost that must be paid.~
@@ -1743,7 +1753,7 @@ CHAIN C0AURA2J QUEST1-40-1
 == C0AURA2J ~Th–this is...~
 == C0AURA2J ~...'Kusoyarou'.~
 == JAHEIRAJ IF ~InParty("JAHEIRA")~ THEN ~This is... a truly horrific blight upon this man's flesh. One which must have amounted to unimaginable pain.~
-== CERNDJ IF ~InParty("CERND")~ THEN ~I have seen such conditions upon the skins of wild beasts in the past. The pain drives them to rage... there is ~
+== CERNDJ IF ~InParty("CERND")~ THEN ~I have seen such conditions upon the skins of wild beasts in the past. The pain drives them to rage... and that is but the beginning.~
 == EDWINJ IF ~InParty("EDWIN")~ THEN ~Fascinating. The skin is dead and rotting, even as the rest of the man lives... or lived, once.~
 == AERIEJ IF ~InParty("AERIE")~ THEN ~B-Baervan preserve us! The skin... it's as though it's already long dead! How much suffering would this poor man have been though...?~
 == C0AURA2J ~Look, <CHARNAME>. This... discolored, greying and scabrous skin. This is... in Lantan, we know this as 'living petrifaction'—a rare, horrible mutation in which living flesh undergoes a particular necrosis.~
@@ -2110,6 +2120,8 @@ EXTERN C0AREES QUEST1-53-11
 
 CHAIN C0AREES QUEST1-53-11
 ~Once I had made certain of that, I had intended to keep you from being further involved in our affairs... but, unexpectedly, the incident of the man poisoned by Titan occurred, and you unexpectedly played a vital part in solving the case.~
+== C0AREES ~Ever since that time, I have been shadowing your movements throughout the city whenever I can, both in anticipation for Interitus to appear, as well as ensure that no sample of Titan, if found by you, finds its way into the local authorities.~
+== C0AREES ~You may have wondered how despite the severity of this case, no sample of Titan has found its way into the hands of the those investigating it... and that is because we of Oculus have been making every effort to remove them. If you recall your encounter with the inspector... had they taken the sample of Titan you carried on you at the time, I would have been forced to remove it from him... through any means necessary.~
 END
 IF ~InParty("C0Aura")~ EXTERN C0AURA2J QUEST1-53-12
   ++ ~And the one who launched an exploding bolt at those abominations to save Aura... that was also you, I assume?~ + QUEST1-53-13
@@ -2760,7 +2772,8 @@ DO ~ReallyForceSpellRES("C0AQEF12",Myself)~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest2FireBattle","GLOBAL",8)~ THEN C0AURA2J QUEST2-FIRE-BATTLE-8
 ~Okay... okay! I think I fixed it... oh, the fighting's over...~ [C0BLANK]
-DO ~SetGlobal("C0AuraBG2Quest2FireBattle","GLOBAL",9)~
+DO ~ApplySpellRES("c0aqef16","c0aura")
+SetGlobal("C0AuraBG2Quest2FireBattle","GLOBAL",9)~
 == C0AUKARI ~And what convenient timing it is, that you were able to avoid the entirety of the battle.~
 == C0AUKARI ~I have acquired what I came for. The essence of an elder fire elemental. You have my gratitude for your assistance.~
 == C0AUKARI ~Hmm, this particular being was particularly powerful, and its spirit essence is highly unstable... it seems it has split into two in order to contain its energies.~
@@ -2820,12 +2833,13 @@ IF ~!Global("C0AuraBG2Quest2FirstTime","GLOBAL",0)~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest2IceEncounter","GLOBAL",1)~ THEN C0AURA2J QUEST2-ICE-ENCOUNTER-1
 ~Ohh... brr... this is even worse than I imagined...~ [C0BLANK]
-DO ~SetGlobal("C0AuraBG2Quest2IceEncounter","GLOBAL",2)~
-EXIT
+DO ~SetGlobal("C0AuraBG2Quest2IceEncounter","GLOBAL",2) CreateCreatureEffect("C0AYUKI","C0FREEZEE",[466.369],S)~ EXIT
 
-CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest2IceEncounter","GLOBAL",2)~ THEN C0AYUKI QUEST2-ICE-ENCOUNTER-2
-~Strangers... who... are you?~ [C0BLANK]
-DO ~SetGlobal("C0AuraBG2Quest2IceEncounter","GLOBAL",3)~
+CHAIN IF WEIGHT #-1 ~Global("INTRO","LOCALS",0)
+Global("C0AuraBG2Quest2IceEncounter","GLOBAL",2)~ THEN C0AYUKI QUEST2-ICE-ENCOUNTER-2
+~Strangers... you... you should not be here.~ [C0BLANK]
+DO ~SetGlobal("INTRO","LOCALS",1)
+SetGlobal("C0AuraBG2Quest2IceEncounter","GLOBAL",3)~
 == C0AURA2J ~A yuki-onna...~
 END
   + ~CheckStatGT(Player1,30,LORE)~ + ~The 'snow-women' of the East, as I recall. They're fey spirits of the cold.~ EXTERN C0AURA2J QUEST2-ICE-ENCOUNTER-2-1
@@ -2847,21 +2861,234 @@ END
   ++ ~I suppose I'll try.~ EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2-4
 
 CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2-4
-~You... should not be here... go, now...~
+~You... should not be here... go, now... this place will not be safe for you...~
 END
   ++ ~We mean you no harm.~ EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2-5
+  ++ ~What do you mean?~ EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2-6
+  ++ ~What is this place?~ EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2-6
 
 CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2-5
-~Please, before it is too late. You must leave before 'she' finds you...~
-= ~Ishallir... the ice hag. She is hideous, and hateful, and evil. She turned our paradise into a horrible garden of death, where all who face her wrath become frozen for eternity.~
-= ~She comes...~
+~Neither I to you... if things were different, I would welcome you to this place, as it should've been...~
+EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2-6
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2-6
+~This place was once a beautiful garden... one built from ice, where creatures of this plane could seek peace. I was its caretaker, and with my friends, we shared in the once-beautiful paradise.~
+== C0AYUKI ~Our home plane... most of it is as harsh and unforgiving as it appears, but there are still those who want to seek comfort, and friendship, and peace. I was here to give them a home. Once, it was all perfect.~
+== C0AYUKI ~But then... the ice hag, Ishallir found us, found this place... she is utterly hideous, and hateful, and evil. She was the very antithesis of the beauty we shared, and sought to destroy it.~
+== C0AYUKI ~My friends fought her, but were frozen, one by one, their corpses turned into statues of ice as horrible trophies, monuments to her destruction... what was once a paradise because a terrible garden of death, where any who meets her gaze becomes another statue, frozen for eternity.~
+== C0AURA2J ~That's awful...! To create a garden of beauty in such an unforgiving plane, only for an evil being to tear it all apart.~
+== C0AYUKI ~I alone escaped her wrath, taking the last flower of our garden with me in the hopes that one day, everything may be regrown... but I am too weak. Soon, Ishallir will find me. When she does... you must not be here, or you will meet the same fate as everyone else...~
+END
+  ++ ~I'm not afraid of this hag. Maybe I can do something to help you.~ + QUEST2-ICE-ENCOUNTER-2-7
+  ++ ~Your story is a sad one. If you want me to help you defeat this hag, you only need to ask.~ + QUEST2-ICE-ENCOUNTER-2-7
+  ++ ~Perhaps I would be willing to help... if there is something you can offer in return.~ + QUEST2-ICE-ENCOUNTER-2-7
+  ++ ~Well, that's terrible. I'd rather not be here to witness it, though. Aura, get us out of here.~ EXTERN C0AURA2J QUEST2-ICE-ENCOUNTER-2-8
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2-7
+~No, I cannot ask that of you, kind one... and there little I can give. Everything has been claimed by the hag... all I hope is to never see another innocent become a victim to her malice and hatred.~
+EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2-9
+
+CHAIN C0AURA2J QUEST2-ICE-ENCOUNTER-2-8
+~But, <CHARNAME>, are you sure we can't do anything? Look at her... she looks so sad, and grim. There's no hope for her here on her own.~
+EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2-9
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2-9
+~There is only a little time before the last of my wards are broken by the hag's magic... what little beauty there is left to witness here, I welcome you to see, and remember... before it is all lost...~
 EXIT
+
+CHAIN IF WEIGHT #-1 ~IsGabber(Player1)
+Global("INTRO","LOCALS",1)
+Global("C0AuraBG2Quest2IceEncounter","GLOBAL",3)~ THEN C0AYUKI QUEST2-ICE-ENCOUNTER-2A
+~Please, leave while you can. I am glad someone is here to see the last traces of beauty here... but it is not worth your life.~ [C0BLANK]
+END
+  ++ ~I can't ignore seeing someone in need. I want to help you.~ + QUEST2-ICE-ENCOUNTER-2A-1
+  + ~InParty("C0Aura")~ + ~Right. Let's get out of here, Aura.~ EXTERN C0AURA2J QUEST2-ICE-ENCOUNTER-2A-0
+
+CHAIN C0AURA2J QUEST2-ICE-ENCOUNTER-2A-0
+~...Alright. I don't feel good about this, but you're the one in charge... and I can't force you to stay in a dangerous place like this.~
+= ~Reconfiguring the anchoring device... we'll be out of here soon. I'm sorry, yuki-onna... *click*~
+DO ~SetGlobal("C0AuraBG2Quest2Done","GLOBAL",0)
+ClearAllActions()
+StartCutSceneMode()
+StartCutScene("C0ATELE1")~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2A-1
+~But... it will be dangerous. The hag is powerful. Even the strongest of my friends could not withstand her cold magic... would you truly face her for a creature like me?~
+END
+  ++ ~Don't worry. I'm sure I'll be able to handle it.~ + QUEST2-ICE-ENCOUNTER-2A-2
+  ++ ~I've faced all sorts of monsters. A hag doesn't sound so scary.~ + QUEST2-ICE-ENCOUNTER-2A-2
+  + ~InParty("C0Aura")~ + ~On second thought, maybe you're right. I should get out of here.~ EXTERN C0AURA2J QUEST2-ICE-ENCOUNTER-2A-0
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2A-2
+~Thank you... thank you! There... may be hope for my garden again, if you succeed... I will never forget your bravery and kindness, warm one.~
+= ~When you are prepared, I may dispel my wards and allow the hag to come. She will arrive eventually regardless... but this way, you will be prepared.~
+= ~Be warned... the ice hag commands the freezing wind itself, and there is no escaping it. You must weather the cold with your fortitude. Tell me when you are ready.~
+DO ~SetGlobal("INTRO","LOCALS",2)~ EXIT
+
+CHAIN IF WEIGHT #-1 ~IsGabber(Player1)
+Global("INTRO","LOCALS",2)
+Global("C0AuraBG2Quest2IceEncounter","GLOBAL",3)~ THEN C0AYUKI QUEST2-ICE-ENCOUNTER-2B
+~Are you prepared, kind one?~ [C0BLANK]
+END
+  ++ ~Alright. Dispel your wards, and allow the hag to come.~ + QUEST2-ICE-ENCOUNTER-2B-1
+  + ~OR(2) !Global("C0AuraBG2Quest2IceQ1","GLOBAL",1) !Global("C0AuraBG2Quest2IceQ2","GLOBAL",1)~ + ~If there's time, I'd like to ask a few questions. About you and this garden.~ + QUEST2-ICE-ENCOUNTER-2B-2
+  ++ ~I'm not ready yet. Just a little bit longer.~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-1
+~Very well. For this battle, I will fight together at your side... for my friends both old and new. If the hag claims you, then I will join you in the endless cold.~
+= ~Now, be ready. She comes...~
+DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+CreateVisualEffect("SPSPEV",[322.468])
+Wait(2)
+CreateCreature("C0AICE01",[322.468],SW)
+Wait(1)
+ActionOverride("C0AICE01",FaceObject("C0AYUKI"))
+Wait(1)
+ActionOverride("C0AICE01",FaceObject(Player1))
+Wait(1)
+ActionOverride("C0AICE01",StartDialogNoSet(Player1))~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-2
+~There is some time yet... what would you like to know?~
+END
+  + ~Global("C0AuraBG2Quest2IceQ1","GLOBAL",0)~ + ~Can you tell me about the yuki-onna?~ DO ~SetGlobal("C0AuraBG2Quest2IceQ1","GLOBAL",1)~ + QUEST2-ICE-ENCOUNTER-2B-3
+  + ~Global("C0AuraBG2Quest2IceQ2","GLOBAL",0)~ + ~What was this garden like, before the hag arrived?~ DO ~SetGlobal("C0AuraBG2Quest2IceQ2","GLOBAL",1)~ + QUEST2-ICE-ENCOUNTER-2B-4
+  + ~Global("C0AuraBG2Quest2IceQ1","GLOBAL",1) Global("C0AuraBG2Quest2IceQ2","GLOBAL",1)~ + ~I haven't even asked yet. What is your name?~ + QUEST2-ICE-ENCOUNTER-2B-5
+  ++ ~Never mind. Dispel your wards, and allow the hag to come.~ + QUEST2-ICE-ENCOUNTER-2B-1
+  ++ ~Actually, I need to prepare for the hag. Wait just one moment.~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-3
+~We are spirits, born in this plane. Many like yourself have encountered many evil examples of our kind... those who venture into your realm, who seek to ensnare and torment mortals for their cruel whims.~
+= ~Those who choose to remain in our home are gentler, and only seek to create beauty and preserve life... there are few of us, relative to our crueler fellows. But many of us were once together here, nurturing our garden. Until Ishallir claimed all of my sisters...~
+END
+  + ~Global("C0AuraBG2Quest2IceQ2","GLOBAL",0)~ + ~What was this garden like, before the hag arrived?~ DO ~SetGlobal("C0AuraBG2Quest2IceQ2","GLOBAL",1)~ + QUEST2-ICE-ENCOUNTER-2B-4
+  + ~Global("C0AuraBG2Quest2IceQ1","GLOBAL",1) Global("C0AuraBG2Quest2IceQ2","GLOBAL",1)~ + ~I haven't even asked yet. What is your name?~ + QUEST2-ICE-ENCOUNTER-2B-5
+  ++ ~Never mind. Dispel your wards, and allow the hag to come.~ + QUEST2-ICE-ENCOUNTER-2B-1
+  ++ ~Actually, I need to prepare for the hag. Wait just one moment.~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-4
+~I wish you, and many others could have seen it... within the harsh, rough tundra, this small piece of land was once full of life... creatures of the ice and snow played and frolicked here freely, and the earth was blooming with trees and flowers, all grown from living ice and snow.~
+= ~It seems impossible, but such is the care that I and my sisters gave to the land, that we could create such a haven... one day, it may be so once again.~
+END
+  + ~Global("C0AuraBG2Quest2IceQ1","GLOBAL",0)~ + ~Can you tell me about the yuki-onna?~ DO ~SetGlobal("C0AuraBG2Quest2IceQ1","GLOBAL",1)~ + QUEST2-ICE-ENCOUNTER-2B-3
+  + ~Global("C0AuraBG2Quest2IceQ1","GLOBAL",1) Global("C0AuraBG2Quest2IceQ2","GLOBAL",1)~ + ~I haven't even asked yet. What is your name?~ + QUEST2-ICE-ENCOUNTER-2B-5
+  ++ ~Never mind. Dispel your wards, and allow the hag to come.~ + QUEST2-ICE-ENCOUNTER-2B-1
+  ++ ~Actually, I need to prepare for the hag. Wait just one moment.~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-5
+~My... my name? It is Shirayuri... named after the flowers that once grew here. My older sisters gifted me with this name, soon after I found this place... it was they who tended to our garden before myself.~
+END
+  ++ ~It's a beautiful name. Just like yourself.~ DO ~SetGlobal("C0AuraBG2YukionnaFlirt","GLOBAL",1)~ + QUEST2-ICE-ENCOUNTER-2B-6
+  ++ ~I'll be sure to remember it, even once I'm gone from here.~ + QUEST2-ICE-ENCOUNTER-2B-7
+  ++ ~That's enough talk. Summon the hag. I'm ready to fight.~ + QUEST2-ICE-ENCOUNTER-2B-1
+  ++ ~Actually, I need to prepare for the hag. Wait just one moment.~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-6
+~I... I thank you... I have never seen anyone like yourself. If there are more with your kindness from where you come, even if it is only a few... I would like to see your world one day, just as you see mine...~
+EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-7
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-7
+~What is your name, dear <PRO_RACE>? I would like to remember it... if the hag does not claim us. Even if it happens... I would still like to know.~
+END
+  ++ ~<CHARNAME>.~ + QUEST2-ICE-ENCOUNTER-2B-8
+  ++ ~Forget it. We should deal with the hag.~ + QUEST2-ICE-ENCOUNTER-2B-1
+  ++ ~Never mind my name. Give me another moment to prepare.~ + QUEST2-ICE-ENCOUNTER-2B-11
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-8
+~<CHARNAME>... I like this name.~
+END
+IF ~Global("C0AuraBG2YukionnaFlirt","GLOBAL",1)~ + QUEST2-ICE-ENCOUNTER-2B-9
+IF ~!Global("C0AuraBG2YukionnaFlirt","GLOBAL",1)~ + QUEST2-ICE-ENCOUNTER-2B-10
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-9
+~Please, beautiful, strong <PRO_RACE>. Win, and live... I hope you will not die here. I do not want to see it.~
+EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-11
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-10
+~I hope you will not die here, <CHARNAME>... as a new friend, one I will speak of to other new friends one day.~
+EXTERN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-11
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-2B-11
+~Talk to me when you are prepared to fight the hag... today, her evil must end.~
+EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0ShirayuriRetreat","GLOBAL",1)~ THEN C0AYUKI QUEST2-ICE-RETREAT
+~F—forgive me, my friend... I can fight no longer. I will... I will return once my wounds are healed.~ [C0BLANK]
+DO ~CreateVisualEffectObject("SPSOLBRD","Myself")
+Deactivate(Myself)~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest2IceEncounter","GLOBAL",3)~ THEN C0AICE01 QUEST2-ICE-ENCOUNTER-3
 ~Ahh, there you are. There you are, pretty thing...~ [C0BLANK]
 DO ~SetGlobal("C0AuraBG2Quest2IceEncounter","GLOBAL",4)~
-== C0AICE01 ~Ohohoho! You will all be lovely for my collection, your bodies trapped in ice!~
-EXIT
+== C0AURA2J IF ~InParty("C0Aura")~ THEN ~A bheur... I've only ever read about them in old anthologies of magical beings in northeastern Faerûn. Be careful, <CHARNAME>... their hearts are as black and cold as they appear, and their ice magic is deadly.~
+== C0AYUKI ~Ishallir... finally, we meet again. I will not run, this time.~
+== C0AICE01 ~Kyeh heh heh... good, that is good indeed. So, shall you finally accept your fate, and join your lovely sisters in their eternal embrace? Or perhaps beg, and provide me with a modicum of amusement?~
+== C0AYUKI ~I may be willing to beg, but not for myself. Though I already know the answer... I will ask once regardless. Will you return my friends to me?~
+== C0AICE01 ~Kyeh HEH! So, that is your position, is it? I will commend you on your bravery, my dear... but you should already know. My answer is no.~
+== C0AYUKI ~It is as I feared... but for my own sake, I had no choice but to ask... the memory of fleeing in fear as my sisters attempted to put an end to your destruction haunts me more than the thought of death ever will. To this day, I regret that they all had to be sacrificed so that I may live. But now... I finally feel my action was no mistake, as I no longer stand alone.~
+== C0AICE01 ~Oh? Heh... these old eyes do not play tricks on me, I see... there are indeed guests to this frozen domain. Welcome, godchild. I do hope you find the chill of the Frostfell comforting.~
+END
+  ++ ~You know who I am?~ + QUEST2-ICE-ENCOUNTER-4
+  ++ ~It's a bit chilly, but I'll get used to it~ + QUEST2-ICE-ENCOUNTER-5
+  ++ ~Time to die, hag!~ + QUEST2-ICE-ENCOUNTER-6
+
+CHAIN C0AICE01 QUEST2-ICE-ENCOUNTER-4
+~I know *what* you are, godchild. The reek of murder clings to you, though you may or may not attempt to conceal it... personally, I find it rather appealing.~
+EXTERN C0AICE01 QUEST2-ICE-ENCOUNTER-7
+
+CHAIN C0AICE01 QUEST2-ICE-ENCOUNTER-5
+~Kyeh heh! It seems you have a sense of wit about you, quite unlike the boring souls similar to you I have encountered before. This old crone may become rather fond of you.~
+EXTERN C0AICE01 QUEST2-ICE-ENCOUNTER-7
+
+CHAIN C0AICE01 QUEST2-ICE-ENCOUNTER-6
+~Now, now. Is that any way to greet a host, godchild? Needless to say, this former garden, and all the lands within sight, belong to me. You had best mind your manners.~
+EXTERN C0AICE01 QUEST2-ICE-ENCOUNTER-7
+
+CHAIN C0AICE01 QUEST2-ICE-ENCOUNTER-7
+~I did think it rather curious that the snow woman allowed me entry, just while I was finding some amusement in tearing down her wards, one by one... but I see now what her intent is. Do you seek to use the godchild as another sacrifice to save yourself, as you did your sisters?~
+== C0AYUKI ~No... never again. The brave <PRO_RACE> chose to stand with me against your cruelty. But I had hoped, seeing that I would not be as easy prey as you expected, you may choose to relent, and spare whatever beauty that you have not yet corrupted.~
+== C0AICE01 ~You believe I fear the godchild? I have watched many of <PRO_HISHER> like wither and fade with time. Such a shame to see how easily even those burdened with divinity may fall... perhaps I shall show some mercy, and immortalize <PRO_HIMHER> as well within my collection.~
+== C0AYUKI ~So we must fight? There truly is no beauty in your heart.~
+== C0AICE01 ~*spit* Beauty? It is your beauty that offends me, spirit. Your very existence heats this crone's blood with rage, knowing of the existence of those so privileged, so arrogant in flaunting what is freely given. How *dare* you be beautiful? For that alone, I see reason to crush all that you hold dear to dust.~
+== C0AYUKI ~Is the surface all you ever see, Ishallir? I remember, though I was little more than a child, the first day we met... after suffering a defeat against your own coven, it was my sisters who saw past your face, and offered you a home in our garden. Yet you saw nothing but mockery in what we had created, and betrayed our kindness by turning it all into your own twisted image.~
+== C0AICE01 ~Kyeh heh heh... yes, I remember well... and a much finer sight to mine own eyes, this place, as it is now.~
+== C0AYUKI ~And it is still not enough to you? This last flower is all that remains of what once was. It will never bloom again in these lands, so long as you are here. Leave it be... find some mercy in your heart.~
+== C0AICE01 ~KYEH! You truly are brave, to seek mercy within the heart of a hag... so be it... I can find a little bit of mercy, should I wring with all my might. The flower, and you, cannot be suffered to exist... but I will allow our unexpected guests to leave unharmed.~
+== C0AICE01 ~And, as I am feeling generous... should you surrender, I will give your fair shape some dignity in its everlasting frozen form. Otherwise... I will be certain to make what remains of you into an image that would make even my eyes squint and turn away in disgust.~
+== C0AYUKI ~You seek to stoke my fear... but I understand you better than you think, Ishallir. You would never hold true to the spirit of your word... you have proven that already.~
+== C0AICE01 ~Kyeh heh... and? Do you seek to make a final display of defiance, knowing how feeble your power is against mine? It would be such a pity to crush you all under the ice, before I even had a proper chance to play!~
+END
+  ++ ~Enough, hag. Your evil ends here and now.~ + QUEST2-ICE-ENCOUNTER-8
+  ++ ~You sure like to talk. I'm ready to fight just to shut you up.~ + QUEST2-ICE-ENCOUNTER-8
+  ++ ~Actually, I was just thinking I needed to be off somewhere...~ + QUEST2-ICE-ENCOUNTER-9
+
+CHAIN C0AICE01 QUEST2-ICE-ENCOUNTER-8
+~Aye, so it shall be, then, and all the better. I have not had proper entertainment since my victory for too long!~
+EXTERN C0AICE01 QUEST2-ICE-ENCOUNTER-10
+
+CHAIN C0AICE01 QUEST2-ICE-ENCOUNTER-9
+~Kyeh heh! No, I do not think so. You have entered the field, and so you are a player in this game whether you like it or not, godchild! From the moment I laid eyes upon you, your fate has been sealed!~
+EXTERN C0AICE01 QUEST2-ICE-ENCOUNTER-10
+
+CHAIN C0AICE01 QUEST2-ICE-ENCOUNTER-10
+~There shall be no escape! Prepare yourselves, for you shall see what it means to face the Frostfell itself!~
+== C0AYUKI ~My newest, and now dearest friend... forgive me for your part in this, but I thank you for standing with me... I will protect you against the cold of this realm with my magic.~
+== C0AICE01 ~Ohohoho! You will all be lovely for my collection, your bodies trapped in ice! Come, my darling pets!~
+DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+ForceSpellRES("c0auice1",Myself)
+CreateCreatureEffect("c0auice1","SPWHIRL",[651.310],0)
+SmallWait(5)
+CreateCreatureEffect("c0auice1","SPWHIRL",[458.468],0)
+SmallWait(5)
+CreateCreatureEffect("c0auice1","SPWHIRL",[848.474],0)
+SmallWait(5)
+CreateCreatureEffect("c0auice1","SPWHIRL",[650.617],0)
+Wait(2)
+EndCutSceneMode()~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest2IceEncounter","GLOBAL",5)~ THEN C0AYUKI QUEST2-ICE-ENCOUNTER-4
 ~She... is dead. The hag, she is no more.~ [C0BLANK]
@@ -2871,9 +3098,48 @@ DO ~SetGlobal("C0AuraBG2Quest2IceEncounter","GLOBAL",6)~
 == C0AYUKI ~Please take my bow. It carries the spirit of the winter in it... I hope it will keep you safe in your world.~
 DO ~GiveItem("c0abow1",Player1)~
 == C0AYUKI IF ~Global("C0AuraBG2YukionnaFlirt","GLOBAL",1)~ THEN ~And... I'm very happy to have met you, and it is difficult to say goodbye. Please accept this kiss...~
-DO ~AddJournalEntry(%quest_snow_kiss%,INFO)
+DO ~AddJournalEntry(%quest_snow_kiss%,QUEST_DONE)
 ApplySpellRES("C0AICES0",Player1)~
+== C0AYUKI IF ~OR(6)
+  HPPercentLT(Player1,1)
+  HPPercentLT(Player2,1)
+  HPPercentLT(Player3,1)
+  HPPercentLT(Player4,1)
+  HPPercentLT(Player5,1)
+  HPPercentLT(Player6,1)~ THEN ~As for your companions who have fallen in battle... I sense their spirits lingering here, and I can guide them back to their mortal bodies.~
+DO ~ReallyForceSpellRES("SPPR550",Player1)
+ReallyForceSpellRES("SPPR550",Player2)
+ReallyForceSpellRES("SPPR550",Player3)
+ReallyForceSpellRES("SPPR550",Player4)
+ReallyForceSpellRES("SPPR550",Player5)
+ReallyForceSpellRES("SPPR550",Player6)~
 == C0AYUKI ~Goodbye, my friend.~
+EXIT
+
+CHAIN IF WEIGHT #-1 ~GlobalGT("C0AuraBG2Quest2IceEncounter","GLOBAL",5)~ THEN C0AYUKI QUEST2-ICE-ENCOUNTER-5
+~Goodbye, my friend.~ [C0BLANK]
+END
+  + ~OR(6)
+  HPPercentLT(Player1,1)
+  HPPercentLT(Player2,1)
+  HPPercentLT(Player3,1)
+  HPPercentLT(Player4,1)
+  HPPercentLT(Player5,1)
+  HPPercentLT(Player6,1)~ + ~Can you help me raise my fallen friends?~ + QUEST2-ICE-ENCOUNTER-5-1
+  ++ ~I hope to see your garden restored one day.~ + QUEST2-ICE-ENCOUNTER-5-2
+  ++ ~Goodbye.~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-5-1
+~Of course.~
+DO ~ReallyForceSpellRES("SPPR550",Player1)
+ReallyForceSpellRES("SPPR550",Player2)
+ReallyForceSpellRES("SPPR550",Player3)
+ReallyForceSpellRES("SPPR550",Player4)
+ReallyForceSpellRES("SPPR550",Player5)
+ReallyForceSpellRES("SPPR550",Player6)~ EXIT
+
+CHAIN C0AYUKI QUEST2-ICE-ENCOUNTER-5-2
+~I hope I can show you as well... you will always be welcome, when that day comes.~
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest2IceEncounter","GLOBAL",6)~ THEN C0AURA2J QUEST2-ICE-ENCOUNTER-3
@@ -3156,13 +3422,14 @@ ActionOverride("C0ALUNA",EscapeAreaMove("AR0403",752,361,SW))
 ActionOverride("C0DEDAL",EscapeAreaMove("AR0403",687,360,SE))
 ChangeAIScript("",DEFAULT)
 LeaveParty()
-ActionOverride(Player1,ApplySpellRES("C0AUIN3",Myself))
-ActionOverride(Player1,ApplySpellRES("C0AUIN3A",Myself))
+ApplySpellRES("C0AUIN3",Myself)
+ApplySpellRES("C0AUIN3A",Myself)
 EscapeAreaMove("AR0403",720,432,N)~ EXIT
 
-CHAIN IF WEIGHT #-1 ~NumTimesTalkedTo(0)
+CHAIN IF WEIGHT #-1 ~Global("Intro","LOCALS",0)
 Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0AJUNO JUNO-0
 ~I'm glad we're finally able to meet, <CHARNAME>. After everything Aura's told me about you, I would've been disappointed if I didn't have a chance to talk to you at least once.~
+DO ~SetGlobal("Intro","LOCALS",1)~
 = ~As you already know, I'm Aura's eldest sister, Juno. I owe you a lot for taking care of her, and teaching her everything you have during your adventures together.~
 END
   ++ ~She's been an incomparable ally, and a good friend. I'm glad to have her around.~ + JUNO-0-1
@@ -3186,7 +3453,7 @@ CHAIN C0AJUNO JUNO-0-4
 = ~If there is something you wish to talk to me about, please don't hesitate to ask. And I'm certain Luna and my uncle will be eager to introduce themselves as well, if they haven't already.~
 EXIT
 
-CHAIN IF ~Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0AJUNO JUNO-1
+CHAIN IF ~!Global("Intro","LOCALS",0) Global("C0AuraBG2Quest3","GLOBAL",8)~ THEN C0AJUNO JUNO-1
 ~Yes, <CHARNAME>? Is there something I can do for you?~
 END
   ++ ~I'd like to know more about your family.~ + JUNO-1-FAMILY
@@ -3337,11 +3604,11 @@ END
 CHAIN C0DEDAL DEDAL-0-3
 ~Alas, I did not, although I know him by reputation. I am, however, acquainted with Keeper Ulraunt and First Reader Tethtoril, who provided me with much-needed guidance. I greatly respect their wisdom and guidance... *ahem*. Forgive me, I should remain on subject.~
 = ~As you are a former ward of Candlekeep, I feel it is your right to have this. It is a ring gifted to me by the First Reader during our... 'cultural exchange', as I may most appropriately put it. I have carried it for many years, but it is of merely sentimental value to me.~
-DO ~GiveItemCreate("C0ARING3","C0Aura",1,0,0)~
+DO ~GiveItemCreate("C0ARING3",Player1,1,0,0)~
 = ~I believe you may find more use from it than I will, and I offer it as a token of gratitude for your care of my niece.~
 END
 ++ ~Thank you. I treasure the memories of my home.~ + DEDAL-0-4
-++ ~You said this was part of an exchange. What did you give to library?~ + DEDAL-0-5
+++ ~You said this was part of an exchange. What did you give to the library?~ + DEDAL-0-5
 
 CHAIN C0DEDAL DEDAL-0-4
 ~Think nothing of it. Aurelia's safety and well-being is of more worth than any device. If this token is of any use to you, then it carries more value than it has had in the past thirty years.~
@@ -3529,7 +3796,7 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",15)~
 DO ~EscapeArea()~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",15)~ THEN C0ALUNA quest3-15
-~The workshop is hidden in the Woods of Sharp Teeth. It's masterfully concealed, and no one will ever find it unless they know it's there. I'll meet you at the pass, <CHARNAME>.~ [C0BLANK]
+~The workshop is hidden in the Small Teeth Pass. It's masterfully concealed, and no one will ever find it unless they know it's there. I'll meet you at the pass, <CHARNAME>.~ [C0BLANK]
 DO ~AddJournalEntry(%Quest3_Entry_3%,QUEST) SetGlobal("C0AuraBG2Quest3","GLOBAL",16) EscapeArea()~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",16)~ THEN C0ALUNA quest3-16
@@ -3609,8 +3876,20 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",25)~
 == C0AFRITZ ~You have my sworn promise that Dame Aurelia is alive and well. Master Dedalus would never wish harm upon her own blood, no matter the differences.~
 == C0ALUNA ~Then why are you here? If he feels no shame, then he shouldn't hesitate to come forth and meet us, instead of having you standing in our way.~
 == C0AFRITZ ~...I am here by my own deduction. Though Master Dedalus has not asked it of me, for the sake of our long-wrought plans I cannot allow any uncertain factors to threaten us. I will not.~
-== C0ALUNA ~(Placeholder)~
-== C0AFRITZ ~(Placeholder)~
+== C0ALUNA ~Get out of our way, Fritz. If my uncle hasn't given you the order, then you have no right to intervene here. I only want to hear the truth from my uncle regarding the future of our people, our plans, along with everything else that he's hidden from me so far.~
+== C0AFRITZ ~Then you will have to subdue me by force, I fear. You are correct, milady, that I have no right. To stand between you and the director is partly an excuse... in truth, I see this as my opportunity. I will have a chance to test myself against none other than the hero <CHARNAME> <PRO_HIMHER>self.~
+END
+  ++ ~What has this got to do with me all of a sudden?~ EXTERN C0AFRITZ quest3-24-1
+  ++ ~Your true intention is to fight me?~ EXTERN C0AFRITZ quest3-24-1
+  ++ ~If we have to battle, then can we just get this over already?~ EXTERN C0AFRITZ quest3-24-2
+
+CHAIN C0AFRITZ quest3-24-1
+~You are recognized as a hero among many, <CHARNAME>, a legend among mortals. Knowledge of your deeds has even spread throughout Lantan, though our people rarely regard affairs in the outerland that do not involve us.~
+= ~It is my dream to become worthy of considering myself a proper defender of our nation... and nothing less than the strength of a legend is acceptable for such a role. Despite my training, I could not hope to achieve nearly as much as the <PRO_MANWOMAN> who has prevented war twice... but even so, I will pit my strength against yours, and see how great the divide before us truly is.~
+EXTERN C0AFRITZ quest3-24-2
+
+CHAIN C0AFRITZ quest3-24-2
+~Under normal circumstances, I likely could not hope to match you... but we of the Eleventh Workshop have achieved many great things. There is one path in which I may hope to stand a chance as an obstacle to you.~
 == C0ALUNA ~That... is that Titan?! Stop, you idiot! Do you have any idea what it'll—!~
 == C0AFRITZ ~*gulp*~ [GULP]
 DO ~StartCutSceneMode()
@@ -3619,8 +3898,10 @@ ApplySpellRES("c0aqef19",Myself)
 Wait(1)
 Enemy()
 SetSequence(SEQ_ATTACK_SLASH)
+ScreenShake([20.20],2)
 Wait(1)
 SetSequence(SEQ_ATTACK_BACKSLASH)
+ScreenShake([20.20],2)
 Wait(2)
 ActionOverride("C0ALUNA",StartDialogNoSet(Player1))~ EXIT
 
@@ -3674,7 +3955,7 @@ EXTERN C0DEDAL quest3-31-2
 CHAIN C0DEDAL quest3-31-2
 ~I believe I owe you an apology for unintentionally misleading you. My intention was not to endanger Aurelia, nor to concern you over the misunderstanding.~
 == C0AURA2P ~I haven't been mistreated or threatened, I've just... been awed. I once thought machines such as these were only a theory... now I'm surrounded by so many of them. It's like an old legend suddenly coming true.~
-== C0AURA2P ~Uncle... he told me about this place. About all the things that have been created here. After that, I agreed to come along. But...~
+== C0AURA2P ~Uncle... he told me everything. The truth about this place, about Interitus, and about our home. About all the things that have been created here. After that, I agreed to come along. But...~
 == C0DEDAL ~This workshop is under my own supervision, and the Ayrorch have no knowledge of it. Because of that, its knowledge is reserved purely to whom I can trust the most. Though my eldest niece is an enforcer of Oculus, I believed Aurelia could see my perspective... as well as Luna.~
 == C0ALUNA ~Forgive me, uncle.~
 == C0DEDAL ~You have no need to ask for forgiveness. Just as you have trusted in my judgement, so do I in yours.~
@@ -3682,7 +3963,7 @@ DO ~StartCutSceneMode()
 Wait(1)
 FaceObject("C0DEDAL")
 Wait(1)
-StartDialogNoSet(Player1)~ EXIT
+ActionOverride("C0AURA",StartDialogNoSet(Player1))~ EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",32)~ THEN C0AURA2P quest3-32
 ~Before I give you my answer, uncle, I just have to ask you directly... are you really the Overseer?~ [C0BLANK]
@@ -3694,13 +3975,16 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",33)~
 == C0AURA2P ~I know. That has never changed, and it's something you would never lie about. That being said, however... I still don't agree with your reasoning, uncle.~
 == C0DEDAL ~Continue.~
 == C0AURA2P ~I didn't fully believe you at first when you said you were certain of Lantan's future, that we would be safe against future threat from the outerland... and I'll admit, seeing that I have today makes me think it's possible. But I still don't believe this is the right way.~
-== C0DEDAL ~No.I expect that not only you, but every member of the homeland would hold the same viewpoint. That is natural—we Lantanna are adepts of many trades, but war has never been among them. We have a natural aversion to war and conflict, yet our lack of understanding of it has made us complacent.~
+== C0DEDAL ~No. I expect that not only you, but every member of the homeland would hold the same viewpoint.~
+== C0DEDAL ~That is natural—we Lantanna are adepts of many trades, but war has never been among them. We have a natural aversion to war and conflict, yet our lack of understanding of it has made us complacent.~
 == C0AURA2P ~I don't disagree with that, uncle. Ever since I left on my journey, I've learned a lot about the world, and I know that others' intentions aren't always pure, but—~
 == C0DEDAL ~Enough. You need not explain, as I understand fully.~
 == C0DEDAL ~In truth, knowing that your time out of Lantan has hardened you brings me little joy, Aurelia. Our blood relation may be distant, but I remember your upbringing well, as you have been Kairos's favored child since your birth.~
-== C0DEDAL ~From the age of three, you had already shown your talent in learning. By adolescence, you had awed each and every tutor with your memory and affinity at innovation. By the time you had finished your studies at the Sambaran academy, every guild in Lantan had offered you a place in their circle. You are considered a prodigy in every sense, and given the privilege befitting your ability.~
+== C0DEDAL ~From the age of three, you had already shown your talent in learning. By adolescence, you had awed each and every tutor with your memory and affinity at innovation.~
+== C0DEDAL ~By the time you had finished your studies at the Sambaran academy, every guild in Lantan had offered you a place in their circle. You are considered a prodigy in every sense, and given the privilege befitting your ability.~
 == C0AURA2P ~That's... uncle, I never—~
-== C0DEDAL ~You misunderstand, Aurelia. I do not intend to criticise you. If I had my way, all inspired minds of our homeland should have the same. I only wish for you to understand that it has always been the goal of those who have nurtured you to keep you within Lantan, so that your gift could be used in turn to enrich the nation. That... was Kairos's wish, most of all.~
+== C0DEDAL ~You misunderstand, Aurelia. I do not intend to criticise you. If I had my way, all inspired minds of our homeland should have the same.~
+== C0DEDAL ~I only wish for you to understand that it has always been the goal of those who have nurtured you to keep you within Lantan, so that your gift could be used in turn to enrich the nation. That... was Kairos's wish, most of all.~
 == C0AURA2P ~Papa... but he always supported my wishes. Even when I decided I wanted to leave Lantan, he...~
 == C0DEDAL ~Indeed. When you declared, in your youth, that your aspiration was to use your knowledge to aid not only Lantan, but the world, your father chose to give you his utmost support, even giving the approval for you to travel the world.~
 == C0AURA2P ~I never knew...~
@@ -3711,7 +3995,8 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",33)~
 == C0DEDAL ~I expected as much. It is a difficult question to answer. But there is one here who may teach you better than myself.~
 == C0ALUNA ~...~
 == C0AURA2P ~Luna?~
-== C0DEDAL ~You are not the only one who has come to understand much of the world outside of Lantan. Since your departure, the church of Gond has appointed Luna as spokeswoman for the Ayrorch, and as you came to know those from the outerland through your travels... she has become exposed to many who came to Lantan of their own initiative.~
+== C0DEDAL ~You are not the only one who has come to understand much of the world outside of Lantan, child.~
+== C0DEDAL ~Since your departure, the church of Gond has appointed Luna as spokeswoman for the Ayrorch, and as you came to know those from the outerland through your travels... she has become exposed to many who came to Lantan of their own initiative.~
 == C0ALUNA ~That'll do, uncle. I'll... I'll tell her myself.~
 == C0ALUNA ~Since I became spokewoman, it's been expected of me to meet those from all over the realms. On the surface, it's to establish friendly relations, but in reality, it's to gauge the intentions of those who are seeking to know about us. As a priestess, I've learned how to sift through who can be trusted, and who have... other intentions.~
 == C0AURA2P ~I... think I understand now. Luna, you've seen threats... those who covet what we have, our knowledge and creations...~
@@ -3719,7 +4004,7 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",33)~
 == C0ALUNA ~More than that, I've seen... how those who are ignorant of our ways look down upon us. If they sought our knowledge for enlightenment, or improvement, even if it's just for themselves, that I could understand... but as time went on, all I saw were more and more who simply saw what we made as tools and weapons, to use for their own greedy and self-centered purposes.~
 == C0ALUNA ~It made me angry. And eventually, even though I would never support their ways... I began to understand the logic of those who hated everything outside of the homeland so much.~
 == C0AURA2P ~That was when you decided to support uncle?~
-== C0DEDAL ~On the contrary, I came to her. I feared for Luna's state of mind should no one intervene, and gradually informed her of my own goals to ease her mind. She has given me the support she can offer as a high priestess of the Gondar church since then.~
+== C0DEDAL ~On the contrary, I came to her. I feared the conclusions that Luna would inevitably make should no one intervene, and gradually informed her of my own goals to ease her mind. She has given me the support she can offer as a high priestess of the Gondar church since then.~
 == C0AURA2P ~But... why? Uncle, why would you do all this... without the knowledge of the Ayrorch? If you care about the homeland, then shouldn't you—~
 == C0DEDAL ~To answer that... perhaps I should ask a hypothetical of your leader instead. <CHARNAME>, if I may have a moment of your time.~
 == C0DEDAL ~If, one day, should Candlekeep be targeted by an outside force, whether for its knowledge, or because it is seen as a threat... what would you do?~
@@ -3744,7 +4029,8 @@ EXTERN C0DEDAL quest3-32-4
 
 CHAIN C0DEDAL quest3-32-4
 ~Even the strongest defenses can only do so much as a precaution. Candlekeep is a resolute fortress, yet conflict has marked it regardless. And our homeland, Lantan... could not possibly even be compared to Candlekeep.~
-= ~I believe you have seen it clearly yourself, Aurelia. Despite all of the efforts of Oculus, secrets of the nation are inevitably stolen and spread throughout the outerland, some even by the hands of our own. Conflict ravages the realms as our people continue to work, under the hope that it will never reach our shores. We present ourselves as eccentrics and researchers, strange yet harmless to others... but that cannot possibly last.~
+== C0DEDAL ~I believe you have seen it clearly yourself, Aurelia. Despite all of the efforts of Oculus, secrets of the nation are inevitably stolen and spread throughout the outerland, some even by the hands of our own.~
+== C0DEDAL ~Conflict ravages the realms as our people continue to work, under the hope that it will never reach our shores. We present ourselves as eccentrics and researchers, strange yet harmless to others... but that cannot possibly last.~
 == C0AURA2P ~...~
 == C0ALUNA ~...~
 == C0DEDAL ~There is no doubt that I believe the future of our people lies in the hands of those of pure heart and mind such as yourself, Aurelia. Yet how many like yourself will continue to live on should the rest of the realms finally seek us, only for our people to discover that we have long been left behind?~
@@ -3767,14 +4053,15 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",34)~
 == C0ALUNA ~...~
 == C0AJUNO ~While my sisters may not know conflict and war well enough yet to grasp at your intentions, uncle, I think I understand well enough. You do not wish for these weapons to be used any more than any Lantanna in this room does. This is a tool for deterrence, a warning to the outside world that we are not unprepared, should the greedy or ambitious see us as easy prey.~
 == C0AJUNO ~And, even should the worst come to pass, these weapons would serve as your secret countermeasure, so that as little blood is shed on our own soil as possible. Am I wrong?~
-== C0DEDAL ~It is accurate enough that I need not argue to the finest detail. The veterans of Oculus have tutored you well, Juno.~
+== C0DEDAL ~...It is the most logical conclusion to come to.~
 == C0AJUNO ~Judging from that, it can be insinuated... this isn't your only workshop outside of Lantan, is it?~
 == C0AURA2P ~What?!~
 == C0DEDAL ~...~
 == C0DEDAL ~No.~
 == C0ALUNA ~That... even I never knew about that... uncle, how long have you...~
 == C0AJUNO ~*sigh* Uncle...~
-== C0AJUNO ~Ignoring how your position looks worse by the second, I have to ask... what could you hope to accomplish for our people this way? By giving us a weapon to use against conflict, you are all but inviting it to our doorstep. If there are those as ravenous for power and resources as you believe, once they know what we are truly capable of... whether out of greed, envy or paranoia, war will become an inevitably for all Lantanna, whether they like it or not.~
+== C0AJUNO ~Ignoring how your position looks worse by the second, I have to ask... what could you hope to accomplish for our people this way?~
+== C0AJUNO ~By giving us a weapon to use against conflict, you are all but inviting it to our doorstep. If there are those as ravenous for power and resources as you believe, once they know what we are truly capable of... whether out of greed, envy or paranoia, war will become an inevitably for all Lantanna, whether they like it or not.~
 == C0AJUNO ~All you have done is ensure we hold an effective weapon against our future enemies for now... but even that can't last. Will be all be forced to turn our attention and research towards conflict, and continue to feed the beast you create?~
 == C0DEDAL ~...~
 == C0AJUNO ~You may not know, uncle, but when I first recommended Luna as spokesman to the church, I had truly hoped that her position would allow our people to find trustworthy allies willing to mutually enrich our nations.~
@@ -3864,6 +4151,7 @@ StartDialogNoSet(Player1)~ EXIT
 CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2Quest3","GLOBAL",35)~ THEN C0AURA2P quest3-35
 ~Phew... I can't believe that actually did the trick.~ [C0BLANK]
 DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",36)~
+== C0DEDAL ~...Curious.~
 == C0DEDAL ~So the energy pattern is still vulnerable to interference... fascinating. I didn't think I could've overlooked such a fault.~
 == C0DEDAL ~And with an anti-mechanism grenade? An advancement over the original model, no less... you've improved greatly, Aurelia. I remembered how much you once shied away from weapons.~
 == C0AURA2P ~You taught me, uncle. The day you approved the creation of my Sunshooter at the Eleventh Workshop... you told me that to succeed, I needed to accept knowledge in all its forms.~
@@ -3902,7 +4190,8 @@ DO ~SetGlobal("C0AuraBG2Quest3","GLOBAL",38)~
 == C0DEDAL ~Why... why is this...~
 == C0AJUNO ~How do we stop them, uncle? Is this not your doing?!~
 == C0DEDAL ~My master control... they're not responding to it...~
-== C0AGOL02 ~THREATS ANALYZED. WANTED TARGET IS WITHIN RANGE. ORIGINAL DIRECTIVE ASSIGNED BY THE OVERSEER WILL NOW BE EXECUTED. ALL PRESENT MUST BE TERMINATED.~
+== C0AGOL02 ~THREATS ANALYZED. WANTED TARGET IS WITHIN RANGE.~
+== C0AGOL02 ~ORIGINAL DIRECTIVE ASSIGNED BY THE OVERSEER WILL NOW BE EXECUTED. ALL PRESENT MUST BE TERMINATED.~
 == C0DEDAL ~Is this... what was intended all along...? You... you foolish...~
 == C0ALUNA ~This—oh, gods damn it! Aura, Juno, get back! That one's coming right at you!~
 == C0DEDAL ~No—!~

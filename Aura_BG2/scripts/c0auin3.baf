@@ -1,4 +1,15 @@
 IF
+	OnCreation()
+    !HasItemEquiped("C0AUTO2",Myself)
+    !HasItemEquiped("C0AUTO3",Myself)
+THEN
+    RESPONSE #100
+		EquipMostDamagingMelee()
+		Continue()
+END
+
+IF
+	InMyArea("C0Aura")
     CombatCounter(0)
     !Global("Standby","LOCALS",1)
     ClassLevelGT("C0Aura",ROGUE,13)  // Aura
@@ -6,18 +17,23 @@ IF
     LevelLT(Myself,14)
 THEN
     RESPONSE #100
-        ChangeAnimationNoEffect("C0AUIN3B")  // Jade Automaton
+		SetGlobal("C0AutoCreated", "GLOBAL", 0)
+  		SetGlobal("SPRITE_IS_DEADC0AUIN3","GLOBAL",0)
+  		ActionOverride("C0Aura",ReallyForceSpellRES("C0AUIN3","C0AUIN3"))
         Continue()
 END
 
 IF
+	InMyArea("C0Aura")
     CombatCounter(0)
     !Global("Standby","LOCALS",1)
     ClassLevelGT("C0Aura",ROGUE,21)  // Aura
     LevelLT(Myself,22)
 THEN
     RESPONSE #100
-        ChangeAnimationNoEffect("C0AUIN3C")  // Black Automaton
+		SetGlobal("C0AutoCreated", "GLOBAL", 0)
+  		SetGlobal("SPRITE_IS_DEADC0AUIN3","GLOBAL",0)
+  		ActionOverride("C0Aura",ReallyForceSpellRES("C0AUIN3","C0AUIN3"))
         Continue()
 END
 
@@ -32,11 +48,9 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,9,SET)
-	ChangeStat(Myself,THAC0,11,SET)
-	ChangeStat(Myself,MAXHITPOINTS,90,SET)
-	ReallyForceSpellRES("c0repair",Myself)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -48,17 +62,9 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,10,SET)
-	ChangeStat(Myself,THAC0,10,SET)
-	ChangeStat(Myself,ARMORCLASS,3,SET)
-	ChangeStat(Myself,SAVEVSDEATH,7,SET)
-	ChangeStat(Myself,SAVEVSWANDS,9,SET)
-	ChangeStat(Myself,SAVEVSPOLY,8,SET)
-	ChangeStat(Myself,SAVEVSBREATH,8,SET)
-	ChangeStat(Myself,SAVEVSSPELL,10,SET)
-	ChangeStat(Myself,MAXHITPOINTS,93,SET)
-	ReallyForceSpellRES("c0repair",Myself)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -70,17 +76,9 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,11,SET)
-	ChangeStat(Myself,THAC0,9,SET)
-	ChangeStat(Myself,ARMORCLASS,3,SET)
-	ChangeStat(Myself,SAVEVSDEATH,7,SET)
-	ChangeStat(Myself,SAVEVSWANDS,9,SET)
-	ChangeStat(Myself,SAVEVSPOLY,8,SET)
-	ChangeStat(Myself,SAVEVSBREATH,8,SET)
-	ChangeStat(Myself,SAVEVSSPELL,10,SET)
-	ChangeStat(Myself,MAXHITPOINTS,96,SET)
-	ReallyForceSpellRES("c0repair",Myself)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -92,17 +90,9 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,12,SET)
-	ChangeStat(Myself,THAC0,8,SET)
-	ChangeStat(Myself,ARMORCLASS,2,SET)
-	ChangeStat(Myself,SAVEVSDEATH,6,SET)
-	ChangeStat(Myself,SAVEVSWANDS,8,SET)
-	ChangeStat(Myself,SAVEVSPOLY,7,SET)
-	ChangeStat(Myself,SAVEVSBREATH,7,SET)
-	ChangeStat(Myself,SAVEVSSPELL,9,SET)
-	ChangeStat(Myself,MAXHITPOINTS,99,SET)
-	ReallyForceSpellRES("c0repair",Myself)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -114,18 +104,9 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,13,SET)
-	ChangeStat(Myself,THAC0,7,SET)
-	ChangeStat(Myself,ARMORCLASS,2,SET)
-	ChangeStat(Myself,SAVEVSDEATH,6,SET)
-	ChangeStat(Myself,SAVEVSWANDS,8,SET)
-	ChangeStat(Myself,SAVEVSPOLY,7,SET)
-	ChangeStat(Myself,SAVEVSBREATH,7,SET)
-	ChangeStat(Myself,SAVEVSSPELL,9,SET)
-	ChangeStat(Myself,MAXHITPOINTS,102,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -137,19 +118,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
-
 	ChangeStat(Myself,LEVEL,14,SET)
-	ChangeStat(Myself,THAC0,6,SET)
-	ChangeStat(Myself,ARMORCLASS,1,SET)
-	ChangeStat(Myself,SAVEVSDEATH,5,SET)
-	ChangeStat(Myself,SAVEVSWANDS,7,SET)
-	ChangeStat(Myself,SAVEVSPOLY,6,SET)
-	ChangeStat(Myself,SAVEVSBREATH,6,SET)
-	ChangeStat(Myself,SAVEVSSPELL,8,SET)
-	ChangeStat(Myself,MAXHITPOINTS,105,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -161,19 +133,11 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 
 	ChangeStat(Myself,LEVEL,15,SET)
-	ChangeStat(Myself,THAC0,5,SET)
-	ChangeStat(Myself,ARMORCLASS,1,SET)
-	ChangeStat(Myself,SAVEVSDEATH,5,SET)
-	ChangeStat(Myself,SAVEVSWANDS,7,SET)
-	ChangeStat(Myself,SAVEVSPOLY,6,SET)
-	ChangeStat(Myself,SAVEVSBREATH,6,SET)
-	ChangeStat(Myself,SAVEVSSPELL,8,SET)
-	ChangeStat(Myself,MAXHITPOINTS,108,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -185,19 +149,11 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 
 	ChangeStat(Myself,LEVEL,16,SET)
-	ChangeStat(Myself,THAC0,4,SET)
-	ChangeStat(Myself,ARMORCLASS,0,SET)
-	ChangeStat(Myself,SAVEVSDEATH,4,SET)
-	ChangeStat(Myself,SAVEVSWANDS,6,SET)
-	ChangeStat(Myself,SAVEVSPOLY,5,SET)
-	ChangeStat(Myself,SAVEVSBREATH,5,SET)
-	ChangeStat(Myself,SAVEVSSPELL,7,SET)
-	ChangeStat(Myself,MAXHITPOINTS,111,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -209,19 +165,11 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 
 	ChangeStat(Myself,LEVEL,17,SET)
-	ChangeStat(Myself,THAC0,3,SET)
-	ChangeStat(Myself,ARMORCLASS,0,SET)
-	ChangeStat(Myself,SAVEVSDEATH,4,SET)
-	ChangeStat(Myself,SAVEVSWANDS,6,SET)
-	ChangeStat(Myself,SAVEVSPOLY,5,SET)
-	ChangeStat(Myself,SAVEVSBREATH,5,SET)
-	ChangeStat(Myself,SAVEVSSPELL,7,SET)
-	ChangeStat(Myself,MAXHITPOINTS,114,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -233,19 +181,11 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 
 	ChangeStat(Myself,LEVEL,18,SET)
-	ChangeStat(Myself,THAC0,2,SET)
-	ChangeStat(Myself,ARMORCLASS,-1,SET)
-	ChangeStat(Myself,SAVEVSDEATH,3,SET)
-	ChangeStat(Myself,SAVEVSWANDS,5,SET)
-	ChangeStat(Myself,SAVEVSPOLY,4,SET)
-	ChangeStat(Myself,SAVEVSBREATH,4,SET)
-	ChangeStat(Myself,SAVEVSSPELL,6,SET)
-	ChangeStat(Myself,MAXHITPOINTS,117,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -257,19 +197,11 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 
 	ChangeStat(Myself,LEVEL,19,SET)
-	ChangeStat(Myself,THAC0,1,SET)
-	ChangeStat(Myself,ARMORCLASS,-1,SET)
-	ChangeStat(Myself,SAVEVSDEATH,3,SET)
-	ChangeStat(Myself,SAVEVSWANDS,5,SET)
-	ChangeStat(Myself,SAVEVSPOLY,4,SET)
-	ChangeStat(Myself,SAVEVSBREATH,4,SET)
-	ChangeStat(Myself,SAVEVSSPELL,6,SET)
-	ChangeStat(Myself,MAXHITPOINTS,120,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -281,19 +213,11 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 
 	ChangeStat(Myself,LEVEL,20,SET)
-	ChangeStat(Myself,THAC0,0,SET)
-	ChangeStat(Myself,ARMORCLASS,-2,SET)
-	ChangeStat(Myself,SAVEVSDEATH,2,SET)
-	ChangeStat(Myself,SAVEVSWANDS,4,SET)
-	ChangeStat(Myself,SAVEVSPOLY,3,SET)
-	ChangeStat(Myself,SAVEVSBREATH,3,SET)
-	ChangeStat(Myself,SAVEVSSPELL,5,SET)
-	ChangeStat(Myself,MAXHITPOINTS,123,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -305,19 +229,11 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 
 	ChangeStat(Myself,LEVEL,21,SET)
-	ChangeStat(Myself,THAC0,-1,SET)
-	ChangeStat(Myself,ARMORCLASS,-2,SET)
-	ChangeStat(Myself,SAVEVSDEATH,2,SET)
-	ChangeStat(Myself,SAVEVSWANDS,4,SET)
-	ChangeStat(Myself,SAVEVSPOLY,3,SET)
-	ChangeStat(Myself,SAVEVSBREATH,3,SET)
-	ChangeStat(Myself,SAVEVSSPELL,5,SET)
-	ChangeStat(Myself,MAXHITPOINTS,126,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -329,18 +245,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,22,SET)
-	ChangeStat(Myself,THAC0,-2,SET)
-	ChangeStat(Myself,ARMORCLASS,-3,SET)
-	ChangeStat(Myself,SAVEVSDEATH,1,SET)
-	ChangeStat(Myself,SAVEVSWANDS,3,SET)
-	ChangeStat(Myself,SAVEVSPOLY,2,SET)
-	ChangeStat(Myself,SAVEVSBREATH,2,SET)
-	ChangeStat(Myself,SAVEVSSPELL,4,SET)
-	ChangeStat(Myself,MAXHITPOINTS,129,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -352,18 +260,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,23,SET)
-	ChangeStat(Myself,THAC0,-3,SET)
-	ChangeStat(Myself,ARMORCLASS,-3,SET)
-	ChangeStat(Myself,SAVEVSDEATH,1,SET)
-	ChangeStat(Myself,SAVEVSWANDS,3,SET)
-	ChangeStat(Myself,SAVEVSPOLY,2,SET)
-	ChangeStat(Myself,SAVEVSBREATH,2,SET)
-	ChangeStat(Myself,SAVEVSSPELL,4,SET)
-	ChangeStat(Myself,MAXHITPOINTS,132,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -375,18 +275,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,24,SET)
-	ChangeStat(Myself,THAC0,-4,SET)
-	ChangeStat(Myself,ARMORCLASS,-4,SET)
-	ChangeStat(Myself,SAVEVSDEATH,0,SET)
-	ChangeStat(Myself,SAVEVSWANDS,2,SET)
-	ChangeStat(Myself,SAVEVSPOLY,1,SET)
-	ChangeStat(Myself,SAVEVSBREATH,1,SET)
-	ChangeStat(Myself,SAVEVSSPELL,3,SET)
-	ChangeStat(Myself,MAXHITPOINTS,135,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -398,18 +290,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,25,SET)
-	ChangeStat(Myself,THAC0,-5,SET)
-	ChangeStat(Myself,ARMORCLASS,-4,SET)
-	ChangeStat(Myself,SAVEVSDEATH,0,SET)
-	ChangeStat(Myself,SAVEVSWANDS,2,SET)
-	ChangeStat(Myself,SAVEVSPOLY,1,SET)
-	ChangeStat(Myself,SAVEVSBREATH,1,SET)
-	ChangeStat(Myself,SAVEVSSPELL,3,SET)
-	ChangeStat(Myself,MAXHITPOINTS,138,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -421,18 +305,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,26,SET)
-	ChangeStat(Myself,THAC0,-6,SET)
-	ChangeStat(Myself,ARMORCLASS,-5,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-1,SET)
-	ChangeStat(Myself,SAVEVSWANDS,1,SET)
-	ChangeStat(Myself,SAVEVSPOLY,0,SET)
-	ChangeStat(Myself,SAVEVSBREATH,0,SET)
-	ChangeStat(Myself,SAVEVSSPELL,2,SET)
-	ChangeStat(Myself,MAXHITPOINTS,141,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -444,18 +320,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,27,SET)
-	ChangeStat(Myself,THAC0,-7,SET)
-	ChangeStat(Myself,ARMORCLASS,-5,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-1,SET)
-	ChangeStat(Myself,SAVEVSWANDS,1,SET)
-	ChangeStat(Myself,SAVEVSPOLY,0,SET)
-	ChangeStat(Myself,SAVEVSBREATH,0,SET)
-	ChangeStat(Myself,SAVEVSSPELL,2,SET)
-	ChangeStat(Myself,MAXHITPOINTS,144,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,21,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -467,18 +335,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,28,SET)
-	ChangeStat(Myself,THAC0,-8,SET)
-	ChangeStat(Myself,ARMORCLASS,-6,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-2,SET)
-	ChangeStat(Myself,SAVEVSWANDS,0,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-1,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-1,SET)
-	ChangeStat(Myself,SAVEVSSPELL,1,SET)
-	ChangeStat(Myself,MAXHITPOINTS,147,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -490,18 +350,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,29,SET)
-	ChangeStat(Myself,THAC0,-9,SET)
-	ChangeStat(Myself,ARMORCLASS,-6,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-2,SET)
-	ChangeStat(Myself,SAVEVSWANDS,0,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-1,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-1,SET)
-	ChangeStat(Myself,SAVEVSSPELL,1,SET)
-	ChangeStat(Myself,MAXHITPOINTS,150,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -513,18 +365,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,30,SET)
-	ChangeStat(Myself,THAC0,-10,SET)
-	ChangeStat(Myself,ARMORCLASS,-7,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-3,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-1,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-2,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-2,SET)
-	ChangeStat(Myself,SAVEVSSPELL,0,SET)
-	ChangeStat(Myself,MAXHITPOINTS,153,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -536,18 +380,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,31,SET)
-	ChangeStat(Myself,THAC0,-11,SET)
-	ChangeStat(Myself,ARMORCLASS,-7,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-3,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-1,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-2,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-2,SET)
-	ChangeStat(Myself,SAVEVSSPELL,0,SET)
-	ChangeStat(Myself,MAXHITPOINTS,156,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -559,18 +395,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,32,SET)
-	ChangeStat(Myself,THAC0,-12,SET)
-	ChangeStat(Myself,ARMORCLASS,-8,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-4,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-2,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-3,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-3,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-1,SET)
-	ChangeStat(Myself,MAXHITPOINTS,159,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -582,18 +410,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,33,SET)
-	ChangeStat(Myself,THAC0,-13,SET)
-	ChangeStat(Myself,ARMORCLASS,-8,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-4,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-2,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-3,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-3,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-1,SET)
-	ChangeStat(Myself,MAXHITPOINTS,162,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -605,18 +425,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,34,SET)
-	ChangeStat(Myself,THAC0,-14,SET)
-	ChangeStat(Myself,ARMORCLASS,-9,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-5,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-3,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-4,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-4,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-2,SET)
-	ChangeStat(Myself,MAXHITPOINTS,165,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -628,18 +440,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,35,SET)
-	ChangeStat(Myself,THAC0,-15,SET)
-	ChangeStat(Myself,ARMORCLASS,-9,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-5,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-3,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-4,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-4,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-2,SET)
-	ChangeStat(Myself,MAXHITPOINTS,168,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -651,18 +455,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,36,SET)
-	ChangeStat(Myself,THAC0,-16,SET)
-	ChangeStat(Myself,ARMORCLASS,-10,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-6,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-4,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-5,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-5,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-3,SET)
-	ChangeStat(Myself,MAXHITPOINTS,171,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -674,18 +470,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,37,SET)
-	ChangeStat(Myself,THAC0,-17,SET)
-	ChangeStat(Myself,ARMORCLASS,-10,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-6,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-4,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-5,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-5,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-3,SET)
-	ChangeStat(Myself,MAXHITPOINTS,174,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -697,18 +485,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,38,SET)
-	ChangeStat(Myself,THAC0,-18,SET)
-	ChangeStat(Myself,ARMORCLASS,-11,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-7,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-5,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-6,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-6,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-4,SET)
-	ChangeStat(Myself,MAXHITPOINTS,177,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -720,18 +500,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,39,SET)
-	ChangeStat(Myself,THAC0,-19,SET)
-	ChangeStat(Myself,ARMORCLASS,-11,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-7,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-5,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-6,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-6,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-4,SET)
-	ChangeStat(Myself,MAXHITPOINTS,180,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -743,18 +515,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,40,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-12,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-8,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-6,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-7,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-7,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-5,SET)
-	ChangeStat(Myself,MAXHITPOINTS,183,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -766,18 +530,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,41,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-12,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-8,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-6,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-7,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-7,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-5,SET)
-	ChangeStat(Myself,MAXHITPOINTS,186,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,23,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -789,18 +545,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,42,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-13,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-9,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-7,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-8,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
-	ChangeStat(Myself,MAXHITPOINTS,186,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -812,18 +560,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,43,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-13,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-9,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-7,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-8,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
-	ChangeStat(Myself,MAXHITPOINTS,189,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -835,18 +575,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,44,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-13,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-9,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-7,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-8,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
-	ChangeStat(Myself,MAXHITPOINTS,189,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -858,18 +590,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,45,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-13,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-9,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-7,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-8,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-8,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-6,SET)
-	ChangeStat(Myself,MAXHITPOINTS,192,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -881,18 +605,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,46,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-14,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-10,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-8,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-9,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-9,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-7,SET)
-	ChangeStat(Myself,MAXHITPOINTS,195,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -904,18 +620,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,47,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-14,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-10,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-8,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-9,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-9,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-7,SET)
-	ChangeStat(Myself,MAXHITPOINTS,198,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -927,18 +635,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,48,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-15,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-11,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-9,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-10,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-10,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-8,SET)
-	ChangeStat(Myself,MAXHITPOINTS,201,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -950,18 +650,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,49,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-15,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-11,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-9,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-10,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-10,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-8,SET)
-	ChangeStat(Myself,MAXHITPOINTS,204,SET)
-	ApplySpellRES("c0autor",Myself)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -973,17 +665,10 @@ THEN
 RESPONSE #100
 	SetGlobal("Upgrade","LOCALS",1)
 	CreateVisualEffectObject("spcrtwpn",Myself)
-	ApplySpellRES("c0autosx",Myself)
 	ChangeStat(Myself,LEVEL,50,SET)
-	ChangeStat(Myself,THAC0,-20,SET)
-	ChangeStat(Myself,ARMORCLASS,-16,SET)
-	ChangeStat(Myself,SAVEVSDEATH,-12,SET)
-	ChangeStat(Myself,SAVEVSWANDS,-10,SET)
-	ChangeStat(Myself,SAVEVSPOLY,-11,SET)
-	ChangeStat(Myself,SAVEVSBREATH,-11,SET)
-	ChangeStat(Myself,SAVEVSSPELL,-9,SET)
-	ChangeStat(Myself,MAXHITPOINTS,207,SET)
-	ReallyForceSpellRES("c0repair",Myself)
+	ChangeStat(Myself,STR,25,SET)
+	ReallyForceSpellRES("c0auin39",Myself)
+	ReallyForceSpellRES("c0autor",Myself)
 END
 
 IF
@@ -1658,4 +1343,13 @@ THEN
 	RESPONSE #100
 		SetGlobal("FollowAura","LOCALS",0)
 		MoveToObjectFollow(Player1)
+END
+
+IF
+	Global("Upgrade","LOCALS",1)
+THEN
+RESPONSE #100
+	SetGlobal("Upgrade","LOCALS",0)
+	ReallyForceSpellRES("c0repair",Myself)
+	ReallyForceSpellRES("c0autosx",Myself)
 END

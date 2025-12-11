@@ -275,19 +275,20 @@ I_C_T PPSTAT01 5 C0AuraPPSTAT015
 END
 
 I_C_T2 PPWANEV 5 C0AuraPPWANEV5
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Uhh... clear everything up? I think I can feel my brain slowly withering away with each line I read of this gibberish...~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Uhh... clear everything up? I think I can feel my brain slowly withering away with each line I read of this gibberish... wait, either I'm also starting to go insane, or there's a cipher in here somewhere...~
+== C0AURA2J ~...Nope. I'm definitely going crazy. And seeing monkeys.~
 END
 
 I_C_T YOSHJ 113 C0AuraYOSHJ113
-== C0AURA2J IF ~Global("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Wh–what? Yoshimo, how could you?~
+== C0AURA2J IF ~!GlobalGT("C0AuraYoshimo2","GLOBAL",4) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Wh–what? Yoshimo, how could you?~
 END
 
 I_C_T YOSHJ 113 C0AuraYOSHJ113
-== C0AURA2J IF ~GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Y–Yoshimo...? No... no, it can't be...~
+== C0AURA2J IF ~GlobalGT("C0AuraYoshimo2","GLOBAL",4) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Y–Yoshimo...? No... no, it can't be...~
 END
 
 I_C_T YOSHIMOX 0 C0AuraYOSHIMOX0
-== C0AURA2J IF ~GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Why are you doing this, Yoshimo?~
+== C0AURA2J IF ~Global("C0AuraYoshimo2","GLOBAL",4) InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Why do you have to do this, Yoshimo?~
 DO ~SetGlobal("C0AuraYoshimoBetrayal","GLOBAL",1)~
 == YOSHIMOX ~Little Aura... please don't. I cannot afford to stay my hand. I have waited too long already.~
 == C0AURA2J ~I knew... long before all of this, I knew you were keeping secrets, despite our friendship... even then, I wanted to believe you would tell me, when you felt the time was right.~
@@ -298,6 +299,103 @@ DO ~SetGlobal("C0AuraYoshimoBetrayal","GLOBAL",1)~
 == C0AURA2J ~I just... don't understand. We trusted you. Why... why couldn't you trust us? <CHARNAME> would have helped you... *we* would have helped you.~
 == YOSHIMOX ~Enough! Please... that's enough.~
 END
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraYoshimoBetrayalTalk","GLOBAL",1)~ THEN C0AURA2J C0AURA-YOSHIMOB
+~...~ [C0BLANK]
+DO ~SetGlobal("C0AuraYoshimoBetrayalTalk","GLOBAL",2)~
+= ~...When? When does our suffering end, <CHARNAME>?~
+END
+  ++ ~I'm sorry, Aura. I wish it could have been different.~ + C0AURA-YOSHIMOB-1
+  ++ ~You seem to be handling Yoshimo's death better than I expected.~ + C0AURA-YOSHIMOB-2
+  ++ ~I don't know. But there must be an end to it all.~ + C0AURA-YOSHIMOB-3
+  ++ ~What's done is done. All we can do is get revenge on Irenicus.~ + C0AURA-YOSHIMOB-4
+
+CHAIN C0AURA2J C0AURA-YOSHIMOB-1
+~So do I. But there wasn't anything we could do, <CHARNAME>. I've accepted that.~
+EXTERN C0AURA2J C0AURA-YOSHIMOB-2
+
+CHAIN C0AURA2J C0AURA-YOSHIMOB-2
+~I... I came to terms with the truth about Yoshimo already. And when I heard what he had to say... I know his betrayal must have destroyed him inside, just as it did to us.~
+== C0AURA2J ~If it's true that Irenicus had him under a geas since the beginning... then it's likely that Yoshimo has been living a life out of his control all this time. And maybe... dying to you might have been the first choice he's been able to make for a long time.~
+== C0AURA2J ~It's... the only way he could restore any semblance of honor. Maybe you can't see it that way, <CHARNAME>... and I wouldn't blame you. What he had a part in doing to you was... unforgivable. But he also knew that.~
+== C0AURA2J ~*sigh* I need some time to think about all this. I'm sorry, <CHARNAME>. Even though he betrayed us... I still care about him, even now.~
+== C0AURA2J IF ~!GlobalGT("YoshimoBodhiServant","GLOBAL",0) PartyHasItem("miscbu")~ THEN ~Let's bring his heart to a priest of Ilmater, <CHARNAME>. If you are able to forgive him... maybe there's still a chance he'll have peace.~
+== C0AURA2J IF ~!GlobalGT("YoshimoBodhiServant","GLOBAL",0) !PartyHasItem("miscbu")~ THEN ~Take his heart, <CHARNAME>. We should... bring it to a priest of Ilmater. If you are able to forgive him... maybe there's still a chance he'll have peace.~
+== C0AURA2J IF ~GlobalGT("YoshimoBodhiServant","GLOBAL",0) !PartyHasItem("miscbu")~ THEN ~And... his heart is destroyed. There may be no chance at salvation for him anymore... ever. And I know how much he meant to you, <CHARNAME>... I'm sorry. I'm so, so sorry...~
+EXIT
+
+CHAIN C0AURA2J C0AURA-YOSHIMOB-3
+~I want to believe... but how much more of this will we have to see? We just... lost another friend. And... there was nothing we could do.~
+EXTERN C0AURA2J C0AURA-YOSHIMOB-2
+
+CHAIN C0AURA2J C0AURA-YOSHIMOB-4
+~Yes... revenge will end it all. But will revenge bring back the dead? Will it undo everything we've been tormented by?~
+EXTERN C0AURA2J C0AURA-YOSHIMOB-2
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraBG2RomanceSlayerTalk","GLOBAL",1)~ THEN C0AURA2J C0AURA-ROM-SLAYER
+~You look... so pale, <CHARNAME>. Did you get any sleep at all?~ [C0BLANK]
+DO ~SetGlobal("C0AuraBG2RomanceSlayerTalk","GLOBAL",2)~
+END
+  ++ ~No. Not really.~ + C0AURA-ROM-SLAYER-1
+  ++ ~I had another nightmare. Perhaps the worst one yet.~ + C0AURA-ROM-SLAYER-2
+  ++ ~Stay away from me. I can't... let you get close to me right now.~ + C0AURA-ROM-SLAYER-1
+  ++ ~It's nothing. Let's just get moving.~ + C0AURA-ROM-SLAYER-0
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-0
+~It can't be nothing. It has to be something truly terrible if you feel you need to lie to me, <CHARNAME>.~
+= ~But... I don't want to push you right now. So I'll wait until you're ready to talk. Just promise me you will.~
+EXIT
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-1
+~You had nightmares again, didn't you?~
+EXTERN C0AURA2J C0AURA-ROM-SLAYER-3
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-2
+~I thought so. Will you... tell me about it?~
+END
+  ++ ~I dreamt of the evil inside of me. It took Imoen's form, telling me to give myself up to it.~ + C0AURA-ROM-SLAYER-3
+  ++ ~I... I turned again, and I killed everyone. Friends and foes alike. I even killed you...~ + C0AURA-ROM-SLAYER-3
+  ++ ~Please don't ask me to remember it. I just want to forget...~ + C0AURA-ROM-SLAYER-4
+  ++ ~The divine essence inside me offered me power. I'm tempted to take it.~ + C0AURA-ROM-SLAYER-5
+  ++ ~I don't want to talk about it. We have more important things to worry about.~ + C0AURA-ROM-SLAYER-6
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-3
+~I... was afraid it'd be something like that. Ever since I saw the Slayer surfacing from you, I knew it wouldn't be the only time it haunted us.~
+= ~You don't want it, do you? As frightening as it was... what scared me more was seeing how much pain you were in when it happened.~
+END
+  ++ ~You know me, Aura. You know I don't want any of this.~ + C0AURA-ROM-SLAYER-7
+  ++ ~I don't. I want to forget it ever happened...~ + C0AURA-ROM-SLAYER-4
+  ++ ~I'm not sure... considering everything, I can't deny I want more power.~ + C0AURA-ROM-SLAYER-5
+  ++ ~Just leave me alone. I'm fine.~ + C0AURA-ROM-SLAYER-6
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-4
+~So do I... I wish we could have avoided all of this.~
+EXTERN C0AURA2J C0AURA-ROM-SLAYER-7
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-5
+~<CHARNAME>...~
+= ~There's nothing wrong with wanting power in itself. Especially... for someone like you. But what matters is the cost... you've made it so far on your own. You can't give up to it, not now. If you want the power to save yourself from all of this pain... we can seek it together. There will be another way.~
+EXTERN C0AURA2J C0AURA-ROM-SLAYER-7
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-6
+~I... I get it. I know you don't want to talk about it... neither do I. But let me stay close to you for a while... until you can feel warm again.~
+EXIT
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-7
+~I wish every day that we could've all lived normal, happy lives... but instead, you've been put through nothing but pain. But I know you'll keep fighting regardless... you're just that type of person.~
+= ~Don't give up, <CHARNAME>. I don't ever want to see you give up.~
+END
+  ++ ~I won't, Aura. Not as long as you're with me.~ + C0AURA-ROM-SLAYER-8
+  ++ ~You're right. I needed some encouragement.~ + C0AURA-ROM-SLAYER-8
+  ++ ~Alright. Now can we get ready to go?~ + C0AURA-ROM-SLAYER-9
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-8
+~Hehe... that's what I'm here for, you know. Making sure you still have something positive in your life.~
+EXTERN C0AURA2J C0AURA-ROM-SLAYER-9
+
+CHAIN C0AURA2J C0AURA-ROM-SLAYER-9
+~I know we can't stay like this forever... but let's take our time. You can lean on me for a bit of comfort as long as you need.~
+EXIT
 
 EXTEND_BOTTOM PPIMOEN 0
 + ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~You can't recognize Aura? Come on, the two of you were the best of friends. Don't you see her?~ EXTERN C0AURA2J C0AuraPPIMOEN0
@@ -345,9 +443,14 @@ CHAIN IF WEIGHT #-1 ~Global("C0AuraSeesCrushTrap","GLOBAL",1)~ THEN C0AURA2J C0A
 DO ~SetGlobal("C0AuraSeesCrushTrap","GLOBAL",2)
 ClearAllActions()
 StartCutSceneMode()
-RemoveTraps("crtrap1")
+TriggerActivation("crtrap1",FALSE)
+TriggerActivation("crtrap2",FALSE)
+MoveToPoint([2139.795])
+AddExperienceParty(3500)
 PlaySound("ACT_09")
-RemoveTraps("crtrap2")
+SmallWait(1)
+MoveToPoint([2016.708])
+AddExperienceParty(3500)
 PlaySound("ACT_09")
 Wait(1)
 StartDialogNoSet(Player1)~ EXIT
@@ -355,8 +458,8 @@ StartDialogNoSet(Player1)~ EXIT
 CHAIN IF WEIGHT #-1 ~Global("C0AuraSeesCrushTrap","GLOBAL",2)~ THEN C0AURA2J C0AURA-CRUSH-TRAP-2
 ~Okay, all taken care of... that was so dangerous. One wrong step, and someone could've been crushed to paste!~
 DO ~SetGlobal("C0AuraSeesCrushTrap","GLOBAL",3)~
-== IMOEN2J IF ~InParty("IMOEN") InMyArea("IMOEN")~ THEN ~You've got to teach me how to do that.~
-== C0AURA2J IF ~InParty("IMOEN") InMyArea("IMOEN")~ THEN ~Ah... ahaha... I'll be sure to, once we see daylight again. Anyway...~
+== IMOEN2J IF ~InParty("IMOEN2") InMyArea("IMOEN2")~ THEN ~...You've got to teach me how to do that.~
+== C0AURA2J IF ~InParty("IMOEN2") InMyArea("IMOEN2")~ THEN ~Ah... ahaha... I'll be sure to, once we see daylight again. Anyway...~
 == C0AURA2J ~This place is a house of horrors, <CHARNAME>... clearly no one was expected to leave here alive. We need to be as alert as possible.~
 EXIT
 
@@ -401,7 +504,8 @@ CHAIN BODHIAMB C0AuraKidnap
 == BODHIAMB ~Such as this feeble little gnome. So weak, so pitiful... it is no wonder she has latched onto you like a parasite. How much will you suffer should I tear her from you, I wonder?~
 == C0AURA2J ~I'm not afraid of you. Not while <CHARNAME> needs me at her side.~
 == BODHIAMB ~I do not want your fear, little girl. What I want is far, far worse...~
-== C0AURA2J ~NO! 'Ama-tsu-kami, ku-nit-su-kami,
+== C0AURA2J ~NO!~
+== C0AURA2J ~'Ama-tsu-kami, ku-ni-tsu-kami,
 ya-o-yo-ro-zo no ka-mi-ta-chi to-mo ni,
 ki-ko-shi me-se to,
 ka-shi-ko-mi ka-shi-ko-mi mo ma-o-su...'~
@@ -414,6 +518,7 @@ StartCutSceneEx("C0ABODHI",FALSE)~ EXIT
 CHAIN IF WEIGHT #-1
 ~Global("C0AuraVampire","GLOBAL",1)~ THEN BODHIAMB C0AuraBodhiKidnap
 ~What is this?!~ [C0AUBO1]
+DO ~SetGlobal("C0AuraVampire","GLOBAL",2)~
 == C0AURA2J ~...~
 END
   ++ ~Aura! What are you doing?~ EXTERN BODHIAMB C0AuraBodhiKidnap.1
@@ -433,7 +538,7 @@ END
 
 CHAIN C0AURA2J AURA-VAMPIRE-1
 ~I... I remember praying... I spoke some chants meant to protect from some evil spirits, then... I don't know.~
-= ~There was a voice... it told me that it was fulfilling its oath, and now its duty is over... and I felt some kind of warmth. And then I heard you calling me.~
+= ~I think I heard a voice... it told me that it was fulfilling its oath, and now its duty is over... and I felt some kind of warmth. And then the next thing I heard was you calling me.~
 = ~It was all so strange. I wasn't expecting anything like it to happen, and I still don't know why it did, but... huh?~
 DO ~ClearAllActions()
 StartCutSceneMode()
@@ -451,9 +556,9 @@ END
   ++ ~You're lucky. Things could've gone much worse there.~ + AURA-VAMPIRE2-1
 
 CHAIN C0AURA2J AURA-VAMPIRE2-1
-~Maybe she always knew... she knew I would only face more dangers, and so she left me this as a way to protect me after she was gone...~
+~Maybe she always knew... she knew I would only face more dangers, and so she left me this last gift as a way to protect me, in my hour of need, even after she was gone...~
 = ~...Thank you.~
-= ~I'm ready, <CHARNAME>. This power... I can use it to protect you too. Let's bring down this evil together.~
+= ~I'm ready, <CHARNAME>. This power... I'm not sure why, but I know I can use it to protect you too. Let's bring down this evil together.~
 EXIT
 
 I_C_T C6BODHI 0 C0AuraC6BODHI0
@@ -478,7 +583,7 @@ INTERJECT SAHPR1 1 C0AuraSAHPR11
 EXTERN SAHPR1 2
 
 INTERJECT SAHKNG01 17 C0AuraSAHPR117
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~<CHARNAME>, I... ~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~<CHARNAME>, I... I—~
 END
   + ~OR(2)
      Global("C0AuraRomanceActive","GLOBAL",1)
@@ -488,9 +593,8 @@ END
   ++ ~Don't embarrass me in front of the shark-men now of all times, Aura...~ EXTERN C0AURA2J C0AuraSahuagin
 
 CHAIN C0AURA2J C0AuraSahuagin
-~I, I'm, I—~
-DO ~SetGlobal("C0AuraSahuaginFears","GLOBAL",1)
-ApplySpellRES("C0AQEF27",Myself)~
+~I, I'm, I—!~
+DO ~SetGlobal("C0AuraSahuaginFears","GLOBAL",1)~
 == SAHKNG01 ~What's this? That especially puny one seems to be shaking especially violently. Rather like a mealworm on a hook, I might say. (Hee hee!) If she's incapable of following your orders, perhaps you can leave her here as a light snack instead, eh?~
 END
   ++ ~Shut up! Don't you dare talk about her like that!~ EXTERN SAHKNG01 C0AuraSahuagin.1
@@ -499,28 +603,28 @@ END
 
 CHAIN SAHKNG01 C0AuraSahuagin.1
 ~(Hee hee!) Quite the gall you have, strange <PRO_RACE>. You are quite lucky I'm in a tolerant mood right now. Otherwise...~
-== SAHPR1 ~My king... please. I will handle this matter. This will not inconvenience you for long.~
+== SAHPR1 ~My king... please. Allow me to handle this matter. This will not inconvenience you for long.~
 EXTERN SAHPR1 C0AuraSahuagin.2
 
 CHAIN SAHPR1 C0AuraSahuagin.2
 ~Worry not, <PRO_RACE>. Take our king's challenge, while your companion will be under my personal protection. So long as you succeed, no harm will come to her—I swear in the Shark-Father's name. You are needed for our cause, and angering you by allowing those with you to be harmed shall benefit neither of us.~
 END
-  ++ ~Fine. It seems I have no choice but to trust in your word, priestess.~ EXTERN SAHKNG01 C0AuraSahuagin.3
+  ++ ~Fine. It seems I have no choice but to trust in your word, priestess.~ DO ~ActionOverride("C0Aura",JoinParty()) ActionOverride("C0Aura",ApplySpellRES("C0AQEF27",Myself))~ EXTERN SAHKNG01 C0AuraSahuagin.3
   ++ ~Alright... please take care of her. She has a terrible fear of drowning.~ EXTERN SAHKNG01 C0AuraSahuagin.3
   ++ ~No. I don't trust any of you. We're leaving now, or else you all die!~ EXTERN SAHKNG01 22
 
 CHAIN SAHKNG01 C0AuraSahuagin.3
-~Finally! I was just about to decide that I'd prefer a meal over entertainment. Now then, off to the ring with you, chop chop.~
+~Finally! I was just about to decide that I'd prefer a meal over entertainment. Now then, off to the ring with you!~
 COPY_TRANS SAHKNG01 17
 
 INTERJECT SAHKNG01 24 C0AuraSAHKNG0124
 == SAHKNG01 IF ~GlobalGT("C0AuraSahuaginFears","GLOBAL",0)~ THEN ~Oh, and of course, your companion is returned to you... unharmed, as our wiser priestess promised. A pity, she does look rather delectable.~
+DO ~SetGlobal("C0AuraSahuaginFears","GLOBAL",3) ActionOverride("C0Aura",ApplySpellRES("C0AQEF28",Myself)) ActionOverride("C0Aura",JoinParty())~
 == SAHPR1 ~She remains shaken, but she should prove responsive to you now, surface <PRO_RACE>. Go, now.~
 == C0AURA2J ~I... I'm sorry for causing a problem for you, <CHARNAME>. I'm... fine now. Really.~
-DO ~ApplySpellRES("C0AQEF28",Myself)~
 END
   ++ ~Are you sure? You don't have to hide it, if you still haven't recovered.~ EXTERN C0AURA2J C0AuraSahuagin.4
-  ++ ~It's not your fault. What happened with the ship was the worst thing that could've happened.~ EXTERN C0AURA2J C0AuraSahuagin.4
+  ++ ~It's not your fault. What happened with the ship must have been traumatizing for you.~ EXTERN C0AURA2J C0AuraSahuagin.4
   ++ ~Just get back in formation, already.~ EXTERN SAHKNG01 C0AuraSahuagin.5
 
 CHAIN C0AURA2J C0AuraSahuagin.4
@@ -554,8 +658,94 @@ IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)
 END
 
 CHAIN C0AURA2J C0AuraSAHBEH34
-~But, what if... let's go with some basic logic... *you* opened it, and I was just very very careful and didn't touch the chest at all to get what's inside... would you allow that? Um, in theory, of course.~
+~But, what if... let's go with some basic logic... *you* opened it, and I was just very veeery careful and didn't touch the chest at all to get what's inside... would you allow that? Um, in theory, of course.~
 EXTERN SAHBEH01 35
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraSahuaginFears","GLOBAL",4)~ THEN C0AURA2J AURA-SAHUAGIN
+~...Nrgh...~ [C0BLANK]
+DO ~SetGlobal("C0AuraSahuaginFears","GLOBAL",5)~
+== C0AURA2J ~...I'm sorry.~
+END
+  ++ ~You've already said that.~ + AURA-SAHUAGIN-1
+  ++ ~It's not your fault.~ + AURA-SAHUAGIN-2
+  ++ ~Are you going to be alright?~ + AURA-SAHUAGIN-3
+  ++ ~Yes, well, at least you're coherent now.~ + AURA-SAHUAGIN-4
+  ++ ~Good think you recovered. Otherwise, you might be fish food already.~ + AURA-SAHUAGIN-4
+  ++ ~Whatever. Let's just work on getting out of here.~ + AURA-SAHUAGIN-0
+
+CHAIN C0AURA2J AURA-SAHUAGIN-0
+~Right... we're still alive. That means I don't have time to stand around moping and dragging us down.~
+= ~I'll be right behind you. Just... give me a moment.~
+EXIT
+
+CHAIN C0AURA2J AURA-SAHUAGIN-1
+~I'm saying it again. I might have to keep saying it until this sinking feeling of disappointment goes away.~
+EXTERN C0AURA2J AURA-SAHUAGIN-4
+
+CHAIN C0AURA2J AURA-SAHUAGIN-2
+~Yes, it is.~
+EXTERN C0AURA2J AURA-SAHUAGIN-4
+
+CHAIN C0AURA2J AURA-SAHUAGIN-3
+~...I don't know.~
+EXTERN C0AURA2J AURA-SAHUAGIN-4
+
+CHAIN C0AURA2J AURA-SAHUAGIN-4
+~I tried, <CHARNAME>. Please believe me, I really did. I'm not naive enough to think that I'd beaten my trauma that quickly, but I thought with how much I believed I'd grown, I'd at least be able to keep myself under control.~
+= ~You've been through something much worse, and I've seen it all happen... I couldn't do anything about it, but I could at least not be another burden for you. I needed to not let such a little thing get in my way. And I couldn't even manage that.~
+= ~I'm so sorry.~
+END
+  + ~OR(2)
+     Global("C0AuraRomanceActive","GLOBAL",1)
+     Global("C0AuraRomanceActive","GLOBAL",2)~ + ~I don't want you to apologize. I want you to be alright. Do you need a hug?~ + AURA-SAHUAGIN-8
+  ++ ~Little thing? We could've all died, Aura. Every one of us. You had good reason to be afraid.~ + AURA-SAHUAGIN-5
+  ++ ~It's alright. You're alive, breathing, and talking it out now. That still takes courage.~ + AURA-SAHUAGIN-6
+  ++ ~You're lucky you're even able to do this self-reflection right now.~ + AURA-SAHUAGIN-7
+  ++ ~That's enough. If you're really sorry, then do everything you can to make up for it. Talking solves nothing.~ + AURA-SAHUAGIN-0
+
+CHAIN C0AURA2J AURA-SAHUAGIN-5
+~I know. It makes sense, I just... still can't forgive myself. Look at you, going on even with all you've lost. I still wish I could do that.~
+EXTERN C0AURA2J AURA-SAHUAGIN-10
+
+CHAIN C0AURA2J AURA-SAHUAGIN-6
+~I'm going to keep trying, <CHARNAME>. I can't help but feel like I've failed you this time... but one day, I know I'll be able to move past this.~
+EXTERN C0AURA2J AURA-SAHUAGIN-10
+
+CHAIN C0AURA2J AURA-SAHUAGIN-7
+~You're probably right. Besides, if I'm still able to breathe, I'll be able to keep doing my best. I'm responsible for not only myself right now, after all.~
+EXTERN C0AURA2J AURA-SAHUAGIN-10
+
+CHAIN C0AURA2J AURA-SAHUAGIN-8
+~No, I shouldn't be—~
+= ~...Yes. Please.~
+END
+  ++ ~Come here.~ + AURA-SAHUAGIN-9
+
+CHAIN C0AURA2J AURA-SAHUAGIN-9
+~Thanks, <CHARNAME>. I don't know what I'd do without you...~
+EXTERN C0AURA2J AURA-SAHUAGIN-10
+
+CHAIN C0AURA2J AURA-SAHUAGIN-10
+~I'm feeling better now, <CHARNAME>. Thank you for being patient with me. If you weren't here, I'd probably be curling up in a hole somewhere, if I wasn't already eaten... hehe. Bad joke, but I need to do something about the atmosphere.~
+= ~Now that I'm able to think more clearly again... this place is quite amazing, don't you think? Even as... brutal as the sahuagin are, they've managed to build something majestic together. How many people above the water could say they've seen a city like this?~
+END
+  ++ ~Not many, I'd imagine.~ + AURA-SAHUAGIN-11
+  ++ ~I'm glad you're feeling well enough to talk about trivial things again.~ + AURA-SAHUAGIN-12
+  ++ ~Let's hope we live to tell the tale.~ + AURA-SAHUAGIN-11
+
+CHAIN C0AURA2J AURA-SAHUAGIN-11
+~I used to paint a lot more often when I was young... when I hadn't seen what the realms were really like yet, all I had was my imagination. Everything I created was abstract, and nothing like what the truth was... but by chance, I did paint a picture of a place somewhat like this in my head, once.~
+= ~At least one of my daydreams turned out closer to reality than I thought. Anyways... let's go and see the rest of it.~
+EXIT
+
+CHAIN C0AURA2J AURA-SAHUAGIN-12
+~Well, you should know by now... I can get a little down at times like anyone else, but keeping me down is the hard part.~
+EXTERN C0AURA2J AURA-SAHUAGIN-10
+
+I_C_T SAHPR1 52 C0AuraSAHPR152
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) GlobalGT("C0AuraSahuaginFears","GLOBAL",0)~ THEN ~I... um, need to thank you, priestess... for earlier. I probably would have been in serious danger if you hadn't taken care of me in <CHARNAME>'s absence.~
+== SAHPR1 ~Do not thank me, surface gnome. Thank the Shark-Father that you are among those chosen for his prophecy. Which you may assist us in fulfilling now if you seek to show gratitude.~
+END
 
 // Copper Coronet
 
@@ -971,7 +1161,7 @@ I_C_T TIRDIR 2 C0AuraTIRDIR2
 END
 
 I_C_T2 WELLYN 10 C0AuraWELLYN10
-== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~That's the best we can do for him, I suppose. The poor child. *sigh* "Yasuraka-ni-nemurinasai".~
+== C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~That's the best we can do for him, I suppose. The poor child. Sleep well...~
 END
 
 I_C_T2 LESTER 5 C0AuraLESTER5
@@ -990,18 +1180,22 @@ END
 
 I_C_T HELLJON 7 C0AuraThirdBattleWithIrenicus1
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
+== C0AURA2J IF ~Global("C0AuraRomanceActive","GLOBAL",2) GlobalGT("C0AuraRomanceYRGlob","GLOBAL",0)~ THEN ~As for Yoshimo... I'll make sure his soul finds peace, even if I must put a thousand arrows into you for it!~
 END
 
 I_C_T HELLJON 8 C0AuraThirdBattleWithIrenicus1
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
+== C0AURA2J IF ~Global("C0AuraRomanceActive","GLOBAL",2) GlobalGT("C0AuraRomanceYRGlob","GLOBAL",0)~ THEN ~As for Yoshimo... I'll make sure his soul finds peace, even if I must put a thousand arrows into you for it!~
 END
 
 I_C_T HELLJON 9 C0AuraThirdBattleWithIrenicus1
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
+== C0AURA2J IF ~Global("C0AuraRomanceActive","GLOBAL",2) GlobalGT("C0AuraRomanceYRGlob","GLOBAL",0)~ THEN ~As for Yoshimo... I'll make sure his soul finds peace, even if I must put a thousand arrows into you for it!~
 END
 
 I_C_T HELLJON 10 C0AuraThirdBattleWithIrenicus1
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~I've never been thrilled to end a life... but the soul that'll face the karma wrought by its sins will be your own, Irenicus!~
+== C0AURA2J IF ~Global("C0AuraRomanceActive","GLOBAL",2) GlobalGT("C0AuraRomanceYRGlob","GLOBAL",0)~ THEN ~As for Yoshimo... I'll make sure his soul finds peace, even if I must put a thousand arrows into you for it!~
 END
 
 // Jansens
@@ -1301,7 +1495,7 @@ CHAIN C0AURA2J TREEOFLIFE.1
 END
 COPY_TRANS PLAYER1 33
 
-EXTEND_BOTTOM PLAYER1 33 #1
+EXTEND_TOP PLAYER1 33 #1
 IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) Global("C0AuraTreeOfLife","GLOBAL",0) Global("C0AuraRomanceActive","GLOBAL",2)~ 
 EXTERN PLAYER1 TREEOFLIFEROM
 END
@@ -1322,6 +1516,258 @@ CHAIN C0AURA2J TREEOFLIFEROM.1
 COPY_TRANS PLAYER1 33
 
 // Umar Hills
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraUmarHills","GLOBAL",1)~ THEN C0AURA2J C0AURA-UMARHILLS
+~It's great that we managed to bring some peace back to this village... now that it's the way it should be, I can really appreciate how simple and charming it is.~ [C0BLANK]
+DO ~SetGlobal("C0AuraUmarHills","GLOBAL",2)~
+= ~The mountains, and the design of the houses are different, but it's the same sort of pastoral feeling I got during my time in Kozakura. The people, too... they're humble and hard-working, but also have stories of their own.~
+= ~*sigh* It makes me wish I was still there, taking walks by the coast, spending time with the fishermen... hey, <CHARNAME>. How do you feel about fishing? I've suddenly got the urge.~
+END
+  ++ ~You want to go fishing?~ + C0AURA-UMARHILLS-1
+  ++ ~Sure, I enjoy fishing.~ + C0AURA-UMARHILLS-2
+  ++ ~I don't mind, but I've never done it before.~ + C0AURA-UMARHILLS-3
+  ++ ~Not right now, Aura.~ + C0AURA-UMARHILLS-0
+
+CHAIN C0AURA2J C0AURA-UMARHILLS-0
+~Oh... alright. That's a shame.~
+DO ~SetGlobal("C0AuraUmarHills","GLOBAL",-1)~ EXIT
+
+CHAIN C0AURA2J C0AURA-UMARHILLS-1
+~Why not? Look at how calm and soothing that stream is. Don't you think it'd be a waste not to have a rest, and do something fun for a while?~
+END
+  ++ ~When you put it that way, then sure. Let's catch some fish.~ + C0AURA-UMARHILLS-2
+  ++ ~There's just one small problem... I've never tried fishing before.~ + C0AURA-UMARHILLS-3
+  ++ ~It sounds like a waste of time. Let's just get moving.~ + C0AURA-UMARHILLS-0
+
+CHAIN C0AURA2J C0AURA-UMARHILLS-2
+~Alright! I think I see a nice spot ahead of us...~
+== WILSONJ IF ~InParty("WILSON")~ THEN ~Growl.~
+== C0AURA2J IF ~InParty("WILSON")~ THEN ~Oh, and you're not coming with us, Mr. Bear! Not a chance!~
+== C0AURA2J ~I have a pair of collapsible fishing rods in my pack, so we just need to catch some bait and we'll be all set!~
+DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([30.0],0)
+Wait(2)
+ActionOverride(Player1,JumpToPoint([3532.608]))
+ActionOverride(Player1,Face(NWW))
+JumpToPoint([3519.632])
+Face(NWW)
+MoveViewObject(Player1,INSTANT)
+FadeFromColor([30.0],0)
+Wait(2)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN C0AURA2J C0AURA-UMARHILLS-3
+~Oh, don't worry about that. I've practiced fishing almost as early as when I learned to walk, so I can teach you!~
+== WILSONJ IF ~InParty("WILSON")~ THEN ~Growl.~
+== C0AURA2J IF ~InParty("WILSON")~ THEN ~Oh, and you're not coming with us, Mr. Bear! Not a chance!~
+== C0AURA2J ~I have a pair of fishing rods, we just need to find some bait...~
+DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([30.0],0)
+Wait(2)
+ActionOverride(Player1,JumpToPoint([3532.608]))
+ActionOverride(Player1,Face(NWW))
+JumpToPoint([3519.632])
+Face(NWW)
+MoveViewObject(Player1,INSTANT)
+FadeFromColor([30.0],0)
+Wait(2)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraUmarHills","GLOBAL",2)~ THEN C0AURA2J C0AURA-UMARHILLS2
+~Do you see them, <CHARNAME>? Just swimming along with the current? I don't think we could find a better spot.~ [C0BLANK]
+END
+IF ~See("MADULF") Global("OgreAlliance","GLOBAL",1)~ EXTERN UHOGRE01 C0AURA-UMARHILLS2-MADULF
+IF ~OR(2) !See("MADULF") !Global("OgreAlliance","GLOBAL",1)~ EXTERN C0AURA2J C0AURA-UMARHILLS2-1
+
+CHAIN C0AURA2J C0AURA-UMARHILLS2-1
+~Let's see how many we can catch together!~
+DO ~SetGlobal("C0AuraUmarHills","GLOBAL",3)~
+END
+  ++ ~I have a better idea. Let's see which of us can catch more!~ + C0AURA-UMARHILLS2-2
+  ++ ~Well, I'll follow your lead. You seem to be more experienced at this.~ + C0AURA-UMARHILLS2-3
+  ++ ~Whatever. We won't have trouble eating, at least. Let's just make it quick.~ + C0AURA-UMARHILLS2-4
+
+CHAIN C0AURA2J C0AURA-UMARHILLS2-2
+~Oh, is that how we're going to do it? Hehe, you'd better not regret it. I grew up in a fishing town, so I'll bet I've fished for longer than you've been alive!~
+EXTERN C0AURA2J C0AURA-UMARHILLS2-4
+
+CHAIN C0AURA2J C0AURA-UMARHILLS2-3
+~Alright, I'll teach you the motions first... and then, it's just waiting for a fish to take the bait. It's mostly patience, after all. And a strong arm.~
+EXTERN C0AURA2J C0AURA-UMARHILLS2-4
+
+CHAIN C0AURA2J C0AURA-UMARHILLS2-4
+~Just attach the bait to the hook, throw, and... here we go!~
+END
+IF ~Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([30.0],0)
+Wait(2)
+ActionOverride("MADULF",JumpToPoint([3628.547]))
+ActionOverride("MADULF",Face(SE))
+FadeFromColor([30.0],0)
+Wait(2)
+StartDialogNoSet(Player1)~ EXIT
+IF ~!Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([30.0],0)
+Wait(2)
+FadeFromColor([30.0],0)
+Wait(2)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN UHOGRE01 C0AURA-UMARHILLS2-MADULF
+~Huh. Friend <PRO_RACE> is going to catch fish? Maybe... maybe Madulf can join you? Madulf was just deciding with fellows what we wanted for dinner.~
+END
+  ++ ~Of course you can.~ DO ~SetGlobal("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ EXTERN UHOGRE01 C0AURA-UMARHILLS2-MADULF-1
+  ++ ~Find your own place, Madulf.~ EXTERN UHOGRE01 C0AURA-UMARHILLS2-MADULF-2
+
+CHAIN UHOGRE01 C0AURA-UMARHILLS2-MADULF-1
+~Thank you, <PRO_RACE>. Madulf will fish over on other side. Madulf will not cause problems for you or friend.~
+EXTERN C0AURA2J C0AURA-UMARHILLS2-1
+
+CHAIN UHOGRE01 C0AURA-UMARHILLS2-MADULF-2
+~Oh. That too bad. Madulf understand. You and friend want to be alone.~
+EXTERN C0AURA2J C0AURA-UMARHILLS2-1
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraUmarHills","GLOBAL",3)~ THEN C0AURA2J C0AURA-UMARHILLS3
+~There's the first one! That didn't take long at all.~ [C0BLANK]
+DO ~SetGlobal("C0AuraUmarHills","GLOBAL",4)
+ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([20.0],0)
+Wait(1)
+FadeFromColor([20.0],0)
+Wait(1)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraUmarHills","GLOBAL",4)~ THEN C0AURA2J C0AURA-UMARHILLS4
+~Ooh, that's a beauty. Nice one, <CHARNAME>!~ [C0BLANK]
+DO ~SetGlobal("C0AuraUmarHills","GLOBAL",5)
+ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([20.0],0)
+Wait(1)
+FadeFromColor([20.0],0)
+Wait(1)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraUmarHills","GLOBAL",5)~ THEN C0AURA2J C0AURA-UMARHILLS5
+~Look at that! We caught even more than I expected. We're going to have to let some of them go at this rate. We can't carry this much. Not to mention, it'll smell.~ [C0BLANK]
+= ~Oh! Another one's biting. I'm going to get this one, just watch!~
+= ~Ooh, he's really struggling. I'll get you yet...~
+= ~Goodness, this one's really strong. I'll bet it's huge. I'm not sure I can... eep!~
+END
+  ++ ~I'll help you out!~ + C0AURA-UMARHILLS5-1
+  ++ ~(Do nothing)~ + C0AURA-UMARHILLS5-2
+
+CHAIN C0AURA2J C0AURA-UMARHILLS5-1
+~Wow... even with the two of us! This must be some kind of monster... keep pulling, <CHARNAME>! We'll tire it out!~
+== UHOGRE01 IF ~Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ THEN ~Madulf help! Madulf hold on rod with <PRO_RACE>!~
+== C0AURA2J ~Just a little bit more... come on, come on... Yes! Reel it in, quickly!~
+END
+IF ~Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ DO ~SetGlobal("C0AuraUmarHills","GLOBAL",6)
+ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([20.0],0)
+Wait(1)
+ActionOverride("MADULF",JumpToPoint([3579.605]))
+ActionOverride("MADULF",Face(W))
+FadeFromColor([20.0],0)
+Wait(1)
+StartDialogNoSet(Player1)~ EXIT
+IF ~!Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ DO ~SetGlobal("C0AuraUmarHills","GLOBAL",6)
+ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([20.0],0)
+Wait(1)
+FadeFromColor([20.0],0)
+Wait(1)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN C0AURA2J C0AURA-UMARHILLS5-2
+~Oh no. Oh no no no no no! Eeeek!~
+DO ~SetGlobal("C0AuraUmarHills","GLOBAL",7)
+ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([20.0],0)
+Wait(1)
+FadeFromColor([20.0],0)
+Wait(1)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraUmarHills","GLOBAL",6)~ THEN C0AURA2J C0AURA-UMARHILLS6
+~Look at that! It's huge! I didn't think we'd catch something of this size.~ [C0BLANK]
+DO ~GiveItemCreate("C0AFISH2",Player1,0,0,0) SetGlobal("C0AuraUmarHills","GLOBAL",8)~
+= ~Here, <CHARNAME>. You take it. We caught it together, after all, so you deserve just as much of the credit. Plus, it's heavy.~
+EXTERN C0AURA2J C0AURA-UMARHILLS8
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraUmarHills","GLOBAL",7)~ THEN C0AURA2J C0AURA-UMARHILLS7
+~Well... that was embarrassing.~ [C0BLANK]
+DO ~SetGlobal("C0AuraUmarHills","GLOBAL",8)~
+= ~It got away... along with my rod. And now I'm all soaked as well. *sigh*~
+END
+  ++ ~Looks like you need to train your muscles a bit.~ + C0AURA-UMARHILLS7-1
+  ++ ~Sorry. I thought you had it.~ + C0AURA-UMARHILLS7-2
+  ++ ~Hahahaha!~ + C0AURA-UMARHILLS7-3
+
+CHAIN C0AURA2J C0AURA-UMARHILLS7-1
+~Looks like it. Time to pull out some weights, I guess...~
+EXTERN C0AURA2J C0AURA-UMARHILLS8
+
+CHAIN C0AURA2J C0AURA-UMARHILLS7-2
+~I really thought I had it, too. That would've given me something to be smug about for at least a few days. Oh well...~
+EXTERN C0AURA2J C0AURA-UMARHILLS8
+
+CHAIN C0AURA2J C0AURA-UMARHILLS7-3
+~Oh, don't laugh! As if I haven't been humiliated enough... *pout*~
+EXTERN C0AURA2J C0AURA-UMARHILLS8
+
+CHAIN C0AURA2J C0AURA-UMARHILLS8
+~...Hehe. That was fun. I can't remember the last time I had a chance to just relax and have a good time...~
+== UHOGRE01 IF ~Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ THEN ~Madulf catch plenty of big ones too. Madulf's friends will be very happy, Madulf thinks.~
+== C0AURA2J ~What do you think, <CHARNAME>?~
+END
+  ++ ~That was great. We need to do it again some time.~ + C0AURA-UMARHILLS8-1
+  ++ ~It was fine, I guess.~ + C0AURA-UMARHILLS8-2
+  ++ ~I don't think I like fishing. But at least we won't go hungry.~ + C0AURA-UMARHILLS8-2
+
+CHAIN C0AURA2J C0AURA-UMARHILLS8-1
+~Yes, for sure! Let's make this a routine, if we can.~
+EXTERN C0AURA2J C0AURA-UMARHILLS8-2
+
+CHAIN C0AURA2J C0AURA-UMARHILLS8-2
+~Thanks for taking the time to indulge in this with me, <CHARNAME>. It's almost like I'm with my family again.~
+= ~But we can't stay here forever, can we? Let's go. We'll have plenty more chances to repeat this in the future.~
+END
+IF ~Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([30.0],0)
+Wait(2)
+ActionOverride("MADULF",JumpToPoint([3288.721]))
+ActionOverride("MADULF",Face(S))
+FadeFromColor([30.0],0)
+Wait(2)
+EndCutSceneMode()~ EXIT
+IF ~!Global("C0AuraUmarHillsMadulfFish","GLOBAL",1)~ DO ~ClearAllActions()
+StartCutSceneMode()
+Wait(1)
+FadeToColor([30.0],0)
+Wait(2)
+FadeFromColor([30.0],0)
+Wait(2)
+EndCutSceneMode()~ EXIT
 
 EXTEND_BOTTOM IMNBOOK1 0
 IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) Global("C0AuraBookMerchant","GLOBAL",0)~ DO ~SetGlobal("C0AuraBookMerchant","GLOBAL",1)~
@@ -1515,7 +1961,7 @@ EXIT
 
 ADD_TRANS_TRIGGER KGENIE1 3 ~OR(3) !InParty("C0Aura") !InMyArea("C0Aura") StateCheck("C0Aura",CD_STATE_NOTVALID)~ DO 0 1 2 3 4 5
 
-EXTEND_TOP KGENIE1 3
+EXTEND_BOTTOM KGENIE1 3
 + ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ + ~The prince is 20 and the princess is 30.~ EXTERN C0AURA2J AURA-KALAH-GENIE-1
 + ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ + ~The prince is 40 and the princess is 30.~ EXTERN C0AURA2J AURA-KALAH-GENIE-1
 + ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ + ~The prince is 30 and the princess is 40.~ DO ~AddexperienceParty(19500)~ EXTERN C0AURA2J AURA-KALAH-GENIE-2
@@ -1673,3 +2119,31 @@ EXIT
 I_C_T FIRWLF01 0 C0AuraFIRWLF01
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Phew! It smells like wet dog in here.~
 END
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraPerfectSunshooter","GLOBAL",1)~ THEN C0AURA2J C0AuraSunshooter
+~Well, that's it. After all this time, it's finally done... the Perfect Sunshooter. I never thought I'd see the day.~ [C0BLANK]
+DO ~SetGlobal("C0AuraPerfectSunshooter","GLOBAL",2)~
+== C0AURA2J ~I feel like I should be happier, but all I can think of is how much fighting we've gone through to push me into completing it. I feel guilty. Both for everything I've put this bow through, and for not admiring it like it deserves.~
+END
+  ++ ~It's beautiful. You should be proud of what you've made.~ + C0AuraSunshooter-1
+  ++ ~A weapon is used as its wielder decides. As long as you know what's right, you shouldn't be ashamed of carrying that bow.~ + C0AuraSunshooter-2
+  ++ ~Since it means you'll be more useful, I'm satisfied.~ + C0AuraSunshooter-0
+
+CHAIN C0AURA2J C0AuraSunshooter-0
+~Yes, I guess I should be satisfied too. Let's go, <CHARNAME>. I should give it a test as soon as possible.~
+EXIT
+
+CHAIN C0AURA2J C0AuraSunshooter-1
+~I am. The first weapon I ever had a part in making with my own hands, and up to now, it's never left my side. ~
+EXTERN C0AURA2J C0AuraSunshooter-3
+
+CHAIN C0AURA2J C0AuraSunshooter-2
+~I'm not ashamed. I know that the path we've taken is the best that we've made it. And I wouldn't be ashamed of this bow. Not after everything it's done for me.~
+EXTERN C0AURA2J C0AuraSunshooter-3
+
+CHAIN C0AURA2J C0AuraSunshooter-3
+~I just thought the day Uncle Dedalus first showed me the completed work... I was so innocent back then, I couldn't even imagine it being covered in blood.~
+= ~Strangely, even though I knew I'd use it for battles that I'd hate, I never thought of a day where I'd actually put it down. It's like a partner to me now... and that's why I've worked hard to make it the best it could possibly be.~
+= ~And even though I'm not excited, I'm... still glad. If it means I can do more for you, then it's a good thing I've succeeded. It may be the whole reason why I was motivated to perfect it at all.~
+= ~I think you deserve some of the credit for the creation of the Perfect Sunshooter, don't you think, <CHARNAME>? Hehe.~
+EXIT

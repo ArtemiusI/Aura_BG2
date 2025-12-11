@@ -94,6 +94,6 @@ THEN
 	RESPONSE #100
 	SetGlobal("C0AuraBG2Quest3","GLOBAL",9)
 	CreateCreatureObjectOffset("c0apico",Player1,[100.100])
-	ActionOverride("c0apico",Dialogue(Player1)
+	ActionOverride("c0apico",StartDialogNoSet(Player1)
 	Continue()
 END

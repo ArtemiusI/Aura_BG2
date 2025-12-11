@@ -2,7 +2,6 @@ IF
 	True()
 THEN
 	RESPONSE #100
-		StartCutSceneMode()
 		CutSceneId(Player1)
 		Wait(1)
 		CreateVisualEffectObject("SPPORTAL",Player1)

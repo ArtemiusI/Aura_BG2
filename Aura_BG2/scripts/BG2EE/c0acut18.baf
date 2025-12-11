@@ -5,7 +5,7 @@ THEN
         CutSceneId(Player1)
         Wait(1)
         PlaySound("C0ASFX1")
-        DisplayStringPoint([440.445],~A series of sharp, demanding knocks on the door interrupt your conversation.~)
+        DisplayStringPointLog([440.445],~A series of sharp, demanding knocks on the door interrupt your conversation.~)
         Wait(2)
         PlaySound("C0ASFX1")
         ActionOverride("C0AMAGN",Face(S))

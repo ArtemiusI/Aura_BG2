@@ -40,8 +40,8 @@ DO ~SetGlobal("C0AuraL0WillToB","GLOBAL",1)~
 == L0WIL25B ~I'll continue wandering for a while, but eventually I'll return. Where else could I go?~
 == BC0AUR25 ~But... is there a chance it won't sustain you anymore? You've become bound to <CHARNAME>'s plane, so...~
 == L0WIL25B ~Ah, but I didn't say I'd go back to keep my existence going. I feel like I've accomplished something important travelling with you all. If I had to finally rest, it'd be as good time as any.~
-== BC0AUR25 ~Maybe... that's for the best... but still I'll miss you.~
-== L0WIL25B ~Perhaps, if I remember all this, wherever I end up next... I will too.~
+== BC0AUR25 ~Maybe... that's for the best... but I'll still miss you.~
+== L0WIL25B ~Perhaps, if I remember all this, wherever I end up next... I will miss you too.~
 == BC0AUR25 ~I still remember the way... when I have a chance, I'll plant some higanbana for you. As an offering... and so other people who find you might know the resting place of a good friend, and a gentle spirit.~
 == L0WIL25B ~I'd appreciate that.~
 EXIT

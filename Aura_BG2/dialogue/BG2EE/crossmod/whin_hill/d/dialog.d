@@ -30,7 +30,7 @@ DO ~SetGlobal("C0AuraWhinHillDragonTalk","GLOBAL",2)~
 == L#AFDRA ~What are you being sorry about?~
 == C0AURA2J ~Oh... it's just that... I've been having to apologize on her behalf during all the years I spent at the academy with her... I just do it by reflex at this point when she bothers anyone.~
 == L#AFDRA ~Eh, don't worry about it, tiny one. To copper dragons, a prank is about as normal as saying hello. Still, I wasn't expecting one set up with an elaborate series of bizarre gadgets. I couldn't even begin to respond to it. Those Lantanese are really something else, and combining it with the cunning of one of our kind is terrifying.~
-== L#AFDRA ~Still, she left a nice mountain of fruit behind as an apology, so I couldn't really hold it against her. Even with her annoying laughter echoing in the tunnels.~
+== L#AFDRA ~Not to mention, she left a nice mountain of fruit behind as an apology, so I couldn't really hold it against her. Even with her annoying laughter echoing in the tunnels.~
 == C0AURA2J ~Ahaha... that sounds like her. She can get anyone's skin, but she's so sweet nobody can stay angry at her once she makes it up to them.~
 == L#AFDRA ~You haven't seen her in a while, have you?~
 == C0AURA2J ~I... no, I haven't.~

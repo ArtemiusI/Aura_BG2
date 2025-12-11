@@ -5,6 +5,20 @@ I_C_T BAERIE25 159 C0AuraBAERIE25159
 == C0AUR25J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) Global("C0AuraKnowsBG1","GLOBAL",1)~ THEN ~Aww, he's so sweet! His little round cheeks remind me of my baby twin siblings... oh, now I miss seeing them.~
 END
 
+// Bondari
+
+I_C_T BAZPAT01 9 C0AuraBAZPAT01
+== C0AUR25J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID)~ THEN ~Is anyone else feeling a weird sense of déjà vu? Just me? Strange...~
+== BAZPAT01 ~Uhh... *sweats profusely*~
+END
+
+// Dragon
+
+I_C_T2 BAZDRA03 8 C0AuraBAZDRA038
+== C0AUR25J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) GlobalGT("C0AuraYoshimoBetrayal","GLOBAL",0)~ THEN ~It's ironic, isn't it, <CHARNAME>? Another geas, but this time, with such a simple solution. If only it could've been so easy with Yosh—~
+== C0AUR25J ~Never mind. I'm sorry to bring it up.~
+END
+
 // Elminster
 
 I_C_T AMELM01 0 C0AuraAMELM01
@@ -64,21 +78,21 @@ IF ~Global("C0AuraRomanceActive","GLOBAL",2)~ DO ~ClearAllActions() StartCutScen
 END
 
 CHAIN 
-IF ~Global("C0AuraToBRomWraith","GLOBAL",0)~ THEN C0AU25W2 tob-wraith1
+IF ~Global("C0AuraToBRomWraith","GLOBAL",0)~ THEN C0AU25WR tob-wraith1
 ~Hmm...? Whose hand is it that beckons me away from the pure land?~
 DO ~SetGlobal("C0AuraToBRomWraith","GLOBAL",1)~
 == C0AUR25J ~Reika-san...?~
-== C0AU25W2 ~Ah, it is you, dear child. Have you... found your name, and your own self? It brings me joy to see it.~
+== C0AU25WR ~Ah, it is you, dear child. Have you... found your name, and your own self? It brings me joy to see it.~
 == C0AUR25J ~I... I have. I owe so much to you. And I've missed you so much... but you shouldn't be here!~
-== C0AU25W2 ~I should not? But have I not said before, that I am always with you, so long as you need me? Or have you forgotten and discarded me already?~
+== C0AU25WR ~I should not? But have I not said before, that I am always with you, so long as you need me? Or have you forgotten and discarded me already?~
 == C0AUR25J ~No! NO! I haven't forgotten you, not even one bit! Please... forgive me...~
-== C0AU25W2 ~Of course I forgive you. I will always forgive you. But how could you forgive yourself, for all the sins you have wrought? All the violence and death which you culpable for?~
+== C0AU25WR ~Of course I forgive you. I will always forgive you. But how could you forgive yourself, for all the sins you have wrought? All the violence and death which you culpable for?~
 == C0AUR25J ~I'm sorry... I'm so sorry... it's my fault that you died. But you should be at peace... I... I made things right...~
-== C0AU25W2 ~Yes, you took revenge. But is revenge what I sought? No, I gave my life hoping for an end to the bloodshed. It was you who decided that my life was worth continuing a cycle of violence, and taint your soul eternally.~
+== C0AU25WR ~Yes, you took revenge. But is revenge what I sought? No, I gave my life hoping for an end to the bloodshed. It was you who decided that my life was worth continuing a cycle of violence, and taint your soul eternally.~
 == C0AUR25J ~You're... you're right. But I—~
-== C0AU25W2 ~Did you believe that, by taking only one life steeped in sin, that it would be enough? Perhaps, but it was not only one, was it? One became a hundred, a thousand... how many lives have you taken with your bow, which I trained you to draw across countless nights? Does all this blood... not stain my hands as well?~
+== C0AU25WR ~Did you believe that, by taking only one life steeped in sin, that it would be enough? Perhaps, but it was not only one, was it? One became a hundred, a thousand... how many lives have you taken with your bow, which I trained you to draw across countless nights? Does all this blood... not stain my hands as well?~
 == C0AUR25J ~I...~
-== C0AU25W2 ~It seems our hearts are both impure, child. And now, in your ignorance, we both suffer. Even in death, I cannot know peace. But if you have truly abandoned me, then I shall bear the weight of our sins for us both.~
+== C0AU25WR ~It seems our hearts are both impure, child. And now, in your ignorance, we both suffer. Even in death, I cannot know peace. But if you have truly abandoned me, then I shall bear the weight of our sins for us both.~
 == C0AUR25J ~No... I... what have I done? I...~
 END
   ++ ~Don't listen, Aura! You mustn't blame yourself for what's happened!~ EXTERN HGWRA01 25
@@ -113,7 +127,7 @@ GlobalLT("PPEvilChoices","GLOBAL",6)~ THEN ~I know it's absolutely tempting, and
 END
 
 EXTEND_BOTTOM FINSOL01 27
-IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) Global("CC0AuraRomanceActive","GLOBAL",2) Global("C0AuraSolarPers","GLOBAL",0)~ DO ~SetGlobal("C0AuraSolarPers","GLOBAL",1)~ EXTERN C0AUR25J C0AuraSolarPers
+IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) Global("C0AuraRomanceActive","GLOBAL",2) Global("C0AuraSolarPers","GLOBAL",0)~ DO ~SetGlobal("C0AuraSolarPers","GLOBAL",1)~ EXTERN C0AUR25J C0AuraSolarPers
 END
 
 CHAIN C0AUR25J C0AuraSolarPers
@@ -244,8 +258,156 @@ EXTERN SARVOLO 9
 
 // Watcher's Keep
 
+EXTEND_BOTTOM GORLUM2 0
+IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ EXTERN C0AUR25J aura-lum
+END
+
+EXTEND_BOTTOM GORLUM2 0
+IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) !GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ EXTERN C0AURA2J aura-lum
+END
+
+CHAIN C0AUR25J aura-lum
+~Well, this sure is a strange bundle of fun, isn't it? 'Mad' is definitely the way I'd describe it, with its complete lack of regard for design consistency, intuitiveness, or even basic safety.~
+END
+  ++ ~Can you make heads or tails of this thing, Aura?~ + aura-lum-1
+
+CHAIN C0AURA2J aura-lum
+~Well, this sure is a strange bundle of fun, isn't it? 'Mad' is definitely the way I'd describe it, with its complete lack of regard for design consistency, intuitiveness, or even basic safety.~
+END
+  ++ ~Can you make heads or tails of this thing, Aura?~ + aura-lum-1
+
+CHAIN C0AUR25J aura-lum-1
+~Umm...~
+== C0AUR25J ~...Hmm.~
+== C0AUR25J ~*sigh* To be honest, I'm not sure I even want to touch this thing, let alone try to get into the framework of it. I probably wouldn't come back out quite the same.~
+== C0AUR25J ~I think I have an idea of what those crazy notes we've been seeing around the place might mean now, though... tell you what, even though my common sense is telling me we shouldn't even be thinking about playing with this machine, I can try to decipher some of the combinations in the notes to have a clue on what they might do.~
+== C0AUR25J ~Assuming you haven't already thrown them away for scrap, that is.~
+EXTERN GORLUM2 1
+
+CHAIN C0AURA2J aura-lum-1
+~Umm...~
+== C0AURA2J ~...Hmm.~
+== C0AURA2J ~*sigh* To be honest, I'm not sure I even want to touch this thing, let alone try to get into the framework of it. I probably wouldn't come back out quite the same.~
+== C0AURA2J ~I think I have an idea of what those crazy notes we've been seeing around the place might mean now, though... tell you what, even though my common sense is telling me we shouldn't even be thinking about playing with this machine, I can try to decipher some of the combinations in the notes to have a clue on what they might do.~
+== C0AURA2J ~Assuming you haven't already thrown them away for scrap, that is.~
+EXTERN GORLUM2 1
+
+EXTEND_TOP GORLUM2 2
++ ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%) Global("C0AuraWKLum","GLOBAL",0)
+OR(8)
+PartyHasItem("LUM1")
+PartyHasItem("LUM2")
+PartyHasItem("LUM3")
+PartyHasItem("LUM4")
+PartyHasItem("LUM5")
+PartyHasItem("LUM6")
+PartyHasItem("LUM7")
+PartyHasItem("LUM8")~ + ~Ask Aura to decipher the combinations of the notes.~ EXTERN C0AUR25J aura-lum-2
++ ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) !GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%) Global("C0AuraWKLum","GLOBAL",0)
+OR(8)
+PartyHasItem("LUM1")
+PartyHasItem("LUM2")
+PartyHasItem("LUM3")
+PartyHasItem("LUM4")
+PartyHasItem("LUM5")
+PartyHasItem("LUM6")
+PartyHasItem("LUM7")
+PartyHasItem("LUM8")~ + ~Ask Aura to decipher the combinations of the notes.~ EXTERN C0AURA2J aura-lum-2
++ ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) Global("C0AuraWKLum","GLOBAL",1)
+OR(8)
+PartyHasItem("LUM1")
+PartyHasItem("LUM2")
+PartyHasItem("LUM3")
+PartyHasItem("LUM4")
+PartyHasItem("LUM5")
+PartyHasItem("LUM6")
+PartyHasItem("LUM7")
+PartyHasItem("LUM8")~ + ~Use the combinations deciphered by Aura.~ EXTERN GORLUM2 aura-lum-3
+END
+
+CHAIN C0AUR25J aura-lum-2
+~Hmm, let's see here... mimble, mumble... mmm, and then...~
+DO ~SetGlobal("C0AuraWKLum","GLOBAL",1)~
+== C0AUR25J ~Here you go!~
+EXTERN GORLUM2 aura-lum-3
+
+CHAIN C0AURA2J aura-lum-2
+~Hmm, let's see here... mimble, mumble... mmm, and then...~
+DO ~SetGlobal("C0AuraWKLum","GLOBAL",1)~
+== C0AURA2J ~Here you go!~
+EXTERN GORLUM2 aura-lum-3
+
+CHAIN GORLUM2 aura-lum-3
+~What combination will you use?~
+END
+ + ~Global("STR","GLOBAL",0)
+ PartyHasItem("LUM1")~ + ~Pull the short lever, medium lever, then push the square button for 'big muscles'.~ DO ~SetGlobal("square","GLOBAL",1)
+SetGlobal("short","GLOBAL",1)
+SetGlobal("medium","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("DEX","GLOBAL",0)
+ PartyHasItem("LUM7")~ + ~Pull the short lever, turn the blue dial, then push the square button to become 'quick and nimble' (But hopefully not shorter...)~ DO ~SetGlobal("square","GLOBAL",1)
+SetGlobal("blue","GLOBAL",1)
+SetGlobal("short","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("CON","GLOBAL",0)
+ PartyHasItem("LUM2")~ + ~Pull the long lever, turn the red dial, then push the circular button to 'be a tough guy'.~ DO ~SetGlobal("circle","GLOBAL",1)
+SetGlobal("red","GLOBAL",1)
+SetGlobal("long","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("INT","GLOBAL",0)
+ PartyHasItem("LUM8")~ + ~Pull the long lever, push the circular button, then turn the blue dial if you're a 'smartypants'.~ DO ~SetGlobal("circle","GLOBAL",1)
+SetGlobal("blue","GLOBAL",1)
+SetGlobal("long","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("WIS","GLOBAL",0)
+ PartyHasItem("LUM5")~ + ~Obey the 'words of the wise' and push the circular, square and triangular buttons.~ DO ~SetGlobal("circle","GLOBAL",1)
+SetGlobal("square","GLOBAL",1)
+SetGlobal("triangle","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("CHA","GLOBAL",0)
+ PartyHasItem("LUM6")~ + ~Pull the short lever, then turn the red and green dials to prove you're a 'beautiful person'.~ DO ~SetGlobal("red","GLOBAL",1)
+SetGlobal("green","GLOBAL",1)
+SetGlobal("short","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("ITEM","GLOBAL",0)
+ PartyHasItem("LUM3")~ + ~Pull the medium lever, turn the green dial, then push the triangular button to summon the 'storm'.~ DO ~SetGlobal("triangle","GLOBAL",1)
+SetGlobal("green","GLOBAL",1)
+SetGlobal("medium","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("PermMR","GLOBAL",0)
+ PartyHasItem("LUM4")~ + ~Pull the long lever, then turn the blue and green dials to 'stop the magic'.~ DO ~SetGlobal("long","GLOBAL",1)
+SetGlobal("blue","GLOBAL",1)
+SetGlobal("green","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ + ~Global("stairbutton","GLOBAL",0)
+ PartyHasItem("PLOT04J")~ + ~Push the triangular button, turn the red dial, then pull the medium lever. (So we can get the Hel—*hastily scratched out*—heck out of here already!)~ DO ~SetGlobal("triangle","GLOBAL",1)
+SetGlobal("red","GLOBAL",1)
+SetGlobal("medium","GLOBAL",1)~ EXTERN GORLUM2 aura-lum-4
+ ++ ~Leave the machine alone for now.~ EXTERN GORLUM2 7
+
+CHAIN GORLUM2 aura-lum-4
+~You follow the instructions tentatively...~
+EXTERN GORLUM2 5
+
 EXTEND_BOTTOM DOMT 19
 IF ~Kit(LastTalkedToBy,C0AURA)~ EXTERN DOMT 32
+END
+
+I_C_T DOMT 2 C0AuraDeckOfManyThings
+== C0AUR25J IF ~IsGabber("C0Aura") GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ THEN ~*breathes* Okay, here goes nothing... wish me luck.~
+END
+
+I_C_T DOMT 3 C0AuraDeckOfManyThings
+== C0AUR25J IF ~IsGabber("C0Aura")GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ THEN ~*breathes* Okay, here goes nothing... wish me luck.~
+END
+
+I_C_T DOMT 4 C0AuraDeckOfManyThings
+== C0AUR25J IF ~IsGabber("C0Aura") GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ THEN ~*breathes* Okay, here goes nothing... wish me luck.~
+END
+
+I_C_T DOMT 2 C0AuraDeckOfManyThings
+== C0AURA2J IF ~IsGabber("C0Aura") !GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ THEN ~*breathes* Okay, here goes nothing... wish me luck.~
+END
+
+I_C_T DOMT 3 C0AuraDeckOfManyThings
+== C0AURA2J IF ~IsGabber("C0Aura") !GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ THEN ~*breathes* Okay, here goes nothing... wish me luck.~
+END
+
+I_C_T DOMT 4 C0AuraDeckOfManyThings
+== C0AURA2J IF ~IsGabber("C0Aura") !GlobalGT("Chapter","GLOBAL",%bg2_chapter_7%)~ THEN ~*breathes* Okay, here goes nothing... wish me luck.~
 END
 
 I_C_T GORAPR 10 C0AuraGORAPR10
@@ -345,7 +507,7 @@ END
 // Talks
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBPocketPlane","GLOBAL",1)~ THEN C0AUR25J tob-pocketplane
-~So... I guess this is going to be our home of sorts from now on, huh? It's... nice?~
+~So... I guess this is going to be our home of sorts from now on, huh? It's... nice?~ [C0BLANK]
 DO ~SetGlobal("C0AuraToBPocketPlane","GLOBAL",2)~
 END
 ++ ~It really isn't, but points for trying.~ + tob-pocketplane-1
@@ -364,4 +526,84 @@ CHAIN C0AUR25J tob-pocketplane-3
 ~Anyways, I was going to say that even though this place isn't pretty, it's at least spacious and pretty secure, so I think I might be able to do my usual maintenance on my automaton here like I could at my workshop.~
 = ~If we find any more components to improve its functions, we can just come back here and I'll make some space for myself to do my work. It'll be a bit more convenient than having to walk back to my old place, even if it's less comfortable.~
 = ~Okay, that's it. Can we get moving? Even if I can keep my nerves under control in this place, that doesn't mean I like looking at it.~
+EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraToBBowstring","GLOBAL",1)~ THEN C0AUR25J tob-bowstring
+~This... this is the Bowstring of Gond! The Wonderbringer himself gifted it to us Lantanna during the Time of Troubles as a gift. I've... I've seen its depiction before, but I never thought I'd be able to hold it with my own hands!~ [C0BLANK]
+DO ~SetGlobal("C0AuraToBBowstring","GLOBAL",2)~
+END
+  ++ ~What could it be doing in the hands of the drow?~ + tob-bowstring-1
+  ++ ~You seem quite excited. What is it good for?~ + tob-bowstring-2
+  ++ ~Just another trinket. Pack it away with the rest.~ + tob-bowstring-3
+
+CHAIN C0AUR25J tob-bowstring-1
+~...~
+= ~I've overheard my uncle speaking with my father in the past. Some Lantanna have suspicions that past cases of our people losing their lives outside of the homeland are more than just accidents. I don't like to think about it.~
+EXTERN C0AUR25J tob-bowstring-2
+
+CHAIN C0AUR25J tob-bowstring-2
+~This is a divine artifact, <CHARNAME>, designed to imbue any bow or crossbow it's strung to with incredible power. Even the most powerful bow could still become even more so with the Bowstring of Gond... or that's what the Gondar church have said.~
+== C0AUR25J ~I wonder... if I could use it to further improve on the Sunshooter...~
+== C0AUR25J IF ~PartyHasItem("c0aubo6")~ THEN ~I thought that I had perfected the design already. But with the Bowstring of Gond, maybe there's still another step to advance. I could hardly compare to the ability of our patron god, after all.~
+== C0AUR25J IF ~!PartyHasItem("c0aubo6")~ THEN ~I'll leave that thought for another time. I'm sure the bowstring could make it far more advanced than I could imagine, but first... I want to see how much progress I can make with my own ability. Maybe when I've reached my own limit, I can think about using this.~
+== C0AUR25J ~Of course, this could be used for more than just my own bow, <CHARNAME>. If you have something in mind for it, I'm happy to let you decide how it should be used.~
+== C0AUR25J IF ~PartyHasItem("c0aubo6")~ THEN ~But if you'll allow it... I would like to see just what miracles occur when the Wonderbringer's creation is combined with my own.~
+EXIT
+
+CHAIN C0AUR25J tob-bowstring-3
+~No, wait, before we do...~
+EXTERN C0AUR25J tob-bowstring-2
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraToBBowstring","GLOBAL",3)~ THEN C0AUR25J tob-bowstring2
+~It's... it's beautiful.~ [C0BLANK]
+DO ~SetGlobal("C0AuraToBBowstring","GLOBAL",4)~
+== C0AUR25J ~Feels a little strange to be saying it about my own work, but... I can feel the harmony of magic and artifice within the metal itself. It's hard to explain it.~
+== C0AUR25J ~My uncle would be proud of me... if he could see it. It might be too soon to say it, for how young I am, but I might just consider this my magnum opus.~
+== C0AUR25J ~Let's go, <CHARNAME>. I still have to try it out in practice before I can truly claim something that bold.~
+EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraPerfectSunshooter","GLOBAL",1)~ THEN C0AUR25J C0AuraSunshooter
+~Well, that's it. After all this time, it's finally done... the Perfect Sunshooter. I never thought I'd see the day.~ [C0BLANK]
+DO ~SetGlobal("C0AuraPerfectSunshooter","GLOBAL",2)~
+== C0AUR25J ~I feel like I should be happier, but all I can think of is how much fighting we've gone through to push me into completing it. I feel guilty. Both for everything I've put this bow through, and for not admiring it like it deserves.~
+END
+  ++ ~It's incredible. You should be proud of what you've made.~ + C0AuraSunshooter-1
+  ++ ~A weapon is used as its wielder decides. As long as you know what's right, you shouldn't be ashamed of carrying that bow.~ + C0AuraSunshooter-2
+  ++ ~Since it means you'll be more useful, I'm satisfied.~ + C0AuraSunshooter-0
+
+CHAIN C0AUR25J C0AuraSunshooter-0
+~Yes, I guess I should be satisfied too. Let's go, <CHARNAME>. I should give it a test as soon as possible.~
+EXIT
+
+CHAIN C0AUR25J C0AuraSunshooter-1
+~I am. The first weapon I ever had a part in making with my own hands, and up to now, it's never left my side. ~
+EXTERN C0AUR25J C0AuraSunshooter-3
+
+CHAIN C0AUR25J C0AuraSunshooter-2
+~I'm not ashamed. I know that the path we've taken is the best that we've made it. And I wouldn't be ashamed of this bow. Not after everything it's done for me.~
+EXTERN C0AUR25J C0AuraSunshooter-3
+
+CHAIN C0AUR25J C0AuraSunshooter-3
+~I just thought the day Uncle Dedalus first showed me the completed work... I was so innocent back then, I couldn't even imagine it being covered in blood.~
+= ~Strangely, even though I knew I'd use it for battles that I'd hate, I never thought of a day where I'd actually put it down. It's like a partner to me now... and that's why I've worked hard to make it the best it could possibly be.~
+= ~And even though I'm not excited, I'm... still glad. If it means I can do more for you, then it's a good thing I've succeeded. It may be the whole reason why I was motivated to perfect it at all.~
+= ~I think you deserve some of the credit for the creation of the Perfect Sunshooter, don't you think, <CHARNAME>? Hehe.~
+EXIT
+
+CHAIN IF WEIGHT #-1 ~Global("C0AuraAbazigalWater","GLOBAL",1)~ THEN C0AUR25J C0AuraAbazigalWater
+~...~ [C0BLANK]
+DO ~SetGlobal("C0AuraAbazigalWater","GLOBAL",2)~
+== C0AUR25J ~We'll have to... go through the water?~
+END
+  ++ ~I'm sorry. But it seems to be our only option.~ + C0AuraAbazigalWater.1
+  ++ ~Unless you're skilled enough to pick open those gates, yes.~ + C0AuraAbazigalWater.1
+  ++ ~You can stay here if you like. Or I can send you back to the pocket plane.~ + C0AuraAbazigalWater.2
+
+CHAIN C0AUR25J C0AuraAbazigalWater.1
+~*sigh* Just can't get away from it no matter how hard I try, can I...~
+EXTERN C0AUR25J C0AuraAbazigalWater.2
+
+CHAIN C0AUR25J C0AuraAbazigalWater.2
+~...No, no. I'm fine. I can do this. I've gotten this far.~
+= ~Besides, I'd much rather deal with this than not knowing what might happen to you on the other side. Just... don't get too far ahead of me, okay? Worst case scenario, I just might need you to pull me out...~
 EXIT

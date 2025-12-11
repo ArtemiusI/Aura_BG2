@@ -253,7 +253,7 @@ Range("C0Aura",15)
 Global("C0AuraImoenToB1","GLOBAL",4)~ THEN BC0AUR25 C0AuraImoenToB4
 ~Well, here we go.~ [C0BLANK]
 DO ~SetGlobal("C0AuraImoenToB1","GLOBAL",5)~
-== BIMOEN25 ~Yep. All or nothing, atop the throne of my dear, awful dad. I'm sure it'll be great.~
+== BIMOEN25 ~Yep. All or nothing, atop the throne of my dear, dreadful, dead dad. I'm sure it'll be great.~
 == BC0AUR25 ~Yeah...~
 == BIMOEN25 ~Hey, remember, just stay back and cover me. You don't need to be scared as long as I've got any spells left in my head.~
 == BC0AUR25 ~Who said I was scared? I'm more worried about having to look over to make sure you're okay, you know that? Don't do anything stupid and make me worry about you when we're fighting for all of our lives!~
@@ -530,7 +530,7 @@ DO ~SetGlobal("C0AuraSarevok1","GLOBAL",2)~
 == BC0AUR25 ~She... she could have returned to the right path. No matter how darkly her soul was stained in blood, still, that is what her kin... what she would have wanted. I owed a debt, but I failed... because of you, Sarevok.~
 == BSAREV25 ~Do you expect remorse? The atrocities of my past life are many, girl. One more shall hardly serve as any greater of a burden. Blame all the evils of the world upon me, if that provides any measure of comfort. I care not a whit.~
 == BC0AUR25 ~...Akuji mi ni tomaru.~
-== BSAREV25 ~All sins cling to one's body, do they?~
+== BSAREV25 ~All my sins will cling to my body, will they?~
 == BC0AUR25 ~You—~
 == BSAREV25 ~A hollow warning for one such as I. My body became dust with my first defeat, and this stolen life is my proof that there will be no karma to damn me. Do not expect me to be threatened so easily, foolish whelp.~
 == BC0AUR25 ~...~
@@ -544,7 +544,9 @@ InParty("C0Aura")
 Range("C0Aura",15)
 !StateCheck("Sarevok",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
+OR(2)
 !Alignment("Sarevok",MASK_EVIL)
+Global("LS#SarevokRomancePath","GLOBAL",1)
 Global("C0AuraSarevokGood1","GLOBAL",0)~ THEN BC0AUR25 C0AuraSarevokFinal1
 ~...~ [C0BLANK]
 DO ~SetGlobal("C0AuraSarevokGood1","GLOBAL",1)~
@@ -553,7 +555,7 @@ DO ~SetGlobal("C0AuraSarevokGood1","GLOBAL",1)~
 == BSAREV25 ~It will serve as little consolation for the untimely fallen, if they can even hear you.~
 == BC0AUR25 ~They might not, but a little faith is better than nothing. Even the knowledge of not being forgotten can bring some peace.~
 == BSAREV25 ~Hmph. A token effort to alleviate oneself of guilt, no more. You are more like her than you think, in that respect.~
-== BC0AUR25 ~Is... is that so?~
+== BC0AUR25 ~R—really...?~
 == BSAREV25 ~Bah... if nothing else, the quiet company is preferable to the alternative choices. I will join you awhile.~
 == BC0AUR25 ~You'll—?~
 == BSAREV25 ~Though if you believe my presence taints your little ceremony, I will leave.~
@@ -562,7 +564,9 @@ DO ~SetGlobal("C0AuraSarevokGood1","GLOBAL",1)~
 == BC0AUR25 ~I don't think I've ever seen you like this before, Sarevok.~
 == BSAREV25 ~And what do you believe you see in me?~
 == BC0AUR25 ~Eyes closed, sitting, with your face unclouded by ambition... you almost seem at peace for the first time.~
-== BSAREV25 ~Is that so? ... Aye. Perhaps.~
+== BSAREV25 ~Is that so?~
+= ~...~
+= ~Aye. Perhaps.~
 EXIT
 
 CHAIN
@@ -572,7 +576,9 @@ InParty("C0Aura")
 Range("C0Aura",15)
 !StateCheck("Sarevok",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
+OR(2)
 !Alignment("Sarevok",MASK_EVIL)
+Global("LS#SarevokRomancePath","GLOBAL",1)
 Global("C0AuraSarevokGood1","GLOBAL",1)~ THEN BC0AUR25 C0AuraSarevokFinal2
 ~Sarevok...~ [C0BLANK]
 DO ~SetGlobal("C0AuraSarevokGood1","GLOBAL",2)~
@@ -582,7 +588,7 @@ DO ~SetGlobal("C0AuraSarevokGood1","GLOBAL",2)~
 == BC0AUR25 ~Maybe. But if we gave up simply because we think it's "too late"... we'll only be tortured by regrets for what time we have remaining.~
 == BSAREV25 ~And you believe that I, Sarevok, the madman and scourge of the Sword Coast, might feel something resembling 'regret'?~
 == BC0AUR25 ~Before, I would have never considered it. Now... I want to at least have a bit of faith. I know there are those would want that... even if they're no longer with us.~
-== BSAREV25 ~You speak as though you hardly believe your own words. However... such an offer may be more than I deserve. I will consider your words.~
+== BSAREV25 ~You speak as though you hardly believe your own words. However... such an offer may be more than I deserve. I will consider what you have said... no more or less.~
 EXIT
 
 // Valygar
@@ -625,4 +631,83 @@ DO ~SetGlobal("C0AuraViconiaToB1","GLOBAL",1)~
 == BVICON25 ~Such are the words repeated by many overeager whelps. How many have succeeded? Death and conflict spreads throughout the realms as a blight would regardless. We are standing in the midst of one such example.~
 == BC0AUR25 ~Only the more reason someone has to try.~
 == BVICON25 ~You may achieve something, or you will simply end up in an early grave. I see this as a foolish risk. So be it—whether you live long enough to see the sense of my words is in your fate alone.~
+EXIT
+
+// Wilson
+
+CHAIN
+IF ~InParty("Wilson")
+Range("Wilson",15)
+!StateCheck("Wilson",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraWilsonToB1","GLOBAL",0)~ THEN BC0AUR25 C0AuraWilsonToB1
+~Mmmmrgh...~ [C0BLANK]
+DO ~SetGlobal("C0AuraWilsonToB1","GLOBAL",1)
+SetGlobalTimer("C0AuraWilsonToBRestTalkTimer","GLOBAL",THREE_DAYS)~
+== BWILSO25 ~Snort?~
+== BC0AUR25 ~What? No, I am not sulking! Why would I possibly be sulking, huh? HUH?~
+== BWILSO25 ~Snuffle snort.~
+== BC0AUR25 ~Okay! So I lost best-of-three against you at fishing. It was an off day for me! I'm getting ready to regain my honor, just you wait!~
+== BWILSO25 ~Growl.~
+== BC0AUR25 ~*sigh* Somehow I just happened to learn to understand you before I even knew it. Better late than never, I suppose... I still don't know when and how everyone else figured it out.~
+== BWILSO25 ~Sniff sniff. Rff?~
+== BC0AUR25 ~Huh? No, we're not—okay, fine. Maaaaybe there's a chance we can be friends. Eventually. When I stop getting the shakes.~
+== BWILSO25 ~Growl!~
+== BC0AUR25 ~Okay, okay! Happy now?~
+== BWILSO25 ~ROAR!~
+== BC0AUR25 ~Eek! J—just as a side note, the challenge is still on, got it?~
+EXIT
+
+CHAIN
+IF ~InParty("Wilson")
+Range("Wilson",15)
+!StateCheck("Wilson",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraWilsonToB1","GLOBAL",2)~ THEN BC0AUR25 C0AuraWilsonToB2
+~Mmph... where, where's my blanket? It's getting cold...~ [C0BLANK]
+DO ~SetGlobal("C0AuraWilsonToB1","GLOBAL",3)~
+== BC0AUR25 ~Oh, that's nice... it's not my blanket, but it's warm... is it you, <CHARNAME>? Thanks... *yaawwn*~
+== BC0AUR25 ~It's a little heavy, though... if I could just get it to move a little to the right... there we go...~
+== BC0AUR25 ~Whatever it is, it's nice and fluffy, like a stuffed animal... wait, fluffy? Huh...? Are those... ears? What's—~
+== BC0AUR25 ~—!!!~
+== BWILSO25 ~Snore...~
+== BC0AUR25 ~AaaaiiieeeeeeeEEEEEEEEK!!!~
+DO ~ClearAllActions()
+StartCutSceneMode()
+FadeToColor([0.0],0)
+Wait(2)
+RestPartyEx(0,0,FALSE)
+FadeToColor([0.0],0)
+Wait(3)
+FadeFromColor([30.0],0)
+Wait(2)
+EndCutSceneMode()
+Interact("WILSON")~ EXIT
+
+CHAIN
+IF ~InParty("Wilson")
+Range("Wilson",15)
+!StateCheck("Wilson",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraWilsonToB1","GLOBAL",3)~ THEN BC0AUR25 C0AuraWilsonToB3
+~WILSOOOON!~ [C0BLANK]
+DO ~SetGlobal("C0AuraWilsonToB1","GLOBAL",4)~
+== BWILSO25 ~Growl?~
+== BC0AUR25 ~Oh, don't you start with that! Why? WHY?~
+== BWILSO25 ~Snort. Snuffle snuff.~
+== BC0AUR25 ~Okay, so I couldn't find my blanket. Probably got burned up during a battle somewhere, I can't remember. But still! That doesn't mean you can just decide to share body warmth with me without my permission!~
+== BWILSO25 ~Growl...~
+== BC0AUR25 ~You—you're really sorry? You're not trying to fool me?~
+== BWILSO25 ~Roar.~
+== BC0AUR25 ~*sigh* O—okaaay! Alright! Apology accepted. And I'm sorry for pulling so hard on your ears too. That must've hurt.~
+== BWILSO25 ~Rff. Sniff, snuffle snuff.~
+== BC0AUR25 ~I can really pet them? Well... alright, I, I can do this! One step, two steps...~
+== BWILSO25 ~Snuffle...~
+== BC0AUR25 ~Hehe, they're kind of nice and round... this isn't so bad...~
+== BWILSO25 ~Roar.~
+== BC0AUR25 ~Yes, my eyes are tightly closed! You didn't think it'd be so easy for me, did you?~
+== BWILSO25 ~Groah. Grr.~
+== BC0AUR25 ~Sure, it's a start. Thanks, Wilson. I—somehow—understand that you care. I think. I'm still not ruling out being eaten one day.~
+== BWILSO25 ~ROAR!~
+== BC0AUR25 ~Eek! I was just joking!~
 EXIT

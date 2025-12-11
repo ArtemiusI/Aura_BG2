@@ -7,5 +7,5 @@ THEN
 	Wait(2)
 	FadeFromColor([30.0],0)
 	Wait(4)
-	ActionOverride("c0aura",Interact("Imoen"))
+	ActionOverride("c0aura",Interact("Imoen2"))
 END

@@ -240,7 +240,7 @@ Range("C0Aura",15)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraAerieFriendship","GLOBAL",7)~ THEN BAERIE C0AuraAerie7
 ~Aura? Is something the matter?~ [C0BLANK]
-DO ~SetGlobalTimer("C0AuraAerieFriendshipRestTalkTimer","GLOBAL",THREE_DAYS)
+DO ~SetGlobalTimer("C0AuraAerieFriendshipRestTimer","GLOBAL",THREE_DAYS)
 IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
 == BC0AURA2 ~Hmm? Oh, no! Not at all. Why would you ever think so? Haha...~
 == BAERIE ~It's just that... you haven't really seemed yourself lately. Not around me, at least. Usually you're always happy to spend time with me and talk about what you've been doing.~
@@ -271,12 +271,13 @@ END
   ++ ~(Say nothing)~ EXTERN BAERIE C0AuraAerie8-2
 
 CHAIN BC0AURA2 C0AuraAerie8-1
-~I... tried to make a surprise present for Aerie. It... didn't work.~
+~I... umm...~
+= ~I tried to make a surprise present for Aerie. It... didn't work.~
 EXTERN BAERIE C0AuraAerie8-2
 
 CHAIN BAERIE C0AuraAerie8-2
 ~I don't even know what to say... when you told me what it is you made, those metal wings... I think you called them a 'prototype'? I thought I was dreaming at first. Then I saw what happened and my heart nearly stopped.~
-== BC0AURA2 ~I'm... I'm sorry. I overestimated how stable the structure would be, and then... I thought I'd surprise you when it was finally working. Instead all I had to show for my work was some broken metals and a pile of scrap metal.~
+== BC0AURA2 ~I'm... I'm sorry. I overestimated how stable the structure would be, and then... I thought I'd surprise you when it was finally working. Instead all I had to show for my work was some broken bones and a pile of scrap metal.~
 == BAERIE ~You nearly had me scared to death. I'm touched that you wanted to do something like this for me, but do you know how awful I would've felt if you hurt yourself even more badly, or worse?~
 == BC0AURA2 ~*sigh* I didn't have it on my mind at all. My thoughts were entirely on how I could do something to make you happy...~
 == BAERIE ~Oh...~
@@ -328,7 +329,7 @@ DO ~IncrementGlobal("C0AuraAerieFriendship","GLOBAL",1)~
 == BAERIE ~I'm starting to realize... as I am now, I've gotten a chance to find things I might never have before. Thank you for helping me realize that.~
 == BC0AURA2 ~Like a friend who cares for your happiness no matter what?~
 == BAERIE ~Exactly.~
-DO ~GiveItemCreate("c0aaeri","AERIE",0,0,0)~ END
+DO ~GiveItemCreate("c0aaeri","AERIE",0,0,0)~ EXIT
 
 // Anomen
 
@@ -760,7 +761,7 @@ DO ~SetGlobal("C0AuraImoenBombMaker","GLOBAL",2)~
 == BC0AURA2 ~...?~
 == BIMOEN2 ~Watch out, would-be-rivals to the great magi Imoen! With this magnificent weapon in hand I shall smite down your feeble magicks! Never will I be defeated again! Mwahahaha!~
 == BC0AURA2 ~Wow. Erm, I hope I haven't made a serious mistake giving you the formula... at least you're not feeling so gloomy anymore. Mission accomplished, I guess.~
-DO ~ActionOverride("IMOEN",AddSpecialAbility("C0AUIMB"))~ EXIT
+DO ~ActionOverride("IMOEN2",AddSpecialAbility("C0AUIMB"))~ EXIT
 
 // Jaheira
 
@@ -1388,7 +1389,7 @@ EXIT
 // Wilson
 
 CHAIN
-IF ~InParty("Wilson")
+IF WEIGHT #-1 ~InParty("Wilson")
 Range("Wilson",15)
 !StateCheck("Wilson",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
@@ -1404,7 +1405,16 @@ DO ~SetGlobal("C0AuraWilson1","GLOBAL",2)~
 == BC0AURA2 ~A—aaah! Stop, stop it! Let go of my gown! Ohh... why? Why do you have to be here?~
 == BWILSON ~Snuff. Snort! Yawn... zzz...~
 == BC0AURA2 ~Ugh... this is never going to work...~
-EXIT
+DO ~ClearAllActions()
+StartCutSceneMode()
+FadeToColor([0.0],0)
+Wait(2)
+RestPartyEx(0,0,FALSE)
+FadeToColor([0.0],0)
+Wait(3)
+FadeFromColor([30.0],0)
+Wait(2)
+EndCutSceneMode()~ EXIT
 
 CHAIN
 IF ~InParty("Wilson")
@@ -1504,8 +1514,8 @@ DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",1)~
 EXIT
 
 CHAIN
-IF ~InParty("C0Aura")
-Range("C0Aura",15)
+IF ~InParty("Yoshimo")
+Range("Yoshimo",15)
 !StateCheck("Yoshimo",CD_STATE_NOTVALID)
 !StateCheck("C0Aura",CD_STATE_NOTVALID)
 Global("C0AuraYoshimo2","GLOBAL",1)~ THEN BC0AURA2 C0AuraYoshimo2
@@ -1520,4 +1530,50 @@ DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",2)~
 == BYOSHIM ~I do. Though I fear it is not the time for a homecoming for me... not yet.~
 == BC0AURA2 ~"Not yet"?~
 == BYOSHIM ~Well, I must see the end of this journey with <CHARNAME>—and you, my new friend—no? Come now, little one, there is still a tale to be told yet.~
+EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Yoshimo",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraYoshimo2","GLOBAL",2)~ THEN BYOSHIM C0AuraYoshimo3
+~Little Aura, you are quite the paradox. You have keen eyes and deft hands of a rogue, yet also the discipline and responsibility of a samurai. Are all within Lantan much like yourself?~ [C0BLANK]
+DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",3)~
+== BC0AURA2 ~Well... I would like to hope so, yes. It's not only important to learn different skills, but to use them responsibly.~
+== BYOSHIM ~Heh, small wonder then, that even though our profession have some similarity, I rarely feel challenged as to my role in this party. Though your strong sense of morals does shame me on occasion, when I am tempted to fall back into my thieving habits.~
+== BC0AURA2 ~Oh, Yoshimo. You don't have anything to be ashamed of. <CHARNAME> trusts you, and so do I. I know you hope the best for us.~
+== BYOSHIM ~Yes, I... indeed, I do. May our friendship be a long and fruitful one, my dear.~
+EXIT
+
+CHAIN
+IF ~InParty("C0Aura")
+Range("C0Aura",15)
+!StateCheck("Yoshimo",CD_STATE_NOTVALID)
+!StateCheck("C0Aura",CD_STATE_NOTVALID)
+Global("C0AuraYoshimo2","GLOBAL",3)~ THEN BYOSHIM C0AuraYoshimo4
+~I see you often handle that jade pendant you wear when deep in thought, little Aura. It must hold great importance to you, as I have never seen it leave your possession.~ [C0BLANK]
+DO ~IncrementGlobal("C0AuraYoshimo2","GLOBAL",4)~
+== BC0AURA2 ~Yes, it... was a gift. From my mentor, a Kozakuran shrine priestess.~
+== BYOSHIM ~A miko? I see... I have noticed that your attire under your armor resembles a priestess's kosode. It is no coincidence, it seems.~
+== BC0AURA2 ~I spent a few years at a shrine, trying to regain my memory after nearly drowning at sea. It was... more like a long study than a way of life, but I kept a few things to remember that time.~
+== BYOSHIM ~If I may ask... what shrine did you tend to, while you were in my homeland?~
+== BC0AURA2 ~It was... the Amatsugami shrine. Do you know about it?~
+== BYOSHIM ~...~
+== BYOSHIM ~Yes... the name is familiar. That magatama... if it is not too much, may I see it?~
+== BC0AURA2 ~...Alright.~
+== BYOSHIM ~A precious gift, this is. And to me, rather... nostalgic.~
+== BC0AURA2 ~What?~
+== BYOSHIM ~The truth is, my dearest aunt was also a miko. A strong, compassionate woman... when I was an unruly child who my parents feared would bring shame to our name, she was the only one who could instill any lessons within the young Yoshimo, an reckless hellion that you would likely not even recognize, should you have met him. And... she wore a magatama much like this one.~
+== BC0AURA2 ~Oh, I see... how is she now?~
+== BYOSHIM ~I... do not know. As I have said, it has been many years since I have returned home. The last I heard from her was through a letter... written to me over a year ago, regarding some family matters involving my sister. What of your mentor, Aura?~
+== BC0AURA2 ~She—she died. A ronin, a former friend, murdered her, when she had protected me. I travelled to the Sword Coast in order to find him... and I stopped him. I'm... not proud of it, even though I know he committed many evils.~
+== BYOSHIM ~Ah. So that is what happened... do not feel guilt, Aura. A disgraced samurai who would turn his blade against his friend... deserves the shame of dying by that same blade.~
+== BC0AURA2 ~Yoshimo, you... you sound angry. This isn't like you.~
+== BYOSHIM ~Heh. If you sense fury, then consider it to be a righteous sort. In any case... these dark memories are behind you now, no?~
+== BC0AURA2 ~Right.~
+== BC0AURA2 ~Yoshimo?~
+== BYOSHIM ~Yes?~
+== BC0AURA2 ~You should... go home soon. It sounds like there are people who are waiting for you. You might be happier if you saw them again.~
+== BYOSHIM ~Ah... yes. That is sound advice indeed. Soon, I hope I will be returning... in one way or another.~
 EXIT

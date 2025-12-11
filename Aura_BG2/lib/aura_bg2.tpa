@@ -105,7 +105,7 @@ COPY_EXISTING ~SONGLIST.2da~ ~override~
 
 	OUTER_SET C0AU03M = c0au03song
 
-ADD_MUSIC ~C0AU06B~ ~%MOD_FOLDER%/music/C0AU06M.mus~
+ADD_MUSIC ~C0AU06M~ ~%MOD_FOLDER%/music/C0AU06M.mus~
 COPY ~%MOD_FOLDER%/music/C0AU06Ma.acm~ ~MUSIC/C0AU06M/C0AU06Ma.acm~
 
 COPY_EXISTING ~SONGLIST.2da~ ~override~
@@ -556,6 +556,9 @@ ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0041.PRO~ ~C0 WALL OF FIR
 ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0071.PRO~ ~C0 FIRE STORM~
 ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0081.PRO~ ~C0 BLAZING INFERNO~
 ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0PY0511.PRO~ ~C0 BURNING VORTEX~
+ADD_PROJECTILE ~%MOD_FOLDER%/spells/bg2/c0afire1.PRO~ ~C0 FIREBOLT~
+ADD_PROJECTILE ~%MOD_FOLDER%/spells/bg2/C0INARE2.PRO~
+ADD_PROJECTILE ~%MOD_FOLDER%/spells/bg2/C0INARE3.PRO~
 
 LAF cd_new_portrait_icon INT_VAR string = RESOLVE_STR_REF(~Burning~) STR_VAR bam_file = c0kicon1 RET c0kicon1 = icon END
 
@@ -2078,7 +2081,7 @@ WRITE_BYTE 0x270 128
 WRITE_ASCII SCRIPT_OVERRIDE ~C0AGOL04~ #8 // override
 WRITE_ASCII SCRIPT_DEFAULT ~OHBFIG01~ #8 // override
 WRITE_ASCII DEATHVAR ~C0AGOL04~ #32 // death variable
-WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_GOLEM_IRON_SMALL~))
+WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_SHIELD_GUARD~))
 SAY NAME1 ~Lantanese Battle Automaton~
 SAY NAME2 ~Lantanese Battle Automaton~
 
@@ -2333,6 +2336,10 @@ WRITE_ASCII DEATHVAR ~c0afir10~ #32 // death variable
 SAY NAME1 ~Inextinguishable Flame~
 SAY NAME2 ~Inextinguishable Flame~
 
+COPY ~%MOD_FOLDER%/creatures/BG2/c0afir11.cre~ ~override~
+WRITE_ASCII SCRIPT_OVERRIDE ~c0afir11~ #8 // override
+WRITE_ASCII DEATHVAR ~c0afir11~ #32 // death variable
+
 COPY ~%MOD_FOLDER%/creatures/BG2/c0aice01.cre~ ~override~
 WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~C0_SNOW_HAG~))
 WRITE_ASCII DIALOG ~c0aice01~ #8 // dialogue
@@ -2340,6 +2347,18 @@ WRITE_ASCII SCRIPT_OVERRIDE ~c0aice01~ #8 // override
 WRITE_ASCII DEATHVAR ~c0aice01~ #32 // death variable
 SAY NAME1 ~Ishallir~
 SAY NAME2 ~Ishallir~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0auice1.cre~ ~override~
+WRITE_ASCII DIALOG ~c0auice1~ #8 // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0auice1~ #8 // override
+WRITE_ASCII DEATHVAR ~c0auice1~ #32 // death variable
+SAY NAME1 ~Orglash~
+SAY NAME2 ~Orglash~
+
+COPY ~%MOD_FOLDER%/creatures/BG2/c0auiceb.cre~ ~override~
+WRITE_ASCII DIALOG ~c0auiceb~ #8 // dialogue
+WRITE_ASCII SCRIPT_OVERRIDE ~c0auiceb~ #8 // override
+WRITE_ASCII DEATHVAR ~c0auiceb~ #32 // death variable
 
 COPY ~%MOD_FOLDER%/creatures/BG2/C0AUWLF1.cre~ ~override~
 WRITE_ASCII DIALOG ~C0AUWLF1~ #8 // dialogue
@@ -2359,6 +2378,9 @@ WRITE_BYTE 0x27b 18 // alignment
 REMOVE_CRE_ITEMS
 SAY NAME1 ~Spectator Messenger~
 SAY NAME2 ~Spectator Messenger~
+
+COPY_EXISTING ~GORLUM.CRE~ ~override~
+WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~DOOM_GUARD~))
 
 // ToB
 
@@ -2408,13 +2430,14 @@ COPY_EXISTING ar2014.are override
 WRITE_ASCII 0x94 ~ar2014~
 END ELSE BEGIN
 EXTEND_TOP ~ar2014.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar2014.baf~
-EXTEND_TOP ~ar2300.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar2300.baf~
 END
+EXTEND_TOP ~ar2300.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ar2300.baf~
 EXTEND_TOP ~baldur.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/baldur.baf~
 EXTEND_TOP ~JAN.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/JAN.baf~
 EXTEND_BOTTOM ~CUT218G.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/CUT218G.baf~
 EXTEND_BOTTOM ~AERIE.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/AERIE.baf~
 EXTEND_BOTTOM ~AERI25.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/AERIE.baf~
+EXTEND_BOTTOM ~ELEMIMIX.bcs~ ~%MOD_FOLDER%/scripts/BG2EE/ELEMIMIX.baf~
 EXTEND_TOP ~AR6200.bcs~ ~%MOD_FOLDER%/Scripts/BG2EE/AR6200.baf~
 
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aura2.baf~
@@ -2435,6 +2458,8 @@ EXTEND_TOP ~AR6200.bcs~ ~%MOD_FOLDER%/Scripts/BG2EE/AR6200.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aur2.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aur3.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aurb.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aurf.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aice01.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0amaskp.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au02.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0au03.baf~
@@ -2491,7 +2516,11 @@ EXTEND_TOP ~AR6200.bcs~ ~%MOD_FOLDER%/Scripts/BG2EE/AR6200.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0atele1.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0afir05.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0afir10.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0afir11.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0auiceb.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0auiceC.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aukari.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0ayuki.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0akoko.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0arees.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aascl.baf~
@@ -2505,6 +2534,7 @@ EXTEND_TOP ~AR6200.bcs~ ~%MOD_FOLDER%/Scripts/BG2EE/AR6200.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0afritz.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0agol04.baf~
   COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/C0AU25C1.baf~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/scripts/BG2EE/c0aur25d.baf~
 
 //Fate Spirit
 ACTION_IF GAME_IS ~eet~ BEGIN
@@ -2811,6 +2841,18 @@ COPY_EXISTING ~c0aqef10.spl~ ~override~
 COPY_EXISTING ~c0aqef12.spl~ ~override~
 SAY NAME1 ~Flames of Sovereignty~
 
+COPY_EXISTING ~c0aqef14.spl~ ~override~
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		projectile = C0INARE3
+END
+
+COPY_EXISTING ~c0aqef15.spl~ ~override~
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		projectile = C0INARE2
+END
+
 COPY_EXISTING ~c0aqef21.spl~ ~override~
   LPF ALTER_SPELL_HEADER
 	INT_VAR
@@ -2820,6 +2862,15 @@ END
 
 COPY_EXISTING ~c0aqef23.spl~ ~override~
 SAY NAME1 ~Gond's Glory—+10 to Armor Class vs. Crushing, +25% Crushing Resistance, +5 to Hit/Damage vs. Constructs~
+
+COPY_EXISTING ~c0auice2.spl~ ~override/c0auice3.spl~
+COPY_EXISTING ~c0auice2.spl~ ~override/c0auice4.spl~
+COPY_EXISTING ~c0auice5.spl~ ~override/c0auice6.spl~
+LPF ALTER_EFFECT INT_VAR match_opcode = 321 STR_VAR resource = c0auice2 END
+COPY_EXISTING ~c0auice5.spl~ ~override/c0auice7.spl~
+LPF ALTER_EFFECT INT_VAR match_opcode = 321 STR_VAR resource = c0auice3 END
+COPY_EXISTING ~c0auice5.spl~ ~override/c0auice8.spl~
+LPF ALTER_EFFECT INT_VAR match_opcode = 321 STR_VAR resource = c0auice4 END
 
 ////////////
 // Armors //
@@ -2917,7 +2968,7 @@ STATISTICS:
 
 Equipped abilities:
 – Movement Rate: +50% (if Aura is in the party)
-– Casting Speed: +2 (if Aura is in the party)
+– Casting Speed: +1 (if Aura is in the party)
 
 Weight: 0~
 
@@ -3413,6 +3464,13 @@ Weight: 0~
 	WRITE_SHORT 0x001c	~%grenade%~
 WRITE_LONG 0x34 3000
 
+COPY_EXISTING ~c0auimb.spl~ ~override~
+SAY NAME1 ~Advanced Alchemy: Create Arcane Disjunctor~
+SAY UNIDENTIFIED_DESC ~Advanced Alchemy: Create Arcane Disjunctor
+With assistance from Aura combined with her own magical knowledge, Imoen has the ability to create three Arcane Disjunctor grenades once per day.
+
+When thrown, the Arcane Disjunctor unleashes a burst of arcane energy which deals 8d6 Magic Damage (Save vs. Spells for half) and, on a failed Saving Throw vs. Spells, causes all spells cast by afflicted targets within the next five rounds to be miscast. If targets pass their Saving Throw, the miscast chance is reduced to 50% and duration is reduced to two rounds. Regardless of whether targets make their Saving Throw, their casting speed is also penalized by 2 for five rounds.~
+
 COPY_EXISTING ~c0auimb.itm~ ~override~
 SAY NAME1 ~Grenade~
 SAY NAME2 ~Arcane Disjunctor~
@@ -3420,7 +3478,7 @@ SAY DESC ~The Arcane Disjunctor was created via collaboration by Imoen and Aura 
 
 STATISTICS:
 
-When thrown, unleashes a burst of arcane energy which deals 8d6 Magic Damage (Save vs. Spells for half) and, on a failed Saving Throw vs. Spells, causes all spells cast by afflicted targets within the next five rounds to be miscast. If targets pass their Saving Throw, the miscast chance is reduced to 50% and duration is reduced to two rounds. Regardless of whether targets make their Saving Throw, their casting speed is also penalized by 2 for five rounds.
+When thrown, unleashes a burst of arcane energy which deals 2d6 Magic Damage (Save vs. Spells for half) and, on a failed Saving Throw vs. Spells, causes all spells cast by afflicted targets within the next five rounds to be miscast. If targets pass their Saving Throw, the miscast chance is reduced to 50% and duration is reduced to two rounds. Regardless of whether targets make their Saving Throw, their casting speed is also penalized by 2 for five rounds.
 
 Weight: 1~
 	WRITE_SHORT 0x001c	~%grenade%~
@@ -3524,9 +3582,9 @@ Pleasepleasepleasepleeeease work..." – A
 GRADE I
 Requirements: 13th level artificer, one Emerald, one Potion of Regeneration, 3,000 gold
 GRADE II
-Requirements: 17th level artificer, one Emerald, two Potions of Power, one Potion of Superior Healing, 5,000 gold
+Requirements: 17th level artificer, one Emerald, one Pearly White Ioun Stone, 5,000 gold
 GRADE III
-Requirements: 22nd level artificer, one Pearly White Ioun Stone, one Ring of Regeneration, 8,000 gold
+Requirements: 22nd level artificer, two Emeralds, one Ring of Regeneration, 8,000 gold
 
 STATISTICS:
 
@@ -4331,6 +4389,12 @@ Requires: 17 Constitution
 
 Weight: 1~
 
+COPY_EXISTING ~C0ACIRC2.SPL~ ~OVERRIDE~
+  LPF ALTER_SPELL_HEADER
+	INT_VAR
+		projectile = C0INAREE
+END
+
 COPY_EXISTING ~c0ausw05.spl~ ~override~
   LPF ALTER_EFFECT
     INT_VAR
@@ -4852,6 +4916,83 @@ SAY NAME1 ~Note~
 SAY NAME2 ~Note~
 SAY DESC ~Go to the southern end of the Bridge District at nighttime.~
 
+COPY_EXISTING ~scrla9.itm~ ~override/c0aqnot1.itm~
+SAY NAME1 ~Note~
+SAY NAME2 ~Dossier: Asclepios~
+SAY DESC ~Name: Asclepios Cohval
+Race: Human
+Age: Mid-sixties
+Place of origin: Halruaa
+Appearance: Grey hair and beard, black eyes, fair complexion
+Other characteristics: Wears grey robes, always carries a gnarled wooden staff
+Status: Deceased
+
+Former Halruaan alchemist. Founder of the Twenty-Seven Theories of Alchymia, master of herblore, alchemy, poisons and medicine. Exceptional proficiency with arcane magic. Exiled from home city of Porthia by Halruaan council due to unethical scientific practices.
+
+During the Time of Troubles, Asclepios's daughter, Lilienne Cohval, was afflicted with Rafilia's Withering. During the time of her illness, no known cure had been discovered by any researcher throughout the realms. As magic had become unstable while divine powers had ceased to function, Asclepios spent five years devoted to the research of medicine and the human body, eventually resorting to unsanctioned and unpracticed human experimentation. Asclepios ceased his experiments and surrendered to Halruaan authorities when he was found, and sympathy from the judges lightened his sentence from execution to exile. For his following years, Asclepios travelled throughout the realms to study medicine from other cultures, including many from outside of Faerûn, while publishing the results of his new research under the names of various practitioners of medicine he has associated with. It is likely that the works written by certain accomplished physicians within the past decade can be attributed to him.
+
+During the past few months, Asclepios was sighted within Athkatla, having made his residence in the Slums district curing the ill and donating remedies to the church of Ilmater. He has been kept under constant supervision when sighted by novice enforcer Gilbert Abatangelo.~
+
+COPY_EXISTING ~scrla9.itm~ ~override/c0aqnot2.itm~
+SAY NAME1 ~Note~
+SAY NAME2 ~Dossier: Caridius~
+SAY DESC ~Name: Caridius Mirathos Magnussen
+Race: Gnome
+Age: 270
+Place of origin: Lantan
+Appearance: White hair and beard, balding
+Other characteristics: Wears purple robes and spectacles.
+Status: Alive
+
+Exiled researcher and former professor of the Sambaran academy. Professor Caridius's exile due to his research into the Pythonic solution and the unexpected incidents as a consequence of its creation was voluntary, and thus he has been allowed a significant amount of freedom and permitted to submit his research material to the Gondar church anonymously. All processes in regard to the matter will be handled by enforcer Reese Sprocket, currently assigned in role of bodyguard and assistant of the professor.~
+
+COPY_EXISTING ~scrla9.itm~ ~override/c0aqnot3.itm~
+SAY NAME1 ~Note~
+SAY NAME2 ~Dossier: Aura~
+SAY DESC ~Name: Aurelia Minerva Eveline Glimmershine
+Race: Gnome
+Age: 53
+Place of origin: Lantan
+Appearance: Pink hair (dyed, natural color is platinum blonde), golden eyes
+Other characteristics: Wears pink armor over white robes of Kozakuran-inspired design, carries mithral compound bow of unique design
+Status: Alive
+
+Third child of the Glimmershine family. Eldest sister is Oculus captain Juno Glimmershine. Currently on travel from the homeland for personal reasons and recently sighted in Athkatla in association with <CHARNAME>, child of Bhaal and adventurer famed for heroism throughout the Sword Coast. Was assumed deceased after shipwreck accident along with other Lantan researchers six years ago, but survived according to later information. Currently at a high risk of being targeted by Interitus enforcers, and is being kept under observation as per the captain's request.
+
+Despite judgment as to the contrary from the captain, the possibility of dame Aurelia as a candidate for being the Overseer should not be discarded. Further investigation is required.~
+
+COPY_EXISTING ~scrla9.itm~ ~override/c0aqnot4.itm~
+SAY NAME1 ~Note~
+SAY NAME2 ~Dossier: Overseer~
+SAY DESC ~Name: Unknown
+Race: Unknown
+Age: Unknown
+Place of origin: Unknown
+Appearance: Unknown
+Other characteristics: Unknown
+Status: Unknown
+
+There has currently been no information gathered regarding the identity or motivations of the individual known as the Overseer. The existence of such a person has only been collaborated thus far by the testimony of captured Interitus agents. However, the sightings of unprecedented weaponry of Lantanese design heavily support the current suspicious of a highly skilled artificer aligned with their goals.~
+
+COPY_EXISTING ~scrla9.itm~ ~override/c0aqnot5.itm~
+SAY NAME1 ~Note~
+SAY NAME2 ~Dossier: Dedalus~
+SAY DESC ~Name: Dedalus Dinelstrand
+Race: Gnome
+Age: 150
+Place of origin: Lantan
+Appearance: Black hair and beard, black eyes
+Other characteristics: Wears black longcoat. Carries platinum blade of unique design at all times.
+Status: Alive
+
+High Artificer of the Eleventh Workshop of Weapons Design. A top-grade alumnus of the Sambaran academy, and half-brother of First Workshop advisor Kairos Glimmershine. Elder brother of deceased High Artificer of the Fourth Workshop of Lifeworking, Glaphyra Dinelstrand. Since the death of High Artificer Glaphyra as well as her fellow researchers under mysterious circumstances as well as the closing of the Fourth Workshop by the order of the Ayrorch, Dedalus has assumed guardianship of Glaphyra's only daughter, Liro.
+
+The assigned role of the Eleventh Workshop has earned it the highest level of scrutiny and restrictions from the Ayrorch, yet High Artificer Dedalus has served his duty without fault since assuming the role, working harmoniously with all other Great Workshops in adapting their research for use in the nation's defense.
+
+High Artificer Dedalus's parents, Arthur and Vera Dinelstrand, were lost in an accident at sea several decades ago while visiting the outerlands for research. Though evidence is circumstantial, certain members of Oculus have suspected their deaths were caused by intentional sabotage by spies working for foreign nations in an attempt to steal Lantanese secrets.
+
+Additional notes: As has been observed during various incidents, the High Artificer is exceptionally skilled in swordplay and must be approached with caution, should there be cause to apprehend him for any given reason. All Oculus enforcers are strongly advised by the captain not to attempt to act against him alone under any circumstances.~
+
 COPY_EXISTING ~c0autt3x.itm~ ~override~
 SAY NAME1 ~Aura's Wildsurge Amplifier (???)~
 SAY NAME2 ~Aura's Wildsurge Amplifier (???)~
@@ -5039,7 +5180,26 @@ SAY NAME1 ~Copper Dragon Breath~
 SAY UNIDENTIFIED_DESC ~Breath Weapon
 The character breathes out an acidic cloud, inflicting 6d6 points of acid damage to all creatures caught within the area of effect (Save vs. Breath for half damage) and slowing all targets for 2 rounds on a failed Save vs. Death at -6.~
 
-  
+COPY_EXISTING ~C0MSP01.SPL~ ~override~
+      LPF ALTER_EFFECT
+      INT_VAR
+        match_opcode      = 139   // Display portrait icon
+        parameter1 = RESOLVE_STR_REF (~Stunned~)
+      END
+	  
+SAY NAME1 ~Gear Crash~
+SAY UNIDENTIFIED_DESC ~Gear Crash
+(Evocation)
+
+Level: 1
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: Neg.
+
+A gear-shaped mass of energy originating from the plane of Mechanus is formed above the targeted creature, smashing into them and dealing 6d6 damage (half magical, half physical). If the target fails a Saving Throw vs. Spells, they are additionally Stunned for 1 round.~
+
 // Epilogue
 
 COPY ~%MOD_FOLDER%/Epilogue/C0AuEpzz.2da~ ~override/C0AuEp01.2da~

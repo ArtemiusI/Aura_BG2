@@ -85,7 +85,8 @@ Global("C0AutoUpgradeSpecial3","GLOBAL",1)
 Global("C0AutoUpgradeSpecial4","GLOBAL",1)
 Global("C0AutoUpgradeSpecial5","GLOBAL",4)~ + ~Special upgrades.~ + UPGRADE-SPECIAL-ALL
 ++ ~Check current upgrades.~ + CHECK-UPGRADES
-++ ~Do nothing.~ DO ~SetGlobal("Upgraded","LOCALS",1)~ EXIT
+++ ~Do nothing.~ DO ~DestroyAllDestructableEquipment()
+SetGlobal("Upgraded","LOCALS",1)~ EXIT
 
 CHAIN C0AUIN3 upgrades2
 ~What else do you wish to do?~
@@ -122,7 +123,8 @@ Global("C0AutoUpgradeSpecial3","GLOBAL",1)
 Global("C0AutoUpgradeSpecial4","GLOBAL",1)
 Global("C0AutoUpgradeSpecial5","GLOBAL",4)~ + ~Special upgrades.~ + UPGRADE-SPECIAL-ALL
 ++ ~Check current upgrades.~ + CHECK-UPGRADES
-++ ~Do nothing.~ DO ~SetGlobal("Upgraded","LOCALS",1)~ EXIT
+++ ~Do nothing.~ DO ~DestroyAllDestructableEquipment()
+SetGlobal("Upgraded","LOCALS",1)~ EXIT
 
 CHAIN C0AUIN3 UPGRADE-OFFENSE-ALL
 ~This unit's offenses have already been fully optimized.~
@@ -196,6 +198,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -211,6 +214,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -226,6 +230,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -241,6 +246,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -256,6 +262,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -271,6 +278,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -286,6 +294,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -301,6 +310,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -317,6 +327,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -332,6 +343,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -348,6 +360,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -363,6 +376,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -378,6 +392,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -393,6 +408,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -408,6 +424,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -423,6 +440,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -438,6 +456,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,11)
@@ -453,6 +472,7 @@ DestroyGold(5000)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -478,6 +498,7 @@ DestroyGold(7500)
 SetGlobal("AugmentedBlade","LOCALS",1)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1c",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -493,8 +514,17 @@ PartyHasItem("c0amith")
 PartyGoldGT(9999)
 NumItemsPartyGT("misc45",1)~ + ~Upgrade to Augmented Blade IV.~ DO ~SetGlobal("C0AutoUpgradeOffense1","GLOBAL",3)
 SetGlobal("AugmentedBlade","LOCALS",1)
+TakePartyItem("c0amith")
+DestroyItem("c0amith")
+TakePartyItemNum("scrl6m",1)
+DestroyItem("scrl6m")
+TakePartyItemNum("misc45",2)
+DestroyItem("misc45")
+TakePartyGold(7500)
+DestroyGold(7500)
 CreateVisualEffectObject("icstreni",Myself)
 ApplySpellRES("c0auto1d",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -517,6 +547,7 @@ DestroyGold(5000)
 SetGlobal("WeaponImpact","LOCALS",1)
 CreateVisualEffectObject("spcrtwpn",Myself)
 ApplySpellRES("c0auto2a",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -539,6 +570,7 @@ DestroyGold(8000)
 SetGlobal("WeaponImpact","LOCALS",1)
 CreateVisualEffectObject("spcrtwpn",Myself)
 ApplySpellRES("c0auto2b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -561,6 +593,7 @@ DestroyGold(12000)
 SetGlobal("WeaponImpact","LOCALS",1)
 CreateVisualEffectObject("spcrtwpn",Myself)
 ApplySpellRES("c0auto2c",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -583,6 +616,7 @@ DestroyItem("sw1h05")
 SetGlobal("KeenEdge","LOCALS",1)
 CreateVisualEffectObject("spflblad",Myself)
 ApplySpellRES("c0auto3a",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -605,6 +639,7 @@ DestroyGold(8000)
 SetGlobal("KeenEdge","LOCALS",1)
 CreateVisualEffectObject("spflblad",Myself)
 ApplySpellRES("c0auto3b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -627,6 +662,7 @@ DestroyGold(12000)
 SetGlobal("KeenEdge","LOCALS",1)
 CreateVisualEffectObject("spflblad",Myself)
 ApplySpellRES("c0auto3c",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -649,6 +685,7 @@ DestroyGold(2000)
 SetGlobal("ReinforcedPlating","LOCALS",1)
 CreateVisualEffectObject("icarmor",Myself)
 ApplySpellRES("c0auto4a",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -671,6 +708,7 @@ DestroyGold(6000)
 SetGlobal("ReinforcedPlating","LOCALS",1)
 CreateVisualEffectObject("icarmor",Myself)
 ApplySpellRES("c0auto4b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -693,6 +731,7 @@ DestroyGold(10000)
 SetGlobal("ReinforcedPlating","LOCALS",1)
 CreateVisualEffectObject("icarmor",Myself)
 ApplySpellRES("c0auto4c",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 + ~Kit(Lasttalkedtoby(Myself),C0AURA)
 ClassLevelGT(Lasttalkedtoby(Myself),ROGUE,15)
@@ -709,6 +748,7 @@ DestroyGold(10000)
 SetGlobal("ReinforcedPlating","LOCALS",1)
 CreateVisualEffectObject("icarmor",Myself)
 ApplySpellRES("c0auto4c",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -728,6 +768,7 @@ DestroyGold(4000)
 SetGlobal("AntimagicShielding","LOCALS",1)
 CreateVisualEffectObject("magres2",Myself)
 ApplySpellRES("c0auto5a",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -750,6 +791,7 @@ DestroyGold(8000)
 SetGlobal("AntimagicShielding","LOCALS",1)
 CreateVisualEffectObject("magres2",Myself)
 ApplySpellRES("c0auto5b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -775,6 +817,7 @@ DestroyGold(10000)
 SetGlobal("AntimagicShielding","LOCALS",1)
 CreateVisualEffectObject("magres2",Myself)
 ApplySpellRES("c0auto5c",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -797,6 +840,7 @@ DestroyGold(3000)
 SetGlobal("SelfRepairThaumaturgy","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 ApplySpellRES("c0auto6a",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -819,6 +863,7 @@ DestroyGold(5000)
 SetGlobal("SelfRepairThaumaturgy","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 ApplySpellRES("c0auto6b",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -836,11 +881,13 @@ TakePartyItem("ring31")
 DestroyItem("ring31")
 TakePartyItemNum("misc43",2)
 DestroyItem("misc43")
+DestroyItem("misc43")
 TakePartyGold(8000)
 DestroyGold(8000)
 SetGlobal("SelfRepairThaumaturgy","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 ApplySpellRES("c0auto6c",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -860,6 +907,7 @@ DestroyGold(2000)
 SetGlobal("Teleportation","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 AddSpecialAbility("c0auto7a")
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -880,6 +928,7 @@ SetGlobal("GolemSlow","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 AddSpecialAbility("c0auto8a")
 AddSpecialAbility("c0auto8a")
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -900,6 +949,7 @@ SetGlobal("GolemHaste","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 AddSpecialAbility("c0auto9a")
 AddSpecialAbility("c0auto9a")
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -922,6 +972,7 @@ DestroyGold(6000)
 SetGlobal("GasCloud","LOCALS",1)
 CreateVisualEffectObject("icrmpari",Myself)
 AddSpecialAbility("c0auto0a")
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -943,6 +994,7 @@ PartyGoldGT(1999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",1
 TakePartyGold(2000)
 DestroyGold(2000)
 CreateVisualEffectObject("SPROTECT",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -964,6 +1016,7 @@ PartyGoldGT(4999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",2
 TakePartyGold(5000)
 DestroyGold(5000)
 CreateVisualEffectObject("SPROTECT",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -985,6 +1038,7 @@ PartyGoldGT(0999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",3
 TakePartyGold(10000)
 DestroyGold(10000)
 CreateVisualEffectObject("SPROTECT",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 
@@ -1006,6 +1060,7 @@ PartyGoldGT(19999)~ + ~Upgrade.~ DO ~SetGlobal("C0AutoUpgradeSpecial5","GLOBAL",
 TakePartyGold(20000)
 DestroyGold(20000)
 CreateVisualEffectObject("SPROTECT",Myself)
+DestroyAllDestructableEquipment()
 SetGlobal("Upgraded","LOCALS",1)~ EXIT
 ++ ~Go back.~ + upgrades2
 

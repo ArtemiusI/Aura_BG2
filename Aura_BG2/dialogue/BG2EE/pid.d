@@ -270,35 +270,35 @@ CHAIN C0AURA2J CHAPTER-3-BODHI-1-3
 EXIT
 
 CHAIN C0AURA2J CHAPTER-3-BODHI-2
-~I ~
+~You've heard my piece, <CHARNAME>. I'm not too comfortable with the sort of help we're getting, but I have to put my trust in you... so follow what course you think is right.~
 EXIT
 
 CHAIN C0AURA2J CHAPTER-4-BEFORE-SPELLHOLD
-~I ~
+~I'm... still getting my bearings after getting off the ship, <CHARNAME>. I'm sorry... I can't put my thoughts in order right now. Maybe later.~
 EXIT
 
 CHAIN C0AURA2J CHAPTER-4-IN-SPELLHOLD
-~I ~
+~Well... we're in now. And I absolutely hate every inch of it. Please, let's just... do our part and get out of here.~
 EXIT
 
 CHAIN C0AURA2J CHAPTER-5
-~I ~
+~The Underdark is a strange, terrifying, yet... mystifying place. This is the first time I've ever been here, and I know it's dangerous... but I can't help but want to see more of it. And maybe some of my underground cousins, if they're willing to talk to us...~
 EXIT
 
 CHAIN C0AURA2J CHAPTER-6-BODHI-ALIVE
-~I ~
+~After everything Bodhi's done to us and others, I'm not even going to pretend I'm not glad we'll have a chance to stop their evil. Even if it's just another task left to us, let's... do our best and finish this.~
 EXIT
 
 CHAIN C0AURA2J CHAPTER-6-BODHI-DEAD
-~~
+~<CHARNAME>, I think you know better than I do what the next step should be. I'll just follow your lead.~
 EXIT
 
 CHAIN C0AURA2J CHAPTER-7-SULDAN
-~I ~
+~Suldanessellar, it's... beautiful. It's so beautiful, I could compare it to my homeland... I only wish there wasn't this much destruction and death. I want to stop it. Please, let's save them. All of them.~
 EXIT
 
 CHAIN C0AURA2J CHAPTER-7-HELL
-~I ~
+~This won't be the end of the road for us, <CHARNAME>... not if we keep looking out for each other. I'm ready for our last stand.~
 EXIT
 
 CHAIN C0AURA2J RANDTALK
@@ -313,8 +313,8 @@ IF ~RandomNum(9,6)~ + RANDTALK-6
 IF ~RandomNum(9,7)~ + RANDTALK-7
 IF ~RandomNum(9,8)~ + RANDTALK-8
 IF ~RandomNum(9,9)~ + RANDTALK-9
-IF ~RandomNum(9,9) Global("C0AuraKnowsBG1","GLOBAL",1) GlobalLT("Chapter","GLOBAL",4)~ + RANDTALK-9a
-IF ~RandomNum(9,9) Global("C0AuraKnowsBG1","GLOBAL",1) GlobalGT("Chapter","GLOBAL",3) InParty("Imoen")~ + RANDTALK-9b
+IF ~RandomNum(9,9) Global("C0AuraKnowsBG1","GLOBAL",1) GlobalLT("Chapter","GLOBAL",%bg2_chapter_4%)~ + RANDTALK-9a
+IF ~RandomNum(9,9) Global("C0AuraKnowsBG1","GLOBAL",1) GlobalGT("Chapter","GLOBAL",%bg2_chapter_3%) InParty("IMOEN2")~ + RANDTALK-9b
 IF ~CheckStatGT(Myself,8,FATIGUE)~ + RANDTALK-TIRED
 
 CHAIN C0AURA2J RANDTALK-1
@@ -501,8 +501,8 @@ InParty("EDWIN")~ + ~What do you think of Edwin?~ + ASKEDWIN-FEMALE
 + ~InParty("HAERDALIS")~ + ~What do you think of Haer'Dalis?~ + ASKHAERDALIS
 + ~InParty("OHHFAK")~ + ~What do you think of Hexxat?~ + ASKCLARA
 + ~InParty("HEXXAT")~ + ~What do you think of Hexxat?~ + ASKHEXXAT
-+ ~!Global("C0AuraKnowsBG1","GLOBAL",1) InParty("IMOEN")~ + ~What do you think of Imoen?~ + ASKIMOEN-NOBG1
-+ ~Global("C0AuraKnowsBG1","GLOBAL",1) InParty("IMOEN")~ + ~What do you think of Imoen?~ + ASKIMOEN-BG1
++ ~!Global("C0AuraKnowsBG1","GLOBAL",1) InParty("IMOEN2")~ + ~What do you think of Imoen?~ + ASKIMOEN-NOBG1
++ ~Global("C0AuraKnowsBG1","GLOBAL",1) InParty("IMOEN2")~ + ~What do you think of Imoen?~ + ASKIMOEN-BG1
 + ~InParty("JAHEIRA")~ + ~What do you think of Jaheira?~ + ASKJAHEIRA
 + ~InParty("JAN")~ + ~What do you think of Jan?~ + ASKJAN
 + ~InParty("KELDORN")~ + ~What do you think of Keldorn?~ + ASKKELDORN
@@ -531,18 +531,19 @@ InParty("L#2VERR")~ + ~What do you think of Verr'Sza?~ + ASKVERRSZA-PHALH
 Global("C0AuraYoshimoFriendship","GLOBAL",0)~ + ~What do you think of Yoshimo?~ + ASKYOSHIMO-NOFRIEND
 + ~InParty("YOSHIMO")
 GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0)~ + ~What do you think of Yoshimo?~ + ASKYOSHIMO-FRIEND
-+ ~Dead("YOSHIMO")
-Global("C0AuraYoshimoFriendship","GLOBAL",0)
++ ~Global("C0AuraYoshimoBetrayal","GLOBAL",0)
+Dead("YOSHIMO")
+!GlobalGT("C0AuraYoshimo2","GLOBAL",4)
 Global("C0AuraYoshimoFriendshipDeadTalk","GLOBAL",0)~ + ~What do you think of Yoshimo?~ DO ~SetGlobal("C0AuraYoshimoFriendshipDeadTalk","GLOBAL",-1)~ + ASKYOSHIMO-DEAD-NOFRIEND
 + ~Global("C0AuraYoshimoBetrayal","GLOBAL",1)
 Dead("YOSHIMO")
-GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0)
+GlobalGT("C0AuraYoshimo2","GLOBAL",4)
 OR(2)
 Global("C0AuraYoshimoFriendshipDeadTalk","GLOBAL",0)
 !GlobalTimerExpired("C0AuraYoshimoFriendshipDeadTimer","GLOBAL")~ + ~What do you think of Yoshimo?~ DO ~SetGlobal("C0AuraYoshimoFriendshipDeadTalk","GLOBAL",1) SetGlobalTimer("C0AuraYoshimoFriendshipDeadTimer","GLOBAL",THREE_DAYS)~ + ASKYOSHIMO-FRIEND-BEFORETIMER
 + ~Global("C0AuraYoshimoBetrayal","GLOBAL",1)
 Dead("YOSHIMO")
-GlobalGT("C0AuraYoshimoFriendship","GLOBAL",0)
+GlobalGT("C0AuraYoshimo2","GLOBAL",4)
 Global("C0AuraYoshimoFriendshipDeadTalk","GLOBAL",1)
 GlobalTimerExpired("C0AuraYoshimoFriendshipDeadTimer","GLOBAL")~ + ~What do you think of Yoshimo?~ DO ~SetGlobal("C0AuraYoshimoFriendshipDeadTalk","GLOBAL",2)~ + ASKYOSHIMO-FRIEND-AFTERTIMER
 + ~InParty("YXYVE")~ + ~What do you think of Yvette?~ + ASKYVETTE
@@ -768,8 +769,8 @@ END
 + ~RandomNum(4,1) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2A
 + ~RandomNum(4,2) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2B
 + ~RandomNum(4,3) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2C
-+ ~RandomNum(4,4) Global("C0AuraRomanceActive","GLOBAL",2) !InParty("IMOEN")~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2A
-+ ~RandomNum(4,4) Global("C0AuraRomanceActive","GLOBAL",2) InParty("IMOEN")~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2D
++ ~RandomNum(4,4) Global("C0AuraRomanceActive","GLOBAL",2) !InParty("IMOEN2")~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2A
++ ~RandomNum(4,4) Global("C0AuraRomanceActive","GLOBAL",2) InParty("IMOEN2")~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2D
 + ~RandomNum(3,1) !Race(Player1,HALFLING) !Race(Player1,DWARF) !Race(Player1,GNOME)~ + ~(Lift her up and hug her)~ + FLIRT-1-3A
 + ~RandomNum(3,2) !Race(Player1,HALFLING) !Race(Player1,DWARF) !Race(Player1,GNOME)~ + ~(Lift her up and hug her)~ + FLIRT-1-3B
 + ~RandomNum(3,3) !Race(Player1,HALFLING) !Race(Player1,DWARF) !Race(Player1,GNOME)~ + ~(Lift her up and hug her)~ + FLIRT-1-3C
@@ -1026,3 +1027,312 @@ EXIT
 CHAIN C0AURA2J FLIRT-1-9C
 ~No fair, <CHARNAME>! Let me pull your ears once in a while.~
 EXIT
+
+CHAIN IF ~IsGabber(Player1) CombatCounter(0) !Detect([ENEMY]) Global("C0AuraInsulted","GLOBAL",0)~ THEN C0AUR25J pid
+~Yep?~ [C0AU022]
+END
+ + ~PartyHasItem("c0aubo6") PartyHasItem("COMPON10")~ + ~I'll give you the Bowstring of Gond, Aura. See how you can enhance the Sunshooter.~ + TOB-SUNSHOOTER
+ + ~OR(2) Global("C0AuraRomanceActive","GLOBAL",1) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Flirt)~ + FLIRT
+ ++ ~I think there's a problem with your voice.~ + stringfix
+ ++ ~I need nothing at the moment.~ EXIT
+
+CHAIN C0AUR25J TOB-SUNSHOOTER
+~You... you're really giving me this opportunity, <CHARNAME>? I'm, I'm honored twice over!~
+= ~Alright... let's see what I can do...~
+DO ~SetGlobal("C0AuraToBBowstring","GLOBAL",3)
+ClearAllActions()
+StartCutSceneMode()
+CreateCreatureObject("C0MUFFY2",Myself,0,0,0)
+SmallWait(1)
+ActionOverride("C0MUFFY2",TakePartyItem("COMPON10"))
+ActionOverride("C0MUFFY2",DestroySelf())
+Wait(2)
+CreateVisualEffectObject("spcrtwpn",Myself)
+TransformItem("c0aubo6","c0aubo7")
+EquipRanged()
+Wait(2)
+SetSequence(SEQ_SHOOT)
+Wait(2)
+StartDialogNoSet(Player1)~ EXIT
+
+CHAIN C0AUR25J FLIRT
+~Hmm?~
+END
++ ~RandomNum(4,1) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Kiss her lips)~ + FLIRT-2-1A
++ ~RandomNum(4,2) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Kiss her lips)~ + FLIRT-2-1B
++ ~RandomNum(4,3) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Kiss her lips)~ + FLIRT-2-1C
++ ~RandomNum(4,4) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Kiss her lips)~ + FLIRT-2-1D
++ ~RandomNum(4,1)~ + ~(Kiss her cheek)~ + FLIRT-1-1A
++ ~RandomNum(4,2)~ + ~(Kiss her cheek)~ + FLIRT-1-1B
++ ~RandomNum(4,3)~ + ~(Kiss her cheek)~ + FLIRT-1-1C
++ ~RandomNum(4,4)~ + ~(Kiss her cheek)~ + FLIRT-1-1D
++ ~RandomNum(3,1)~ + ~(Kiss her nose)~ + FLIRT-1-2A
++ ~RandomNum(3,2)~ + ~(Kiss her nose)~ + FLIRT-1-2B
++ ~RandomNum(3,3)~ + ~(Kiss her nose)~ + FLIRT-1-2C
++ ~RandomNum(4,1) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2A
++ ~RandomNum(4,2) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2B
++ ~RandomNum(4,3) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2C
++ ~RandomNum(4,4) Global("C0AuraRomanceActive","GLOBAL",2) !InParty("IMOEN2")~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2A
++ ~RandomNum(4,4) Global("C0AuraRomanceActive","GLOBAL",2) InParty("IMOEN2")~ + ~(Hold her close and squeeze tightly)~ + FLIRT-2-2D
++ ~RandomNum(3,1) !Race(Player1,HALFLING) !Race(Player1,DWARF) !Race(Player1,GNOME)~ + ~(Lift her up and hug her)~ + FLIRT-1-3A
++ ~RandomNum(3,2) !Race(Player1,HALFLING) !Race(Player1,DWARF) !Race(Player1,GNOME)~ + ~(Lift her up and hug her)~ + FLIRT-1-3B
++ ~RandomNum(3,3) !Race(Player1,HALFLING) !Race(Player1,DWARF) !Race(Player1,GNOME)~ + ~(Lift her up and hug her)~ + FLIRT-1-3C
++ ~RandomNum(3,1) OR(3) Race(Player1,HALFLING) Race(Player1,DWARF) Race(Player1,GNOME)~ + ~(Hug her)~ + FLIRT-1-3A
++ ~RandomNum(3,2) OR(3) Race(Player1,HALFLING) Race(Player1,DWARF) Race(Player1,GNOME)~ + ~(Hug her)~ + FLIRT-1-3B
++ ~RandomNum(3,3) OR(3) Race(Player1,HALFLING) Race(Player1,DWARF) Race(Player1,GNOME)~ + ~(Hug her)~ + FLIRT-1-3D
++ ~RandomNum(3,1)~ + ~(Wink at her)~ + FLIRT-1-4A
++ ~RandomNum(3,2)~ + ~(Wink at her)~ + FLIRT-1-4B
++ ~RandomNum(3,3)~ + ~(Wink at her)~ + FLIRT-1-4C
++ ~RandomNum(3,1)~ + ~(Tickle her)~ + FLIRT-1-5A
++ ~RandomNum(3,2)~ + ~(Tickle her)~ + FLIRT-1-5B
++ ~RandomNum(3,3)~ + ~(Tickle her)~ + FLIRT-1-5C
++ ~RandomNum(3,1)~ + ~(Pinch her cheeks)~ + FLIRT-1-6A
++ ~RandomNum(3,2)~ + ~(Pinch her cheeks)~ + FLIRT-1-6B
++ ~RandomNum(3,3)~ + ~(Pinch her cheeks)~ + FLIRT-1-6C
++ ~RandomNum(3,1)~ + ~(Poke her nose)~ + FLIRT-1-7A
++ ~RandomNum(3,2)~ + ~(Poke her nose)~ + FLIRT-1-7B
++ ~RandomNum(3,3) !Race(Player1,HALFLING) !Race(Player1,DWARF) !Race(Player1,GNOME)~ + ~(Poke her nose)~ + FLIRT-1-7C
++ ~RandomNum(3,3) OR(3) Race(Player1,HALFLING) Race(Player1,DWARF) Race(Player1,GNOME)~ + ~(Poke her nose)~ + FLIRT-1-7D
++ ~RandomNum(3,1)~ + ~(Stroke her hair)~ + FLIRT-1-8A
++ ~RandomNum(3,2)~ + ~(Stroke her hair)~ + FLIRT-1-8B
++ ~RandomNum(3,3)~ + ~(Stroke her hair)~ + FLIRT-1-8C
++ ~RandomNum(3,1)~ + ~(Playfully tug her ear)~ + FLIRT-1-9A
++ ~RandomNum(3,2)~ + ~(Playfully tug her ear)~ + FLIRT-1-9B
++ ~RandomNum(3,3)~ + ~(Playfully tug her ear)~ + FLIRT-1-9C
+/*+ ~RandomNum(3,1)~ + ~(Tease her)~ + FLIRT-1-10A
++ ~RandomNum(3,2)~ + ~(Tease her)~ + FLIRT-1-10B
++ ~RandomNum(3,3)~ + ~(Tease her)~ + FLIRT-1-10C
++ ~RandomNum(3,1)~ + ~Care for a spot of tea?~ + FLIRT-1-11A
++ ~RandomNum(3,2)~ + ~Care for a spot of tea?~ + FLIRT-1-11B
++ ~RandomNum(3,3)~ + ~Care for a spot of tea?~ + FLIRT-1-11C
++ ~RandomNum(3,1) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~I love you, Aura.~ + FLIRT-2-3A
++ ~RandomNum(3,2) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~I love you, Aura.~ + FLIRT-2-3B
++ ~RandomNum(3,3) Global("C0AuraRomanceActive","GLOBAL",2)~ + ~I love you, Aura.~ + FLIRT-2-3C
++ ~Global("C0AuraRomanceActive","GLOBAL",1)~ + ~Sweetie, there's something I need to tell you...~ + FLIRT-TALK
++ ~Global("C0AuraRomanceActive","GLOBAL",2)~ + ~Sweetie, there's something I need to tell you...~ + FLIRT-TALK*/
+++ ~No, nothing.~ EXIT
+
+CHAIN C0AUR25J FLIRT-2-1A
+~Mmm...~
+= ~I could never get enough of that. *giggle* One more?~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-1B
+~(Aura closes her bright eyes in contentment in response to your kiss. When you finally part, she opens them slowly with a shy smile.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-1C
+~(You feel Aura's small hands holding you as closely as your bodies will allow as you hold the kiss. There is a pleading look on her face when she reluctantly releases you.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-1D
+~(You hold Aura closely as your lips touch hers, faintly tasting the sweetness of sugar and wildberries.)~
+END
+++ ~(Teasingly brush your tongue against her lips)~ + FLIRT-2-1D1
+++ ~Mmm, now nice... strawberry tarts, hmm?~ + FLIRT-2-1D2
+++ ~(Break away from her)~ EXIT
+
+CHAIN C0AUR25J FLIRT-2-1D1
+~Hey... *giggle* hey, stop that! That tickles!~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-1D2
+~(She laughs and licks her lips with a flustered expression on her face.) They're my favorite...~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-1A
+~(As you lay a soft peck on Aura's dimpled cheek, a pink flush immediately rises at the spot you kissed.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-1B
+~(Aura's skin is soft, smooth and warm, without the slightest trace of roughness. She remains perfectly still, perhaps overwhelmed by the straightforwardness of your affection.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-1C
+~(When you press your lips against Aura's cheek, she gives a contented sigh and then a look of endearment in response.)~
+= ~Ahaha... I can't help but feel warm every time you do that.~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-1D
+~(As you lean forward, Aura presses a hand against your shoulder to stop you.)~
+= ~No, no, not right now, I've got a spot of grease on my face. Wait until I've had a chance to wash up, okay?~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-2A
+~(You taste faintly of sweat on the bridge of Aura's nose. She makes a small gasp and pulls back, wiping her face hurriedly.)~
+= ~S–sorry! I should've paid more attention before you... well... you can go again now. Please?~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-2B
+~(As your lips touch Aura's nose, you feel her breath upon your neck, drawn from no small amount of nervousness. She tilts her head slightly forward, however, laying a faint kiss on your chin before you part.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-2C
+~(As close as you are to Aura's face, you notice how her nose, despite being slightly larger than average by any other race's standards, is unusually smaller and fey-like, with a sharper, more defined shape that complements her youthful features.)~
+= ~(When you finally pull away, Aura smiles at you, only for a strange expression to suddenly take over as her nose twitches. A second later, she sneezes.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-2A
+~(While Aura sighs in resignation at first when you take her in your arms, as you hold her closely she lays her face against your chest, giving a hum of contentment while resting in your embrace.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-2B
+~(Aura barely struggles as you cuddle her tightly, finally giving up and wrapping her arms around your neck.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-2C
+~H–hey...! This again...? I'm not a doll!~
+END
+++ ~I can't help it... you're just too adorable!~ + FLIRT-2-2C1
+++ ~Okay, okay... I'll let go...~ + FLIRT-2-2C2
+
+CHAIN C0AUR25J FLIRT-2-2C1
+~Hmph, okay... I guess I can deal with it...~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-2C2
+~I–I didn't say you *had* to let go... I didn't mind it that much.~
+EXIT
+
+CHAIN C0AUR25J FLIRT-2-2D
+~Oof! Goodness, i–it's so hard to decide whether you or Imoen gives the tighter hugs...~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-3A
+~M-hmmmm... that's nice. You're so nice and warm, <CHARNAME>.~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-3B
+~(As you wrap your arms around Aura's waist and bring her close, she presses herself against you, and you enjoy the softness of her body closely against yours.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-3C
+~(Aura gives a cry of shock as you lift her from the ground, her arms reaching for you as you pull her close to you for an embrace. She nuzzles your neck as you hold her by the waist.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-3D
+~Hmm, it's so comforting to be held like this...~
+= ~(She nuzzles her face against your neck as you hold onto her, sighing in contentment.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-4A
+~(Aura blinks bemusedly in response to your gesture.)~
+= ~Uh oh... what are you planning this time?~
+END
+++ ~I'm not telling.~ + FLIRT-1-4A1
+++ ~Nothing... I just wanted to see how your smile.~ + FLIRT-1-4A2
+
+CHAIN C0AUR25J FLIRT-1-4A1
+~A-haha... I'm already terrified... *shudder*~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-4A2
+~Oh. Well then...~
+= ~(She gives you a gentle, slightly teasing smile and winks back at you in response.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-4B
+~What? Is there something on my face? Or is my hair mussed up again? C'mon, tell me what's going on!~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-4C
+~(Aura giggles and grins sheepishly for a moment, before nervously running her fingers along her long hair expectantly.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-5A
+~Oh... no, nononono! A-hahaha! Stop it, <CHARNAME>―no, not there! Hahahahaha―aah!~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-5B
+~Eep! Ahahahah, not the waist, not the waist... eeek!~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-5C
+~(Surprisingly, Aura puts up a meager resistance as you playfully attack her ticklish spots. When you detect a glint of mischief in her eyes, you realize―a little too late―that you've made a careless mistake.~
+= ~Haha! You've fallen for my trap! Get her, Muffy!~
+= ~(The small squirrel construct leaps onto you and runs crazily over your body in circles from head to toe, its tiny metal paws tickling you endlessly as you struggle to capture it.)~
+END
+++ ~Eeeeek! Call him off, Aura!~ + FLIRT-1-5C1
+++ ~Okay, okay, I surrender!~ + FLIRT-1-5C1
+++ ~No, you don't, you little... ah ha, gotcha!~ + FLIRT-1-5C2
+
+CHAIN C0AUR25J FLIRT-1-5C1
+~*giggle* Looks like I win this time, <CHARNAME>!~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-5C2
+~Aww. I never get one over you, do I, <CHARNAME>?~
+= ~Er, can you give him back now?~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-6A
+~Oof! My goodness, you're worse than my sisters, <CHARNAME>...~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-6B
+~*sigh* Sometimes I wish I'd outgrow my own face so my cheeks wouldn't be so tempting to other people.~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-6C
+~(Aura gives an unconvincingly disapproving pout as you gently rub her cheek using two fingers, while struggling to hide her approval with contented eyes and a barely-restrained smile.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-7A
+~(Aura flushes furiously as you lay a finger teasingly on her nose.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-7B
+~(Aura gives a nervous giggle at the affectionate touch. You notice a glint of excitement in her eyes for a brief moment, and as you withdraw, she catches your hand and gently kisses your finger.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-7C
+~(As you raise a finger to the tip of Aura's nose, she beckons you to lean closer with a candid smile on her face and raises a finger to touch your cheek in return.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-7D
+~(As you bend down and raise a finger to the tip of Aura's nose, she beckons you to lean closer with a candid smile on her face and lifts her own finger to touch your cheek in return.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-8A
+~(As you tenderly stroke the long, straight strands of Aura's hair, you notice how well-tended it is. Her hair is clean, even, and smells faintly of rose and lavender. You cannot help but wonder just how much time she spends tending to her hair at night to make up for the roughness of your daily travels.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-8B
+~(After you brush against Aura's hair for a while, she clasps your hand and holds it against her cheek, gently caressing your fingers with a slight smile.)~
+= ~(Suddenly she blushes, and with a flustered expression, reaches in her pack hurriedly to take out a small wooden brush.)~
+= ~Umm... would you mind brushing my hair a bit, <CHARNAME>? I'd like that.~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-8C
+~(As you trace a strand of Aura's rose-colored hair to its roots on her head, you see the faint change of colour to its natural pale―almost silvery―blonde.~
+= ~Aura lets off a giggle as your finger slides against her head, clearly ticklish.)~
+END
+++ ~You have very lovely hair, Aura.~ + FLIRT-1-8C1
+++ ~I want to see your normal hair colour one day.~ + FLIRT-1-8C2
+
+CHAIN C0AUR25J FLIRT-1-8C1
+~*giggle* Thank you, <CHARNAME>... I'm really glad you like it.~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-8C2
+~Really? I'll let my hair grow out without dyeing it for a while then, if that's what you'd like.~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-9A
+~(You sneak up on Aura from behind and teasingly nip on the point of her ear that is slightly sticking out from under her hair. She makes a startled squeak and turns to face you.)~
+= ~Eep! Oh, it's just you, <CHARNAME>... um, I don't mind you doing something like that... *blush* ...but could you give me some warning first?~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-9B
+~(You give a few teasing pinches to Aura's small, elfin ears.)~
+EXIT
+
+CHAIN C0AUR25J FLIRT-1-9C
+~No fair, <CHARNAME>! Let me pull your ears once in a while.~
+EXIT
+
+CHAIN C0AUR25J stringfix
+~Ick. I'll have to see what I can do about that. *ahem* 'La, la...'~
+DO ~ClearAllActions() 
+      StartCutSceneMode() 
+      StartCutScene("c0areset")~ EXIT

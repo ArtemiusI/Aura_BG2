@@ -633,7 +633,7 @@ IF
 THEN
   RESPONSE #100
 	SetGlobal("C0UltimateMastery","GLOBAL",1)
-	AddStoreItem("c0aupoth","c0apoth5",3,0)
+	AddStoreItem("c0aupoth","c0apoth5",1,0)
 	Continue()
 END
 

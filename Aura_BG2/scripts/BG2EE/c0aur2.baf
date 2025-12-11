@@ -9,3 +9,24 @@ THEN
     ActionOverride("C0AMAGN",Face(SW))
     ActionOverride("C0AMAGN",StartDialogNoSet(Player1))
 END
+
+IF
+    GlobalGT("C0AuraBG2Quest1","GLOBAL",53)
+    Global("Dossier1","C0AUR2",0)
+THEN
+    RESPONSE #100
+        SetGlobal("Dossier1","C0AUR2",1)
+		ActionOverride("Container001",CreateItem("c0aqnot1",0,0,0))
+		ActionOverride("Container001",CreateItem("c0aqnot2",0,0,0))
+		ActionOverride("Container001",CreateItem("c0aqnot3",0,0,0))
+		ActionOverride("Container001",CreateItem("c0aqnot4",0,0,0))
+    END
+
+IF
+    GlobalGT("C0AuraBG2Quest3","GLOBAL",44)
+    Global("Dossier2","C0AUR2",0)
+THEN
+    RESPONSE #100
+        SetGlobal("Dossier2","C0AUR2",1)
+		ActionOverride("Container001",CreateItem("c0aqnot5",0,0,0))
+    END

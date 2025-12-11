@@ -1476,7 +1476,7 @@ Casting Time: 1
 Area of Effect: 15-ft. radius
 Saving Throw: Special
 
-The Calamity Rune allows the user to cast Red Meteor. A crimson-colored mass of magical energy is shaped several hundred feet above the caster and their target and strikes down with massive speed and force, dealing 10d10 damage (half magic, half fire) with no save. Targets are knocked away from the center of impact by the shockwave and must make a Saving Throw vs. Paralysis or be stunned for 3 rounds.
+The Calamity Rune allows the user to cast Red Meteor. A crimson-colored mass of magical energy is shaped several hundred feet above the caster and their target and strikes down with massive speed and force, dealing 8d8 damage (half magic, half fire) with no save. Targets are knocked away from the center of impact by the shockwave and must make a Saving Throw vs. Paralysis or be stunned for 3 rounds.
 
 This spell will not harm party members.~
 	LPF ALTER_SPELL_HEADER STR_VAR icon = c0rune9c END
@@ -1653,7 +1653,7 @@ Casting Time: 1
 Area of Effect: 15-ft. radius
 Saving Throw: Special
 
-The Calamity Rune allows the user to cast Red Meteor. A crimson-colored mass of magical energy is shaped several hundred feet above the caster and their target and strikes down with massive speed and force, dealing 10d10 damage (half magic, half fire) with no save. Targets are knocked away from the center of impact by the shockwave and must make a Saving Throw vs. Paralysis or be stunned for 3 rounds.
+The Calamity Rune allows the user to cast Red Meteor. A crimson-colored mass of magical energy is shaped several hundred feet above the caster and their target and strikes down with massive speed and force, dealing 8d8 damage (half magic, half fire) with no save. Targets are knocked away from the center of impact by the shockwave and must make a Saving Throw vs. Paralysis or be stunned for 3 rounds.
 
 This spell will not harm party members.~
 
@@ -2091,7 +2091,7 @@ Casting Time: 1
 Area of Effect: 15-ft. radius
 Saving Throw: Special
 
-The Calamity Rune allows the user to cast Red Meteor. A crimson-colored mass of magical energy is shaped several hundred feet above the caster and their target and strikes down with massive speed and force, dealing 10d10 damage (half magic, half fire) with no save. Targets are knocked away from the center of impact by the shockwave and must make a Saving Throw vs. Paralysis or be stunned for 3 rounds.
+The Calamity Rune allows the user to cast Red Meteor. A crimson-colored mass of magical energy is shaped several hundred feet above the caster and their target and strikes down with massive speed and force, dealing 8d8 damage (half magic, half fire) with no save. Targets are knocked away from the center of impact by the shockwave and must make a Saving Throw vs. Paralysis or be stunned for 3 rounds.
 
 This spell will not harm party members.~
 

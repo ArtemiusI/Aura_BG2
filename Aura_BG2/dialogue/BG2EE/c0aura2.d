@@ -606,9 +606,9 @@ EXTERN C0AURA2 INTRO-JOINME-1
 CHAIN C0AURA2 INTRO-JOINME-1
 ~I've got my portable toolkit, my alchemical skills and my Sunshooter. I might not be the best fighter, but I'm sure I'll still be an asset to you!~
 END
-+ ~GlobalLT("chapter","GLOBAL",4) Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I should tell you first about our mission. Imoen was taken by the Cowled Wizards during that incident at Waukeen's Promenade, and I aim to rescue her. There will be considerable danger involved.~ + INTRO-JOINME-2
-+ ~GlobalLT("chapter","GLOBAL",4) !Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I should tell you first about our mission. An old friend of mine, Imoen, was taken by the Cowled Wizards during that incident at Waukeen's Promenade, and I aim to rescue her. There will be considerable danger involved.~ + INTRO-JOINME-3
-+ ~GlobalLT("chapter","GLOBAL",4)~ + ~Alright. You should know, however, that I am hunting a powerful wizard by the name of Irenicus. He was the one who captured and tortured me, and I plan to find him. It'll be dangerous.~ + INTRO-JOINME-4
++ ~GlobalLT("chapter","GLOBAL",%bg2_chapter_4%) Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I should tell you first about our mission. Imoen was taken by the Cowled Wizards during that incident at Waukeen's Promenade, and I aim to rescue her. There will be considerable danger involved.~ + INTRO-JOINME-2
++ ~GlobalLT("chapter","GLOBAL",%bg2_chapter_4%) !Global("C0AuraKnowsBG1","GLOBAL",1)~ + ~I should tell you first about our mission. An old friend of mine, Imoen, was taken by the Cowled Wizards during that incident at Waukeen's Promenade, and I aim to rescue her. There will be considerable danger involved.~ + INTRO-JOINME-3
++ ~GlobalLT("chapter","GLOBAL",%bg2_chapter_4%)~ + ~Alright. You should know, however, that I am hunting a powerful wizard by the name of Irenicus. He was the one who captured and tortured me, and I plan to find him. It'll be dangerous.~ + INTRO-JOINME-4
 ++ ~Alright, let's go.~ DO ~SetGlobal("C0AuraQuest1","GLOBAL",1) JoinParty()~ + INTRO-JOINME-5
 
 CHAIN C0AURA2 INTRO-JOINME-2

@@ -711,7 +711,6 @@ SAY DESC ~The Sunshooter is Aura's personal weapon, a metallic bow of unusual de
 STATISTICS:
 
 – Configuration: Power
-  Adds strength bonus to damage
   Attacks deal maximum damage
   2 attacks per round
 
@@ -723,7 +722,7 @@ Combat abilities:
 – Analytical Archery: This bow uses Intelligence, if higher, for bonuses to ranged THAC0 instead of Dexterity.
 
 THAC0: -2
-Damage: +2 (missile)
+Damage: +1 (missile)
 Speed Factor: 2
 Proficiency Type: Shortbow
 Type: Two-handed
@@ -834,7 +833,6 @@ SAY DESC ~The Sunshooter is Aura's personal weapon, a metallic bow of unusual de
 STATISTICS:
 
 – Configuration: Power
-  Adds strength bonus to damage
   Attacks deal maximum damage
   2 attacks per round
 
@@ -847,7 +845,7 @@ Combat abilities:
 – Analytical Archery: This bow uses Intelligence, if higher, for bonuses to ranged THAC0 instead of Dexterity.
 
 THAC0: -1
-Damage: +3 (missile)
+Damage: +2 (missile)
 Speed Factor: 2
 Proficiency Type: Shortbow
 Type: Two-handed
@@ -966,7 +964,6 @@ SAY DESC ~The Sunshooter is Aura's personal weapon, a metallic bow of unusual de
 STATISTICS:
 
 – Configuration: Power
-  Adds strength bonus to damage
   Attacks deal maximum damage
   2 attacks per round
   
@@ -982,7 +979,7 @@ Combat abilities:
 – Magnetism: Each hit reduces target's Armor Class vs. Ranged Weapons by 1 and Missile Resistance by 3% for 5 rounds
 – Analytical Archery: This bow uses Intelligence, if higher, for bonuses to ranged THAC0 instead of Dexterity.
 
-Damage: +4 (missile)
+Damage: +2 (missile)
 Speed Factor: 2
 Proficiency Type: Shortbow
 Type: Two-handed
@@ -1101,7 +1098,6 @@ SAY DESC ~The Sunshooter is Aura's personal weapon, a metallic bow of unusual de
 STATISTICS:
 
 – Configuration: Power
-  Adds strength bonus to damage
   Attacks deal maximum damage
   2 attacks per round
   
@@ -1117,7 +1113,7 @@ Combat abilities:
 – Magnetism: Each hit reduces target's Armor Class vs. Ranged Weapons by 1 and Missile Resistance by 3% for 5 rounds
 – Analytical Archery: This bow uses Intelligence, if higher, for bonuses to ranged THAC0 instead of Dexterity.
 
-Damage: +6 (missile)
+Damage: +3 (missile)
 Speed Factor: 2
 Proficiency Type: Shortbow
 Type: Two-handed
@@ -1143,7 +1139,7 @@ SAY NAME1 ~Perfect Sunshooter~
 SAY NAME2 ~Perfect Sunshooter~
 SAY DESC ~The Sunshooter is Aura's personal weapon, a metallic bow of unusual design that fires arrows with almost inhuman speed and accuracy. Various attachments decorate the arc of the bow, some useful (such as enchantments that alter the effects of nocked arrows) and others purely for accessory. Its complexity is so great that no one besides its creator is likely capable of understanding how to properly wield it. The Perfect Sunshooter is the product of a master artificer's craft, combining all the strengths of the bow's various configurations.
 
-Additionally, Aura gains +2 to Dexterity while wielding the Sunshooter.
+Additionally, Aura gains a +4 bonus to Armor Class vs. Melee Weapons whilst wielding the Sunshooter.
 
 STATISTICS:
 
@@ -1151,7 +1147,6 @@ STATISTICS:
   3.5 attacks per round
   Attacks never critically miss
   +15% Critical Hit Chance
-  Adds strength bonus to damage
   Attacks deal maximum damage
   May use 'Rain of Arrows', 'Sniper Shot' or 'Blazing Shot' two times per day
 
@@ -1176,7 +1171,7 @@ Combat abilities:
 – Analytical Archery: This bow uses Intelligence, if higher, for bonuses to ranged THAC0 instead of Dexterity.
 
 THAC0: +7
-Damage: +6 (missile)
+Damage: +3 (missile)
 Speed Factor: 0
 Proficiency Type: Shortbow
 Type: Two-handed
@@ -1202,7 +1197,7 @@ SAY NAME1 ~Sunshooter Opus~
 SAY NAME2 ~Sunshooter Opus~
 SAY DESC ~The Sunshooter is Aura's personal weapon, a metallic bow of unusual design that fires arrows with almost inhuman speed and accuracy. Various attachments decorate the arc of the bow, some useful (such as enchantments that alter the effects of nocked arrows) and others purely for accessory. Its complexity is so great that no one besides its creator is likely capable of understanding how to properly wield it. The Sunshooter Opus is the product of a master artificer's craft, combining all the strengths of the bow's various configurations.
 
-The magical bowstring of Gond has made the bow even more powerful, allowing it to launch arrows of pure magical energy. Additionally, Aura gains +2 to Dexterity while wielding the Sunshooter.
+The magical bowstring of Gond has made the bow even more powerful, allowing it to launch arrows of pure magical energy. Additionally, Aura gains a +4 bonus to Armor Class vs. Melee Weapons whilst wielding the Sunshooter.
 
 STATISTICS:
 
@@ -1210,7 +1205,6 @@ STATISTICS:
   4 attacks per round
   Attacks never critically miss
   +20% Critical Hit Chance
-  Adds strength bonus to damage
   Attacks deal maximum damage
   May use 'Rain of Arrows', 'Sniper Shot' or 'Blazing Shot' three times per day
 
@@ -1230,13 +1224,12 @@ Charge abilities (1x/day):
 – Create Sunshooter Arrows
 
 Combat abilities:
-– Eminence: All arrows launched by this bow strike with at least +5 enchantment
-– When no arrows are equipped, the bow fires missiles that are treated as +5 for the purposes of determining what enemies they can damage. The missiles receive +8 to hit and deal a total of 7 piercing and 2d6 magical damage
+– Eminence and Divinity: All arrows launched by this bow strike with at least +5 enchantment. When no arrows are equipped, the bow fires missiles that are treated as +5 for the purposes of determining what enemies they can damage. The missiles receive +8 to hit and deal a total of 4 piercing and 1d4 magical damage
 – Magnetism: Each hit reduces target's Armor Class vs. Ranged Weapons by 1 and Missile Resistance by 5% for 5 rounds
 – Analytical Archery: This bow uses Intelligence, if higher, for bonuses to ranged THAC0 instead of Dexterity.
 
 THAC0: +8
-Damage: +7 (missile)
+Damage: +4 (missile)
 Speed Factor: 0
 Proficiency Type: Shortbow
 Type: Two-handed
