@@ -609,8 +609,8 @@ EXTERN SAHPR1 C0AuraSahuagin.2
 CHAIN SAHPR1 C0AuraSahuagin.2
 ~Worry not, <PRO_RACE>. Take our king's challenge, while your companion will be under my personal protection. So long as you succeed, no harm will come to her—I swear in the Shark-Father's name. You are needed for our cause, and angering you by allowing those with you to be harmed shall benefit neither of us.~
 END
-  ++ ~Fine. It seems I have no choice but to trust in your word, priestess.~ DO ~ActionOverride("C0Aura",JoinParty()) ActionOverride("C0Aura",ApplySpellRES("C0AQEF27",Myself))~ EXTERN SAHKNG01 C0AuraSahuagin.3
-  ++ ~Alright... please take care of her. She has a terrible fear of drowning.~ EXTERN SAHKNG01 C0AuraSahuagin.3
+  ++ ~Fine. It seems I have no choice but to trust in your word, priestess.~ DO ~ActionOverride("C0Aura",LeaveParty()) ActionOverride("C0Aura",ApplySpellRES("C0AQEF27",Myself))~ EXTERN SAHKNG01 C0AuraSahuagin.3
+  ++ ~Alright... please take care of her. She has a terrible fear of drowning.~ DO ~ActionOverride("C0Aura",LeaveParty()) ActionOverride("C0Aura",ApplySpellRES("C0AQEF27",Myself))~ EXTERN SAHKNG01 C0AuraSahuagin.3
   ++ ~No. I don't trust any of you. We're leaving now, or else you all die!~ EXTERN SAHKNG01 22
 
 CHAIN SAHKNG01 C0AuraSahuagin.3
