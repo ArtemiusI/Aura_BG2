@@ -3250,7 +3250,7 @@ EXTERN C0AUR25J tob-final-1
 
 CHAIN C0AUR25J tob-final-2
 ~I'm not just worried. I'm terrified, <CHARNAME>... I thought I'd conquered all my old fears, but now I've grown a new one, and I can't... I can't fight it alone.~
-EXTERN C0AUR25J tob-final-1
+EXTERN C0AUR25J tob-final-3
 
 CHAIN C0AUR25J tob-final-3
 ~<CHARNAME>, I want you to stay. Ever since I've known you, I haven't been able to imagine what it'd be like for you to really be gone.~
