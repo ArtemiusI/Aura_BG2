@@ -529,7 +529,7 @@ CHAIN C0AUR25J tob-pocketplane-3
 EXIT
 
 CHAIN IF WEIGHT #-1 ~Global("C0AuraToBBowstring","GLOBAL",1)~ THEN C0AUR25J tob-bowstring
-~This... this is the Bowstring of Gond! The Wonderbringer himself gifted it to us Lantanna during the Time of Troubles as a gift. I've... I've seen its depiction before, but I never thought I'd be able to hold it with my own hands!~ [C0BLANK]
+~This... this is the Bowstring of Gond! The Wonderbringer himself gifted it to us Lantanna during the Time of Troubles in return for our hospitality. I've... I've seen its depiction before, but I never thought I'd be able to hold it with my own hands!~ [C0BLANK]
 DO ~SetGlobal("C0AuraToBBowstring","GLOBAL",2)~
 END
   ++ ~What could it be doing in the hands of the drow?~ + tob-bowstring-1
