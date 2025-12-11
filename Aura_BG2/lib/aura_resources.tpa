@@ -307,6 +307,6 @@ ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/c0au#at1.PRO~ ~C0 Autocannon 
 ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/c0au#at2.PRO~ ~C0 Autocannon Missile Ice~
 ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/c0au#at3.PRO~ ~C0 Autocannon Missile Lightning~
 
-ADD_PROJECTILE ~%MOD_FOLDER%/spells/C0INAREP.PRO~ ~C0 Instant Area Allies~
-ADD_PROJECTILE ~%MOD_FOLDER%/spells/C0INAREE.PRO~ ~C0 Instant Area Enemies~
-ADD_PROJECTILE ~%MOD_FOLDER%/spells/C0INAREL.PRO~ ~C0 Instant Area Enemies Large~
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0INAREP.PRO~ ~C0 Instant Area Allies~
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0INAREE.PRO~ ~C0 Instant Area Enemies~
+ADD_PROJECTILE ~%MOD_FOLDER%/artificer/projectiles/C0INAREL.PRO~ ~C0 Instant Area Enemies Large~
