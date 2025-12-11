@@ -740,7 +740,7 @@ EXIT
 
 CHAIN C0AURA2J AURA-SAHUAGIN-12
 ~Well, you should know by now... I can get a little down at times like anyone else, but keeping me down is the hard part.~
-EXTERN C0AURA2J AURA-SAHUAGIN-10
+EXTERN C0AURA2J AURA-SAHUAGIN-11
 
 I_C_T SAHPR1 52 C0AuraSAHPR152
 == C0AURA2J IF ~InParty("C0Aura") InMyArea("C0Aura") !StateCheck("C0Aura",CD_STATE_NOTVALID) GlobalGT("C0AuraSahuaginFears","GLOBAL",0)~ THEN ~I... um, need to thank you, priestess... for earlier. I probably would have been in serious danger if you hadn't taken care of me in <CHARNAME>'s absence.~
